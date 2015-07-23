@@ -27,7 +27,7 @@ Class.define("framework.ui.animation.SharedTimer", YObject, {
     addTimer: function(callback, interval) {
         this._timerQueue.push({interval: interval, callback: callback, lastTime: 0});
         if (this._timer === null) {
-            this._timer = setInterval(this.onTimer.bind(this), 16);
+            this._timer = window.requestAnimationFrame(this.onTimer.bind(this));
         }
     },
 
@@ -65,6 +65,7 @@ Class.define("framework.ui.animation.SharedTimer", YObject, {
                 }
             }
         }
+        this._timer = window.requestAnimationFrame(this.onTimer.bind(this));
     }
 }, module);
 

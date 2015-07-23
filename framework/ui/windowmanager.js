@@ -108,8 +108,8 @@ Class.define("framework.ui.WindowManager", EventEmitter, {
         }
 
         this._redraw = true;
-        this._timer = setTimeout(function() {
-            clearTimeout(this._timer);
+        var animationFunc = null;
+        this._timer = window.requestAnimationFrame(animationFunc = function() {
             this._redraw = false;
             this._redrawTime = new Date().getTime();
             this._mainWindow.paint(this._context);
@@ -126,7 +126,8 @@ Class.define("framework.ui.WindowManager", EventEmitter, {
                     window.debugTimestamp = 0;
                 }
             }
-        }.bind(this), 0);
+            window.requestAnimationFrame(animationFunc);
+        }.bind(this));
     },
 
     processRawInputEvent: function(e) {
