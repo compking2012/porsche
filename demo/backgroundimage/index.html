@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>BackgroundImage App</title>
+    <!-- data-main attribute tells require.js to load
+         scripts/main.js after require.js loads. -->
+    <!--<script data-main="scripts/main" src="lib/require.js"></script>-->
+
+    <script src="/framework/vendor/seajs/2.1.1/sea.js"></script>
+    <script src="/framework/vendor/seajs-style/1.0.0/seajs-style.js"></script>
+    <script src="/framework/vendor/seajs-text/1.0.2/seajs-text.js"></script>
+    <script>
+        seajs.config({
+            base: "./"
+        });
+        seajs.use("./index");
+    </script>
+</head>
+<body>
+    <canvas style="border: solid 1px #000000" width=320 height=320></canvas>
+</body>
+</html>

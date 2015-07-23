@@ -1,0 +1,7 @@
+{
+    "appName": "GradientColor",
+    "debug": {
+        "paintFPS": true,
+        "dirtyRect": true
+    }
+}

@@ -1,0 +1,7 @@
+{
+    "appName" : "ProgressView",
+    "debug": {
+        "paintFPS": true,
+        "dirtyRect": true
+    }
+}

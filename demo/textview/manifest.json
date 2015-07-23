@@ -1,0 +1,7 @@
+{
+    "appName": "TextView",
+    "debug": {
+        "paintFPS": true,
+        "dirtyRect": true
+    }
+}

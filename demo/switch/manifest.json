@@ -1,0 +1,7 @@
+{
+    "appName" : "Switch",
+    "debug": {
+        "paintFPS": true,
+        "dirtyRect": true
+    }
+}

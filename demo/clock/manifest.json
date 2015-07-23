@@ -1,0 +1,7 @@
+{
+    "appName": "Clock",
+    "debug": {
+        "paintFPS": true,
+        "dirtyRect": true
+    }
+}

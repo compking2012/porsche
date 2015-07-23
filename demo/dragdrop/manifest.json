@@ -1,0 +1,7 @@
+{
+    "appName": "DragDrop",
+    "debug": {
+        "paintFPS": true,
+        "dirtyRect": true
+    }
+}

@@ -1,0 +1,7 @@
+{
+    "appName": "ViewHierarchy-Overlap",
+    "debug": {
+        "paintFPS": true,
+        "dirtyRect": true
+    }
+}

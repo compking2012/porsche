@@ -1,0 +1,7 @@
+{
+    "appName": "Transform2D-Animation",
+    "debug": {
+        "paintFPS": true,
+        "dirtyRect": true
+    }
+}
