@@ -40,12 +40,12 @@ Class.define("framework.ui.view.ImageView", View, {
             var onLoadFunc = null;
             this._image = new Image();
             this._image.addEventListener("load", onLoadFunc = function() {
-                // this._image.removeEventListener("load", onLoadFunc);
+                this._image.removeEventListener("load", onLoadFunc);
                 this.invalidate();
             }.bind(this));
             this._image.src = value;
             if (this._image.complete) {
-                // this._image.removeEventListener("load", onLoadFunc);
+                this._image.removeEventListener("load", onLoadFunc);
                 this.invalidate();
             }
         }

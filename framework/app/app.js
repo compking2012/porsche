@@ -46,6 +46,10 @@ Class.define("framework.app.App", EventEmitter, {
         // }.bind(this));
     },
 
+    destroy: function() {
+
+    },
+
     get rootController() {
         return this._rootController;
     },

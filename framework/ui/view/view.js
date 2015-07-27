@@ -224,7 +224,7 @@ Class.define("framework.ui.view.View", EventEmitter, {
             var radial = GradientParser.parse(this._background);
             console.log("radial:", radial);
             this._backgroundObject = null;
-        } else if (/^conical\-gradient/.test(this._background)) {
+        } else if (/^conic\-gradient/.test(this._background)) {
             // var conical = GradientParser.parse(this._background);
             this._backgroundObject = null;
         } else if (/^url/.test(this._background)) {
@@ -642,26 +642,8 @@ Class.define("framework.ui.view.View", EventEmitter, {
                 var radial = this._backgroundObject;
                 // context.fillStyle = null;
                 context.fillRect(0, 0, this._width, this._height);
-            } else if (/^conical\-gradient/.test(this._background)) {
-                var conical = this._backgroundObject;
-                // TODO: support conical gradient
-                var r1 = 251, g1 = 27, b1 = 84;
-                var r2 = 57, g2 = 3, b2 = 18;
-                var cx = this._width / 2;
-                var cy = this._height / 2;
-                for (var i = 0; i < 360; i += 0.1) {
-                    var rad = i * 2 * Math.PI / 360;
-                    var p = i / 360;
-                    var r = parseInt(r2 * p + r1 * (1 - p));
-                    var g = parseInt(g2 * p + g1 * (1 - p));
-                    var b = parseInt(b2 * p + b1 * (1 - p));
-                    context.strokeStyle = "rgb(" + r + "," + g + "," + b +")"; //"hsla(" + i + ", 100%, 50%, 1.0)";
-                    context.beginPath();
-                    context.moveTo(cx, cy);
-                    context.lineTo(cx + cx * Math.cos(rad), cy + cy * Math.sin(rad));
-                    context.stroke();
-                }
-                console.log("conical");
+            } else if (/^conic\-gradient/.test(this._background)) {
+                var conic = this._backgroundObject;
             } else if (/^url/.test(this._background)) {
                 var group = this._background.match(/^url\(([\w|\.|\/|\-]+)\)\s+(\w+)/);
                 var repeat = group[2];
