@@ -11,7 +11,7 @@ var CompositeView = require("./compositeview");
  */
 Class.define("framework.ui.view.Window", CompositeView, {
     /**
-     * Constructor that create a view
+     * Constructor
      * @method Window#initialize
      */
     initialize: function() {
@@ -21,7 +21,7 @@ Class.define("framework.ui.view.Window", CompositeView, {
     },
 
     /**
-     * Destructor that destroy a view
+     * Destructor
      * @method Window#destroy
      */
     destroy: function() {

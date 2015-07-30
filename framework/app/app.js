@@ -12,42 +12,37 @@ var WindowManager = require("../ui/windowmanager");
  * @extends EventEmitter
  * @param {String} appName name of current app
  * @abstract
- **/
+ */
 Class.define("framework.app.App", EventEmitter, {
+    /**
+     * Constructor
+     * @method App#initialize
+     */
     initialize: function() {
         EventEmitter.prototype.initialize.apply(this, arguments);
-
-        // this._manifest = this.loadManifest();
-        // this._appName = this._manifest.appName;
-        // this._rootController = null;
+        this._manifest = this.loadManifest();
+        this._rootController = null;
 
         var canvas = document.querySelector("canvas");
         var rect = canvas.getBoundingClientRect();
         var width = rect.width;
         var height = rect.height;
         this._window = new Window();
-
         this._windowManager = new WindowManager(this._window, width, height);
-
-        // // this.window.on("apptofront", this.bringAppToFront.bind(this));
-        // // this.window.on("hideapp", this.hideApp.bind(this));
-        // // this._uiServer.on("start", function() {
-        //     this.bringAppToFront(this._appName);
-        //     this.onStart.call(this);
-        // // }.bind(this));
-
-        // this._uiServer.on("state", function(state) {
-        //     if (state === UIServer.BACKGROUND) {
-        //         this.onInactive.call(this);
-        //     } else if (state === UIServer.FOREGROUND) {
-        //         this._uiServer.invalidateAll();
-        //         this.onActive.call(this);
-        //     }
-        // }.bind(this));
     },
 
+    /**
+     * Destructor
+     * @method App#destroy
+     */
     destroy: function() {
-
+        this._windowManager.destroy();
+        this._windowManager = null;
+        this._window.destroy();
+        this._window = null;
+        this._rootController = null;
+        this._manifest = null;
+        EventEmitter.prototype.destroy.apply(this, arguments);
     },
 
     get rootController() {
@@ -72,12 +67,12 @@ Class.define("framework.app.App", EventEmitter, {
         return this._window;
     },
 
-    get uiServer() {
-        return this._uiServer;
-    },
-
     get windowManager() {
         return this._windowManager;
+    },
+
+    loadManifest: function() {
+        return null;
     },
 
     /**
@@ -86,7 +81,6 @@ Class.define("framework.app.App", EventEmitter, {
      * @param {String} appname the name of apps
      */
     bringAppToFront: function(appname) {
-        return this._uiServer.bringAppToFront(appname);
     },
 
     /**
@@ -95,7 +89,6 @@ Class.define("framework.app.App", EventEmitter, {
      * @param {String} appname the name of apps
      */
     hideApp: function(appname) {
-        return this._uiServer.hideApp(appname);
     },
 
     /**
@@ -118,8 +111,8 @@ Class.define("framework.app.App", EventEmitter, {
 
     /**
      * Handle Event when set app run in foreground
-     * @abstract
      * @method App#onActive
+     * @abstract
      */
     onActive: function() {
 

@@ -7,14 +7,19 @@ var YObject = require("../yobject");
 /**
  * Base struct for rectangle
  * @class Rectangle
- * @param {Number} x left edge of rectangle, in pixels.
- * @param {Number} y top edge of rectangle, in pixels.
- * @param {Number} width width edge of rectangle, in pixels.
- * @param {Number} height height edge of rectangle, in pixels.
  * @extends YObject
  */
 Class.define("framework.ui.Rectangle", YObject, {
+    /**
+     * Constructor
+     * @method Button#initialize
+     * @param {Number} x left edge of rectangle, in pixels.
+     * @param {Number} y top edge of rectangle, in pixels.
+     * @param {Number} width width edge of rectangle, in pixels.
+     * @param {Number} height height edge of rectangle, in pixels.
+     */
     initialize: function(left, top, width, height) {
+        YObject.prototype.initialize.apply(this, arguments);
         this._left = left;
         this._top = top;
         this._width = width;

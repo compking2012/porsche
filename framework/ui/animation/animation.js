@@ -7,6 +7,10 @@ var CubicBezier = require("./cubicbezier");
 var SharedTimer = require("./sharedtimer");
 
 Class.define("framework.ui.animation.Animation", EventEmitter, {
+    /**
+     * Constructor
+     * @method Animation#initialize
+     */
     initialize: function(view) {
         EventEmitter.prototype.initialize.apply(this, arguments);
         this._view = view;
@@ -26,8 +30,20 @@ Class.define("framework.ui.animation.Animation", EventEmitter, {
         this._currentTime = 0;
     },
 
+    /**
+     * Destructor
+     * @method Animation#destroy
+     */
     destroy: function() {
-
+        this._view = null;
+        this._from = null;
+        this._to = null;
+        this._beziers.destroy();
+        this._beziers = null;
+        this._timer.destroy();
+        this._timer = null;
+        this._animators = null;
+        EventEmitter.prototype.destroy.apply(this, arguments);
     },
 
     get from() {

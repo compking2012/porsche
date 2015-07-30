@@ -10,27 +10,24 @@ var Rectangle = require("./rectangle");
 Class.define("framework.ui.WindowManager", EventEmitter, {
     initialize: function(mainWindow, width, height) {
         EventEmitter.prototype.initialize.call(this);
-
         this._screenWidth = width;
         this._screenHeight = height;
 
         this._redraw = false;
         this._redrawTime = 0;
-        this._timer = 0;
         this._position = new Point(0, 0);
         this._timestamp = 0;
         this._screen = new Rectangle(0, 0, this._screenWidth, this._screenHeight);
 
-        this._timestamp = 0;
         this._canvasIdGen = 0;
         this._canvasStack = [];
         this._canvasStack.push(this.createCanvas(this._screenWidth, this._screenHeight));
         this._context = this.getContext(this._canvasStack[0]);
-        this._canvasStack[0].addEventListener("touchstart", this.processRawInputEvent.bind(this));
-        this._canvasStack[0].addEventListener("touchmove", this.processRawInputEvent.bind(this));
-        this._canvasStack[0].addEventListener("touchend", this.processRawInputEvent.bind(this));
-        this._canvasStack[0].addEventListener("touchcancel", this.processRawInputEvent.bind(this));
-        this._canvasStack[0].addEventListener("click", this.processRawInputEvent.bind(this));
+        this._canvasStack[0].addEventListener("touchstart", this.onTouchStartFunc = this.processRawInputEvent.bind(this));
+        this._canvasStack[0].addEventListener("touchmove", this.onTouchMoveFunc = this.processRawInputEvent.bind(this));
+        this._canvasStack[0].addEventListener("touchend", this.onTouchEndFunc = this.processRawInputEvent.bind(this));
+        this._canvasStack[0].addEventListener("touchcancel", this.onTouchCancelFunc = this.processRawInputEvent.bind(this));
+        this._canvasStack[0].addEventListener("click", this.onClickFunc = this.processRawInputEvent.bind(this));
         this._mainWindow = mainWindow;
         this._mainWindow._windowManager = this;
         this._mainWindow.width = width;
@@ -38,7 +35,24 @@ Class.define("framework.ui.WindowManager", EventEmitter, {
     },
 
     destroy: function() {
-
+        this._mainWindow = null;
+        this._mainWindow._windowManager = null;
+        this._canvasStack[0].removeEventListener("touchstart", this.onTouchStartFunc);
+        this.onTouchStart = null;
+        this._canvasStack[0].removeEventListener("touchmove", this.onTouchMoveFunc);
+        this.onTouchMoveFunc = null;
+        this._canvasStack[0].removeEventListener("touchend", this.onTouchEndFunc);
+        this.onTouchEndFunc = null;
+        this._canvasStack[0].removeEventListener("touchcancel", this.onTouchCancelFunc);
+        this.onTouchCancelFunc = null;
+        this._canvasStack[0].removeEventListener("click", this.onClickFunc);
+        this.onClickFunc = null;
+        this._position.destroy();
+        this._position = null;
+        this._screen.destroy();
+        this._screen = null;
+        this._canvasStack = null;
+        this._context = null;
     },
 
     createCanvas: function(width, height) {
@@ -109,7 +123,7 @@ Class.define("framework.ui.WindowManager", EventEmitter, {
 
         this._redraw = true;
         var animationFunc = null;
-        this._timer = window.requestAnimationFrame(animationFunc = function() {
+        window.requestAnimationFrame(animationFunc = function() {
             this._redraw = false;
             this._redrawTime = new Date().getTime();
             this._mainWindow.paint(this._context);
@@ -189,6 +203,7 @@ Class.define("framework.ui.WindowManager", EventEmitter, {
             view.dispatchEvent(e.type, touchEvent);
             view = view.parent;
         } while (touchEvent.propagation && view !== null);
+        touchEvent.destroy();
     },
 
     dispatchTouchEvent: function(e) {
@@ -227,6 +242,7 @@ Class.define("framework.ui.WindowManager", EventEmitter, {
             view.dispatchEvent(e.type, touchEvent);
             view = view.parent;
         } while (touchEvent.propagation && view !== null);
+        touchEvent.destroy();
     }
 }, module);
 

@@ -5,19 +5,25 @@ var Class = require("../../class");
 var TextView = require("./textview");
 
 /**
- * Button widget, send click and cancel events
+ * Button widget
  * @class Button
- * @param {string} [text] value of the text show in button
- * @extends View
- **/
+ * @extends TextView
+ */
 Class.define("framework.ui.view.Button", TextView, {
+    /**
+     * Constructor
+     * @method Button#initialize
+     */
     initialize: function(/*value*/) {
         TextView.prototype.initialize.apply(this, arguments);
-
         this._radius = 0;
         this._textAlign = "center";
     },
 
+    /**
+     * Destructor
+     * @method Button#destroy
+     */
     destroy: function() {
         TextView.prototype.destroy.apply(this, arguments);
     },

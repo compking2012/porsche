@@ -12,7 +12,14 @@ var YObject = require("../yobject");
  * @extends YObject
  */
 Class.define("framework.ui.Point", YObject, {
+    /**
+     * Constructor
+     * @method Point#initialize
+     * @param {Number} x the x-axis value
+     * @param {Number} y the y-axis value
+     */
     initialize: function(x, y) {
+        YObject.prototype.initialize.apply(this, arguments);
         this._x = x;
         this._y = y;
     },
@@ -71,7 +78,7 @@ Class.define("framework.ui.Point", YObject, {
 
     toString: function() {
         return this.className + "(" + this._x + "," + this._y + ")";
-    }    
+    }
 }, module);
 
 });

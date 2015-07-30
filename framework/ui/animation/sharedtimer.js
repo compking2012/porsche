@@ -4,16 +4,23 @@ define(function(require, exports, module) {
 var Class = require("../../class");
 var YObject = require("../../yobject");
 
-Class.define("framework.ui.animation.SharedTimer", YObject, {
+Class.define("com.yunos.ui.animation.SharedTimer", YObject, {
+    /**
+     * Constructor
+     * @method SharedTimer#initialize
+     */
     initialize: function() {
-        YObject.prototype.initialize.call(this);
-
+        YObject.prototype.initialize.apply(this, arguments);
         this.constructor.refCount = 0;
         this._timerQueue = [];
         this._timer = null;
         this._interval = 0;
     },
 
+    /**
+     * Destructor
+     * @method SharedTimer#destroy
+     */
     destroy: function() {
         this.constructor.refCount--;
         if (this.constructor.refCount > 0) {
@@ -21,13 +28,23 @@ Class.define("framework.ui.animation.SharedTimer", YObject, {
         }
         this._timerQueue = [];
         clearInterval(this._timer);
-        YObject.prototype.destroy.call(this);
+        YObject.prototype.destroy.apply(this, arguments);
+    },
+
+    static: {
+        getInstance: function() {
+            if (!this.instance) {
+                this.instance = new this();
+            }
+            this.refCount++;
+            return this.instance;
+        }
     },
 
     addTimer: function(callback, interval) {
         this._timerQueue.push({interval: interval, callback: callback, lastTime: 0});
         if (this._timer === null) {
-            this._timer = window.requestAnimationFrame(this.onTimer.bind(this));
+            this._timer = setInterval(this.onTimer.bind(this), 16);
         }
     },
 
@@ -65,17 +82,7 @@ Class.define("framework.ui.animation.SharedTimer", YObject, {
                 }
             }
         }
-        this._timer = window.requestAnimationFrame(this.onTimer.bind(this));
     }
 }, module);
-
-var SharedTimer = module.exports;
-SharedTimer.getInstance = function() {
-    if (!SharedTimer.instance) {
-        SharedTimer.instance = new SharedTimer();
-    }
-    SharedTimer.refCount++;
-    return SharedTimer.instance;
-};
 
 });

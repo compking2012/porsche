@@ -9,8 +9,13 @@ var YObject = require("../../yobject");
  * @class CubicBezier
  * @extends YObject
  */
-Class.define("framework.ui.animation.CubicBezier", YObject, {
+Class.define("com.yunos.ui.animation.CubicBezier", YObject, {
+    /**
+     * Constructor
+     * @method CubicBezier#initialize
+     */
     initialize: function(p1x, p1y, p2x, p2y) {
+        YObject.prototype.initialize.apply(this, arguments);
         if (!(p1x >= 0 && p1x <= 1)) {
             throw new RangeError("'p1x' must be a number between 0 and 1. Got " + p1x + "instead.");
         }
@@ -27,6 +32,63 @@ Class.define("framework.ui.animation.CubicBezier", YObject, {
         // Control points
         this._p1 = {x: p1x, y: p1y};
         this._p2 = {x: p2x, y: p2y};
+    },
+
+    /**
+     * Destructor
+     * @method CubicBezier#destroy
+     */
+    destroy: function() {
+        this._p1 = null;
+        this._p2 = null;
+        YObject.prototype.destroy.apply(this, arguments);
+    },
+
+    static: {
+        /**
+         * ease bezier
+         * @returns {Object} Returns ease bezier Object
+         * @method CubicBezier#ease
+         */
+        ease: function() {
+            return new this(0.25, 0.1, 0.25, 1.0);
+        },
+
+        /**
+         * linear bezier
+         * @returns {Object} Returns linear bezier Object
+         * @method CubicBezier#linear
+         */
+        linear: function() {
+            return new this(0.0, 0.0, 1.0, 1.0);
+        },
+
+        /**
+         * easeIn bezier
+         * @returns {Object} Returns easeIn bezier Object
+         * @method CubicBezier#easeIn
+         */
+        easeIn: function() {
+            return new this(0.42, 0, 1.0, 1.0);
+        },
+
+        /**
+         * easeOut bezier
+         * @returns {Object} Returns easeOut bezier Object
+         * @method CubicBezier#easeOut
+         */
+        easeOut: function() {
+            return new this(0, 0, 0.58, 1.0);
+        },
+
+        /**
+         * easeInOut bezier
+         * @returns {Object} Returns easeInOut bezier Object
+         * @method CubicBezier#easeInOut
+         */
+        easeInOut: function() {
+            return new this(0.42, 0, 0.58, 1.0);
+        }
     },
 
     /**
@@ -266,51 +328,5 @@ Class.define("framework.ui.animation.CubicBezier", YObject, {
         };
     }
 }, module);
-
-var CubicBezier = module.exports;
-/**
- * ease bezier
- * @returns {Object} Returns ease bezier Object
- * @method CubicBezier#ease
- */
-CubicBezier.ease = function() {
-    return new CubicBezier(0.25, 0.1, 0.25, 1.0);
-};
-
-/**
- * linear bezier
- * @returns {Object} Returns linear bezier Object
- * @method CubicBezier#linear
- */
-CubicBezier.linear = function() {
-    return new CubicBezier(0.0, 0.0, 1.0, 1.0);
-};
-
-/**
- * easeIn bezier
- * @returns {Object} Returns easeIn bezier Object
- * @method CubicBezier#easeIn
- */
-CubicBezier.easeIn = function() {
-    return new CubicBezier(0.42, 0, 1.0, 1.0);
-};
-
-/**
- * easeOut bezier
- * @returns {Object} Returns easeOut bezier Object
- * @method CubicBezier#easeOut
- */
-CubicBezier.easeOut = function() {
-    return new CubicBezier(0, 0, 0.58, 1.0);
-};
-
-/**
- * easeInOut bezier
- * @returns {Object} Returns easeInOut bezier Object
- * @method CubicBezier#easeInOut
- */
-CubicBezier.easeInOut = function() {
-    return new CubicBezier(0.42, 0, 0.58, 1.0);
-};
 
 });

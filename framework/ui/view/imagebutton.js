@@ -10,9 +10,12 @@ var ImageView = require("./imageview");
  * @extends Button
  */
 Class.define("framework.ui.view.ImageButton", ImageView, {
+    /**
+     * Constructor
+     * @method ImageButton#initialize
+     */
     initialize: function() {
         ImageView.prototype.initialize.apply(this, arguments);
-
         this._normalImage = this._image;
         this._pressedSrc = null;
         this._pressedImage = null;
@@ -25,6 +28,10 @@ Class.define("framework.ui.view.ImageButton", ImageView, {
         this.addEventListener("touchend", this.onTouchEndFunc = this.onTouchEnd.bind(this));
     },
 
+    /**
+     * Destructor
+     * @method ImageButton#destroy
+     */
     destroy: function() {
         this._normalImage = null;
         this._pressedImage = null;

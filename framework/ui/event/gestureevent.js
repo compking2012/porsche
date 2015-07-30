@@ -10,11 +10,13 @@ var UIEvent = require("./uievent");
  * @extends UIEvent
  */
 Class.define("framework.ui.event.GestureEvent", UIEvent, {
-    initialize: function() {
+    /**
+     * Constructor
+     * @method GestureEvent#initialize
+     */
+    initialize: function(/*options*/) {
         UIEvent.prototype.initialize.apply(this, arguments);
     }
-
-
 }, module);
 
 });

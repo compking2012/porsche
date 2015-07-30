@@ -5,13 +5,28 @@ var Class = require("../../class");
 var EventEmitter = require("../../eventemitter");
 
 Class.define("framework.ui.animation.AnimationGroup", EventEmitter, {
+    /**
+     * Constructor
+     * @method AnimationGroup#initialize
+     */
     initialize: function(view) {
         EventEmitter.prototype.initialize.apply(this, arguments);
         this._animations = [];
         this._view = view;
         this._type = "parallel";
-
+        this._completed = 0;
         this._animationCompleteFunc = [];
+    },
+
+    /**
+     * Destructor
+     * @method AnimationGroup#destroy
+     */
+    destroy: function() {
+        this._animations = null;
+        this._view = null;
+        this._animationCompleteFunc = null;
+        EventEmitter.prototype.destroy.apply(this, arguments);
     },
 
     get type() {

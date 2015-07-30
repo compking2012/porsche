@@ -5,9 +5,22 @@ var Class = require("../../class");
 var Animation = require("./animation");
 
 Class.define("framework.ui.animation.FrameAnimation", Animation, {
+    /**
+     * Constructor
+     * @method FrameAnimation#initialize
+     */
     initialize: function(/*view*/) {
         Animation.prototype.initialize.apply(this, arguments);
         this._frames = {};
+    },
+
+    /**
+     * Destructor
+     * @method FrameAnimation#destroy
+     */
+    destroy: function() {
+        this._frames = null;
+        Animation.prototype.destroy.apply(this, arguments);
     },
 
     get frames() {

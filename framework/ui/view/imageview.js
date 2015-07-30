@@ -11,6 +11,10 @@ var View = require("./view");
  * @extends View
  **/
 Class.define("framework.ui.view.ImageView", View, {
+    /**
+     * Constructor
+     * @method ImageView#initialize
+     */
     initialize: function(src) {
         View.prototype.initialize.apply(this, arguments);
         this._offsetX = 0;
@@ -20,6 +24,10 @@ Class.define("framework.ui.view.ImageView", View, {
         this.src = src;
     },
 
+    /**
+     * Destructor
+     * @method ImageView#destroy
+     */
     destroy: function() {
         this._image = null;
         View.prototype.destroy.apply(this, arguments);

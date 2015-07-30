@@ -8,9 +8,17 @@ var Class = require("./class");
  * @class YObject
  */
 Class.define("framework.YObject", {
+    /**
+     * Constructor
+     * @method YObject#initialize
+     */
     initialize: function() {
     },
 
+    /**
+     * Destructor
+     * @method YObject#destroy
+     */
     destroy: function() {
     },
 

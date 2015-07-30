@@ -11,6 +11,10 @@ var Event = require("./event");
  * @extends Event
  */
 Class.define("framework.ui.event.UIEvent", Event, {
+    /**
+     * Constructor
+     * @method TouchEvent#initialize
+     */
     initialize: function(/*options*/) {
         Event.prototype.initialize.apply(this, arguments);
         this._propagation = true;

@@ -10,10 +10,20 @@ var YObject = require("../../yobject");
  * @extends YObject
  */
 Class.define("framework.ui.event.Event", YObject, {
+    /**
+     * Constructor
+     * @method Event#initialize
+     */
     initialize: function(options) {
+        YObject.prototype.initialize.apply(this, arguments);
         this._target = options.target !== undefined ? options.target : null;
         this._type = options.type !== undefined ? options.type : "";
         this._timestamp = options.timestamp !== undefined ? options.timestamp : 0;
+    },
+
+    destroy: function() {
+        this._target = null;
+        YObject.prototype.destroy.apply(this, arguments);
     },
 
     /**

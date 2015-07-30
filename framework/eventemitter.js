@@ -10,11 +10,19 @@ var YObject = require("./yobject");
  * @extends YObject
  */
 Class.define("framework.EventEmitter", YObject, {
+    /**
+     * Constructor
+     * @method EventEmitter#initialize
+     */
     initialize: function() {
         YObject.prototype.initialize.apply(this, arguments);
         this.events = {};
     },
 
+    /**
+     * Destructor
+     * @method EventEmitter#destroy
+     */
     destroy: function() {
         for (var key in this.events) {
             if (this.events.hasOwnProperty(key)) {

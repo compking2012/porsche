@@ -1,19 +1,21 @@
 define(function(require, exports, module) {
 
 "use strict";
-var View = require("./view");
 var Class = require("../../class");
+var View = require("./view");
 
 /**
- * textview widget, place some text in it.
+ * TextView widget
  * @class TextView
- * @param text {string} text value
  * @extends View
- **/
+ */
 Class.define("framework.ui.view.TextView", View, {
+    /**
+     * Constructor
+     * @method TextView#initialize
+     */
     initialize: function() {
         View.prototype.initialize.apply(this, arguments);
-
         this._text = "";
         this._fontFamily = "sans-serif";
         this._fontSize = "18px";
@@ -32,10 +34,18 @@ Class.define("framework.ui.view.TextView", View, {
     },
 
     /**
+     * Destructor
+     * @method TextView#destroy
+     */
+    destroy: function() {
+
+    },
+
+    /**
      * @name TextView#text
-     * @type {string}
+     * @type {String}
      * @description Text content.
-     **/
+     */
     get text() {
         return this._text;
     },
@@ -46,9 +56,9 @@ Class.define("framework.ui.view.TextView", View, {
 
     /**
      * @name TextView#fontFamily
-     * @type {string}
+     * @type {String}
      * @description The text Font-family, such as sans-serif.
-     **/
+     */
     get fontFamily() {
         return this._fontFamily;
     },
@@ -59,9 +69,9 @@ Class.define("framework.ui.view.TextView", View, {
 
     /**
      * @name TextView#fontSize
-     * @type {string}
+     * @type {String}
      * @description The text fontSize, such as "12px".
-     **/
+     */
     set fontSize(value) {
         this._fontSize = value;
     },
@@ -71,9 +81,9 @@ Class.define("framework.ui.view.TextView", View, {
     },
 
     /**
-     * @type {string}
-     * @description The text fontWeight, such as "bold".
      * @name TextView#fontWeight
+     * @type {String}
+     * @description The text fontWeight, such as "bold".
      */
     get fontWeight() {
         return this._fontWeight;
@@ -84,9 +94,9 @@ Class.define("framework.ui.view.TextView", View, {
     },
 
     /**
-     * @type {string}
-     * @description The text fontStyle, such as "normal".
      * @name TextView#fontStyle
+     * @type {String}
+     * @description The text fontStyle, such as "normal".
      */
     get fontStyle() {
         return this._fontStyle;
@@ -97,9 +107,9 @@ Class.define("framework.ui.view.TextView", View, {
     },
 
     /**
-     * @type {string}
-     * @description The text align.value text align, value is : "left", "center", "right".
      * @name TextView#align
+     * @type {String}
+     * @description The text align.value text align, value is : "left", "center", "right".
      */
     get textAlign() {
         return this._textAlign;
@@ -110,9 +120,9 @@ Class.define("framework.ui.view.TextView", View, {
     },
 
     /**
-     * @type {string}
-     * @description The text align.value text align, value is : "left", "center", "right".
      * @name TextView#align
+     * @type {String}
+     * @description The text align.value text align, value is : "left", "center", "right".
      */
     get textVAlign() {
         return this._textVAlign;
@@ -123,9 +133,9 @@ Class.define("framework.ui.view.TextView", View, {
     },
 
     /**
-     * @type {string}
-     * @description The text font baseline, such as "middle", "top", "bottom".
      * @name TextView#baseLine
+     * @type {String}
+     * @description The text font baseline, such as "middle", "top", "bottom".
      */
     get baseline() {
         return this._baseline;
@@ -137,9 +147,9 @@ Class.define("framework.ui.view.TextView", View, {
 
     /**
      * @name TextView#color
-     * @type {string}
+     * @type {String}
      * @description The text color.
-     **/
+     */
     get color() {
         return this._color;
     },
@@ -150,9 +160,9 @@ Class.define("framework.ui.view.TextView", View, {
 
     /**
      * @name TextView#multiLine
-     * @type {bool}
+     * @type {Boolean}
      * @description The text draw mode, one line or multiline.
-     **/
+     */
     get multiLine() {
         return this._multiLine;
     },

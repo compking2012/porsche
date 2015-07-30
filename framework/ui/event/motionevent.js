@@ -10,11 +10,13 @@ var UIEvent = require("./uievent");
  * @extends UIEvent
  */
 Class.define("framework.ui.event.MotionEvent", UIEvent, {
-    initialize: function() {
+    /**
+     * Constructor
+     * @method Motion#initialize
+     */
+    initialize: function(/*options*/) {
         UIEvent.prototype.initialize.apply(this, arguments);
     }
-
-
 }, module);
 
 });

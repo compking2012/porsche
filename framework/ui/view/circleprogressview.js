@@ -5,16 +5,24 @@ var Class = require("../../class");
 var ProgressView = require("./progressview");
 
 /**
- * Circle progress widget
+ * Circle Progress widget
  * @class CircleProgressView
- * @extends View
+ * @extends ProgressView
  */
 Class.define("framework.ui.view.CircleProgressView", ProgressView, {
+    /**
+     * Constructor
+     * @method CircleProgressView#initialize
+     */
     initialize: function() {
         ProgressView.prototype.initialize.apply(this, arguments);
         this._lineWidth = 1;
     },
 
+    /**
+     * Destructor
+     * @method CircleProgressView#destroy
+     */
     destroy: function() {
         ProgressView.prototype.destroy.apply(this, arguments);
     },

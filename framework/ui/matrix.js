@@ -12,9 +12,11 @@ var YObject = require("../yobject");
 Class.define("framework.ui.Matrix", YObject, {
     /**
      * Constructor
+     * @method Matrix#initialize
      * @param {Matrix} matrix the matrix array.
      */
     initialize: function(matrix) {
+        YObject.prototype.initialize.apply(this, arguments);
         if (!matrix) {
             matrix = [
                 [1, 0, 0],

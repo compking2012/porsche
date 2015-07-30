@@ -11,6 +11,10 @@ var GradientParser = require("../../util/gradientparser");
  * @extends View
  */
 Class.define("framework.ui.view.ProgressView", View, {
+    /**
+     * Constructor
+     * @method ProgressView#initialize
+     */
     initialize: function() {
         View.prototype.initialize.apply(this, arguments);
         this._value = 0;
@@ -19,6 +23,10 @@ Class.define("framework.ui.view.ProgressView", View, {
         this._foreground = "#00D4A0";
     },
 
+    /**
+     * Destructor
+     * @method ProgressView#destroy
+     */
     destroy: function() {
         this._backgroundObject = null;
         this._foregroundObject = null;

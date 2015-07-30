@@ -10,11 +10,26 @@ var InputEvent = require("./inputevent");
  * @extends InputEvent
  */
 Class.define("framework.ui.event.TouchEvent", InputEvent, {
+    /**
+     * Constructor
+     * @method TouchEvent#initialize
+     */
     initialize: function(options) {
         InputEvent.prototype.initialize.apply(this, arguments);
         this._touches = options.touches !== undefined ? options.touches : [];
         this._targetTouches = [];
         this._changedTouches = [];
+    },
+
+    /**
+     * Destructor
+     * @method TouchEvent#destroy
+     */
+    destroy: function() {
+        this._touches = null;
+        this._targetTouches = null;
+        this._changedTouches = null;
+        InputEvent.prototype.destroy.apply(this, arguments);
     },
 
     /**

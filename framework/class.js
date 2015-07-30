@@ -1,6 +1,7 @@
 define(function(require, exports, module) {
 
 "use strict";
+
 function Class() {}
 (function() {
     Class.define = function(myClass, superClass, definition, module) {
@@ -25,6 +26,18 @@ function Class() {}
             });
             newClass.prototype.constructor = newClass;
         }
+
+        if (definition.hasOwnProperty("static")) {
+            var statics = definition.static;
+            delete definition.static;
+            for (var key in statics) {
+                if (statics.hasOwnProperty(key)) {
+                    var pd = Object.getOwnPropertyDescriptor(statics, key);
+                    Object.defineProperty(newClass, key, pd);
+                }
+            }
+        }
+
         for (var property in definition) {
             if (definition.hasOwnProperty(property)) {
                 var pd = Object.getOwnPropertyDescriptor(definition, property);
@@ -33,7 +46,12 @@ function Class() {}
         }
         newClass.prototype.super = superClass ? superClass.prototype : null;
         newClass.prototype.className = myClass;
-        module.exports = newClass;
+
+        if (module !== null) {
+            module.exports = newClass;
+        } else {
+            return newClass;
+        }
     };
 }).apply(Class.prototype);
 module.exports = Class;

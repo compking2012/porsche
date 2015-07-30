@@ -10,6 +10,10 @@ var UIEvent = require("./uievent");
  * @extends UIEvent
  */
 Class.define("framework.ui.event.InputEvent", UIEvent, {
+    /**
+     * Constructor
+     * @method InputEvent#initialize
+     */
     initialize: function(/*options*/) {
         UIEvent.prototype.initialize.apply(this, arguments);
         this._ctrlKey = false;

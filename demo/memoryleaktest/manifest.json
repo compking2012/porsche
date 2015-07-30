@@ -1,0 +1,7 @@
+{
+    "appName": "MemoryLeakTest",
+    "debug": {
+        "paintFPS": true,
+        "dirtyRect": true
+    }
+}

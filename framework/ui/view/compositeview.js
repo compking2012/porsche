@@ -24,7 +24,7 @@ Class.define("framework.ui.view.CompositeView", View, {
 
     /**
      * Destructor that destroy a composite view
-     * @method CompositeView#initialize
+     * @method CompositeView#destroy
      */
     destroy: function() {
         this._children = null;
