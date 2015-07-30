@@ -121,39 +121,47 @@ Class.define("framework.EventEmitter", YObject, {
                 }
             }
         }
+    },
+
+    /**
+     * Alias of addEventListener
+     * @method EventEmitter#emit
+     */
+    emit: function(event) {
+        this.dispatchEvent.call(this, event);
+    },
+
+    /**
+     * Alias of addEventListener
+     * @method EventEmitter#addListener
+     */
+    addListener: function(event, handler) {
+        this.addEventListener.call(this, event, handler);
+    },
+
+    /**
+     * Alias of removeEventListener
+     * @method EventEmitter#removeListener
+     */
+    removeListener: function(event, handler) {
+        this.removeEventListener.call(this, event, handler);
+    },
+
+    /**
+     * Alias of addEventListener
+     * @method EventEmitter#on
+     */
+    on: function(event, handler) {
+        this.addEventListener.call(this, event, handler);
+    },
+
+    /**
+     * Alias of removeEventListener
+     * @method EventEmitter#off
+     */
+    off: function(event, handler) {
+        this.removeEventListener.call(this, event, handler);
     }
 }, module);
-
-var EventEmitter = module.exports;
-
-/**
- * Alias of addEventListener
- * @method EventEmitter#on
- */
-EventEmitter.prototype.on = EventEmitter.prototype.addEventListener;
-
-/**
- * Alias of addEventListener
- * @method EventEmitter#emit
- */
-EventEmitter.prototype.emit = EventEmitter.prototype.dispatchEvent;
-
-/**
- * Alias of addEventListener
- * @method EventEmitter#addListener
- */
-EventEmitter.prototype.addListener = EventEmitter.prototype.addEventListener;
-
-/**
- * Alias of removeEventListener
- * @method EventEmitter#removeListener
- */
-EventEmitter.prototype.removeListener = EventEmitter.prototype.removeEventListener;
-
-/**
- * Alias of removeEventListener
- * @method EventEmitter#off
- */
-EventEmitter.prototype.off = EventEmitter.prototype.removeEventListener;
 
 });

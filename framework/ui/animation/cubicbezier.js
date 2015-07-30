@@ -9,7 +9,7 @@ var YObject = require("../../yobject");
  * @class CubicBezier
  * @extends YObject
  */
-Class.define("com.yunos.ui.animation.CubicBezier", YObject, {
+Class.define("framework.ui.animation.CubicBezier", YObject, {
     /**
      * Constructor
      * @method CubicBezier#initialize

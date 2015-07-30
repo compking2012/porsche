@@ -4,7 +4,7 @@ define(function(require, exports, module) {
 var Class = require("../../class");
 var YObject = require("../../yobject");
 
-Class.define("com.yunos.ui.animation.SharedTimer", YObject, {
+Class.define("framework.ui.animation.SharedTimer", YObject, {
     /**
      * Constructor
      * @method SharedTimer#initialize
