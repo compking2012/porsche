@@ -1,0 +1,198 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <title>Porsche.js API documentation: Source: ui/view/imagebutton.js</title>
+
+    <script src="scripts/prettify/prettify.js"> </script>
+    <script src="scripts/prettify/lang-css.js"> </script>
+    <!--[if lt IE 9]>
+      <script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+    <![endif]-->
+    <link type="text/css" rel="stylesheet" href="styles/prettify-tomorrow.css">
+    <link href="styles/bootstrap.css" rel="stylesheet">
+    <link href="styles/docs.css" rel="stylesheet">
+    <link href="styles/bootstrap-custom.css" rel="stylesheet">
+    <link href="http://netdna.bootstrapcdn.com/font-awesome/3.2.1/css/font-awesome.css" rel="stylesheet">
+    <script src="http://netdna.bootstrapcdn.com/twitter-bootstrap/2.3.2/js/bootstrap.min.js"></script>
+  </head>
+  <body>
+    <header class="header navbar navbar-inverse">
+      <div class="navbar-inner">
+        <div class="container-fluid">
+          <a class="brand" href="#"><strong>Porsche.js</strong> API documentation</a>
+        </div>
+      </div>
+    </header>
+
+    <div class="container-fluid">
+      <div class="row-fluid">
+          <div class="span4">
+              <h2><a href="index.html">Index</a></h2><div class="well well-small"><ul class="nav nav-list"><li class="nav-header">Classes</li><li><a href="App.html"><i class="icon-shield" style="color: #0186d1"></i> App</a></li><li><a href="Button.html"><i class="icon-shield" style="color: #0186d1"></i> Button</a></li><li><a href="CheckBox.html"><i class="icon-shield" style="color: #0186d1"></i> CheckBox</a></li><li><a href="CircleProgressView.html"><i class="icon-shield" style="color: #0186d1"></i> CircleProgressView</a></li><li><a href="CompositeView.html"><i class="icon-shield" style="color: #0186d1"></i> CompositeView</a></li><li><a href="CubicBezier.html"><i class="icon-shield" style="color: #0186d1"></i> CubicBezier</a></li><li><a href="Event.html"><i class="icon-shield" style="color: #0186d1"></i> Event</a></li><li><a href="EventEmitter.html"><i class="icon-shield" style="color: #0186d1"></i> EventEmitter</a></li><li><a href="GestureEvent.html"><i class="icon-shield" style="color: #0186d1"></i> GestureEvent</a></li><li><a href="ImageButton.html"><i class="icon-shield" style="color: #0186d1"></i> ImageButton</a></li><li><a href="ImageView.html"><i class="icon-shield" style="color: #0186d1"></i> ImageView</a></li><li><a href="InputEvent.html"><i class="icon-shield" style="color: #0186d1"></i> InputEvent</a></li><li><a href="Matrix.html"><i class="icon-shield" style="color: #0186d1"></i> Matrix</a></li><li><a href="Point.html"><i class="icon-shield" style="color: #0186d1"></i> Point</a></li><li><a href="ProgressView.html"><i class="icon-shield" style="color: #0186d1"></i> ProgressView</a></li><li><a href="Rectangle.html"><i class="icon-shield" style="color: #0186d1"></i> Rectangle</a></li><li><a href="Switch.html"><i class="icon-shield" style="color: #0186d1"></i> Switch</a></li><li><a href="TextView.html"><i class="icon-shield" style="color: #0186d1"></i> TextView</a></li><li><a href="TouchEvent.html"><i class="icon-shield" style="color: #0186d1"></i> TouchEvent</a></li><li><a href="UIEvent.html"><i class="icon-shield" style="color: #0186d1"></i> UIEvent</a></li><li><a href="View.html"><i class="icon-shield" style="color: #0186d1"></i> View</a></li><li><a href="Window.html"><i class="icon-shield" style="color: #0186d1"></i> Window</a></li><li><a href="YObject.html"><i class="icon-shield" style="color: #0186d1"></i> YObject</a></li></ul></div>
+          </div>
+
+          <div class="span8">
+              <h1 class="page-header">Source: ui/view/imagebutton.js</h1>
+              
+
+
+    
+    <section>
+        <article>
+            <pre class="prettyprint source"><code>define(function(require, exports, module) {
+
+"use strict";
+var Class = require("../../class");
+var ImageView = require("./imageview");
+
+/**
+ * ImageButton widget
+ * @class ImageButton
+ * @extends Button
+ */
+Class.define("framework.ui.view.ImageButton", ImageView, {
+    /**
+     * Constructor
+     * @method ImageButton#initialize
+     */
+    initialize: function() {
+        ImageView.prototype.initialize.apply(this, arguments);
+        this._normalImage = this._image;
+        this._pressedSrc = null;
+        this._pressedImage = null;
+        this._focusedSrc = null;
+        this._focusedImage = null;
+        this._disabledSrc = null;
+        this._disabledImage = null;
+
+        this.addEventListener("touchstart", this.onTouchStartFunc = this.onTouchStart.bind(this));
+        this.addEventListener("touchend", this.onTouchEndFunc = this.onTouchEnd.bind(this));
+    },
+
+    /**
+     * Destructor
+     * @method ImageButton#destroy
+     */
+    destroy: function() {
+        this._normalImage = null;
+        this._pressedImage = null;
+        this._focusedImage = null;
+        this._disabledImage = null;
+        this.removeEventListener("touchstart", this.onTouchStartFunc);
+        this.onTouchStartFunc = null;
+        this.removeEventListener("touchend", this.onTouchEndFunc);
+        this.onTouchEndFunc = null;
+        ImageView.prototype.destroy.apply(this, arguments);
+    },
+
+    get pressedSrc() {
+        return this._pressedSrc;
+    },
+
+    set pressedSrc(value) {
+        if (!value) {
+            return;
+        }
+        this._pressedSrc = value;
+        var onLoadFunc = null;
+        this._pressedImage = new Image();
+        this._pressedImage.addEventListener("load", onLoadFunc = function() {
+            this._pressedImage.removeEventListener("load", onLoadFunc);
+            this.invalidate();
+        }.bind(this));
+        this._pressedImage.src = value;
+        if (this._pressedImage.complete) {
+            this._pressedImage.removeEventListener("load", onLoadFunc);
+            this.invalidate();
+        }
+    },
+
+    get focusedSrc() {
+        return this._focusedSrc;
+    },
+
+    set focusedSrc(value) {
+        if (!value) {
+            return;
+        }
+        this._focusedSrc = value;
+        var onLoadFunc = null;
+        this._focusedImage = new Image();
+        this._focusedImage.addEventListener("load", onLoadFunc = function() {
+            this._focusedImage.removeEventListener("load", onLoadFunc);
+            this.invalidate();
+        }.bind(this));
+        this._focusedImage.src = value;
+        if (this._focusedImage.complete) {
+            this._focusedImage.removeEventListener("load", onLoadFunc);
+            this.invalidate();
+        }
+    },
+
+    get disabledSrc() {
+        return this._disabledSrc;
+    },
+
+    set disabledSrc(value) {
+        if (!value) {
+            return;
+        }
+        this._disabledSrc = value;
+        var onLoadFunc = null;
+        this._disabledImage = new Image();
+        this._disabledImage.addEventListener("load", onLoadFunc = function() {
+            this._disabledImage.removeEventListener("load", onLoadFunc);
+            this.invalidate();
+        }.bind(this));
+        this._disabledImage.src = value;
+        if (this._disabledImage.complete) {
+            this._disabledImage.removeEventListener("load", onLoadFunc);
+            this.invalidate();
+        }
+    },
+
+    draw: function(context) {
+        if (!this._enabled) {
+            this._image = this._disabledImage;
+        } else if (this._selected) {
+            this._image = this._pressedImage;
+        } else {
+            this._image = this._normalImage;
+        }
+
+        if (this._image === null) {
+            return;
+        }
+        ImageView.prototype.draw.call(this, context);
+    },
+
+    onTouchStart: function() {
+        this.invalidate();
+    },
+
+    onTouchEnd: function() {
+        this.invalidate();
+    }
+}, module);
+
+});
+</code></pre>
+        </article>
+    </section>
+
+
+
+
+          </div>
+      </div>
+
+        <br clear="both">
+
+      <footer>
+        Documentation generated by <a href="https://github.com/jsdoc3/jsdoc">JSDoc 3.3.2</a> on Thu Aug 06 2015 14:19:20 GMT+0800 (CST)
+        <br>
+      </footer>
+      <script> prettyPrint(); </script>
+    </div>
+  </body>
+</html>

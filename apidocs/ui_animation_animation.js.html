@@ -1,0 +1,298 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <title>Porsche.js API documentation: Source: ui/animation/animation.js</title>
+
+    <script src="scripts/prettify/prettify.js"> </script>
+    <script src="scripts/prettify/lang-css.js"> </script>
+    <!--[if lt IE 9]>
+      <script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+    <![endif]-->
+    <link type="text/css" rel="stylesheet" href="styles/prettify-tomorrow.css">
+    <link href="styles/bootstrap.css" rel="stylesheet">
+    <link href="styles/docs.css" rel="stylesheet">
+    <link href="styles/bootstrap-custom.css" rel="stylesheet">
+    <link href="http://netdna.bootstrapcdn.com/font-awesome/3.2.1/css/font-awesome.css" rel="stylesheet">
+    <script src="http://netdna.bootstrapcdn.com/twitter-bootstrap/2.3.2/js/bootstrap.min.js"></script>
+  </head>
+  <body>
+    <header class="header navbar navbar-inverse">
+      <div class="navbar-inner">
+        <div class="container-fluid">
+          <a class="brand" href="#"><strong>Porsche.js</strong> API documentation</a>
+        </div>
+      </div>
+    </header>
+
+    <div class="container-fluid">
+      <div class="row-fluid">
+          <div class="span4">
+              <h2><a href="index.html">Index</a></h2><div class="well well-small"><ul class="nav nav-list"><li class="nav-header">Classes</li><li><a href="App.html"><i class="icon-shield" style="color: #0186d1"></i> App</a></li><li><a href="Button.html"><i class="icon-shield" style="color: #0186d1"></i> Button</a></li><li><a href="CheckBox.html"><i class="icon-shield" style="color: #0186d1"></i> CheckBox</a></li><li><a href="CircleProgressView.html"><i class="icon-shield" style="color: #0186d1"></i> CircleProgressView</a></li><li><a href="CompositeView.html"><i class="icon-shield" style="color: #0186d1"></i> CompositeView</a></li><li><a href="CubicBezier.html"><i class="icon-shield" style="color: #0186d1"></i> CubicBezier</a></li><li><a href="Event.html"><i class="icon-shield" style="color: #0186d1"></i> Event</a></li><li><a href="EventEmitter.html"><i class="icon-shield" style="color: #0186d1"></i> EventEmitter</a></li><li><a href="GestureEvent.html"><i class="icon-shield" style="color: #0186d1"></i> GestureEvent</a></li><li><a href="ImageButton.html"><i class="icon-shield" style="color: #0186d1"></i> ImageButton</a></li><li><a href="ImageView.html"><i class="icon-shield" style="color: #0186d1"></i> ImageView</a></li><li><a href="InputEvent.html"><i class="icon-shield" style="color: #0186d1"></i> InputEvent</a></li><li><a href="Matrix.html"><i class="icon-shield" style="color: #0186d1"></i> Matrix</a></li><li><a href="Point.html"><i class="icon-shield" style="color: #0186d1"></i> Point</a></li><li><a href="ProgressView.html"><i class="icon-shield" style="color: #0186d1"></i> ProgressView</a></li><li><a href="Rectangle.html"><i class="icon-shield" style="color: #0186d1"></i> Rectangle</a></li><li><a href="Switch.html"><i class="icon-shield" style="color: #0186d1"></i> Switch</a></li><li><a href="TextView.html"><i class="icon-shield" style="color: #0186d1"></i> TextView</a></li><li><a href="TouchEvent.html"><i class="icon-shield" style="color: #0186d1"></i> TouchEvent</a></li><li><a href="UIEvent.html"><i class="icon-shield" style="color: #0186d1"></i> UIEvent</a></li><li><a href="View.html"><i class="icon-shield" style="color: #0186d1"></i> View</a></li><li><a href="Window.html"><i class="icon-shield" style="color: #0186d1"></i> Window</a></li><li><a href="YObject.html"><i class="icon-shield" style="color: #0186d1"></i> YObject</a></li></ul></div>
+          </div>
+
+          <div class="span8">
+              <h1 class="page-header">Source: ui/animation/animation.js</h1>
+              
+
+
+    
+    <section>
+        <article>
+            <pre class="prettyprint source"><code>define(function(require, exports, module) {
+
+"use strict";
+var Class = require("../../class");
+var EventEmitter = require("../../eventemitter");
+var CubicBezier = require("./cubicbezier");
+var SharedTimer = require("./sharedtimer");
+
+Class.define("framework.ui.animation.Animation", EventEmitter, {
+    /**
+     * Constructor
+     * @method Animation#initialize
+     */
+    initialize: function(view) {
+        EventEmitter.prototype.initialize.apply(this, arguments);
+        this._view = view;
+        this._from = {};
+        this._to = {};
+        this._duration = 0;
+        this._repeat = 1;
+        this._easing = "ease";
+        this._animating = false;
+        this._paused = false;
+
+        this._beziers = CubicBezier.ease();
+        this._timer = SharedTimer.getInstance();
+        this._iteration = 0;
+        this._animators = [];
+        this._startTime = 0;
+        this._currentTime = 0;
+    },
+
+    /**
+     * Destructor
+     * @method Animation#destroy
+     */
+    destroy: function() {
+        this._view = null;
+        this._from = null;
+        this._to = null;
+        this._beziers.destroy();
+        this._beziers = null;
+        this._timer.destroy();
+        this._timer = null;
+        this._animators = null;
+        EventEmitter.prototype.destroy.apply(this, arguments);
+    },
+
+    get from() {
+        return this._from;
+    },
+
+    set from(value) {
+        this._from = value;
+    },
+
+    get to() {
+        return this._to;
+    },
+
+    set to(value) {
+        this._to = value;
+    },
+
+    get duration() {
+        return this._duration;
+    },
+
+    set duration(value) {
+        this._duration = value;
+    },
+
+    get repeat() {
+        return this._repeat;
+    },
+
+    set repeat(value) {
+        this._repeat = value;
+    },
+
+    get easing() {
+        return this._easing;
+    },
+
+    set easing(value) {
+        this._easing = value;
+    },
+
+    get animating() {
+        return this._animating;
+    },
+
+    get paused() {
+        return this._paused;
+    },
+
+    start: function() {
+        if (this._currentTime === 0) {
+            this._beziers = this.getCubicBezier();
+            this._animators = [];
+            for (var key in this._from) {
+                if (this._from.hasOwnProperty(key) &amp;&amp; this._to.hasOwnProperty(key)) {
+                    this._animators.push({
+                        key: key,
+                        from: this._from[key],
+                        to: this._to[key],
+                        current: 0
+                    });
+                }
+            }
+        }
+
+        var length = this._animators.length;
+        for (var i = 0; i &lt; length; i++) {
+            var animator = this._animators[i];
+            this._view[animator.key] = this._currentTime === 0 ? animator.from : animator.current;
+        }
+
+        this._animating = true;
+
+        this._startTime = new Date().getTime();
+        var remainTime = this._duration - this._currentTime;
+        this._timer.addTimer(this._onTimerFunc = function() {
+            var time = new Date().getTime() - this._startTime;
+            this._currentTime = time;
+            if (time >= remainTime) {
+                this.animate(0, this._duration);
+                this._iteration++;
+                if (this._repeat === 0) {
+                    this._startTime = new Date().getTime();
+                    remainTime = this._duration;
+                    this.dispatchEvent("iteration", this._iteration);
+                } else {
+                    if (this._iteration &lt; this._repeat) {
+                        this._startTime = new Date().getTime();
+                        remainTime = this._duration;
+                        this.dispatchEvent("iteration", this._iteration);
+                    } else {
+                        this.stop();
+                        this.dispatchEvent("complete");
+                    }
+                }
+                return;
+            }
+            this.animate(0, time);
+        }.bind(this), 16);
+    },
+
+    stop: function() {
+        this._timer.removeTimer(this._onTimerFunc);
+        this._animators = [];
+        this._currentTime = 0;
+        this._startTime = 0;
+        this._animating = false;
+    },
+
+    pause: function() {
+        this._timer.removeTimer(this._onTimerFunc);
+        this._animating = false;
+        this._paused = true;
+    },
+
+    resume: function() {
+        this._paused = false;
+        this.start();
+    },
+
+    animate: function(startTime, time) {
+        var delta = this._beziers.getPointForT((time - startTime) / this._duration).y;
+        var length = this._animators.length;
+        for (var i = 0; i &lt; length; i++) {
+            var animator = this._animators[i];
+            var key = animator.key;
+            var from = animator.from;
+            var to = animator.to;
+            if (typeof from === "string") {
+                from = from.toLowerCase();
+            }
+            if (typeof to === "string") {
+                to = to.toLowerCase();
+            }
+            if (typeof from === "number" &amp;&amp; typeof to === "number") {
+                var offset = from + delta * (to - from);
+                this._view[key] = offset;
+                animator.current = offset;
+            } else if (/^[rgb|rgba|#]/.test(from) &amp;&amp; /^[rgb|rgba|#]/.test(to)) {
+                var fromColor = this.getColor(from);
+                var toColor = this.getColor(to);
+                var offset = "rgb(" + parseInt(fromColor.r + delta * (toColor.r - fromColor.r)) + "," + 
+                    parseInt(fromColor.g + delta * (toColor.g - fromColor.g)) + "," + 
+                    parseInt(fromColor.b + delta * (toColor.b - fromColor.b)) + ")";
+                this._view[key] = offset;
+                animator.current = offset;
+            }
+        }
+    },
+
+    getCubicBezier: function() {
+        if (this._easing === "ease") {
+            return CubicBezier.ease();
+        } else if (this._easing === "linear") {
+            return CubicBezier.linear();
+        } else if (this._easing === "easeIn") {
+            return CubicBezier.easeIn();
+        } else if (this._easing === "easeOut") {
+            return CubicBezier.easeOut();
+        } else if (this._easing === "easeInOut") {
+            return CubicBezier.easeInOut();
+        } else {
+            var group = this._easing.match(/cubic-bezier\(\s*([\d.]+),\s*([\d.]+),\s*([\d.]+),\s*([\d.]+)\s*\)/);
+            return new CubicBezier(parseFloat(group[1]), parseFloat(group[2]), parseFloat(group[3]), parseFloat(group[4]));
+        }
+    },
+
+    getColor: function(color) {
+        var rgbReg = /rgb\((\d+),(\d+),(\d+)\)/;
+        var rgbaReg = /rgba\((\d+),(\d+),(\d+),(\d+)\)/;
+        var shortHexReg = /#([0-9a-f])([0-9a-f])([0-9a-f])/;
+        var longHexReg = /#([0-9a-f]{2})([0-9a-f]{2})([0-9a-f]{2})/;
+        var group = null;
+        if (/^rgb/.test(color)) {
+            group = color.match(rgbReg);
+            return {r: parseInt(group[1]), g: parseInt(group[2]), b: parseInt(group[3])};
+        } else if (/^rgba/.test(color)) {
+            group = color.match(rgbaReg);
+            return {r: parseInt(group[1]), g: parseInt(group[2]), b: parseInt(group[3]), a: parseInt(group[4])};
+        } else if (/^#/.test(color) &amp;&amp; color.length === 4) {
+            group = color.match(shortHexReg);
+            return {r: parseInt(group[1], 16), g: parseInt(group[2], 16), b: parseInt(group[3], 16)};
+        } else if (/^#/.test(color) &amp;&amp; color.length === 7) {
+            group = color.match(longHexReg);
+            return {r: parseInt(group[1], 16), g: parseInt(group[2], 16), b: parseInt(group[3], 16), a: parseInt(group[4], 16)};
+        }
+    }
+}, module);
+
+});
+</code></pre>
+        </article>
+    </section>
+
+
+
+
+          </div>
+      </div>
+
+        <br clear="both">
+
+      <footer>
+        Documentation generated by <a href="https://github.com/jsdoc3/jsdoc">JSDoc 3.3.2</a> on Thu Aug 06 2015 14:19:20 GMT+0800 (CST)
+        <br>
+      </footer>
+      <script> prettyPrint(); </script>
+    </div>
+  </body>
+</html>
