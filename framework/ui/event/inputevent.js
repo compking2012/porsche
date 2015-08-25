@@ -24,7 +24,7 @@ Class.define("framework.ui.event.InputEvent", UIEvent, {
 
     /**
      * Get the state of the Ctrl key.
-     * @method InputEvent#ctrlKey
+     * @name InputEvent#ctrlKey
      * @type {Boolean}
      * @description true if the Ctrl key modifier is activated; otherwise false.
      **/
@@ -34,7 +34,7 @@ Class.define("framework.ui.event.InputEvent", UIEvent, {
 
     /**
      * Get the state of the Alt key.
-     * @method InputEvent#altKey
+     * @name InputEvent#altKey
      * @type {Boolean}
      **/
     get altKey() {
@@ -43,7 +43,7 @@ Class.define("framework.ui.event.InputEvent", UIEvent, {
 
     /**
      * Get the state of the Shift key.
-     * @method InputEvent#shiftKey
+     * @name InputEvent#shiftKey
      * @type {Boolean}
      * @description true if the Shift key modifier is activated; otherwise false.
      **/
@@ -53,7 +53,7 @@ Class.define("framework.ui.event.InputEvent", UIEvent, {
 
     /**
      * Get the state of the Meta key.
-     * @method InputEvent#metaKey
+     * @name InputEvent#metaKey
      * @type {Boolean}
      * @description true if the meta (Meta) key modifier is activated; otherwise false. On some platforms this attribute may map to a differently-named key modifier.
      **/

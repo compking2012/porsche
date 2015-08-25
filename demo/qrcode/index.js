@@ -2,7 +2,7 @@ define(function(require, exports, module) {
 
 "use strict";
 
-var MyApp = require("./myapp4");
+var MyApp = require("./myapp");
 new MyApp();
 
 });

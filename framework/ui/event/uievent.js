@@ -7,13 +7,13 @@ var Event = require("./event");
 
 /**
  * Base event from all UI elements
- * @class UIevent
+ * @class UIEvent
  * @extends Event
  */
 Class.define("framework.ui.event.UIEvent", Event, {
     /**
      * Constructor
-     * @method TouchEvent#initialize
+     * @method UIEvent#initialize
      */
     initialize: function(/*options*/) {
         Event.prototype.initialize.apply(this, arguments);
@@ -22,9 +22,9 @@ Class.define("framework.ui.event.UIEvent", Event, {
     },
 
     /**
-     * @type {bool}
+     * @name UIEvent#propagation
+     * @type {Boolean}
      * @description whether stop propagation
-     * @name Event#propagation
      * @private
      */
     get propagation() {
@@ -32,9 +32,9 @@ Class.define("framework.ui.event.UIEvent", Event, {
     },
 
     /**
-     * @type {bool}
+     * @name UIEvent#defaultBehavior
+     * @type {Boolean}
      * @description whether is send event to system
-     * @name Event#preventDefault
      * @private
      */
     get defaultBehavior() {
@@ -42,16 +42,16 @@ Class.define("framework.ui.event.UIEvent", Event, {
     },
 
     /**
-     * @description Stop the propagation of this event to its parent.
-     * @method UIevent#stopPropagation
+     * Stop the propagation of this event to its parent.
+     * @method UIEvent#stopPropagation
      */
     stopPropagation: function() {
         this._propagation = false;
     },
 
     /**
-     * @description Prevent this event back to system.
-     * @method UIevent#preventDefault
+     * Prevent this event back to system.
+     * @method UIEvent#preventDefault
      */
     preventDefault: function() {
         this._defaultBehavior = false;

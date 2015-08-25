@@ -208,7 +208,7 @@ Class.define("framework.ui.view.View", EventEmitter, {
 
     /**
      * @name View#background
-     * @type {string}
+     * @type {String}
      * @description the background color, gradient or image for this view.
      */
     get background() {

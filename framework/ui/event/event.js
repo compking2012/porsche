@@ -21,6 +21,10 @@ Class.define("framework.ui.event.Event", YObject, {
         this._timestamp = options.timestamp !== undefined ? options.timestamp : 0;
     },
 
+    /**
+     * Destructor
+     * @method Event#destroy
+     */
     destroy: function() {
         this._target = null;
         YObject.prototype.destroy.apply(this, arguments);
@@ -47,7 +51,7 @@ Class.define("framework.ui.event.Event", YObject, {
     },
 
     /**
-     * @method Event#timestamp
+     * @name Event#timestamp
      * @type {Number}
      * @description the timestamp of this event.
      * @readonly

@@ -7,10 +7,9 @@ var Window = require("../ui/view/window");
 var WindowManager = require("../ui/windowmanager");
 
 /**
- * Base App, a new app must extend this class
+ * Base App class
  * @class App
  * @extends EventEmitter
- * @param {String} appName name of current app
  * @abstract
  */
 Class.define("framework.app.App", EventEmitter, {

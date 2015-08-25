@@ -35,9 +35,9 @@ Class.define("framework.EventEmitter", YObject, {
 
     /**
      * Invoke each of the listeners in order with the supplied arguments.
-     * @param {String} event - event name
-     * @param {...*} argN - the supplied arguments
      * @method EventEmitter#dispatchEvent
+     * @param {String} event - event name
+     * @param {...*} args - the supplied arguments
      */
     dispatchEvent: function(event) {
         if (!this.events[event]) {
@@ -57,9 +57,9 @@ Class.define("framework.EventEmitter", YObject, {
 
     /**
      * Adds a listener to the end of the listeners array for the specified event.
+     * @method EventEmitter#addEventListener
      * @param {String} event - event name
      * @param {function} listener - a listener for the specified event
-     * @method EventEmitter#addEventListener
      */
     addEventListener: function(event, handler) {
         if (!handler instanceof Function) {

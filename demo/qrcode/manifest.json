@@ -1,0 +1,7 @@
+{
+    "appName": "QRCode",
+    "debug": {
+        "paintFPS": true,
+        "dirtyRect": true
+    }
+}

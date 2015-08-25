@@ -25,7 +25,7 @@ Class.define("framework.YObject", {
     /**
      * Returns true if value equals this object.
      * @method YObject#equals
-     * @param {Object} comparable value
+     * @param {Object} value The object which compared to self.
      * @return {Boolean}
      */
     equals: function(value) {
