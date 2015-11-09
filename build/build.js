@@ -8,7 +8,7 @@ var dstDir = process.argv[4];
 
 prepare();
 
-var dirInfo = scanFolder(srcDir);
+var dirInfo = scanFolder(dstDir);
 
 var files = dirInfo.files;
 var contentPrefix = "define(function(require, exports, module) {\r\n";
@@ -28,6 +28,10 @@ function prepare() {
     String.prototype.endsWith = function(suffix) {
         return this.indexOf(suffix, this.length - suffix.length) !== -1;
     };
+
+    String.prototype.startsWith = function(prefix) {
+        return this.indexOf(prefix, 0) !== -1;
+    };
 }
 
 function scanFolder(path) {
@@ -38,18 +42,12 @@ function scanFolder(path) {
             var tmpPath = path + "/" + item;
             var stats = fs.statSync(tmpPath);
             if (stats.isDirectory()) {
-                if (item === dstDir) {
-                    return;
-                }
-                if (tmpPath === srcDir + "/framework/vendor") {
+                if (tmpPath.startsWith(dstDir + "/framework/vendor")) {
                     return;
                 }
                 walk(tmpPath, fileList);
             } else {
                 if (!tmpPath.endsWith(".js")) {
-                    return;
-                }
-                if (item === "build.js") {
                     return;
                 }
                 fileList.push(tmpPath);
