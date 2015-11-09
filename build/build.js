@@ -2,13 +2,9 @@
 var fs = require("fs");
 var path = require("path");
 
-var mode = process.argv[2];     // "h5" or "node"
-var srcDir = ".";
-var dstDir = "out";
-
-if (!fs.existsSync(dstDir)) {
-    fs.mkdirSync(dstDir);
-}
+var mode = process.argv[2];     // "h5", "node", "h5-es6" or "node-es6"
+var srcDir = process.argv[3];
+var dstDir = process.argv[4];
 
 prepare();
 
@@ -24,7 +20,6 @@ files.forEach(function(file) {
         content = contentPrefix + content + contentPostfix;
     }
     var dstFile = path.join(dstDir, file);
-    console.log("dstFile: ", dstFile);
     fs.writeFileSync(dstFile, content);
 });
 
