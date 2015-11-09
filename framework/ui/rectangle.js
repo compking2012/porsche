@@ -1,5 +1,3 @@
-define(function(require, exports, module) {
-
 "use strict";
 var Class = require("../class");
 var YObject = require("../yobject");
@@ -9,7 +7,7 @@ var YObject = require("../yobject");
  * @class Rectangle
  * @extends YObject
  */
-Class.define("framework.ui.Rectangle", YObject, {
+Class.define("{Framework}.ui.Rectangle", YObject, {
     /**
      * Constructor
      * @method Button#initialize
@@ -181,6 +179,14 @@ Class.define("framework.ui.Rectangle", YObject, {
             rect.top >= this._top && rect.bottom <= this._top + this._height;
     },
 
+    containsXY: function(x, y) {
+        return x >= this._left && y >= this._top && x <= this._left + this._width && y <= this._top + this._height;
+    },
+
+    containsPoint: function(point) {
+        return point.x >= this._left && point.y >= this._top && point.x <= this._left + this._width && point.y <= this._top + this._height;
+    },
+
     /**
      * copy this rectangle to a new object.
      * @return {Rectangle} rect other rectangle to be checked with.
@@ -205,5 +211,3 @@ Class.define("framework.ui.Rectangle", YObject, {
         return this.className + "(" + this._left + "," + this._top + " - " + this._width + "," + this._height + ")";
     }
 }, module);
-
-});

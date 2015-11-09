@@ -1,5 +1,3 @@
-define(function(require, exports, module) {
-
 "use strict";
 var Class = require("../class");
 var UIEvent = require("./uievent");
@@ -9,7 +7,7 @@ var UIEvent = require("./uievent");
  * @class GestureEvent
  * @extends UIEvent
  */
-Class.define("framework.ui.event.MotionEvent", UIEvent, {
+Class.define("{Framework}.ui.event.MotionEvent", UIEvent, {
     /**
      * Constructor
      * @method Motion#initialize
@@ -18,5 +16,3 @@ Class.define("framework.ui.event.MotionEvent", UIEvent, {
         UIEvent.prototype.initialize.apply(this, arguments);
     }
 }, module);
-
-});

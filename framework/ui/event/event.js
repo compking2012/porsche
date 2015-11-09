@@ -1,5 +1,3 @@
-define(function(require, exports, module) {
-
 "use strict";
 var Class = require("../../class");
 var YObject = require("../../yobject");
@@ -9,16 +7,18 @@ var YObject = require("../../yobject");
  * @class Event
  * @extends YObject
  */
-Class.define("framework.ui.event.Event", YObject, {
+Class.define("{Framework}.ui.event.Event", YObject, {
     /**
      * Constructor
      * @method Event#initialize
      */
     initialize: function(options) {
         YObject.prototype.initialize.apply(this, arguments);
+
         this._target = options.target !== undefined ? options.target : null;
         this._type = options.type !== undefined ? options.type : "";
         this._timestamp = options.timestamp !== undefined ? options.timestamp : 0;
+        this._immediatePropagation = true;
     },
 
     /**
@@ -27,7 +27,16 @@ Class.define("framework.ui.event.Event", YObject, {
      */
     destroy: function() {
         this._target = null;
+
         YObject.prototype.destroy.apply(this, arguments);
+    },
+
+    /**
+     * @description Stop the propagation of this event to its parent.
+     * @method Event#stopImmediatePropagation
+     */
+    stopImmediatePropagation: function() {
+        this._immediatePropagation = false;
     },
 
     /**
@@ -60,5 +69,3 @@ Class.define("framework.ui.event.Event", YObject, {
         return this._timestamp;
     }
 }, module);
-
-});

@@ -1,18 +1,17 @@
-define(function(require, exports, module) {
-
 "use strict";
 var Class = require("../../class");
 var EventEmitter = require("../../eventemitter");
 var CubicBezier = require("./cubicbezier");
 var SharedTimer = require("./sharedtimer");
 
-Class.define("framework.ui.animation.Animation", EventEmitter, {
+Class.define("{Framework}.ui.animation.Animation", EventEmitter, {
     /**
      * Constructor
      * @method Animation#initialize
      */
     initialize: function(view) {
         EventEmitter.prototype.initialize.apply(this, arguments);
+
         this._view = view;
         this._from = {};
         this._to = {};
@@ -43,6 +42,7 @@ Class.define("framework.ui.animation.Animation", EventEmitter, {
         this._timer.destroy();
         this._timer = null;
         this._animators = null;
+
         EventEmitter.prototype.destroy.apply(this, arguments);
     },
 
@@ -233,5 +233,3 @@ Class.define("framework.ui.animation.Animation", EventEmitter, {
         }
     }
 }, module);
-
-});

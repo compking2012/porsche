@@ -1,5 +1,3 @@
-define(function(require, exports, module) {
-
 "use strict";
 var Class = require("./class");
 
@@ -7,7 +5,7 @@ var Class = require("./class");
  * Base class for all the class
  * @class YObject
  */
-Class.define("framework.YObject", {
+Class.define("{Framework}.YObject", {
     /**
      * Constructor
      * @method YObject#initialize
@@ -46,5 +44,3 @@ Class.define("framework.YObject", {
         return this.className;
     }
 }, module);
-
-});

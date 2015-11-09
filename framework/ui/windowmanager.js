@@ -1,74 +1,87 @@
-define(function(require, exports, module) {
-
 "use strict";
 var Class = require("../class");
 var EventEmitter = require("../eventemitter");
 var TouchEvent = require("./event/touchevent");
 var Point = require("./point");
-var Rectangle = require("./rectangle");
 
-Class.define("framework.ui.WindowManager", EventEmitter, {
-    initialize: function(mainWindow, width, height) {
-        EventEmitter.prototype.initialize.call(this);
-        this._screenWidth = width;
-        this._screenHeight = height;
+Class.define("{Framework}.ui.WindowManager", EventEmitter, {
+    initialize: function(inputService, renderService) {
+        EventEmitter.prototype.initialize.apply(this, arguments);
+
+        this._inputService = inputService;
+        this._renderService = renderService;
+
+        this._windows = [];
+        this._dialog = null;
 
         this._redraw = false;
         this._redrawTime = 0;
-        this._position = new Point(0, 0);
+        this._timer = 0;
         this._timestamp = 0;
-        this._screen = new Rectangle(0, 0, this._screenWidth, this._screenHeight);
 
-        this._canvasIdGen = 0;
-        this._canvasStack = [];
-        this._canvasStack.push(this.createCanvas(this._screenWidth, this._screenHeight));
-        this._context = this.getContext(this._canvasStack[0]);
-        this._canvasStack[0].addEventListener("touchstart", this.onTouchStartFunc = this.processRawInputEvent.bind(this));
-        this._canvasStack[0].addEventListener("touchmove", this.onTouchMoveFunc = this.processRawInputEvent.bind(this));
-        this._canvasStack[0].addEventListener("touchend", this.onTouchEndFunc = this.processRawInputEvent.bind(this));
-        this._canvasStack[0].addEventListener("touchcancel", this.onTouchCancelFunc = this.processRawInputEvent.bind(this));
-        this._canvasStack[0].addEventListener("click", this.onClickFunc = this.processRawInputEvent.bind(this));
-        this._mainWindow = mainWindow;
-        this._mainWindow._windowManager = this;
-        this._mainWindow.width = width;
-        this._mainWindow.height = height;
+        this._activeView = null;
+        this._touchstartPoint = new Point(0, 0);
+        this._lastTouchPoint = new Point(0, 0);
+        this._identifier = 0;
+
+        this._screenCanvas = this._renderService.createCanvas(this._renderService.getWidth(), this._renderService.getHeight());
+        this._screenContext = this.getContext(this._screenCanvas);
+
+        this._inputService.addEventListener("input", this._processTouchEventFunc = this.processTouchEvent.bind(this));
     },
 
     destroy: function() {
-        this._mainWindow = null;
-        this._mainWindow._windowManager = null;
-        this._canvasStack[0].removeEventListener("touchstart", this.onTouchStartFunc);
-        this.onTouchStart = null;
-        this._canvasStack[0].removeEventListener("touchmove", this.onTouchMoveFunc);
-        this.onTouchMoveFunc = null;
-        this._canvasStack[0].removeEventListener("touchend", this.onTouchEndFunc);
-        this.onTouchEndFunc = null;
-        this._canvasStack[0].removeEventListener("touchcancel", this.onTouchCancelFunc);
-        this.onTouchCancelFunc = null;
-        this._canvasStack[0].removeEventListener("click", this.onClickFunc);
-        this.onClickFunc = null;
-        this._position.destroy();
-        this._position = null;
-        this._screen.destroy();
-        this._screen = null;
-        this._canvasStack = null;
-        this._context = null;
+        this._touchstartPoint.destroy();
+        this._touchstartPoint = null;
+
+        this._lastTouchPoint.destroy();
+        this._lastTouchPoint = null;
+
+        this._activeView = null;
+
+        this._screenContext = null;
+        this.destroyCanvas(this._screenCanvas);
+        this._screenCanvas = null;
+        this._windows = null;
+
+        this._renderService.destroy();
+        this._renderService = null;
+
+        this._inputService.removeEventListener("input", this._processTouchEventFunc);
+        this._processTouchEventFunc = null;
+        this._inputService.destroy();
+        this._inputService = null;
+
+        EventEmitter.prototype.destroy.apply(this, arguments);
     },
 
-    createCanvas: function(width, height) {
-        width = this._screenWidth;
-        height = this._screenHeight;
-        this._canvasIdGen++;
-        var canvas = document.querySelector("canvas");
-        return canvas;
+    addWindow: function(win) {
+        win.windowManager = this;
+        this._windows.push(win);
+
+        if (this._windows.length === 1) {
+            this._mainWindow = win;
+        }
     },
 
-    destroyCanvas: function(canvas) {
+    showDialog: function(dialog) {
+        if (this._dialog !== null) {
+            return;
+        }
+        dialog.windowManager = this;
+        this._dialog = dialog;
+        this.draw();
+    },
+
+    closeDialog: function() {
+        this._dialog.windowManager = null;
+        this._dialog = null;
+        this._mainWindow.invalidate();
     },
 
     getContext: function(canvas) {
         var context = canvas.getContext("2d");
-        context.clearRect(0, 0, this._screenWidth/*canvas.width*/, this._screenHeight/*canvas.height*/);
+        context.clearRect(0, 0, canvas.width, canvas.height);
 
         if (context.roundRect === undefined) {
             context.constructor.prototype.roundRect = function(x, y, width, height, radius) {
@@ -117,133 +130,167 @@ Class.define("framework.ui.WindowManager", EventEmitter, {
             return;
         }
 
-        if (new Date().getTime() - this._redrawTime < 16) {
+        var time = new Date().getTime();
+        if (time >= this._redrawTime && time - this._redrawTime < 16) {
             return;
         }
 
         this._redraw = true;
-        var animationFunc = null;
-        window.requestAnimationFrame(animationFunc = function() {
+        this._renderService.requestRenderFrame(function() {
             this._redraw = false;
             this._redrawTime = new Date().getTime();
-            this._mainWindow.paint(this._context);
-            if (window.debugPaintFPS) {
-                if (!window.debugTimestamp) {
-                    window.debugTimestamp = new Date().getTime();
-                    window.debugFrameCount = 0;
+
+            this._mainWindow.paint(this._screenContext);
+            if (this._dialog !== null) {
+                this._dialog.paint(this._screenContext);
+            }
+
+            if (global.FXDebugPaintFPS) {
+                if (!global.FXTimestamp) {
+                    global.FXTimestamp = new Date().getTime();
+                    global.FXFrameCount = 0;
                 }
-                window.debugFrameCount++;
-                var time = new Date().getTime() - window.debugTimestamp;
+                global.FXFrameCount++;
+                var time = new Date().getTime() - global.FXTimestamp;
                 if (time >= 1000) {
-                    console.log("[Debug] PaintFPS: ", Math.round(window.debugFrameCount / time * 1000));
-                    window.debugFrameCount = 0;
-                    window.debugTimestamp = 0;
+                    console.log("[FX]PaintFPS: ", Math.round(global.FXFrameCount / time * 1000));
+                    global.FXFrameCount = 0;
+                    global.FXTimestamp = 0;
                 }
             }
-            window.requestAnimationFrame(animationFunc);
+            this._renderService.render();
         }.bind(this));
     },
 
-    processRawInputEvent: function(e) {
-        if (e.type === "touchstart") {
-            this.onTouchStart(e);
-        } else if (e.type === "touchend") {
-            this.onTouchEnd(e);
-        } else if (e.type === "touchmove") {
-            this.onTouchMove(e);
-        } else if (e.type === "click") {
-            this.onClick(e);
-        }
-    },
-
-    onTouchStart: function(e) {
-        this._position.assign(e.touches[0].clientX, e.touches[0].clientY);
-        var view = this._mainWindow.findViewAtPoint(this._position);
-        if (view === null) {
-            return;
-        }
-        this._mainWindow._activeView = view;
-
-        this.dispatchTouchEvent(e);
-    },
-
-    onTouchMove: function(e) {
-        this._position.assign(e.touches[0].clientX, e.touches[0].clientY);
-        if (this._mainWindow._activeView === null) {
-            return;
-        }
-
-        this.dispatchTouchEvent(e);
-    },
-
-    onTouchEnd: function(e) {
-        if (this._mainWindow._activeView === null) {
-            return;
-        }
-
-        this.dispatchTouchEvent(e);
-    },
-
-    onClick: function(e) {
-        if (this._mainWindow._activeView === null) {
-            return;
-        }
-
-        var touchEvent = new TouchEvent({
-            type: e.type,
-            timestamp: new Date().getTime(),
-            target: this._mainWindow._activeView
-        });
-
+    processTouchEvent: function(type, e) {
         // TODO: currently, only support single-touch, multi-touch is not supported yet.
         // TODO: only assign touches[], need plus changedTouches[] and targetTouches[]
-        var view = this._mainWindow._activeView;
-        do {
-            view.getCurrentOffset(touchEvent);
-            view.dispatchEvent(e.type, touchEvent);
-            view = view.parent;
-        } while (touchEvent.propagation && view !== null);
-        touchEvent.destroy();
-    },
 
-    dispatchTouchEvent: function(e) {
-        var touchEvent = new TouchEvent({
-            type: e.type,
-            timestamp: new Date().getTime(),
-            target: this._mainWindow._activeView,
-            touches: [],
-            changedTouches: [],
-            targetTouches: []
-        });
-
-        var types = ["touches", "targetTouches", "changedTouches"];
-        for (var k = 0; k < types.length; k++) {
-            var length = e[types[k]].length;
-            for (var i = 0; i < length; i++) {
-                var touch = {
-                    identifier: 0,
-                    screenX: e[types[k]][i].clientX,
-                    screenY: e[types[k]][i].clientY,
-                    clientX: e[types[k]][i].clientX,
-                    clientY: e[types[k]][i].clientY,
-                    pageX: e[types[k]][i].clientX,
-                    pageY: e[types[k]][i].clientY,
-                    target: this._mainWindow._activeView
-                };
-                touchEvent[types[k]].push(touch);
+        var activeWindow = this._dialog !== null ? this._dialog : this._mainWindow;
+        var view = null;
+        if (type === "touchstart") {
+            this._touchstartPoint.assign(e.x, e.y);
+            this._touchTimestamp = new Date().getTime();
+            view = activeWindow.findViewAtPoint(this._touchstartPoint);
+            this._identifier = 0;
+        } else if (type === "touchmove") {
+            if (e.x === this._lastTouchPoint.x && e.y === this._lastTouchPoint.y) {
+                return;
+            }
+            this._lastTouchPoint.assign(e.x, e.y);
+            view = activeWindow.findViewAtPoint(this._lastTouchPoint);
+            if (this._activeView !== view) {
+                return;
+            }
+        } else if (type === "touchend") {
+            view = activeWindow.findViewAtPoint(this._lastTouchPoint);
+            if (this._activeView !== view) {
+                // FIXME: touchcancel is incorrect
+                type = "touchcancel";
             }
         }
 
-        // TODO: currently, only support single-touch, multi-touch is not supported yet.
-        // TODO: only assign touches[], need plus changedTouches[] and targetTouches[]
-        var view = this._mainWindow._activeView;
+        if (view === null) {
+            return;
+        }
+
+        if (type !== "touchcancel") {
+            this._activeView = view;
+        }
+
+        var x = e.x;
+        var y = e.y;
+        var dx = x;
+        var dy = y;
+        var v = this._activeView;
+        while (v !== null) {
+            dx -= v.left;
+            dy -= v.top;
+            v = v.parent;
+        }
+        x = dx;
+        y = dy;
+
+        var touches = [];
+        var targetTouches = [];
+        var changedTouches = [];
+        if (type === "touchstart" || type === "touchmove") {
+            touches.push({
+                identifier: this._identifier,
+                screenX: e.x,
+                screenY: e.y,
+                clientX: x,
+                clientY: y,
+                pageX: x,
+                pageY: y,
+                target: this._activeView
+            });
+
+            targetTouches.push({
+                identifier: this._identifier,
+                screenX: e.x,
+                screenY: e.y,
+                clientX: x,
+                clientY: y,
+                pageX: x,
+                pageY: y,
+                target: this._activeView
+            });
+        }
+        changedTouches.push({
+            identifier: this._identifier,
+            screenX: e.x,
+            screenY: e.y,
+            clientX: x,
+            clientY: y,
+            pageX: x,
+            pageY: y,
+            target: this._activeView
+        });
+
+        var touchEvent = new TouchEvent({
+            type: type,
+            timestamp: new Date().getTime(),
+            target: this._activeView,
+            touches: touches,
+            targetTouches: targetTouches,
+            changedTouches: changedTouches
+        });
+
+        this.chainedDispatchEvent(this._activeView, touchEvent);
+    },
+
+    chainedDispatchEvent: function(view, event) {
         do {
-            view.getCurrentOffset(touchEvent);
-            view.dispatchEvent(e.type, touchEvent);
+            view.dispatchEvent(event.type, event);
+
+            // FIXME: use instanceof instead
+            if (event.toString() === "{Framework}.ui.event.TouchEvent") {
+                var length = event.touches.length;
+                for (var i = 0; i < length; i++) {
+                    event.touches[i].clientX += view.left;
+                    event.touches[i].clientY += view.top;
+                    event.touches[i].pageX += view.left;
+                    event.touches[i].pageY += view.top;
+                }
+
+                length = event.targetTouches.length;
+                for (var i = 0; i < length; i++) {
+                    event.targetTouches[i].clientX += view.left;
+                    event.targetTouches[i].clientY += view.top;
+                    event.targetTouches[i].pageX += view.left;
+                    event.targetTouches[i].pageY += view.top;
+                }
+
+                length = event.changedTouches.length;
+                for (var i = 0; i < length; i++) {
+                    event.changedTouches[i].clientX += view.left;
+                    event.changedTouches[i].clientY += view.top;
+                    event.changedTouches[i].pageX += view.left;
+                    event.changedTouches[i].pageY += view.top;
+                }
+            }
             view = view.parent;
-        } while (touchEvent.propagation && view !== null);
-        touchEvent.destroy();
+        } while (event.propagation && view !== null);
     }
 }, module);
-
-});

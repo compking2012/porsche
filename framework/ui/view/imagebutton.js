@@ -1,5 +1,3 @@
-define(function(require, exports, module) {
-
 "use strict";
 var Class = require("../../class");
 var ImageView = require("./imageview");
@@ -9,14 +7,14 @@ var ImageView = require("./imageview");
  * @class ImageButton
  * @extends Button
  */
-Class.define("framework.ui.view.ImageButton", ImageView, {
+Class.define("{Framework}.ui.view.ImageButton", ImageView, {
     /**
      * Constructor
      * @method ImageButton#initialize
      */
     initialize: function() {
         ImageView.prototype.initialize.apply(this, arguments);
-        this._normalImage = this._image;
+
         this._pressedSrc = null;
         this._pressedImage = null;
         this._focusedSrc = null;
@@ -33,7 +31,6 @@ Class.define("framework.ui.view.ImageButton", ImageView, {
      * @method ImageButton#destroy
      */
     destroy: function() {
-        this._normalImage = null;
         this._pressedImage = null;
         this._focusedImage = null;
         this._disabledImage = null;
@@ -49,21 +46,15 @@ Class.define("framework.ui.view.ImageButton", ImageView, {
     },
 
     set pressedSrc(value) {
-        if (!value) {
-            return;
+        if (value === null) {
+            this._pressedSrc = null;
+            this._pressedImage = null;
+        } else {
+            this._pressedSrc = value;
+            this._pressedImage = new Canvas.Image();
+            this._pressedImage.src = fs.readFileSync(value);
         }
-        this._pressedSrc = value;
-        var onLoadFunc = null;
-        this._pressedImage = new Image();
-        this._pressedImage.addEventListener("load", onLoadFunc = function() {
-            this._pressedImage.removeEventListener("load", onLoadFunc);
-            this.invalidate();
-        }.bind(this));
-        this._pressedImage.src = value;
-        if (this._pressedImage.complete) {
-            this._pressedImage.removeEventListener("load", onLoadFunc);
-            this.invalidate();
-        }
+        this.invalidate();
     },
 
     get focusedSrc() {
@@ -71,21 +62,15 @@ Class.define("framework.ui.view.ImageButton", ImageView, {
     },
 
     set focusedSrc(value) {
-        if (!value) {
-            return;
+        if (value === null) {
+            this._focusedSrc = null;
+            this._focusedImage = null;
+        } else {
+            this._focusedSrc = value;
+            this._focusedImage = new Canvas.Image();
+            this._focusedImage.src = fs.readFileSync(value);
         }
-        this._focusedSrc = value;
-        var onLoadFunc = null;
-        this._focusedImage = new Image();
-        this._focusedImage.addEventListener("load", onLoadFunc = function() {
-            this._focusedImage.removeEventListener("load", onLoadFunc);
-            this.invalidate();
-        }.bind(this));
-        this._focusedImage.src = value;
-        if (this._focusedImage.complete) {
-            this._focusedImage.removeEventListener("load", onLoadFunc);
-            this.invalidate();
-        }
+        this.invalidate();
     },
 
     get disabledSrc() {
@@ -93,36 +78,30 @@ Class.define("framework.ui.view.ImageButton", ImageView, {
     },
 
     set disabledSrc(value) {
-        if (!value) {
-            return;
+        if (value === null) {
+            this._disabledSrc = null;
+            this._disabledImage = null;
+        } else {
+            this._disabledSrc = value;
+            this._disabledImage = new Canvas.Image();
+            this._disabledImage.src = fs.readFileSync(value);
         }
-        this._disabledSrc = value;
-        var onLoadFunc = null;
-        this._disabledImage = new Image();
-        this._disabledImage.addEventListener("load", onLoadFunc = function() {
-            this._disabledImage.removeEventListener("load", onLoadFunc);
-            this.invalidate();
-        }.bind(this));
-        this._disabledImage.src = value;
-        if (this._disabledImage.complete) {
-            this._disabledImage.removeEventListener("load", onLoadFunc);
-            this.invalidate();
-        }
+        this.invalidate();
     },
 
     draw: function(context) {
+        var image = null;
         if (!this._enabled) {
-            this._image = this._disabledImage;
+            image = this._disabledSrc !== null ? this._disabledImage : this._image;
         } else if (this._selected) {
-            this._image = this._pressedImage;
+            image = this._pressedImage !== null ? this._pressedImage : this._image;
         } else {
-            this._image = this._normalImage;
+            image = this._image;
         }
-
-        if (this._image === null) {
+        if (image === null) {
             return;
         }
-        ImageView.prototype.draw.call(this, context);
+        this.drawImage(context, image);
     },
 
     onTouchStart: function() {
@@ -133,5 +112,3 @@ Class.define("framework.ui.view.ImageButton", ImageView, {
         this.invalidate();
     }
 }, module);
-
-});

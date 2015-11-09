@@ -1,5 +1,3 @@
-define(function(require, exports, module) {
-
 "use strict";
 var Class = require("../../class");
 var ProgressView = require("./progressview");
@@ -9,13 +7,14 @@ var ProgressView = require("./progressview");
  * @class CircleProgressView
  * @extends ProgressView
  */
-Class.define("framework.ui.view.CircleProgressView", ProgressView, {
+Class.define("{Framework}.ui.view.CircleProgressView", ProgressView, {
     /**
      * Constructor
      * @method CircleProgressView#initialize
      */
     initialize: function() {
         ProgressView.prototype.initialize.apply(this, arguments);
+
         this._lineWidth = 1;
     },
 
@@ -81,5 +80,3 @@ Class.define("framework.ui.view.CircleProgressView", ProgressView, {
         context.stroke();
     }
 }, module);
-
-});

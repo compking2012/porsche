@@ -1,5 +1,3 @@
-define(function(require, exports, module) {
-
 "use strict";
 var Class = require("../../class");
 var View = require("./view");
@@ -10,13 +8,14 @@ var GradientParser = require("../../util/gradientparser");
  * @class ProgressView
  * @extends View
  */
-Class.define("framework.ui.view.ProgressView", View, {
+Class.define("{Framework}.ui.view.ProgressView", View, {
     /**
      * Constructor
      * @method ProgressView#initialize
      */
     initialize: function() {
         View.prototype.initialize.apply(this, arguments);
+
         this._value = 0;
         this._lineWidth = 5;
         this._background = "#C8C8C8";
@@ -30,6 +29,7 @@ Class.define("framework.ui.view.ProgressView", View, {
     destroy: function() {
         this._backgroundObject = null;
         this._foregroundObject = null;
+
         View.prototype.destroy.apply(this, arguments);
     },
 
@@ -44,7 +44,6 @@ Class.define("framework.ui.view.ProgressView", View, {
             this._foregroundObject = linear;
         } else if (/^radial\-gradient/.test(this._foreground)) {
             var radial = GradientParser.parse(this._foreground);
-            console.log("radial:", radial);
             this._foregroundObject = null;
         } else {
             this._foregroundObject = null;
@@ -53,7 +52,7 @@ Class.define("framework.ui.view.ProgressView", View, {
     },
 
     /**
-     * @name CircleProgressView#lineWidth
+     * @name ProgressView#lineWidth
      * @type {Number}
      * @description the line width of the circle.
      */
@@ -67,7 +66,7 @@ Class.define("framework.ui.view.ProgressView", View, {
     },
 
     /**
-     * @name CircleProgressView#value
+     * @name ProgressView#value
      * @type {Number} the counter between 0 and 1.
      * @description The counter value.
      */
@@ -83,6 +82,7 @@ Class.define("framework.ui.view.ProgressView", View, {
     drawBackground: function(context) {
         var halfHeight = this._height / 2;
 
+        context.save();
         context.lineCap = "round";
         context.lineWidth = this._lineWidth;
         context.beginPath();
@@ -103,11 +103,16 @@ Class.define("framework.ui.view.ProgressView", View, {
             context.strokeStyle = this._background;
         }
         context.stroke();
+        context.restore();
     },
 
     draw: function(context) {
+        if (this._value === 0) {
+            return;
+        }
         var halfHeight = this._height / 2;
 
+        context.save();
         context.lineCap = "round";
         context.lineWidth = this._lineWidth;
         context.beginPath();
@@ -128,7 +133,6 @@ Class.define("framework.ui.view.ProgressView", View, {
             context.strokeStyle = this._foreground;
         }
         context.stroke();
+        context.restore();
     }
 }, module);
-
-});

@@ -1,25 +1,27 @@
-define(function(require, exports, module) {
-
 "use strict";
 var Class = require("../../class");
 var EventEmitter = require("../../eventemitter");
 var Rectangle = require("../rectangle");
-var Point = require("../point");
 var Matrix = require("../matrix");
 var GradientParser = require("../../util/gradientparser");
+var GestureManager = require("../gesture/gesturemanager");
+var Canvas = require("canvas/lib/canvas");
+var fs = require("fs");
 
 /**
  * Base view for all UI elements
  * @class View
  * @extends EventEmitter
  */
-Class.define("framework.ui.view.View", EventEmitter, {
+Class.define("{Framework}.ui.view.View", EventEmitter, {
     /**
      * Constructor that create a view
      * @method View#initialize
      */
     initialize: function() {
         EventEmitter.prototype.initialize.apply(this, arguments);
+
+        // Properties
         this._parent = null;
         this._id = "";
         this._enabled = true;
@@ -29,6 +31,13 @@ Class.define("framework.ui.view.View", EventEmitter, {
         this._top = 0;
         this._width = 0;
         this._height = 0;
+
+        this._absoluteLeft = 0;
+        this._absoluteTop = 0;
+        this._absoluteWidth = 0;
+        this._absoluteHeight = 0;
+
+        this._hasLayout = false;
 
         this._background = "";
         this._opacity = 1;
@@ -48,8 +57,16 @@ Class.define("framework.ui.view.View", EventEmitter, {
         this._originX = 0;
         this._originY = 0;
 
-        this._hardwareAccelerated = false;
+        this._scrollX = 0;
+        this._scrollY = 0;
 
+        this._hardwareAccelerated = false;
+        this._bitmapBuffer = null;
+        this._bitmapBufferContext = null;
+
+        this._touchRegion = null;
+
+        // Private members
         this._selected = false;
         this._focused = false;
 
@@ -57,20 +74,13 @@ Class.define("framework.ui.view.View", EventEmitter, {
         this._dirty = false;
         this._dirtyRect = new Rectangle(0, 0, 0, 0);
         this._boundRect = new Rectangle(0, 0, 0, 0);
-        this._touchstartPoint = new Point(0, 0);
-        this._lastTouchPoint = new Point(0, 0);
-        this._clickTheshold = 250;
-        this._moveTheshold = 15;
 
-        this._canvasArray = [];
-        this._contextArray = [];
-
-        this._eventOffsetX = 0;
-        this._eventOffsetY = 0;
+        this._gestureManager = new GestureManager(this);
 
         this.addEventListener("touchstart", this.handleTouchStartFunc = this.handleTouchStart.bind(this));
         this.addEventListener("touchmove", this.handleTouchMoveFunc = this.handleTouchMove.bind(this));
-        this.addEventListener("touchend", this.handleTouchEndFunc = this.handleTouchEnd.bind(this));
+        this.addEventListener("touchend", this.handleTouchEndCancelFunc = this.handleTouchEndCancel.bind(this));
+        this.addEventListener("touchcancel", this.handleTouchEndCancelFunc);
     },
 
     /**
@@ -78,20 +88,21 @@ Class.define("framework.ui.view.View", EventEmitter, {
      * @method View#destroy
      */
     destroy: function() {
+        this._gestureManager.destroy();
+        this._gestureManager = null;
         this._matrix.destroy();
         this._matrix = null;
         this._dirtyRect.destroy();
         this._dirtyRect = null;
         this._boundRect.destroy();
         this._boundRect = null;
-        this._touchstartPoint.destroy();
-        this._touchstartPoint = null;
         this.removeEventListener("touchstart", this.handleTouchStartFunc);
         this.handleTouchStartFunc = null;
         this.removeEventListener("touchmove", this.handleTouchMoveFunc);
         this.handleTouchMoveFunc = null;
-        this.removeEventListener("touchend", this.handleTouchEndFunc);
-        this.handleTouchEndFunc = null;
+        this.removeEventListener("touchend", this.handleTouchEndCancelFunc);
+        this.removeEventListener("touchcancel", this.handleTouchEndCancelFunc);
+        this.handleTouchEndCancelFunc = null;
         EventEmitter.prototype.destroy.apply(this, arguments);
     },
 
@@ -105,7 +116,12 @@ Class.define("framework.ui.view.View", EventEmitter, {
     },
 
     set id(value) {
+        var oldValue = this._id;
+        if (oldValue === value) {
+            return;
+        }
         this._id = value;
+        this.dispatchEvent("propertychange", "id", oldValue, value);
     },
 
     /**
@@ -118,7 +134,13 @@ Class.define("framework.ui.view.View", EventEmitter, {
     },
 
     set left(value) {
+        var oldValue = this._left;
+        if (oldValue === value) {
+            return;
+        }
         this._left = value;
+        this.relayout(false);
+        this.dispatchEvent("propertychange", "left", oldValue, value);
         this.invalidate();
     },
 
@@ -132,7 +154,13 @@ Class.define("framework.ui.view.View", EventEmitter, {
     },
 
     set top(value) {
+        var oldValue = this._top;
+        if (oldValue === value) {
+            return;
+        }
         this._top = value;
+        this.relayout(false);
+        this.dispatchEvent("propertychange", "top", oldValue, value);
         this.invalidate();
     },
 
@@ -146,7 +174,13 @@ Class.define("framework.ui.view.View", EventEmitter, {
     },
 
     set bottom(value) {
+        var oldValue = this._top + this._height;
+        if (oldValue === value) {
+            return;
+        }
         this._top = value - this._height;
+        this.relayout(false);
+        this.dispatchEvent("propertychange", "bottom", oldValue, value);
         this.invalidate();
     },
 
@@ -160,7 +194,13 @@ Class.define("framework.ui.view.View", EventEmitter, {
     },
 
     set right(value) {
+        var oldValue = this._left + this._width;
+        if (oldValue === value) {
+            return;
+        }
         this._left = value - this._width;
+        this.relayout(false);
+        this.dispatchEvent("propertychange", "right", oldValue, value);
         this.invalidate();
     },
 
@@ -188,7 +228,13 @@ Class.define("framework.ui.view.View", EventEmitter, {
     },
 
     set width(value) {
+        var oldValue = this._width;
+        if (oldValue === value) {
+            return;
+        }
         this._width = value;
+        this.relayout(true);
+        this.dispatchEvent("propertychange", "width", oldValue, value);
         this.invalidate();
     },
 
@@ -202,13 +248,19 @@ Class.define("framework.ui.view.View", EventEmitter, {
     },
 
     set height(value) {
+        var oldValue = this._height;
+        if (oldValue === value) {
+            return;
+        }
         this._height = value;
+        this.relayout(true);
+        this.dispatchEvent("propertychange", "height", oldValue, value);
         this.invalidate();
     },
 
     /**
      * @name View#background
-     * @type {String}
+     * @type {string}
      * @description the background color, gradient or image for this view.
      */
     get background() {
@@ -216,6 +268,10 @@ Class.define("framework.ui.view.View", EventEmitter, {
     },
 
     set background(value) {
+        var oldValue = this._background;
+        if (oldValue === value) {
+            return;
+        }
         this._background = value;
         if (/^linear\-gradient/.test(this._background)) {
             var linear = GradientParser.parse(this._background);
@@ -230,12 +286,13 @@ Class.define("framework.ui.view.View", EventEmitter, {
         } else if (/^url/.test(this._background)) {
             var group = this._background.match(/^url\(([\w|\.|\/|\-]+)\)\s+(\w+)/);
             var url = group[1];
-            var image = new Image();
-            image.src = url;
+            var image = new Canvas.Image();
+            image.src = fs.readFileSync(url);
             this._backgroundObject = image;
         } else {
             this._backgroundObject = null;
         }
+        this.dispatchEvent("propertychange", "background", oldValue, value);
         this.invalidate();
     },
 
@@ -249,7 +306,12 @@ Class.define("framework.ui.view.View", EventEmitter, {
     },
 
     set opacity(value) {
+        var oldValue = this._opacity;
+        if (oldValue === value) {
+            return;
+        }
         this._opacity = value;
+        this.dispatchEvent("propertychange", "opacity", oldValue, value);
         this.invalidate();
     },
 
@@ -263,7 +325,12 @@ Class.define("framework.ui.view.View", EventEmitter, {
     },
 
     set enabled(value) {
+        var oldValue = this._enabled;
+        if (oldValue === value) {
+            return;
+        }
         this._enabled = value;
+        this.dispatchEvent("propertychange", "enabled", oldValue, value);
         this.invalidate();
     },
 
@@ -277,7 +344,12 @@ Class.define("framework.ui.view.View", EventEmitter, {
     },
 
     set visibility(value) {
+        var oldValue = this._visibility;
+        if (oldValue === value) {
+            return;
+        }
         this._visibility = value;
+        this.dispatchEvent("propertychange", "visibility", oldValue, value);
         this.invalidate();
     },
 
@@ -306,8 +378,13 @@ Class.define("framework.ui.view.View", EventEmitter, {
     },
 
     set translationX(value) {
+        var oldValue = this._translationX;
+        if (oldValue === value) {
+            return;
+        }
         this._translationX = value;
         this._matrix.translate(this._translationX, this._translationY);
+        this.dispatchEvent("propertychange", "translationX", oldValue, value);
         this.invalidate();
     },
 
@@ -321,8 +398,13 @@ Class.define("framework.ui.view.View", EventEmitter, {
     },
 
     set translationY(value) {
+        var oldValue = this._translationY;
+        if (oldValue === value) {
+            return;
+        }
         this._translationY = value;
         this._matrix.translate(this._translationX, this._translationY);
+        this.dispatchEvent("propertychange", "translationY", oldValue, value);
         this.invalidate();
     },
 
@@ -400,8 +482,13 @@ Class.define("framework.ui.view.View", EventEmitter, {
     },
 
     set rotationZ(value) {
+        var oldValue = this._rotationZ;
+        if (oldValue === value) {
+            return;
+        }
         this._rotationZ = value;
         this._matrix.rotate(this._rotationZ);
+        this.dispatchEvent("propertychange", "rotationZ", oldValue, value);
         this.invalidate();
     },
 
@@ -438,8 +525,13 @@ Class.define("framework.ui.view.View", EventEmitter, {
     },
 
     set scaleX(value) {
+        var oldValue = this._scaleX;
+        if (oldValue === value) {
+            return;
+        }
         this._scaleX = value;
         this._matrix.scale(this._scaleX, this._scaleY);
+        this.dispatchEvent("propertychange", "scaleX", oldValue, value);
         this.invalidate();
     },
 
@@ -454,8 +546,13 @@ Class.define("framework.ui.view.View", EventEmitter, {
     },
 
     set scaleY(value) {
+        var oldValue = this._scaleY;
+        if (oldValue === value) {
+            return;
+        }
         this._scaleY = value;
         this._matrix.scale(this._scaleX, this._scaleY);
+        this.dispatchEvent("propertychange", "scaleY", oldValue, value);
         this.invalidate();
     },
 
@@ -473,9 +570,14 @@ Class.define("framework.ui.view.View", EventEmitter, {
     },
 
     set scale(value) {
+        var oldValue = {x: this._scaleX, y: this._scaleY};
+        if (oldValue.x === this._scaleX && oldValue.y === this._scaleY) {
+            return;
+        }
         this._scaleX = value.x;
         this._scaleY = value.y;
         this._matrix.scale(this._scaleX, this._scaleY);
+        this.dispatchEvent("propertychange", "scale", oldValue, value);
         this.invalidate();
     },
 
@@ -489,8 +591,13 @@ Class.define("framework.ui.view.View", EventEmitter, {
     },
 
     set originX(value) {
+        var oldValue = this._originX;
+        if (oldValue === value) {
+            return;
+        }
         this._originX = value;
         this._matrix.at(this._originX, this._originY);
+        this.dispatchEvent("propertychange", "originX", oldValue, value);
         this.invalidate();
     },
 
@@ -504,8 +611,13 @@ Class.define("framework.ui.view.View", EventEmitter, {
     },
 
     set originY(value) {
+        var oldValue = this._originY;
+        if (oldValue === value) {
+            return;
+        }
         this._originY = value;
         this._matrix.at(this._originX, this._originY);
+        this.dispatchEvent("propertychange", "originY", oldValue, value);
         this.invalidate();
     },
 
@@ -522,10 +634,65 @@ Class.define("framework.ui.view.View", EventEmitter, {
     },
 
     set origin(value) {
+        var oldValue = {x: this._originX, y: this._originY};
+        if (oldValue.x === this._originX && oldValue.y === this._originY) {
+            return;
+        }
         this._originX = value.x;
         this._originY = value.y;
         this._matrix.at(this._originX, this._originY);
+        this.dispatchEvent("propertychange", "origin", oldValue, value);
         this.invalidate();
+    },
+
+    get scrollX() {
+        return this._scrollX;
+    },
+
+    set scrollX(value) {
+        var oldValue = this._scrollX;
+        if (oldValue === value) {
+            return;
+        }
+        this._scrollX = value;
+        this.dispatchEvent("propertychange", "scrollX", oldValue, value);
+        this.invalidate();
+    },
+
+    get scrollY() {
+        return this._scrollY;
+    },
+
+    set scrollY(value) {
+        var oldValue = this._scrollY;
+        if (oldValue === value) {
+            return;
+        }
+        this._scrollY = value;
+        this.dispatchEvent("propertychange", "scrollY", oldValue, value);
+        this.invalidate();
+    },
+
+    get touchRegion() {
+        return this._touchRegion;
+    },
+
+    set touchRegion(value) {
+        this._touchRegion = value;
+    },
+
+    /**
+     * @name View#hardwareAccelerated
+     * @type {Boolean}
+     * @description Flag indicating whether the view's rendering should be hardware accelerated if possible.
+     */
+    get hardwareAccelerated() {
+        return this._hardwareAccelerated;
+    },
+
+    set hardwareAccelerated(value) {
+        this._hardwareAccelerated = value;
+        this.processHardwareAcceleration();
     },
 
     /**
@@ -534,7 +701,9 @@ Class.define("framework.ui.view.View", EventEmitter, {
      */
     removeFromParent: function() {
         if (this._parent !== null) {
+            this.dispatchEvent("willremove");
             this._parent.removeChild(this);
+            this.dispatchEvent("removed");
             this.invalidate();
         }
         this._parent = null;
@@ -562,26 +731,38 @@ Class.define("framework.ui.view.View", EventEmitter, {
         }
     },
 
-    // FIXME: remove later
-    get uiServer() {
-        if (this.getRoot()._windowManager) {
-            return this.getRoot()._windowManager._uiServer;
-        } else {
-            return null;
+    addGestureRecognizer: function(gestureRecognizer) {
+        this._gestureManager.add(gestureRecognizer);
+    },
+
+    removeGestureRecognizer: function(gestureRecognizer) {
+        this._gestureManager.remove(gestureRecognizer);
+    },
+
+    saveAbsoluteInfo: function() {
+        if (!this._hasLayout) {
+            this._absoluteLeft = this._left;
+            this._absoluteTop = this._top;
+            this._absoluteWidth = this._width;
+            this._absoluteHeight = this._height;
+            this._hasLayout = true;
         }
     },
 
-    /**
-     * @name View#hardwareAccelerated
-     * @type {Boolean}
-     * @description Flag indicating whether the view's rendering should be hardware accelerated if possible.
-     */
-    get hardwareAccelerated() {
-        return this._hardwareAccelerated;
+    resetToNoLayout: function() {
+        if (this._hasLayout) {
+            this._left = this._absoluteLeft;
+            this._top = this._absoluteTop;
+            this._width = this._absoluteWidth;
+            this._height = this._absoluteHeight;
+            this._hasLayout = false;
+        }
     },
 
-    set hardwareAccelerated(value) {
-        this._hardwareAccelerated = value;
+    relayout: function(self) {
+        if (this._parent !== null) {
+            this._parent.needRelayout = true;
+        }
     },
 
     /**
@@ -642,8 +823,26 @@ Class.define("framework.ui.view.View", EventEmitter, {
                 var radial = this._backgroundObject;
                 // context.fillStyle = null;
                 context.fillRect(0, 0, this._width, this._height);
-            } else if (/^conic\-gradient/.test(this._background)) {
-                var conic = this._backgroundObject;
+            } else if (/^conical\-gradient/.test(this._background)) {
+                var conical = this._backgroundObject;
+                // TODO: support conical gradient
+                var r1 = 251, g1 = 27, b1 = 84;
+                var r2 = 57, g2 = 3, b2 = 18;
+                var cx = this._width / 2;
+                var cy = this._height / 2;
+                for (var i = 0; i < 360; i += 0.1) {
+                    var rad = i * 2 * Math.PI / 360;
+                    var p = i / 360;
+                    var r = parseInt(r2 * p + r1 * (1 - p));
+                    var g = parseInt(g2 * p + g1 * (1 - p));
+                    var b = parseInt(b2 * p + b1 * (1 - p));
+                    context.strokeStyle = "rgb(" + r + "," + g + "," + b +")"; //"hsla(" + i + ", 100%, 50%, 1.0)";
+                    context.beginPath();
+                    context.moveTo(cx, cy);
+                    context.lineTo(cx + cx * Math.cos(rad), cy + cy * Math.sin(rad));
+                    context.stroke();
+                }
+                console.log("conical");
             } else if (/^url/.test(this._background)) {
                 var group = this._background.match(/^url\(([\w|\.|\/|\-]+)\)\s+(\w+)/);
                 var repeat = group[2];
@@ -669,10 +868,6 @@ Class.define("framework.ui.view.View", EventEmitter, {
             return;
         }
 
-        if (this._hardwareAccelerated) {
-            context = this._contextArray[0];
-        }
-
         context.restore();
 
         this._dirty = false;
@@ -694,29 +889,9 @@ Class.define("framework.ui.view.View", EventEmitter, {
             return false;
         }
 
-        if (this._hardwareAccelerated) {
-            if (this._canvasArray && this._contextArray.length === 0) {
-                var windowManager = this.getRoot()._windowManager;
-                this._canvasArray.push(windowManager.createCanvas(this._width, this._height));
-                this._contextArray.push(windowManager.getContext(this._canvasArray[0]));
-            }
-        } else {
-            if (this._canvasArray) {
-                // FIXME
-                var length = this._contextArray.length;
-                for (var i = 0; i < length; i++) {
-                    this.getRoot()._windowManager.deleteCanvas(this._canvasArray[i]);
-                }
-                this._canvasArray = [];
-                this._contextArray = [];
-            }
-        }
 
         if (this._hardwareAccelerated) {
-            var matrix = context.getMatrix();
-            context = this._contextArray[0];
-            context.setTransform(matrix.xx, matrix.xy, matrix.yx, matrix.yy, matrix.x0, matrix.y0);
-            context.clearRect(0, 0, this.width, this.height);
+            context = this._bitmapBufferContext;
         }
 
         context.save();
@@ -740,11 +915,11 @@ Class.define("framework.ui.view.View", EventEmitter, {
     },
 
     viewDebug: function(context) {
-        if (this.debugDirtyRect) {
+        if (global.CloudAppFXDebugDirtyRect) {
             context.strokeStyle = "#FFFFFF";
             context.lineWidth = 3;
             context.strokeRect(this._dirtyRect.left, this._dirtyRect.top, this._dirtyRect.width, this._dirtyRect.height);
-            console.log("[Debug] dirtyRect: ", this.toString(), this._dirtyRect.toString());
+            console.log("[CloudAppFX]dirtyRect: ", this.toString(), this._dirtyRect.toString());
         }
     },
 
@@ -769,10 +944,6 @@ Class.define("framework.ui.view.View", EventEmitter, {
      * @protected
      */
     findViewAtPoint: function(point) {
-        if (this._parent) {
-            this._eventOffsetX = this._parent._eventOffsetX + this._left;
-            this._eventOffsetY = this._parent._eventOffsetY + this._top;
-        }
         if (this._visibility !== "visible") {
             return null;
         }
@@ -784,16 +955,16 @@ Class.define("framework.ui.view.View", EventEmitter, {
     },
 
     /**
-     * Gets the root view of this item.
-     * @method View#getRoot
-     * @return {View} the root view
+     * Gets the root window of this view.
+     * @method View#getWindow
+     * @return {Window} the root window
      * @private
      */
-    getRoot: function() {
-        if (this.parent === null) {
+    getWindow: function() {
+        if (this._parent === null) {
             return this;
         }
-        return this.parent.getRoot();
+        return this._parent.getWindow();
     },
 
     /**
@@ -903,10 +1074,8 @@ Class.define("framework.ui.view.View", EventEmitter, {
      * @param {TouchEvent} e the touch event info
      * @private
      */
-    handleTouchStart: function(e) {
+    handleTouchStart: function(/*e*/) {
         this._selected = true;
-        this._touchstartPoint.assign(e.touches[0].screenX, e.touches[0].screenY);
-        this._touchTimestamp = new Date().getTime();
     },
 
     /**
@@ -915,43 +1084,29 @@ Class.define("framework.ui.view.View", EventEmitter, {
      * @param {TouchEvent} e the touch event info
      * @private
      */
-    handleTouchMove: function(e) {
-        this._lastTouchPoint.assign(e.touches[0].screenX, e.touches[0].screenY);
+    handleTouchMove: function(/*e*/) {
     },
 
     /**
-     * Handle the touch end event processing
-     * @method View#onTouchEnd
+     * Handle the touch end or touch cancel event processing
+     * @method View#onTouchEndCancel
      * @param {TouchEvent} e the touch event info
      * @private
      */
-    handleTouchEnd: function(e) {
-        if (this._selected &&
-            Math.abs(this._touchstartPoint.x - this._lastTouchPoint.x) < this._moveTheshold &&
-            Math.abs(this._touchstartPoint.y - this._lastTouchPoint.y) < this._moveTheshold) {
-            var now = new Date().getTime();
-            if (now - this._touchTimestamp <= this._clickTheshold) {
-                this.dispatchEvent("click", e);
-            }
-        } else {
-            this.dispatchEvent("touchcancel", e);
-        }
+    handleTouchEndCancel: function(/*e*/) {
         this._selected = false;
     },
 
-    /**
-     * Gets the current offset of touch point
-     * @method View#getCurrentOffset
-     * @param {TouchEvent} touchEvent the touch event info
-     * @private
-     */
-    getCurrentOffset: function(touchEvent) {
-        var length = touchEvent.touches.length;
-        for (var i = 0; i < length; i++) {
-            touchEvent.touches[i].clientX = touchEvent.touches[i].screenX - this._eventOffsetX;
-            touchEvent.touches[i].clientY = touchEvent.touches[i].screenY - this._eventOffsetY;
+    processHardwareAcceleration: function() {
+        if (!this._hardwareAccelerated) {
+            this.getWindow().windowManager.destroyCanvas(this._bitmapBuffer);
+            this._bitmapBuffer = null;
+        } else {
+            if (this._bitmapBuffer.width !== this._width || this._bitmapBuffer.height !== this._height) {
+                this.getWindow().windowManager.destroyCanvas(this._bitmapBuffer);
+                this._bitmapBuffer = this.getWindow().windowManager.createCanvas(this._width, this._height);
+                this._bitmapBufferContext = this.getWindow().windowManager.getContext(this._bitmapBuffer);
+            }
         }
     }
 }, module);
-
-});

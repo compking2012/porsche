@@ -1,23 +1,23 @@
-define(function(require, exports, module) {
-
 "use strict";
 var Class = require("../../class");
 var TextView = require("./textview");
+var TapRecognizer = require("../gesture/taprecognizer");
 
 /**
  * Button widget
  * @class Button
  * @extends TextView
  */
-Class.define("framework.ui.view.Button", TextView, {
+Class.define("{Framework}.ui.view.Button", TextView, {
     /**
      * Constructor
      * @method Button#initialize
      */
     initialize: function(/*value*/) {
         TextView.prototype.initialize.apply(this, arguments);
+
         this._radius = 0;
-        this._textAlign = "center";
+        this.addGestureRecognizer(this._tapRecognizer = new TapRecognizer());
     },
 
     /**
@@ -25,6 +25,9 @@ Class.define("framework.ui.view.Button", TextView, {
      * @method Button#destroy
      */
     destroy: function() {
+        this.removeGestureRecognizer(this._tapRecognizer);
+        this._tapRecognizer = null;
+
         TextView.prototype.destroy.apply(this, arguments);
     },
 
@@ -39,9 +42,6 @@ Class.define("framework.ui.view.Button", TextView, {
 
     drawBackground: function(context) {
         context.save();
-        if (this._selected) {
-            context.globalAlpha = 0.6;
-        }
         context.roundRect(0, 0, this._width , this._height, this._radius);
         context.clip();
         TextView.prototype.drawBackground.call(this, context);
@@ -50,9 +50,6 @@ Class.define("framework.ui.view.Button", TextView, {
 
     draw: function(context) {
         context.save();
-        if (this._selected) {
-            context.globalAlpha = 0.6;
-        }
         context.roundRect(0, 0, this._width , this._height, this._radius);
         context.clip();
         // TODO: Pressed state
@@ -60,5 +57,3 @@ Class.define("framework.ui.view.Button", TextView, {
         context.restore();
     }
 }, module);
-
-});

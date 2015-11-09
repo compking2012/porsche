@@ -1,16 +1,15 @@
-define(function(require, exports, module) {
-
 "use strict";
 var Class = require("../../class");
 var Animation = require("./animation");
 
-Class.define("framework.ui.animation.FrameAnimation", Animation, {
+Class.define("{Framework}.ui.animation.FrameAnimation", Animation, {
     /**
      * Constructor
      * @method FrameAnimation#initialize
      */
     initialize: function(/*view*/) {
         Animation.prototype.initialize.apply(this, arguments);
+
         this._frames = {};
     },
 
@@ -20,6 +19,7 @@ Class.define("framework.ui.animation.FrameAnimation", Animation, {
      */
     destroy: function() {
         this._frames = null;
+
         Animation.prototype.destroy.apply(this, arguments);
     },
 
@@ -112,7 +112,6 @@ Class.define("framework.ui.animation.FrameAnimation", Animation, {
             var key = animator.key;
             var value = animator.value;
             this._view[key] = value;
-            console.log("kv:", key, value);
         }
 
         if (time < this._duration) {
@@ -120,5 +119,3 @@ Class.define("framework.ui.animation.FrameAnimation", Animation, {
         }
     }
 }, module);
-
-});

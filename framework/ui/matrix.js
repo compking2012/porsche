@@ -1,5 +1,3 @@
-define(function(require, exports, module) {
-
 "use strict";
 var Class = require("../class");
 var YObject = require("../yobject");
@@ -9,7 +7,7 @@ var YObject = require("../yobject");
  * @class Matrix
  * @extends YObject
  */
-Class.define("framework.ui.Matrix", YObject, {
+Class.define("{Framework}.ui.Matrix", YObject, {
     /**
      * Constructor
      * @method Matrix#initialize
@@ -17,6 +15,7 @@ Class.define("framework.ui.Matrix", YObject, {
      */
     initialize: function(matrix) {
         YObject.prototype.initialize.apply(this, arguments);
+
         if (!matrix) {
             matrix = [
                 [1, 0, 0],
@@ -119,5 +118,3 @@ Class.define("framework.ui.Matrix", YObject, {
         return matrix;
     }
 }, module);
-
-});

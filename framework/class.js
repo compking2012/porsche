@@ -1,5 +1,3 @@
-define(function(require, exports, module) {
-
 "use strict";
 
 function Class() {}
@@ -14,17 +12,14 @@ function Class() {}
         var newClass = function() {
             this.initialize.apply(this, arguments);
         };
-        // global[myClass] = newClass;
+
         if (superClass) {
-            newClass.prototype = Object.create(superClass.prototype, {
-                constructor: {
-                    value: newClass,
-                    enumerable: false,
-                    writable: true,
-                    configurable: true
+            for (var key in superClass) {
+                if (superClass.hasOwnProperty(key)) {
+                    var pd = Object.getOwnPropertyDescriptor(superClass, key);
+                    Object.defineProperty(newClass, key, pd);
                 }
-            });
-            newClass.prototype.constructor = newClass;
+            }
         }
 
         if (definition.hasOwnProperty("static")) {
@@ -36,6 +31,18 @@ function Class() {}
                     Object.defineProperty(newClass, key, pd);
                 }
             }
+        }
+
+        if (superClass) {
+            newClass.prototype = Object.create(superClass.prototype, {
+                constructor: {
+                    value: newClass,
+                    enumerable: false,
+                    writable: true,
+                    configurable: true
+                }
+            });
+            newClass.prototype.constructor = newClass;
         }
 
         for (var property in definition) {
@@ -55,5 +62,3 @@ function Class() {}
     };
 }).apply(Class.prototype);
 module.exports = Class;
-
-});

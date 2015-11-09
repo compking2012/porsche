@@ -1,5 +1,3 @@
-define(function(require, exports, module) {
-
 "use strict";
 var Class = require("../../class");
 /* global Event:true */
@@ -10,13 +8,14 @@ var Event = require("./event");
  * @class UIEvent
  * @extends Event
  */
-Class.define("framework.ui.event.UIEvent", Event, {
+Class.define("{Framework}.ui.event.UIEvent", Event, {
     /**
      * Constructor
      * @method UIEvent#initialize
      */
     initialize: function(/*options*/) {
         Event.prototype.initialize.apply(this, arguments);
+
         this._propagation = true;
         this._defaultBehavior = true;
     },
@@ -57,5 +56,3 @@ Class.define("framework.ui.event.UIEvent", Event, {
         this._defaultBehavior = false;
     }
 }, module);
-
-});

@@ -1,5 +1,3 @@
-define(function(require, exports, module) {
-
 "use strict";
 var Class = require("../class");
 var YObject = require("../yobject");
@@ -58,5 +56,3 @@ Class.define("framework.util.I18nManager", YObject, {
         }
     }
 }, module);
-
-});

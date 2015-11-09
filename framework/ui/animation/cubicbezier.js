@@ -1,5 +1,3 @@
-define(function(require, exports, module) {
-
 "use strict";
 var Class = require("../../class");
 var YObject = require("../../yobject");
@@ -9,13 +7,14 @@ var YObject = require("../../yobject");
  * @class CubicBezier
  * @extends YObject
  */
-Class.define("framework.ui.animation.CubicBezier", YObject, {
+Class.define("{Framework}.ui.animation.CubicBezier", YObject, {
     /**
      * Constructor
      * @method CubicBezier#initialize
      */
     initialize: function(p1x, p1y, p2x, p2y) {
         YObject.prototype.initialize.apply(this, arguments);
+
         if (!(p1x >= 0 && p1x <= 1)) {
             throw new RangeError("'p1x' must be a number between 0 and 1. Got " + p1x + "instead.");
         }
@@ -41,6 +40,7 @@ Class.define("framework.ui.animation.CubicBezier", YObject, {
     destroy: function() {
         this._p1 = null;
         this._p2 = null;
+        
         YObject.prototype.destroy.apply(this, arguments);
     },
 
@@ -328,5 +328,3 @@ Class.define("framework.ui.animation.CubicBezier", YObject, {
         };
     }
 }, module);
-
-});

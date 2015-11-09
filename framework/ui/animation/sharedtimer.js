@@ -1,16 +1,15 @@
-define(function(require, exports, module) {
-
 "use strict";
 var Class = require("../../class");
 var YObject = require("../../yobject");
 
-Class.define("framework.ui.animation.SharedTimer", YObject, {
+Class.define("{Framework}.ui.animation.SharedTimer", YObject, {
     /**
      * Constructor
      * @method SharedTimer#initialize
      */
     initialize: function() {
         YObject.prototype.initialize.apply(this, arguments);
+
         this.constructor.refCount = 0;
         this._timerQueue = [];
         this._timer = null;
@@ -28,6 +27,7 @@ Class.define("framework.ui.animation.SharedTimer", YObject, {
         }
         this._timerQueue = [];
         clearInterval(this._timer);
+
         YObject.prototype.destroy.apply(this, arguments);
     },
 
@@ -84,5 +84,3 @@ Class.define("framework.ui.animation.SharedTimer", YObject, {
         }
     }
 }, module);
-
-});

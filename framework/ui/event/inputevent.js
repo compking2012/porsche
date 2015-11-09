@@ -1,5 +1,3 @@
-define(function(require, exports, module) {
-
 "use strict";
 var Class = require("../../class");
 var UIEvent = require("./uievent");
@@ -9,13 +7,14 @@ var UIEvent = require("./uievent");
  * @class InputEvent
  * @extends UIEvent
  */
-Class.define("framework.ui.event.InputEvent", UIEvent, {
+Class.define("{Framework}.ui.event.InputEvent", UIEvent, {
     /**
      * Constructor
      * @method InputEvent#initialize
      */
     initialize: function(/*options*/) {
         UIEvent.prototype.initialize.apply(this, arguments);
+
         this._ctrlKey = false;
         this._altKey = false;
         this._shiftKey = false;
@@ -61,5 +60,3 @@ Class.define("framework.ui.event.InputEvent", UIEvent, {
         return this._metaKey;
     }
 }, module);
-
-});

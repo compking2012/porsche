@@ -1,16 +1,15 @@
-define(function(require, exports, module) {
-
 "use strict";
 var Class = require("../../class");
 var EventEmitter = require("../../eventemitter");
 
-Class.define("framework.ui.animation.AnimationGroup", EventEmitter, {
+Class.define("{Framework}.ui.animation.AnimationGroup", EventEmitter, {
     /**
      * Constructor
      * @method AnimationGroup#initialize
      */
     initialize: function(view) {
         EventEmitter.prototype.initialize.apply(this, arguments);
+
         this._animations = [];
         this._view = view;
         this._type = "parallel";
@@ -26,6 +25,7 @@ Class.define("framework.ui.animation.AnimationGroup", EventEmitter, {
         this._animations = null;
         this._view = null;
         this._animationCompleteFunc = null;
+
         EventEmitter.prototype.destroy.apply(this, arguments);
     },
 
@@ -107,5 +107,3 @@ Class.define("framework.ui.animation.AnimationGroup", EventEmitter, {
         }
     }
 }, module);
-
-});

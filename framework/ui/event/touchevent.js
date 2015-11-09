@@ -1,5 +1,3 @@
-define(function(require, exports, module) {
-
 "use strict";
 var Class = require("../../class");
 var InputEvent = require("./inputevent");
@@ -9,16 +7,17 @@ var InputEvent = require("./inputevent");
  * @class TouchEvent
  * @extends InputEvent
  */
-Class.define("framework.ui.event.TouchEvent", InputEvent, {
+Class.define("{Framework}.ui.event.TouchEvent", InputEvent, {
     /**
      * Constructor
      * @method TouchEvent#initialize
      */
     initialize: function(options) {
         InputEvent.prototype.initialize.apply(this, arguments);
+
         this._touches = options.touches !== undefined ? options.touches : [];
-        this._targetTouches = [];
-        this._changedTouches = [];
+        this._targetTouches = options.targetTouches !== undefined ? options.targetTouches : [];
+        this._changedTouches = options.changedTouches !== undefined ? options.changedTouches : [];
     },
 
     /**
@@ -29,6 +28,7 @@ Class.define("framework.ui.event.TouchEvent", InputEvent, {
         this._touches = null;
         this._targetTouches = null;
         this._changedTouches = null;
+
         InputEvent.prototype.destroy.apply(this, arguments);
     },
 
@@ -62,5 +62,3 @@ Class.define("framework.ui.event.TouchEvent", InputEvent, {
         return this._changedTouches;
     }
 }, module);
-
-});

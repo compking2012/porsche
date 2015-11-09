@@ -1,5 +1,3 @@
-define(function(require, exports, module) {
-
 "use strict";
 var Class = require("../../class");
 var View = require("./view");
@@ -10,18 +8,18 @@ var View = require("./view");
  * @param {string} src image path
  * @extends View
  **/
-Class.define("framework.ui.view.ImageView", View, {
+Class.define("{Framework}.ui.view.ImageView", View, {
     /**
      * Constructor
      * @method ImageView#initialize
      */
-    initialize: function(src) {
+    initialize: function() {
         View.prototype.initialize.apply(this, arguments);
+
+        this._image = null;
         this._offsetX = 0;
         this._offsetY = 0;
         this._scaleType = "fitcenter";
-        this._image = null;
-        this.src = src;
     },
 
     /**
@@ -30,6 +28,7 @@ Class.define("framework.ui.view.ImageView", View, {
      */
     destroy: function() {
         this._image = null;
+
         View.prototype.destroy.apply(this, arguments);
     },
 
@@ -43,20 +42,15 @@ Class.define("framework.ui.view.ImageView", View, {
     },
 
     set src(value) {
-        if (value) {
+        if (value === null) {
+            this._src = null;
+            this._image = null;
+        } else {
             this._src = value;
-            var onLoadFunc = null;
-            this._image = new Image();
-            this._image.addEventListener("load", onLoadFunc = function() {
-                this._image.removeEventListener("load", onLoadFunc);
-                this.invalidate();
-            }.bind(this));
-            this._image.src = value;
-            if (this._image.complete) {
-                this._image.removeEventListener("load", onLoadFunc);
-                this.invalidate();
-            }
+            this._image = new Canvas.Image();
+            this._image.src = fs.readFileSync(value);
         }
+        this.invalidate();
     },
 
     /**
@@ -71,6 +65,7 @@ Class.define("framework.ui.view.ImageView", View, {
 
     set scaleType(value) {
         this._scaleType = value;
+        this.invalidate();
     },
 
     get offsetX() {
@@ -79,6 +74,7 @@ Class.define("framework.ui.view.ImageView", View, {
 
     set offsetX(value) {
         this._offsetX = value;
+        this.invalidate();
     },
 
     get offsetY() {
@@ -87,23 +83,30 @@ Class.define("framework.ui.view.ImageView", View, {
 
     set offsetY(value) {
         this._offsetY = value;
+        this.invalidate();
     },
 
     draw: function(context) {
         if (this._image === null) {
             return;
         }
+        var image = this._image;
+        this.drawImage(context, image);
+    },
 
+    drawImage: function(context, image) {
         if (this._scaleType === "matrix") {
-            context.drawImage(this._image, 0, 0);
+            context.drawImage(image, 0, 0);
         } else if (this._scaleType === "fitxy") {
-            context.drawImage(this._image, 0, 0, this._width, this._height);
+            context.drawImage(image, 0, 0, this._width, this._height);
         } else if (this._scaleType === "fitstart" || this._scaleType === "fitend" || this._scaleType === "fitcenter") {
-            var rw = this._width / this._image.width;
-            var rh = this._height / this._image.height;
+            var dw = image.width;
+            var dh = image.height;
+            var rw = this._width / dw;
+            var rh = this._height / dh;
             var r = Math.min(rw, rh);
-            var width = this._image.width * r;
-            var height = this._image.height * r;
+            var width = dw * r;
+            var height = dh * r;
 
             var x = 0;
             var y = 0;
@@ -121,17 +124,19 @@ Class.define("framework.ui.view.ImageView", View, {
                     y = (this._height - height) / 2;
                     break;
             }
-            context.drawImage(this._image, x, y, width, height);
+            context.drawImage(image, x, y, width, height);
         } else if (this._scaleType === "center") {
-            var x = (this._width - this._image.width) / 2;
-            var y = (this._height - this._image.height) / 2;
-            context.drawImage(this._image, x, y, this._image.width, this._image.height);
+            var dw = image.width;
+            var dh = image.height;
+            var x = (this._width - dw) / 2;
+            var y = (this._height - dw) / 2;
+            context.drawImage(image, x, y, dw, dh);
         } else if (this._scaleType === "centercrop") {
             var r = 0;
             var x = 0;
             var y = 0;
-            var dw = this._image.width;
-            var dh = this._image.height;
+            var dw = image.width;
+            var dh = image.height;
             var vw = this._width;
             var vh = this._height;
             if (dw * vh > vw * dh) {
@@ -141,11 +146,11 @@ Class.define("framework.ui.view.ImageView", View, {
                 r = vw / dw;
                 y = (vh - dh * r) / 2;
             }
-            context.drawImage(this._image, x, y, dw * r, dh * r);
+            context.drawImage(image, x, y, dw * r, dh * r);
         } else if (this._scaleType === "centerinside") {
             var r = 0;
-            var dw = this._image.width;
-            var dh = this._image.height;
+            var dw = image.width;
+            var dh = image.height;
             var vw = this._width;
             var vh = this._height;
             if (dw <= vw && dh <= vh) {
@@ -155,9 +160,7 @@ Class.define("framework.ui.view.ImageView", View, {
             }
             var x = (vw - dw * r) / 2;
             var y = (vh - dh * r) / 2;
-            context.drawImage(this._image, x, y, dw * r, dh * r);
+            context.drawImage(image, x, y, dw * r, dh * r);
         }
     }
 }, module);
-
-});

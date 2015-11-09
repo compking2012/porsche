@@ -1,5 +1,3 @@
-define(function(require, exports, module) {
-
 "use strict";
 var GradientParser = GradientParser || {};
 
@@ -485,5 +483,3 @@ GradientParser.parse = function() {
 
 exports.parse = GradientParser.parse;
 exports.stringify = GradientParser.stringify;
-
-});

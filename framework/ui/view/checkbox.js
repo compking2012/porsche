@@ -1,5 +1,3 @@
-define(function(require, exports, module) {
-
 "use strict";
 var Class = require("../../class");
 var Switch = require("./switch");
@@ -9,7 +7,7 @@ var Switch = require("./switch");
  * @class CheckBox
  * @extends Switch
  */
-Class.define("framework.ui.view.CheckBox", Switch, {
+Class.define("{Framework}.ui.view.CheckBox", Switch, {
     /**
      * Constructor
      * @method CheckBox#initialize
@@ -29,5 +27,3 @@ Class.define("framework.ui.view.CheckBox", Switch, {
         Switch.prototype.destroy.apply(this, arguments);
     }
 }, module);
-
-});

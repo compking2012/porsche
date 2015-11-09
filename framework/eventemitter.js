@@ -1,5 +1,3 @@
-define(function(require, exports, module) {
-
 "use strict";
 var Class = require("./class");
 var YObject = require("./yobject");
@@ -9,13 +7,14 @@ var YObject = require("./yobject");
  * @class EventEmitter
  * @extends YObject
  */
-Class.define("framework.EventEmitter", YObject, {
+Class.define("{Framework}.EventEmitter", YObject, {
     /**
      * Constructor
      * @method EventEmitter#initialize
      */
     initialize: function() {
         YObject.prototype.initialize.apply(this, arguments);
+
         this.events = {};
     },
 
@@ -24,20 +23,17 @@ Class.define("framework.EventEmitter", YObject, {
      * @method EventEmitter#destroy
      */
     destroy: function() {
-        for (var key in this.events) {
-            if (this.events.hasOwnProperty(key)) {
-                this.removeEventListener(this.events[key]);
-            }
-        }
+        this.removeAllEventListeners();
         this.events = null;
+
         YObject.prototype.destroy.apply(this, arguments);
     },
 
     /**
      * Invoke each of the listeners in order with the supplied arguments.
-     * @method EventEmitter#dispatchEvent
      * @param {String} event - event name
-     * @param {...*} args - the supplied arguments
+     * @param {...*} argN - the supplied arguments
+     * @method EventEmitter#dispatchEvent
      */
     dispatchEvent: function(event) {
         if (!this.events[event]) {
@@ -57,9 +53,9 @@ Class.define("framework.EventEmitter", YObject, {
 
     /**
      * Adds a listener to the end of the listeners array for the specified event.
-     * @method EventEmitter#addEventListener
      * @param {String} event - event name
      * @param {function} listener - a listener for the specified event
+     * @method EventEmitter#addEventListener
      */
     addEventListener: function(event, handler) {
         if (!handler instanceof Function) {
@@ -68,11 +64,9 @@ Class.define("framework.EventEmitter", YObject, {
 
         if (!this.events[event]) {
             this.events[event] = handler;
-        }
-        else if (this.events[event] instanceof Array) {
+        } else if (this.events[event] instanceof Array) {
             this.events[event].push(handler);
-        }
-        else {
+        } else {
             this.events[event] = [this.events[event], handler];
         }
     },
@@ -88,13 +82,9 @@ Class.define("framework.EventEmitter", YObject, {
             return;
         }
 
-        if (!handler) {
+        if (this.events[event] === handler) {
             delete this.events[event];
-        }
-        else if (this.events[event] === handler) {
-            delete this.events[event];
-        }
-        else if (this.events[event] instanceof Array) {
+        } else if (this.events[event] instanceof Array) {
             var handlers = this.events[event];
             for (var i = 0; i < handlers.length; i++) {
                 if (handlers[i] === handler) {
@@ -114,12 +104,10 @@ Class.define("framework.EventEmitter", YObject, {
      * @method EventEmitter#removeAllEventListeners
      */
     removeAllEventListeners: function(event) {
-        for (var key in this.events) {
-            if (this.events.hasOwnProperty(key)) {
-                if (event && event === key) {
-                    this.removeEventListener(this.events[key]);
-                }
-            }
+        if (event) {
+            delete this.events[event];
+        } else {
+            this.events = {};
         }
     },
 
@@ -127,41 +115,39 @@ Class.define("framework.EventEmitter", YObject, {
      * Alias of addEventListener
      * @method EventEmitter#emit
      */
-    emit: function(event) {
-        this.dispatchEvent.call(this, event);
+    emit: function(/*event*/) {
+        this.dispatchEvent.apply(this, arguments);
     },
 
     /**
      * Alias of addEventListener
      * @method EventEmitter#addListener
      */
-    addListener: function(event, handler) {
-        this.addEventListener.call(this, event, handler);
+    addListener: function(/*event, handler*/) {
+        this.addEventListener.apply(this, arguments);
     },
 
     /**
      * Alias of removeEventListener
      * @method EventEmitter#removeListener
      */
-    removeListener: function(event, handler) {
-        this.removeEventListener.call(this, event, handler);
+    removeListener: function(/*event, handler*/) {
+        this.removeEventListener.apply(this, arguments);
     },
 
     /**
      * Alias of addEventListener
      * @method EventEmitter#on
      */
-    on: function(event, handler) {
-        this.addEventListener.call(this, event, handler);
+    on: function(/*event, handler*/) {
+        this.addEventListener.apply(this, arguments);
     },
 
     /**
      * Alias of removeEventListener
      * @method EventEmitter#off
      */
-    off: function(event, handler) {
-        this.removeEventListener.call(this, event, handler);
+    off: function(/*event, handler*/) {
+        this.removeEventListener.apply(this, arguments);
     }
 }, module);
-
-});

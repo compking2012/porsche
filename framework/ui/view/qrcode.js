@@ -1,5 +1,3 @@
-define(function(require, exports, module) {
-
 "use strict";
 var Class = require("../../class");
 var View = require("./view");
@@ -9,7 +7,7 @@ var View = require("./view");
  * @class QRCode
  * @extends View
  */
-Class.define("framework.ui.view.QRCode", View, {
+Class.define("{Framework}.ui.view.QRCode", View, {
     /**
      * Constructor
      * @method QRCode#initialize
@@ -19,8 +17,13 @@ Class.define("framework.ui.view.QRCode", View, {
 
         this._color = "#000000";
         this._value = "";
+        this._margin = 20;
+        this._scale = 8;
+        this._marginScaleFactor = 5;
+        this._correctLevel = "H";
+        this._errorBehavior = "trim";
 
-        this.qrDraw = this.getQRCodeDraw();
+        this._qrDraw = this.getQRCodeDraw();
     },
 
     /**
@@ -28,38 +31,155 @@ Class.define("framework.ui.view.QRCode", View, {
      * @method QRCode#destroy
      */
     destroy: function() {
+        this._qrDraw = null;
+
         View.prototype.destroy.apply(this, arguments);
     },
 
+    /**
+     * @name QRCode#value
+     * @type {String}
+     * @description the value.
+     */
     get value() {
         return this._value;
     },
 
     set value(value) {
+        var oldValue = this._value;
+        if (oldValue === value) {
+            return;
+        }
         this._value = value;
+        this.dispatchEvent("propertychange", "value", oldValue, value);
         this.invalidate();
     },
 
-    get type() {
-        return this._type;
-    },
 
-    set type(value) {
-        this._type = value;
-        this.invalidate();
-    },
-
+    /**
+     * @name QRCode#color
+     * @type {String}
+     * @description the color.
+     */
     get color() {
         return this._color;
     },
 
     set color(value) {
+        var oldValue = this._color;
+        if (oldValue === value) {
+            return;
+        }
         this._color = value;
+        this.dispatchEvent("propertychange", "color", oldValue, value);
+        this.invalidate();
+    },
+
+    /**
+     * @name QRCode#margin
+     * @type {Number}
+     * @description the margin.
+     */
+    get margin() {
+        return this._margin;
+    },
+
+    set margin(value) {
+        var oldValue = this._margin;
+        if (oldValue === value) {
+            return;
+        }
+        this._margin = value;
+        this.dispatchEvent("propertychange", "margin", oldValue, value);
+        this.invalidate();
+    },
+
+    /**
+     * @name QRCode#scale
+     * @type {Number}
+     * @description the scale.
+     */
+    get scale() {
+        return this._scale;
+    },
+
+    set scale(value) {
+        var oldValue = this._scale;
+        if (oldValue === value) {
+            return;
+        }
+        this._scale = value;
+        this.dispatchEvent("propertychange", "scale", oldValue, value);
+        this.invalidate();
+    },
+
+    /**
+     * @name QRCode#marginScaleFactor
+     * @type {Number}
+     * @description the factor of margin and scale.
+     */
+    get marginScaleFactor() {
+        return this._marginScaleFactor;
+    },
+
+    set marginScaleFactor(value) {
+        var oldValue = this._marginScaleFactor;
+        if (oldValue === value) {
+            return;
+        }
+        this._marginScaleFactor = value;
+        this.dispatchEvent("propertychange", "marginScaleFactor", oldValue, value);
+        this.invalidate();
+    },
+
+    /**
+     * @name QRCode#correctLevel
+     * @type {String}
+     * @description the correct level, e.g. "H", "Q", "M" and "L".
+     */
+    get correctLevel() {
+        return this._correctLevel;
+    },
+
+    set correctLevel(value) {
+        var oldValue = this._correctLevel;
+        if (oldValue === value) {
+            return;
+        }
+        this._correctLevel = value;
+        this.dispatchEvent("propertychange", "correctLevel", oldValue, value);
+        this.invalidate();
+    },
+
+    /**
+     * @name QRCode#errorBehavior
+     * @type {String}
+     * @description the error behavior, currently only support "trim".
+     */
+    get errorBehavior() {
+        return this._errorBehavior;
+    },
+
+    set errorBehavior(value) {
+        var oldValue = this._errorBehavior;
+        if (oldValue === value) {
+            return;
+        }
+        this._errorBehavior = value;
+        this.dispatchEvent("propertychange", "errorBehavior", oldValue, value);
         this.invalidate();
     },
 
     draw: function(context) {
-        this.qrDraw.draw(context, this._value, {});
+        this._qrDraw.draw(context, this._value, {
+            margin: this._margin,
+            scale: this._scale,
+            marginScaleFactor: this._marginScaleFactor,
+            color: this._color,
+            background: this._background,
+            correctLevel: this._correctLevel,
+            errorBehavior: this._errorBehavior
+        });
     },
 
     getQRCodeDraw: function() {
@@ -1312,26 +1432,15 @@ Class.define("framework.ui.view.QRCode", View, {
         function QRCodeDraw() {}
 
         QRCodeDraw.prototype = {
-            //4 px module size
-            scale: 8,
-            
-            defaultMargin: 20,
-            
-            marginScaleFactor: 5,
-            
             Array: (typeof Uint32Array == "undefined" ? Uint32Array : Array),
             
             // you may configure the error behavior for input string too long
-            errorBehavior: {
-                length: "trim"
+            correctLevel: {
+                H: QRErrorCorrectLevel.H,
+                Q: QRErrorCorrectLevel.Q,
+                M: QRErrorCorrectLevel.M,
+                L: QRErrorCorrectLevel.L
             },
-            
-            color: {
-                dark: "black",
-                light: "white"
-            },
-            
-            defaultErrorCorrectLevel: QRErrorCorrectLevel.H,
             
             draw: function(context, text, options) {
                 var level;
@@ -1340,7 +1449,7 @@ Class.define("framework.ui.view.QRCode", View, {
             
                 var fix = this.QRVersion(
                     text,
-                    options.errorCorrectLevel || this.defaultErrorCorrectLevel,
+                    options.correctLevel || "H",
                     options.version
                 );
 
@@ -1348,8 +1457,11 @@ Class.define("framework.ui.view.QRCode", View, {
                 level = fix.version;
                 errorCorrectLevel = fix.errorCorrectLevel;
 
-                this.scale = options.scale || this.scale;
-                this.margin = typeof(options.margin) === "undefined" ? this.defaultMargin : options.margin;
+                this.scale = options.scale;
+                this.margin = options.margin;
+                this.errorBehavior = options.errorBehavior;
+                this.color = options.color;
+                this.background = options.background;
             
                 if (!level) {
                     //if we are unable to find an appropriate qr level error out
@@ -1369,17 +1481,15 @@ Class.define("framework.ui.view.QRCode", View, {
                     var currenty = margin;
                     width = this.dataWidth(qr)+ margin * 2;
               
-                    // this.resetCanvas(canvas,ctx,width);
-
                     for (var r = 0, rl = qr.getModuleCount(); r < rl; r++) {
                         var currentx = margin;
                         for (var c = 0, cl = qr.getModuleCount(); c < cl; c++) {
                             if (qr.isDark(r, c)) {
-                                context.fillStyle = this.color.dark;
+                                context.fillStyle = this.color;
                                 context.fillRect(currentx, currenty, scale, scale);
                             } else if(this.color.light) {
                                 //if falsy configured color
-                                context.fillStyle = this.color.light;
+                                context.fillStyle = this.background;
                                 context.fillRect(currentx, currenty, scale, scale);
                             }
                             currentx += scale;
@@ -1394,7 +1504,7 @@ Class.define("framework.ui.view.QRCode", View, {
             QRVersion: function(text, errorCorrectLevel, version) {
                 var c = from(text).length; // BINARY LENGTH!
                 var error;
-                var errorCorrectLevel = QRErrorCorrectLevel[errorCorrectLevel] || this.defaultErrorCorrectLevel;
+                var errorCorrectLevel = QRErrorCorrectLevel[errorCorrectLevel];
                 var errorCorrectIndex = [1, 0, 3, 2];   //fix odd mapping to order in table
                 var keys = ["L", "M", "Q", "H"];
                 var capacity = 0;
@@ -1425,7 +1535,7 @@ Class.define("framework.ui.view.QRCode", View, {
                 }
             
                 if (capacity < c) {
-                    if (this.errorBehavior.length === "trim") {
+                    if (this.errorBehavior === "trim") {
                         text = text.substr(0, capacity);
                         level = QRVersionCapacityTable.length; 
                     } else {
@@ -1455,28 +1565,8 @@ Class.define("framework.ui.view.QRCode", View, {
             dataWidth: function(qr, scale) {
                 return qr.getModuleCount() * (scale || this.scale || 4);
             }
-
-            // resetCanvas:function(canvas, ctx, width) {
-            //     ctx.clearRect(0,0,canvas.width,canvas.height);
-            //     if(!canvas.style) canvas.style = {};
-            //     canvas.style.height = canvas.height = width;//square!
-            //     canvas.style.width = canvas.width = width;
-                
-            //     if(this.color.light){
-            //       ctx.fillStyle = this.color.light; 
-            //       ctx.fillRect(0,0,canvas.width,canvas.height);
-            //     } else {
-            //       //support transparent backgrounds?
-            //       //not exactly to spec but i really would like someone to be able to add a background with heavily reduced luminosity for simple branding
-            //       //i could just ditch this because you could also just set #******00 as the color =P
-            //       ctx.clearRect(0,0,canvas.width,canvas.height);
-            //     }
-            // }
         };
 
         return new QRCodeDraw();     
     }
 }, module);
-
-});
-

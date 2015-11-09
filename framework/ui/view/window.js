@@ -1,5 +1,3 @@
-define(function(require, exports, module) {
-
 "use strict";
 var Class = require("../../class");
 var CompositeView = require("./compositeview");
@@ -9,31 +7,52 @@ var CompositeView = require("./compositeview");
  * @class Window
  * @extends CompositeView
  */
-Class.define("framework.ui.view.Window", CompositeView, {
+Class.define("{Framework}.ui.view.Window", CompositeView, {
     /**
-     * Constructor
+     * Constructor that create a view
      * @method Window#initialize
      */
-    initialize: function() {
+    initialize: function(title) {
         CompositeView.prototype.initialize.apply(this, arguments);
+        this._title = title;
         this._windowManager = null;
-        this._activeView = null;
     },
 
     /**
-     * Destructor
+     * Destructor that destroy a view
      * @method Window#destroy
      */
     destroy: function() {
         this._windowManager.destroy();
         this._windowManager = null;
-        this._activeView = null;
         CompositeView.prototype.destroy.apply(this, arguments);
     },
 
     /**
+     * @name Window#title
+     * @type {String}
+     * @description The title of a window
+     */
+    get title() {
+        return this._title;
+    },
+
+    set title(value) {
+        this._title = value;
+        this.invalidate();
+    },
+
+    get windowManager() {
+        return this._windowManager;
+    },
+
+    set windowManager(value) {
+        this._windowManager = value;
+    },
+
+    /**
      * Paint the composite view itself.
-     * @method CompositeView#paint
+     * @method Window#paint
      * @param {Context} context - the canvas context to which it is rendered
      * @protected
      */
@@ -41,9 +60,6 @@ Class.define("framework.ui.view.Window", CompositeView, {
         context.clearRect(this._dirtyRect.left, this._dirtyRect.top, this._dirtyRect.width, this._dirtyRect.height);
         CompositeView.prototype.paint.call(this, context);
     },
-
-    // viewDebug: function(context) {
-    // },
 
     /**
      * Mark the area defined by dirty as needing to be drawn and start drawing
@@ -69,8 +85,8 @@ Class.define("framework.ui.view.Window", CompositeView, {
      */
     invalidateChild: function(view, rect) {
         CompositeView.prototype.invalidateChild.call(this, view, rect);
-        this._windowManager.draw();
+        if (this._windowManager !== null) {
+            this._windowManager.draw();
+        }
     }
 }, module);
-
-});

@@ -1,5 +1,3 @@
-define(function(require, exports, module) {
-
 "use strict";
 var Class = require("../../class");
 var View = require("./view");
@@ -9,7 +7,7 @@ var View = require("./view");
  * @class CompositeView
  * @extends View
  */
-Class.define("framework.ui.view.CompositeView", View, {
+Class.define("{Framework}.ui.view.CompositeView", View, {
     /**
      * Constructor that create a composite view
      * @method CompositeView#initialize
@@ -17,9 +15,8 @@ Class.define("framework.ui.view.CompositeView", View, {
     initialize: function() {
         View.prototype.initialize.apply(this, arguments);
         this._children = [];
-        this._display = [];
         this._layout = null;
-        this._needRelayout = true;
+        this._needRelayout = false;
     },
 
     /**
@@ -28,9 +25,16 @@ Class.define("framework.ui.view.CompositeView", View, {
      */
     destroy: function() {
         this._children = null;
-        this._display = null;
+        if (this._layout !== null) {
+            this._layout.destroy();
+        }
         this._layout = null;
         View.prototype.destroy.apply(this, arguments);
+    },
+
+    set needRelayout(value) {
+        this._needRelayout = value;
+        this.invalidate();
     },
 
     /**
@@ -43,8 +47,21 @@ Class.define("framework.ui.view.CompositeView", View, {
     },
 
     set layout(value) {
-        this._layout = value;
-        this._layout.setView(this);
+        if (value === null && this._layout !== null) {
+            var length = this._children.length;
+            for (var i = 0; i < length; i++) {
+                var view = this._children[i];
+                view.resetToNoLayout();
+            }
+            this._needRelayout = false;
+            this._layout.setView(null);
+            this._layout = null;
+        } else if (value !== null) {
+            this._needRelayout = true;
+            this._layout = value;
+            this._layout.setView(this);
+        }
+        this.invalidate();
     },
 
     /**
@@ -68,9 +85,6 @@ Class.define("framework.ui.view.CompositeView", View, {
             return;
         }
 
-        if (this._hardwareAccelerated) {
-            context = this._contextArray[0];
-        }
         this.paintChildren(context);
 
         context.restore();
@@ -82,19 +96,16 @@ Class.define("framework.ui.view.CompositeView", View, {
     /**
      * Paint the composite view's children.
      * @method CompositeView#paint
-     * @param {Context} context - the canvas context to which it is rendered
      * @protected
      */
     paintChildren: function(context) {
-        // FIXME: support layout
         if (this._layout !== null && this._needRelayout) {
-            this._layout.calculateFrame();
+            this._layout.perform();
             this._needRelayout = false;
         }
-
-        var length = this._display.length;
+        var length = this._children.length;
         for (var i = 0; i < length; i++) {
-            var view = this._display[i];
+            var view = this._children[i];
             if (view.bottom >= 0 && view.top <= this._height) {
                 context.translate(view.left, view.top);
                 view.paint(context);
@@ -123,7 +134,6 @@ Class.define("framework.ui.view.CompositeView", View, {
             view.parent.removeChild(view);
         }
         this._children.push(view);
-        this._display.push(view);
         view.parent = this;
         this._needRelayout = true;
         this.invalidate();
@@ -153,7 +163,6 @@ Class.define("framework.ui.view.CompositeView", View, {
             view.parent.removeChild(view);
         }
         this._children.splice(index, 0, view);
-        this._display.push(view);
         view.parent = this;
         this._needRelayout = true;
         this.invalidate();
@@ -168,43 +177,21 @@ Class.define("framework.ui.view.CompositeView", View, {
      * @param {View} child - the child view to remove, or the position in this composite view to remove
      */
     removeChild: function(view) {
+        var index = this._children.indexOf(view);
+        if (index === -1) {
+            return;
+        }
+
         this.dispatchEvent("childwillremove", view);
         view.dispatchEvent("willremove");
 
-        var index = this._children.indexOf(view);
-        if (index !== -1) {
-            this._children.splice(index, 1);
-        }
-
-        index = this._display.indexOf(view);
-        if (index !== -1) {
-            this._display.splice(index, 1);
-        }
-        this._removeCanvas(view);
+        this._children.splice(index, 1);
         view.parent = null;
         this._needRelayout = true;
+        this.invalidate();
 
         this.dispatchEvent("childremoved", view);
         view.dispatchEvent("removed");
-    },
-
-    _removeCanvas: function(child) {
-        if (child._hardwareAccelerated === true || child._contextArray.length !== 0) {
-            if (child._canvasArray) {
-                for (var j = 0; j < child._canvasArray.length; j++) {
-                    this.uiServer.deleteCanvas(child._canvasArray[j]);
-                }
-                child._canvasArray = [];
-            }
-            child._canvasArray = [];
-            child._contextArray = [];
-        }
-        if (child._children) {
-            var length = child._children.length;
-            for (var i = 0; i < length; i++) {
-                this._removeCanvas(child._children[i]);
-            }
-        }
     },
 
     /**
@@ -212,11 +199,9 @@ Class.define("framework.ui.view.CompositeView", View, {
      * @method CompositeView#removeAllChildren
      */
     removeAllChildren: function() {
-        while (this._children.length > 0) {
-            this.removeChild(this.children[0]);
-        }
-        this._children = [];
-        this._display = [];
+        this._children.splice(0, this._children.length);
+        this._needRelayout = true;
+        this.invalidate();
     },
 
     /**
@@ -225,12 +210,12 @@ Class.define("framework.ui.view.CompositeView", View, {
      * @param {View} view - the child to bring to the top of the z order
      */
     bringChildToFront: function(view) {
-        var index = this._display.indexOf(view);
+        var index = this._children.indexOf(view);
         if (index < 0) {
             return;
         }
-        this._display.splice(index, 1);
-        this._display.push(view);
+        this._children.splice(index, 1);
+        this._children.push(view);
         this.invalidate();
     },
 
@@ -240,12 +225,12 @@ Class.define("framework.ui.view.CompositeView", View, {
      * @param {View} view - the child to bring to the bottom of the z order
      */
     sendChildToBack: function(view) {
-        var index = this._display.indexOf(view);
+        var index = this._children.indexOf(view);
         if (index < 0) {
             return;
         }
-        this._display.splice(index, 1);
-        this._display.unshift(view);
+        this._children.splice(index, 1);
+        this._children.unshift(view);
         this.invalidate();
     },
 
@@ -256,10 +241,6 @@ Class.define("framework.ui.view.CompositeView", View, {
      * @return {View} return the view which point in the view and it has the max zOrder;
      */
     findViewAtPoint: function(point) {
-        if (this._parent) {
-            this._eventOffsetX = this._parent._eventOffsetX + this._left;
-            this._eventOffsetY = this._parent._eventOffsetY + this._top;
-        }
         if (this._visibility !== "visible") {
             return null;
         }
@@ -268,17 +249,24 @@ Class.define("framework.ui.view.CompositeView", View, {
             return null;
         }
 
-        point.offset(-this._left, -this._top);
+        var x = this._left;
+        var y = this._top;
+        if (this._parent !== null) {
+            x -= this._parent.scrollX;
+            y -= this._parent.scrollY;
+        }
+
+        point.offset(-x, -y);
         var findChild = this;
         var length = this._children.length;
         for (var i = length - 1; i >= 0; i--) {
-            var child = this._display[i].findViewAtPoint(point);
+            var child = this._children[i].findViewAtPoint(point);
             if (child !== null) {
                 findChild = child;
                 break;
             }
         }
-        point.offset(this._left, this._top);
+        point.offset(x, y);
         return findChild;
     },
 
@@ -295,7 +283,7 @@ Class.define("framework.ui.view.CompositeView", View, {
 
         var length = this._children.length;
         for (var i = 0; i < length; i++) {
-            var child = this._display[i];
+            var child = this._children[i];
             child.setDirty(rect);
         }
 
@@ -315,7 +303,7 @@ Class.define("framework.ui.view.CompositeView", View, {
 
         var length = this._children.length;
         for (var i = 0; i < length; i++) {
-            var child = this._display[i];
+            var child = this._children[i];
             if (child !== view) {
                 child.setDirty(rect);
             }
@@ -336,10 +324,15 @@ Class.define("framework.ui.view.CompositeView", View, {
         View.prototype.setDirty.call(this, rect);
         var length = this._children.length;
         for (var i = 0; i < length; i++) {
-            var child = this._display[i];
+            var child = this._children[i];
             child.setDirty(rect);
         }
+    },
+
+    relayout: function(self) {
+        if (self) {
+            this.needRelayout = true;
+        }
+        View.prototype.relayout.call(this, self);
     }
 }, module);
-
-});

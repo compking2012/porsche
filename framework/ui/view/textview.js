@@ -1,36 +1,39 @@
-define(function(require, exports, module) {
-
 "use strict";
-var Class = require("../../class");
 var View = require("./view");
+var Class = require("../../class");
+var Canvas = require("canvas/lib/canvas");
 
 /**
  * TextView widget
  * @class TextView
  * @extends View
  */
-Class.define("framework.ui.view.TextView", View, {
+Class.define("{Framework}.ui.view.TextView", View, {
     /**
      * Constructor
      * @method TextView#initialize
      */
     initialize: function() {
         View.prototype.initialize.apply(this, arguments);
+
         this._text = "";
         this._fontFamily = "sans-serif";
         this._fontSize = "18px";
         this._fontWeight = "normal";
         this._fontStyle = "normal";
-        this._textAlign = "center";
-        this._textVAlign = "middle";
+        this._align = "center";
+        this._verticalAlign = "middle";
         this._baseline = "middle";
         this._color = "#ffffff";
         this._multiLine = false;
         this._highQuality = false;
         this._antialias = false;
 
+        this._lineMargin = 10;
+
         this._width = 100;
         this._height = 20;
+        this._chsFont = new Canvas.Font("sans-serif", "/system/bin/ui_res/chsfont2.ttf");
     },
 
     /**
@@ -52,6 +55,7 @@ Class.define("framework.ui.view.TextView", View, {
 
     set text(value) {
         this._text = value;
+        this.invalidate();
     },
 
     /**
@@ -65,6 +69,7 @@ Class.define("framework.ui.view.TextView", View, {
 
     set fontFamily(value) {
         this._fontFamily = value;
+        this.invalidate();
     },
 
     /**
@@ -72,12 +77,13 @@ Class.define("framework.ui.view.TextView", View, {
      * @type {String}
      * @description The text fontSize, such as "12px".
      */
-    set fontSize(value) {
-        this._fontSize = value;
-    },
-
     get fontSize() {
         return this._fontSize;
+    },
+
+    set fontSize(value) {
+        this._fontSize = value;
+        this.invalidate();
     },
 
     /**
@@ -91,6 +97,7 @@ Class.define("framework.ui.view.TextView", View, {
 
     set fontWeight(value) {
         this._fontWeight = value;
+        this.invalidate();
     },
 
     /**
@@ -104,6 +111,7 @@ Class.define("framework.ui.view.TextView", View, {
 
     set fontStyle(value) {
         this._fontStyle = value;
+        this.invalidate();
     },
 
     /**
@@ -111,25 +119,27 @@ Class.define("framework.ui.view.TextView", View, {
      * @type {String}
      * @description The text align.value text align, value is : "left", "center", "right".
      */
-    get textAlign() {
-        return this._textAlign;
+    get align() {
+        return this._align;
     },
 
-    set textAlign(value) {
-        this._textAlign = value;
+    set align(value) {
+        this._align = value;
+        this.invalidate();
     },
 
     /**
-     * @name TextView#align
+     * @name TextView#verticalAlign
      * @type {String}
-     * @description The text align.value text align, value is : "left", "center", "right".
+     * @description The text verticalAlign.value text align, value is : "top", "middle", "bottom".
      */
-    get textVAlign() {
-        return this._textVAlign;
+    get verticalAlign() {
+        return this._verticalAlign;
     },
 
-    set textVAlign(value) {
-        this._textVAlign = value;
+    set verticalAlign(value) {
+        this._verticalAlign = value;
+        this.invalidate();
     },
 
     /**
@@ -143,6 +153,21 @@ Class.define("framework.ui.view.TextView", View, {
 
     set baseline(value) {
         this._baseline = value;
+        this.invalidate();
+    },
+
+    /**
+     * @name TextView#lineMargin
+     * @type {Number}
+     * @description The line margin
+     */
+    get lineMargin() {
+        return this._lineMargin;
+    },
+
+    set lineMargin(value) {
+        this._lineMargin = value;
+        this.invalidate();
     },
 
     /**
@@ -156,6 +181,7 @@ Class.define("framework.ui.view.TextView", View, {
 
     set color(value) {
         this._color = value;
+        this.invalidate();
     },
 
     /**
@@ -169,14 +195,18 @@ Class.define("framework.ui.view.TextView", View, {
 
     set multiLine(value) {
         this._multiLine = value;
+        this.invalidate();
     },
 
     draw: function(context) {
         context.save();
         context.beginPath();
+        context.addFont(this._chsFont);
+        context.textDrawingMode = this._highQuality ? "path" : "glyph";
+        context.antialias = "none";
         context.fillStyle = this._color;
         context.font = this._fontStyle + " " + this._fontWeight + " " + this._fontSize + " " + this._fontFamily;
-        context.textAlign = this._textAlign;
+        context.textAlign = this._align;
 
         if (this.text !== null) {
             if (this._multiLine) {
@@ -207,11 +237,11 @@ Class.define("framework.ui.view.TextView", View, {
             } else {
                 var l = 0;
                 var t = 0;
-                if (this._textAlign === "center") {
+                if (this._align === "center") {
                     l = this._width / 2;
-                } else if (this._textAlign === "left") {
+                } else if (this._align === "left") {
                     l = 0;
-                } else if (this._textAlign === "right") {
+                } else if (this._align === "right") {
                     l = this._width;
                 }
 
@@ -229,5 +259,3 @@ Class.define("framework.ui.view.TextView", View, {
         context.restore();
     }
 }, module);
-
-});

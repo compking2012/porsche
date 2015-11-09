@@ -1,5 +1,3 @@
-define(function(require, exports, module) {
-
 "use strict";
 var Class = require("../class");
 var YObject = require("../yobject");
@@ -7,11 +5,9 @@ var YObject = require("../yobject");
 /**
  * Base struct for point
  * @class Point
- * @param {Number} x the point's x-axis.
- * @param {Number} y the point's y-axis.
  * @extends YObject
  */
-Class.define("framework.ui.Point", YObject, {
+Class.define("{Framework}.ui.Point", YObject, {
     /**
      * Constructor
      * @method Point#initialize
@@ -20,6 +16,7 @@ Class.define("framework.ui.Point", YObject, {
      */
     initialize: function(x, y) {
         YObject.prototype.initialize.apply(this, arguments);
+
         this._x = x;
         this._y = y;
     },
@@ -80,5 +77,3 @@ Class.define("framework.ui.Point", YObject, {
         return this.className + "(" + this._x + "," + this._y + ")";
     }
 }, module);
-
-});
