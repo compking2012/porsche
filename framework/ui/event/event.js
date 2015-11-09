@@ -7,7 +7,7 @@ var YObject = require("../../yobject");
  * @class Event
  * @extends YObject
  */
-Class.define("{Framework}.ui.event.Event", YObject, {
+Class.define("framework.ui.event.Event", YObject, {
     /**
      * Constructor
      * @method Event#initialize

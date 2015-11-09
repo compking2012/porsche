@@ -10,7 +10,7 @@ var Input = require("./input");
  * @class TapRecognizer
  * @extends GestureRecognizer
  */
-Class.define("{Framework}.ui.gesture.TapRecognizer", GestureRecognizer, {
+Class.define("framework.ui.gesture.TapRecognizer", GestureRecognizer, {
     /**
      * The eventData from the emitted event contains the property `tapCount`, which contains the amount of
      * multi-taps being recognized.

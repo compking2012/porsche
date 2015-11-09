@@ -1,0 +1,7 @@
+{
+    "appName": "FlowLayout",
+    "debug": {
+        "paintFPS": true,
+        "dirtyRect": false
+    }
+}

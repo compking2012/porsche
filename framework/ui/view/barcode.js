@@ -7,7 +7,7 @@ var View = require("./view");
  * @class BarCode
  * @extends View
  */
-Class.define("{Framework}.ui.view.BarCode", View, {
+Class.define("framework.ui.view.BarCode", View, {
     /**
      * Constructor
      * @method BarCode#initialize

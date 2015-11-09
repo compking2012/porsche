@@ -5,7 +5,7 @@ var RelativeLayout = require("../layout/relativelayout");
 var TextView = require("./textview");
 var Button = require("./button");
 
-Class.define("{Framework}.ui.view.AlertDialog", Dialog, {
+Class.define("framework.ui.view.AlertDialog", Dialog, {
     initialize: function(options) {
         Dialog.prototype.initialize.apply(this, arguments);
 

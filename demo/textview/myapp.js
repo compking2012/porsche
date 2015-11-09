@@ -1,20 +1,16 @@
-define(function(require, exports, module) {
-define(function(require, exports, module) {
-define(function(require, exports, module) {
-define(function(require, exports, module) {define(function(require, exports, module) {
-
 "use strict";
-var Class = require("/framework/class");
-var App = require("/framework/app/app");
-var TextView = require("/framework/ui/view/textview");
+var fx = require("cloudappfx");
+var Class = fx.import("framework.Class");
+var CloudApp = fx.import("framework.app.CloudApp");
+var TextView = fx.import("framework.ui.view.TextView");
 
-Class.define("MyApp", App, {
+Class.define("MyApp", CloudApp, {
     initialize: function() {
-        App.prototype.initialize.apply(this, arguments);
+        CloudApp.prototype.initialize.apply(this, arguments);
 
         var textview = new TextView();
         textview.text = "1234567890!";
-        textview.fontSize = "60px";
+        textview.fontSize = "24px";
         textview.textAlign = "center";
         textview.fontStyle = "normal";
         textview.background = "#FF0000";
@@ -28,9 +24,3 @@ Class.define("MyApp", App, {
         this.window.addChild(textview);
     }
 }, module);
-
-});
-});
-});
-});
-});

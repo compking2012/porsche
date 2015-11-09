@@ -7,7 +7,7 @@ var View = require("./view");
  * @class QRCode
  * @extends View
  */
-Class.define("{Framework}.ui.view.QRCode", View, {
+Class.define("framework.ui.view.QRCode", View, {
     /**
      * Constructor
      * @method QRCode#initialize

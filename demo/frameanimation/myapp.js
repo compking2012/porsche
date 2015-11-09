@@ -1,21 +1,17 @@
-define(function(require, exports, module) {
-define(function(require, exports, module) {
-define(function(require, exports, module) {
-define(function(require, exports, module) {define(function(require, exports, module) {
-
 "use strict";
-var Class = require("/framework/class");
-var App = require("/framework/app/app");
-var ImageView = require("/framework/ui/view/imageview");
-var CompositeView = require("/framework/ui/view/compositeview");
-var FrameAnimation = require("/framework/ui/animation/frameanimation");
+var fx = require("cloudappfx");
+var Class = fx.import("framework.Class");
+var CloudApp = fx.import("framework.app.CloudApp");
+var ImageView = fx.import("framework.ui.view.ImageView");
+var CompositeView = fx.import("framework.ui.view.CompositeView");
+var FrameAnimation = fx.import("framework.ui.animation.FrameAnimation");
 
-Class.define("MyApp", App, {
+Class.define("MyApp", CloudApp, {
     initialize: function() {
-        App.prototype.initialize.apply(this, arguments);
+        CloudApp.prototype.initialize.apply(this, arguments);
 
         var imageView = new ImageView();
-        imageView.src = "./coin.png";
+        imageView.src = __dirname + "/coin.png";
         imageView.scaleType = "matrix";
         imageView.width = 1000;
         imageView.height = 100;
@@ -71,9 +67,3 @@ Class.define("MyApp", App, {
         this.window.addChild(containerView);
     }
 }, module);
-
-});
-});
-});
-});
-});

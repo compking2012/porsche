@@ -6,7 +6,7 @@ var Util = require("./util");
 /**
  * TouchInput
  */
-Class.define("{Framework}.ui.gesture.TouchInput", Input, {
+Class.define("framework.ui.gesture.TouchInput", Input, {
     initialize: function(/*manager*/) {
         Input.prototype.initialize.apply(this, arguments);
 

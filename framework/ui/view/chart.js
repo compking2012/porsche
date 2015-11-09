@@ -7,7 +7,7 @@ var View = require("./view");
  * @class Chart
  * @extends CompositeView
  */
-Class.define("{Framework}.ui.view.Chart", View, {
+Class.define("framework.ui.view.Chart", View, {
     /**
      * Constructor that create a view
      * @method Chart#initialize

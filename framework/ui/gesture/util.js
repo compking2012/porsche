@@ -2,7 +2,7 @@
 var Class = require("../../class");
 var YObject = require("../../eventemitter");
 
-Class.define("{Framework}.ui.gesture.Util", YObject, {
+Class.define("framework.ui.gesture.Util", YObject, {
     static: {
         /**
          * extend object.

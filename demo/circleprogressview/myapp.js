@@ -1,16 +1,12 @@
-define(function(require, exports, module) {
-define(function(require, exports, module) {
-define(function(require, exports, module) {
-define(function(require, exports, module) {define(function(require, exports, module) {
-
 "use strict";
-var Class = require("/framework/class");
-var App = require("/framework/app/app");
-var CircleProgressView = require("/framework/ui/view/circleprogressview");
+var fx = require("cloudappfx");
+var Class = fx.import("framework.Class");
+var CloudApp = fx.import("framework.app.CloudApp");
+var CircleProgressView = fx.import("framework.ui.view.CircleProgressView");
 
-Class.define("MyApp", App, {
+Class.define("MyApp", CloudApp, {
     initialize: function() {
-        App.prototype.initialize.apply(this, arguments);
+        CloudApp.prototype.initialize.apply(this, arguments);
 
         this.circleProgressView = new CircleProgressView();
         this.circleProgressView.width = 320;
@@ -22,9 +18,3 @@ Class.define("MyApp", App, {
         this.window.addChild(this.circleProgressView);
     }
 }, module);
-
-});
-});
-});
-});
-});

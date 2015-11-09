@@ -7,7 +7,7 @@ var YObject = require("../yobject");
  * @class Point
  * @extends YObject
  */
-Class.define("{Framework}.ui.Point", YObject, {
+Class.define("framework.ui.Point", YObject, {
     /**
      * Constructor
      * @method Point#initialize

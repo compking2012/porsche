@@ -8,7 +8,7 @@ var RelativeLayoutParam = require("./relativelayoutparam");
  * @class RelativeLayout
  * @extends Layout
  */
-Class.define("{Framework}.ui.layout.RelativeLayout", Layout, {
+Class.define("framework.ui.layout.RelativeLayout", Layout, {
     initialize: function() {
         Layout.prototype.initialize.apply(this, arguments);
         

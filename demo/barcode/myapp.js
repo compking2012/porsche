@@ -1,31 +1,23 @@
-define(function(require, exports, module) {
-define(function(require, exports, module) {
-define(function(require, exports, module) {
-define(function(require, exports, module) {define(function(require, exports, module) {
-
 "use strict";
-var Class = require("/framework/class");
-var App = require("/framework/app/app");
-var BarCode = require("/framework/ui/view/barcode");
+var fx = require("cloudappfx");
+var Class = fx.import("framework.Class");
+var CloudApp = fx.import("framework.app.CloudApp");
+var BarCode = fx.import("framework.ui.view.BarCode");
 
-Class.define("MyApp", App, {
+Class.define("MyApp", CloudApp, {
     initialize: function() {
-        App.prototype.initialize.apply(this, arguments);
+        CloudApp.prototype.initialize.apply(this, arguments);
 
         this.barcode = new BarCode();
+        this.barcode.width = 300;
+        this.barcode.height = 150;
         this.barcode.background = "#FFFFFF";
-        this.barcode.width = 320;
-        this.barcode.height = 320;
-        this.barcode.type = "ITF14";
-        this.barcode.value = "10012345000017";
+        this.barcode.color = "#0000FF";
+        this.barcode.type = "CODE128C";
+        this.barcode.value = "283197578276228209";
+        this.barcode.fontSize = 20;
+        this.barcode.displayValue = true;
 
         this.window.addChild(this.barcode);
     }
 }, module);
-
-});
-
-});
-});
-});
-});

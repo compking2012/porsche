@@ -8,7 +8,7 @@ var Util = require("./util");
  * GestureRecognizer
  * Every recognizer needs to extend from this class.
  */
-Class.define("{Framework}.ui.gesture.GestureRecognizer", EventEmitter, {
+Class.define("framework.ui.gesture.GestureRecognizer", EventEmitter, {
     /**
      * @constructor
      * @param {Object} options

@@ -1,17 +1,13 @@
-define(function(require, exports, module) {
-define(function(require, exports, module) {
-define(function(require, exports, module) {
-define(function(require, exports, module) {define(function(require, exports, module) {
-
 "use strict";
-var Class = require("/framework/class");
-var App = require("/framework/app/app");
-var ImageButton = require("/framework/ui/view/imagebutton");
-var TextView = require("/framework/ui/view/textview");
+var fx = require("cloudappfx");
+var Class = fx.import("framework.Class");
+var CloudApp = fx.import("framework.app.CloudApp");
+var ImageButton = fx.import("framework.ui.view.ImageButton");
+var TextView = fx.import("framework.ui.view.TextView");
 
-Class.define("MyApp", App, {
+Class.define("MyApp", CloudApp, {
     initialize: function() {
-        App.prototype.initialize.apply(this, arguments);
+        CloudApp.prototype.initialize.apply(this, arguments);
 
         this.textView = new TextView();
         this.textView.width = 320;
@@ -25,13 +21,13 @@ Class.define("MyApp", App, {
         this.window.addChild(this.textView);
 
         this.imageButton = new ImageButton();
-        this.imageButton.src = "./res/wall3.png";
-        this.imageButton.pressedSrc = "./res/wall1.png";
-        this.imageButton.disabledSrc = "./res/wall2.png";
         this.imageButton.left = 50;
         this.imageButton.top = 50;
         this.imageButton.width = 100;
         this.imageButton.height = 100;
+        this.imageButton.src = __dirname + "/res/wall3.png";
+        this.imageButton.pressedSrc = __dirname + "/res/wall1.png";
+        this.imageButton.disabledSrc = __dirname + "/res/wall2.png";
         this.imageButton.addEventListener("click", this.onClick.bind(this));
         this.window.addChild(this.imageButton);
     },
@@ -45,9 +41,3 @@ Class.define("MyApp", App, {
         this.textView.text = "Hello!";
     }
 }, module);
-
-});
-});
-});
-});
-});

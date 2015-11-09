@@ -1,23 +1,15 @@
-define(function(require, exports, module) {
-define(function(require, exports, module) {
-define(function(require, exports, module) {
-define(function(require, exports, module) {define(function(require, exports, module) {
-
 "use strict";
-var Class = require("/framework/class");
-var App = require("/framework/app/app");
-var TextView = require("/framework/ui/view/textview");
-var I18nManager = require("/framework/util/i18nmanager");
+var fx = require("cloudappfx");
+var Class = fx.import("framework.Class");
+var CloudApp = fx.import("framework.app.CloudApp");
+var TextView = fx.import("framework.ui.view.TextView");
 
-Class.define("MyApp", App, {
+Class.define("MyApp", CloudApp, {
     initialize: function() {
-        App.prototype.initialize.apply(this, arguments);
-
-        var i18n = new I18nManager();
-        i18n.locale = "zh-CN";
+        CloudApp.prototype.initialize.apply(this, arguments);
 
         var textview = new TextView();
-        textview.text = i18n.getString("MY_TEXT");
+        textview.text = global.app.getI18nString("MY_TEXT");
         textview.fontSize = "60px";
         textview.textAlign = "center";
         textview.fontStyle = "normal";
@@ -32,9 +24,3 @@ Class.define("MyApp", App, {
         this.window.addChild(textview);
     }
 }, module);
-
-});
-});
-});
-});
-});

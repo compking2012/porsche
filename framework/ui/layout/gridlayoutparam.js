@@ -7,7 +7,7 @@ var LayoutParam = require("./layoutparam");
  * @class GridLayoutParam
  * @extends LayoutParam
  */
-Class.define("{Framework}.ui.layout.GridLayoutParam", LayoutParam, {
+Class.define("framework.ui.layout.GridLayoutParam", LayoutParam, {
     initialize: function() {
         LayoutParam.prototype.initialize.apply(this, arguments);
         

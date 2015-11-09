@@ -2,7 +2,7 @@
 var Class = require("../class");
 var EventEmitter = require("../yobject");
 
-Class.define("{Framework}.controller.Controller", EventEmitter, {
+Class.define("framework.controller.Controller", EventEmitter, {
     initialize: function() {
         EventEmitter.prototype.initialize.apply(this, arguments);
 

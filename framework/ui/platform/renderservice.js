@@ -3,7 +3,7 @@ var Class = require("../class");
 var EventEmitter = require("../eventemitter");
 var UIServer = require("core/ui");
 
-Class.define("{Framework}.ui.platform.RenderService", EventEmitter, {
+Class.define("framework.ui.platform.RenderService", EventEmitter, {
     initialize: function() {
         EventEmitter.prototype.initialize.apply(this, arguments);
 

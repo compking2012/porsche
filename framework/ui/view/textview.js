@@ -8,7 +8,7 @@ var Canvas = require("canvas/lib/canvas");
  * @class TextView
  * @extends View
  */
-Class.define("{Framework}.ui.view.TextView", View, {
+Class.define("framework.ui.view.TextView", View, {
     /**
      * Constructor
      * @method TextView#initialize

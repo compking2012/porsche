@@ -7,7 +7,7 @@ var CompositeView = require("./compositeview");
  * @class Window
  * @extends CompositeView
  */
-Class.define("{Framework}.ui.view.Window", CompositeView, {
+Class.define("framework.ui.view.Window", CompositeView, {
     /**
      * Constructor that create a view
      * @method Window#initialize

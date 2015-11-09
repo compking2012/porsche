@@ -1,0 +1,7 @@
+{
+    "appName": "Gesture",
+    "debug": {
+        "paintFPS": false,
+        "dirtyRect": false
+    }
+}

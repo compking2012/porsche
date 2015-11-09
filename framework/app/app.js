@@ -13,7 +13,7 @@ var RenderService = require("./platform/renderservice");
  * @extends EventEmitter
  * @abstract
  */
-Class.define("{Framework}.app.App", EventEmitter, {
+Class.define("framework.app.App", EventEmitter, {
     /**
      * Constructor
      * @method App#initialize

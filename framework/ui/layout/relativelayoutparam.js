@@ -2,7 +2,7 @@
 var Class = require("../../class");
 var LayoutParam = require("./layoutparam");
 
-Class.define("{Framework}.ui.layout.RelativeLayoutParam", LayoutParam, {
+Class.define("framework.ui.layout.RelativeLayoutParam", LayoutParam, {
     initialize: function() {
         LayoutParam.prototype.initialize.apply(this, arguments);
 

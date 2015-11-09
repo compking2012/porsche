@@ -1,0 +1,7 @@
+{
+    "appName": "RelativeLayout_recorder",
+    "debug": {
+        "paintFPS": true,
+        "dirtyRect": false
+    }
+}

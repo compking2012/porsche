@@ -1,16 +1,12 @@
-define(function(require, exports, module) {
-define(function(require, exports, module) {
-define(function(require, exports, module) {
-define(function(require, exports, module) {define(function(require, exports, module) {
-
 "use strict";
-var Class = require("/framework/class");
-var App = require("/framework/app/app");
+var fx = require("cloudappfx");
+var Class = fx.import("framework.Class");
+var CloudApp = fx.import("framework.app.CloudApp");
 var Clock6View = require("./view/clock6/clock6view");
 
-Class.define("ClockApp", App, {
+Class.define("framework.apps.simpleclock.ClockApp", CloudApp, {
     initialize: function() {
-        App.prototype.initialize.apply(this, arguments);
+        CloudApp.prototype.initialize.apply(this, arguments);
 
         this.clockView = new Clock6View();
         this.clockView.width = 320;
@@ -18,12 +14,6 @@ Class.define("ClockApp", App, {
         this.window.addChild(this.clockView);
         setInterval(function() {
             this.clockView.setTime(new Date());
-        }.bind(this), 1000);
+        }.bind(this), 1);
     }
 }, module);
-
-});
-});
-});
-});
-});

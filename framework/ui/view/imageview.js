@@ -8,7 +8,7 @@ var View = require("./view");
  * @param {string} src image path
  * @extends View
  **/
-Class.define("{Framework}.ui.view.ImageView", View, {
+Class.define("framework.ui.view.ImageView", View, {
     /**
      * Constructor
      * @method ImageView#initialize

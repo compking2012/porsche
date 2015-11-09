@@ -8,7 +8,7 @@ var GradientParser = require("../../util/gradientparser");
  * @class ProgressView
  * @extends View
  */
-Class.define("{Framework}.ui.view.ProgressView", View, {
+Class.define("framework.ui.view.ProgressView", View, {
     /**
      * Constructor
      * @method ProgressView#initialize

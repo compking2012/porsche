@@ -9,7 +9,7 @@ var PanRecognizer = require("../gesture/panrecognizer");
  * @class ScrollableView
  * @extends CompositeView
  */
-Class.define("{Framework}.ui.view.ScrollableView", CompositeView, {
+Class.define("framework.ui.view.ScrollableView", CompositeView, {
     /**
      * Constructor
      * @method ScrollableView#initialize

@@ -7,7 +7,7 @@ var Window = require("./window");
  * @class Dialog
  * @extends Window
  */
-Class.define("{Framework}.ui.view.Dialog", Window, {
+Class.define("framework.ui.view.Dialog", Window, {
     initialize: function(/*options*/) {
         Window.prototype.initialize.apply(this, arguments);
         this._width = 320;

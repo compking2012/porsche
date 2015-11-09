@@ -1,18 +1,14 @@
-define(function(require, exports, module) {
-define(function(require, exports, module) {
-define(function(require, exports, module) {
-define(function(require, exports, module) {define(function(require, exports, module) {
-
 "use strict";
-var Class = require("/framework/class");
-var App = require("/framework/app/app");
-var ProgressView = require("/framework/ui/view/progressview");
-var Animation = require("/framework/ui/animation/animation");
-var AnimationGroup = require("/framework/ui/animation/animationgroup");
+var fx = require("cloudappfx");
+var Class = fx.import("framework.Class");
+var CloudApp = fx.import("framework.app.CloudApp");
+var ProgressView = fx.import("framework.ui.view.ProgressView");
+var Animation = fx.import("framework.ui.animation.Animation");
+var AnimationGroup = fx.import("framework.ui.animation.AnimationGroup");
 
-Class.define("MyApp", App, {
+Class.define("MyApp", CloudApp, {
     initialize: function() {
-        App.prototype.initialize.apply(this, arguments);
+        CloudApp.prototype.initialize.apply(this, arguments);
 
         this.progressView1 = new ProgressView();
         this.progressView1.left = 20;
@@ -71,9 +67,3 @@ Class.define("MyApp", App, {
         animationGroup.start();
     }
 }, module);
-
-});
-});
-});
-});
-});

@@ -5,7 +5,7 @@ var EventEmitter = require("../../eventemitter");
 /**
  * Input
  */
-Class.define("{Framework}.ui.gesture.Input", EventEmitter, {
+Class.define("framework.ui.gesture.Input", EventEmitter, {
     /**
      * Constructor
      * @param {Manager} manager

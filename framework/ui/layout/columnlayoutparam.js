@@ -7,7 +7,7 @@ var LayoutParam = require("./layoutparam");
  * @class ColumnLayoutParam
  * @extends LayoutParam
  */
-Class.define("{Framework}.ui.layout.ColumnLayoutParam", LayoutParam, {
+Class.define("framework.ui.layout.ColumnLayoutParam", LayoutParam, {
     initialize: function() {
         LayoutParam.prototype.initialize.apply(this, arguments);
     },

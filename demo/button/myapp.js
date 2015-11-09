@@ -1,16 +1,12 @@
-define(function(require, exports, module) {
-define(function(require, exports, module) {
-define(function(require, exports, module) {
-define(function(require, exports, module) {define(function(require, exports, module) {
-
 "use strict";
-var Class = require("/framework/class");
-var App = require("/framework/app/app");
-var Button = require("/framework/ui/view/button");
+var fx = require("cloudappfx");
+var Class = fx.import("framework.Class");
+var CloudApp = fx.import("framework.app.CloudApp");
+var Button = fx.import("framework.ui.view.Button");
 
-Class.define("MyApp", App, {
+Class.define("MyApp", CloudApp, {
     initialize: function() {
-        App.prototype.initialize.apply(this, arguments);
+        CloudApp.prototype.initialize.apply(this, arguments);
 
         this.button = new Button();
         this.button.text = "Hello";
@@ -18,41 +14,47 @@ Class.define("MyApp", App, {
         this.button.radius = 50;
         this.button.textAlign = "center";
         this.button.background = "#FF0000";
+        this.button.top = 60;
+        this.button.left = 60;
         this.button.width = 200;
-        this.button.height = 100;
+        this.button.height = 200;
 
         this.button.addEventListener("touchstart", this.onTouchStart.bind(this));
         this.button.addEventListener("touchmove", this.onTouchMove.bind(this));
         this.button.addEventListener("touchend", this.onTouchEnd.bind(this));
         this.button.addEventListener("touchcancel", this.onTouchCancel.bind(this));
-        this.button.addEventListener("click", this.onClick.bind(this));
+        this.button.addEventListener("tap", this.onTap.bind(this));
 
         this.window.addChild(this.button);
     },
 
-    onTouchStart: function(/*e*/) {
+    onTouchStart: function(e) {
         this.button.background = "#00FF00";
+        e.stopPropagation();
+        console.log("button: onTouchStart");
     },
 
-    onTouchMove: function(/*e*/) {
+    onTouchMove: function(e) {
         this.button.background = "#FFFF00";
+        e.stopPropagation();
+        console.log("button: onTouchMove");
     },
 
-    onTouchEnd: function(/*e*/) {
+    onTouchEnd: function(e) {
         this.button.background = "#FF0000";
+        e.stopPropagation();
+        console.log("button: onTouchEnd");
     },
 
-    onTouchCancel: function(/*e*/) {
+    onTouchCancel: function(e) {
         this.button.background = "#0000FF";
+        e.stopPropagation();
+        console.log("button: onTouchCancel");
     },
 
-    onClick: function(/*e*/) {
+    onTap: function(e) {
         this.button.text = "Well done!";
+        e.stopPropagation();
+        console.log("button: onTap");
     }
 }, module);
-
-});
-});
-});
-});
-});

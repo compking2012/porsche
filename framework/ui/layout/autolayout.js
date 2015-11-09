@@ -9,7 +9,7 @@ var AutoLayoutParam = require("./autolayoutparam");
  * @class ColumnLayout
  * @extends Layout
  */
-Class.define("{Framework}.ui.layout.AutoLayout", Layout, {
+Class.define("framework.ui.layout.AutoLayout", Layout, {
     initialize: function() {
         Layout.prototype.initialize.apply(this, arguments);
 

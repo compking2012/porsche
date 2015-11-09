@@ -7,7 +7,7 @@ var ImageView = require("./imageview");
  * @class ImageButton
  * @extends Button
  */
-Class.define("{Framework}.ui.view.ImageButton", ImageView, {
+Class.define("framework.ui.view.ImageButton", ImageView, {
     /**
      * Constructor
      * @method ImageButton#initialize

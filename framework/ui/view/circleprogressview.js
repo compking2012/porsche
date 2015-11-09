@@ -7,7 +7,7 @@ var ProgressView = require("./progressview");
  * @class CircleProgressView
  * @extends ProgressView
  */
-Class.define("{Framework}.ui.view.CircleProgressView", ProgressView, {
+Class.define("framework.ui.view.CircleProgressView", ProgressView, {
     /**
      * Constructor
      * @method CircleProgressView#initialize

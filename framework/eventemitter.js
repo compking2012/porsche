@@ -7,7 +7,7 @@ var YObject = require("./yobject");
  * @class EventEmitter
  * @extends YObject
  */
-Class.define("{Framework}.EventEmitter", YObject, {
+Class.define("framework.EventEmitter", YObject, {
     /**
      * Constructor
      * @method EventEmitter#initialize

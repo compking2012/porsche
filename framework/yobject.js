@@ -5,7 +5,7 @@ var Class = require("./class");
  * Base class for all the class
  * @class YObject
  */
-Class.define("{Framework}.YObject", {
+Class.define("framework.YObject", {
     /**
      * Constructor
      * @method YObject#initialize

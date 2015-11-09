@@ -4,7 +4,7 @@ var EventEmitter = require("../../eventemitter");
 var CubicBezier = require("./cubicbezier");
 var SharedTimer = require("./sharedtimer");
 
-Class.define("{Framework}.ui.animation.Animation", EventEmitter, {
+Class.define("framework.ui.animation.Animation", EventEmitter, {
     /**
      * Constructor
      * @method Animation#initialize

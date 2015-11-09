@@ -8,7 +8,7 @@ var Input = require("./input");
  * @class RotationRecognizer
  * @extends GestureRecognizer
  */
-Class.define("{Framework}.ui.gesture.RotationRecognizer", GestureRecognizer, {
+Class.define("framework.ui.gesture.RotationRecognizer", GestureRecognizer, {
     /**
      * @constructor
      */

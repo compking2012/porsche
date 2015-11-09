@@ -7,7 +7,7 @@ var TextView = require("./textview");
  * @class RichTextView
  * @extends TextView
  */
-Class.define("{Framework}.ui.view.RichTextView", TextView, {
+Class.define("framework.ui.view.RichTextView", TextView, {
     /**
      * Constructor that create a view
      * @method RichTextView#initialize

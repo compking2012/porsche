@@ -13,7 +13,7 @@ var fs = require("fs");
  * @class View
  * @extends EventEmitter
  */
-Class.define("{Framework}.ui.view.View", EventEmitter, {
+Class.define("framework.ui.view.View", EventEmitter, {
     /**
      * Constructor that create a view
      * @method View#initialize

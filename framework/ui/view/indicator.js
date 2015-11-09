@@ -7,7 +7,7 @@ var Class = require("../../class");
  * @class Indicator
  * @extends View
  **/
-Class.define("{Framework}.ui.view.Indicator", View, {
+Class.define("framework.ui.view.Indicator", View, {
     initialize: function() {
         View.prototype.initialize.apply(this, arguments);
         this._count = 1;

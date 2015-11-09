@@ -7,7 +7,7 @@ var LayoutParam = require("./layoutparam");
  * @class RowLayoutParam
  * @extends LayoutParam
  */
-Class.define("{Framework}.ui.layout.RowLayoutParam", LayoutParam, {
+Class.define("framework.ui.layout.RowLayoutParam", LayoutParam, {
     initialize: function() {
         LayoutParam.prototype.initialize.apply(this, arguments);
     },

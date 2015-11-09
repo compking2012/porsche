@@ -1,17 +1,13 @@
-define(function(require, exports, module) {
-define(function(require, exports, module) {
-define(function(require, exports, module) {
-define(function(require, exports, module) {define(function(require, exports, module) {
-
 "use strict";
-var Class = require("/framework/class");
-var App = require("/framework/app/app");
-var Button = require("/framework/ui/view/button");
-var Point = require("/framework/ui/point");
+var fx = require("cloudappfx");
+var Class = fx.import("framework.Class");
+var CloudApp = fx.import("framework.app.CloudApp");
+var Button = fx.import("framework.ui.view.Button");
+var Point = fx.import("framework.ui.Point");
 
-Class.define("MyApp", App, {
+Class.define("MyApp", CloudApp, {
     initialize: function() {
-        App.prototype.initialize.apply(this, arguments);
+        CloudApp.prototype.initialize.apply(this, arguments);
 
         this.startPoint = new Point(0, 0);
         this.buttonPoint = new Point(0, 0);
@@ -41,7 +37,8 @@ Class.define("MyApp", App, {
     onTouchMove: function(e) {
         var offsetX = e.touches[0].pageX - this.startPoint.x;
         var offsetY = e.touches[0].pageY - this.startPoint.y;
-        this.button.setPosition(this.buttonPoint.x + offsetX, this.buttonPoint.y + offsetY);
+        this.button.left = this.buttonPoint.x + offsetX;
+        this.button.top = this.buttonPoint.y + offsetY;
     },
 
     onTouchEnd: function(/*e*/) {
@@ -54,9 +51,3 @@ Class.define("MyApp", App, {
         this.buttonPoint.assign(0, 0);
     }
 }, module);
-
-});
-});
-});
-});
-});

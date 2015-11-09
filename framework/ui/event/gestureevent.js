@@ -7,7 +7,7 @@ var UIEvent = require("./uievent");
  * @class GestureEvent
  * @extends UIEvent
  */
-Class.define("{Framework}.ui.event.GestureEvent", UIEvent, {
+Class.define("framework.ui.event.GestureEvent", UIEvent, {
     /**
      * Constructor
      * @method GestureEvent#initialize

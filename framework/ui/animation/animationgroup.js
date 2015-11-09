@@ -2,7 +2,7 @@
 var Class = require("../../class");
 var EventEmitter = require("../../eventemitter");
 
-Class.define("{Framework}.ui.animation.AnimationGroup", EventEmitter, {
+Class.define("framework.ui.animation.AnimationGroup", EventEmitter, {
     /**
      * Constructor
      * @method AnimationGroup#initialize

@@ -8,7 +8,7 @@ var Input = require("./input");
  * @class PanRecognizer
  * @extends GestureRecognizer
  */
-Class.define("{Framework}.ui.gesture.PanRecognizer", GestureRecognizer, {
+Class.define("framework.ui.gesture.PanRecognizer", GestureRecognizer, {
     /**
      * @constructor
      */

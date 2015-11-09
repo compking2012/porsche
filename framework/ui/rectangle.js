@@ -7,7 +7,7 @@ var YObject = require("../yobject");
  * @class Rectangle
  * @extends YObject
  */
-Class.define("{Framework}.ui.Rectangle", YObject, {
+Class.define("framework.ui.Rectangle", YObject, {
     /**
      * Constructor
      * @method Button#initialize

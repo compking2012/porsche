@@ -1,16 +1,19 @@
 "use strict";
-var Class = require("/framework/class");
-var App = require("/framework/app/app");
-var ImageView = require("/framework/ui/view/imageview");
-var Animation = require("/framework/ui/animation/animation");
+var fx = require("cloudappfx");
+var Class = fx.import("framework.Class");
+var CloudApp = fx.import("framework.app.CloudApp");
+var ImageView = fx.import("framework.ui.view.ImageView");
+var Animation = fx.import("framework.ui.animation.Animation");
 
-Class.define("MyApp", App, {
+Class.define("MyApp", CloudApp, {
     initialize: function() {
-        App.prototype.initialize.apply(this, arguments);
+        CloudApp.prototype.initialize.apply(this, arguments);
+
+        global.CloudAppFXDebugPaintFPS = true;
 
         for (var i = 0; i < 10; i++) {
             var imageView = new ImageView();
-            imageView.src = "./res/ic_launcher.png";
+            imageView.src = __dirname + "/res/ic_launcher.png";
             imageView.left = 10 + i * 20;
             imageView.top = 10 + (i % 5) * 20;
             imageView.originX = 50;

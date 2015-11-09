@@ -7,7 +7,7 @@ var LayoutParam = require("./layoutparam");
  * @class FlowLayoutParam
  * @extends LayoutParam
  */
-Class.define("{Framework}.ui.layout.FlowLayoutParam", LayoutParam, {
+Class.define("framework.ui.layout.FlowLayoutParam", LayoutParam, {
     initialize: function() {
         LayoutParam.prototype.initialize.apply(this, arguments);
 

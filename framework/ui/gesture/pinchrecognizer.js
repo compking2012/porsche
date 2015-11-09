@@ -8,7 +8,7 @@ var Input = require("./input");
  * @class PinchRecognizer
  * @extends GestureRecognizer
  */
-Class.define("{Framework}.ui.gesture.PinchRecognizer", GestureRecognizer, {
+Class.define("framework.ui.gesture.PinchRecognizer", GestureRecognizer, {
     /**
      * @constructor
      */

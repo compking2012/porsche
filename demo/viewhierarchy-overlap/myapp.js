@@ -1,18 +1,14 @@
-define(function(require, exports, module) {
-define(function(require, exports, module) {
-define(function(require, exports, module) {
-define(function(require, exports, module) {define(function(require, exports, module) {
-
 "use strict";
-var Class = require("/framework/class");
-var App = require("/framework/app/app");
-var CompositeView = require("/framework/ui/view/compositeview");
-var TextView = require("/framework/ui/view/textview");
-var View = require("/framework/ui/view/view");
+var fx = require("cloudappfx");
+var Class = fx.import("framework.Class");
+var CloudApp = fx.import("framework.app.CloudApp");
+var CompositeView = fx.import("framework.ui.view.CompositeView");
+var TextView = fx.import("framework.ui.view.TextView");
+var View = fx.import("framework.ui.view.View");
 
-Class.define("MyApp", App, {
+Class.define("MyApp", CloudApp, {
     initialize: function() {
-        App.prototype.initialize.apply(this, arguments);
+        CloudApp.prototype.initialize.apply(this, arguments);
 
         this.window.id = "window";
 
@@ -65,9 +61,3 @@ Class.define("MyApp", App, {
         }, 3000);
     }
 }, module);
-
-});
-});
-});
-});
-});

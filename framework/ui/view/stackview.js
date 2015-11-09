@@ -10,7 +10,7 @@ var PanRecognizer = require("../gesture/panrecognizer");
  * @class StackView
  * @extends CompositeView
  */
-Class.define("{Framework}.ui.view.StackView", CompositeView, {
+Class.define("framework.ui.view.StackView", CompositeView, {
     /**
      * Constructor
      * @method StackView#initialize

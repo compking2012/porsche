@@ -2,7 +2,7 @@
 var Class = require("../../class");
 var Animation = require("./animation");
 
-Class.define("{Framework}.ui.animation.FrameAnimation", Animation, {
+Class.define("framework.ui.animation.FrameAnimation", Animation, {
     /**
      * Constructor
      * @method FrameAnimation#initialize

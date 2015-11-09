@@ -2,7 +2,7 @@
 var Class = require("../class");
 var EventEmitter = require("../yobject");
 
-Class.define("{Framework}.model.DataSource", EventEmitter, {
+Class.define("framework.model.DataSource", EventEmitter, {
     initialize: function() {
         EventEmitter.prototype.initialize.apply(this, arguments);
 

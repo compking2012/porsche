@@ -1,0 +1,7 @@
+{
+    "appName" : "ScrollableView-Vertical",
+    "debug": {
+        "paintFPS": true,
+        "dirtyRect": false
+    }
+}

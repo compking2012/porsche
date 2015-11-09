@@ -10,7 +10,7 @@ var TapRecognizer = require("../gesture/taprecognizer");
  * @class Slider
  * @extends ProgressView
  */
-Class.define("{Framework}.ui.view.Slider", ProgressView, {
+Class.define("framework.ui.view.Slider", ProgressView, {
     initialize: function() {
         ProgressView.prototype.initialize.apply(this, arguments);
 

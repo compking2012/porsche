@@ -4,7 +4,7 @@ var EventEmitter = require("../eventemitter");
 var TouchEvent = require("./event/touchevent");
 var Point = require("./point");
 
-Class.define("{Framework}.ui.WindowManager", EventEmitter, {
+Class.define("framework.ui.WindowManager", EventEmitter, {
     initialize: function(inputService, renderService) {
         EventEmitter.prototype.initialize.apply(this, arguments);
 
@@ -265,7 +265,7 @@ Class.define("{Framework}.ui.WindowManager", EventEmitter, {
             view.dispatchEvent(event.type, event);
 
             // FIXME: use instanceof instead
-            if (event.toString() === "{Framework}.ui.event.TouchEvent") {
+            if (event.toString() === "framework.ui.event.TouchEvent") {
                 var length = event.touches.length;
                 for (var i = 0; i < length; i++) {
                     event.touches[i].clientX += view.left;

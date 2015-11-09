@@ -9,7 +9,7 @@ var LayoutParam = require("./layoutparam");
  * @class RowLayout
  * @extends Layout
  */
-Class.define("{Framework}.ui.layout.RowLayout", Layout, {
+Class.define("framework.ui.layout.RowLayout", Layout, {
     initialize: function() {
         Layout.prototype.initialize.apply(this, arguments);
         this._paddingTop = 0;

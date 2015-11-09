@@ -1,19 +1,15 @@
-define(function(require, exports, module) {
-define(function(require, exports, module) {
-define(function(require, exports, module) {
-define(function(require, exports, module) {define(function(require, exports, module) {
-
 "use strict";
-var Class = require("/framework/class");
-var App = require("/framework/app/app");
-var View = require("/framework/ui/view/view");
+var fx = require("cloudappfx");
+var Class = fx.import("framework.Class");
+var CloudApp = fx.import("framework.app.CloudApp");
+var View = fx.import("framework.ui.view.View");
 
-Class.define("MyApp", App, {
+Class.define("MyApp", CloudApp, {
     initialize: function() {
-        App.prototype.initialize.apply(this, arguments);
+        CloudApp.prototype.initialize.apply(this, arguments);
 
         var view = new View();
-        view.background = "url(background.gif" + ") repeat";
+        view.background = "url(" + __dirname + "/background.gif" + ") repeat";
         view.left = 110;
         view.top = 110;
         view.width = 100;
@@ -22,9 +18,3 @@ Class.define("MyApp", App, {
         this.window.addChild(view);
     }
 }, module);
-
-});
-});
-});
-});
-});

@@ -1,0 +1,7 @@
+{
+    "appName": "chart",
+    "debug": {
+        "paintFPS": true,
+        "dirtyRect": false
+    }
+}

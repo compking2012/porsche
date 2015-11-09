@@ -7,7 +7,7 @@ var Switch = require("./switch");
  * @class CheckBox
  * @extends Switch
  */
-Class.define("{Framework}.ui.view.CheckBox", Switch, {
+Class.define("framework.ui.view.CheckBox", Switch, {
     /**
      * Constructor
      * @method CheckBox#initialize

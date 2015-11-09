@@ -2,7 +2,7 @@
 var Class = require("../../class");
 var YObject = require("../../yobject");
 
-Class.define("{Framework}.ui.animation.SharedTimer", YObject, {
+Class.define("framework.ui.animation.SharedTimer", YObject, {
     /**
      * Constructor
      * @method SharedTimer#initialize

@@ -8,7 +8,7 @@ var Input = require("./input");
  * @class SwipeRecognizer
  * @extends GestureRecognizer
  */
-Class.define("{Framework}.ui.gesture.SwipeRecognizer", GestureRecognizer, {
+Class.define("framework.ui.gesture.SwipeRecognizer", GestureRecognizer, {
     /**
      * @constructor
      */

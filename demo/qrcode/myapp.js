@@ -1,29 +1,23 @@
-define(function(require, exports, module) {
-define(function(require, exports, module) {
-define(function(require, exports, module) {
-define(function(require, exports, module) {define(function(require, exports, module) {
-
 "use strict";
-var Class = require("/framework/class");
-var App = require("/framework/app/app");
-var QRCode = require("/framework/ui/view/qrcode");
+var fx = require("cloudappfx");
+var Class = fx.import("framework.Class");
+var CloudApp = fx.import("framework.app.CloudApp");
+var QRCode = fx.import("framework.ui.view.QRCode");
 
-Class.define("MyApp", App, {
+Class.define("MyApp", CloudApp, {
     initialize: function() {
-        App.prototype.initialize.apply(this, arguments);
+        CloudApp.prototype.initialize.apply(this, arguments);
 
         this.qrcode = new QRCode();
         this.qrcode.background = "#FFFFFF";
-        this.qrcode.width = 320;
-        this.qrcode.height = 320;
-        this.qrcode.value = "http://www.google.com";
-
+        this.qrcode.width = 180;
+        this.qrcode.height = 180;
+        this.qrcode.margin = 3;
+        this.qrcode.scale = 6;
+        this.qrcode.color = "#0000FF";
+        this.qrcode.background = "#EEEEEE";
+        this.qrcode.correctLevel = "H";
+        this.qrcode.value = "283197578276228209";
         this.window.addChild(this.qrcode);
     }
 }, module);
-
-});
-});
-});
-});
-});

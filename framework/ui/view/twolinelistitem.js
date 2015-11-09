@@ -6,7 +6,7 @@ var TextView = require("./textview");
 var Switch = require("./switch");
 var CheckBox = require("./checkbox");
 
-Class.define("{Framework}.ui.view.TwoLineListItem", ListItem, {
+Class.define("framework.ui.view.TwoLineListItem", ListItem, {
     initialize: function() {
         ListItem.prototype.initialize.apply(this, arguments);
 

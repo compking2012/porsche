@@ -8,7 +8,7 @@ var FlowLayoutParam = require("./flowlayoutparam");
  * @class FlowLayout
  * @extends Layout
  */
-Class.define("{Framework}.ui.layout.FlowLayout", Layout, {
+Class.define("framework.ui.layout.FlowLayout", Layout, {
     initialize: function() {
         Layout.prototype.initialize.apply(this, arguments);
         this._align = "center";

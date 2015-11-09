@@ -2,7 +2,7 @@
 var Class = require("../../class");
 var CheckBox = require("./checkbox");
 
-Class.define("{Framework}.ui.view.RadioButton", CheckBox, {
+Class.define("framework.ui.view.RadioButton", CheckBox, {
     initialize: function () {
         CheckBox.prototype.initialize.apply(this, arguments);
     },

@@ -1,19 +1,15 @@
-define(function(require, exports, module) {
-define(function(require, exports, module) {
-define(function(require, exports, module) {
-define(function(require, exports, module) {define(function(require, exports, module) {
-
 "use strict";
-var Class = require("/framework/class");
-var App = require("/framework/app/app");
-var ImageView = require("/framework/ui/view/imageview");
+var fx = require("cloudappfx");
+var Class = fx.import("framework.Class");
+var CloudApp = fx.import("framework.app.CloudApp");
+var ImageView = fx.import("framework.ui.view.ImageView");
 
-Class.define("MyApp", App, {
+Class.define("MyApp", CloudApp, {
     initialize: function() {
-        App.prototype.initialize.apply(this, arguments);
+        CloudApp.prototype.initialize.apply(this, arguments);
 
         var imageView = new ImageView();
-        imageView.src = "./res/big.png";
+        imageView.src = __dirname + "/res/bg_1.png";
         imageView.left = 40;
         imageView.top = 40;
         imageView.width = 240;
@@ -22,9 +18,3 @@ Class.define("MyApp", App, {
         this.window.addChild(imageView);
     }
 }, module);
-
-});
-});
-});
-});
-});

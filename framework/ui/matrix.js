@@ -7,7 +7,7 @@ var YObject = require("../yobject");
  * @class Matrix
  * @extends YObject
  */
-Class.define("{Framework}.ui.Matrix", YObject, {
+Class.define("framework.ui.Matrix", YObject, {
     /**
      * Constructor
      * @method Matrix#initialize

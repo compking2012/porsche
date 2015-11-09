@@ -6,7 +6,7 @@ var TouchInput = require("./touchinput");
 var GestureRecognizer = require("./gesturerecognizer");
 var GestureEvent = require("../event/gestureevent");
 
-Class.define("{Framework}.ui.gesture.GestureManager", EventEmitter, {
+Class.define("framework.ui.gesture.GestureManager", EventEmitter, {
     initialize: function(view) {
         EventEmitter.prototype.initialize.apply(this, arguments);
 

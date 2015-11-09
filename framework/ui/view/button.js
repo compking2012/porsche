@@ -8,7 +8,7 @@ var TapRecognizer = require("../gesture/taprecognizer");
  * @class Button
  * @extends TextView
  */
-Class.define("{Framework}.ui.view.Button", TextView, {
+Class.define("framework.ui.view.Button", TextView, {
     /**
      * Constructor
      * @method Button#initialize

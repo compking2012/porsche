@@ -2,7 +2,7 @@
 var Class = require("../class");
 var EventEmitter = require("../eventemitter");
 
-Class.define("{Framework}.ui.platform.H5RenderService", EventEmitter, {
+Class.define("framework.ui.platform.H5RenderService", EventEmitter, {
     initialize: function() {
         EventEmitter.prototype.initialize.apply(this, arguments);
 

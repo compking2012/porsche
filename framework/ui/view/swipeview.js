@@ -8,7 +8,7 @@ var CubicBezier = require("../animation/cubicbezier");
  * @class SwipeView
  * @extends ScrollableView
  **/
-Class.define("{Framework}.ui.view.SwipeView", CompositeView, {
+Class.define("framework.ui.view.SwipeView", CompositeView, {
     initialize: function() {
         CompositeView.prototype.initialize.apply(this, arguments);
 

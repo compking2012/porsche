@@ -8,7 +8,7 @@ var Event = require("./event");
  * @class UIEvent
  * @extends Event
  */
-Class.define("{Framework}.ui.event.UIEvent", Event, {
+Class.define("framework.ui.event.UIEvent", Event, {
     /**
      * Constructor
      * @method UIEvent#initialize

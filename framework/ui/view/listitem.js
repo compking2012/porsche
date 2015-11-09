@@ -7,7 +7,7 @@ var CompositeView = require("./compositeview");
  * @class ListItem
  * @extends CompositeView
  */
-Class.define("{Framework}.ui.view.ListItem", CompositeView, {
+Class.define("framework.ui.view.ListItem", CompositeView, {
     initialize: function() {
         CompositeView.prototype.initialize.apply(this, arguments);
     },

@@ -8,7 +8,7 @@ var ColumnLayout = require("../layout/columnlayout");
  * @class ListView
  * @extends ScrollableView
  */
-Class.define("{Framework}.ui.view.ListView", ScrollableView, {
+Class.define("framework.ui.view.ListView", ScrollableView, {
     /**
      * Constructor
      * @method ListView#initialize
@@ -81,7 +81,7 @@ Class.define("{Framework}.ui.view.ListView", ScrollableView, {
      */
     addChild: function(view) {
         // FIXME: use instanceof instead
-        if (view.toString() !== "{Framework}.ui.view.ListItem") {
+        if (view.toString() !== "framework.ui.view.ListItem") {
             throw "The view must be a List Item";
         }
         view.saveAbsoluteInfo();
@@ -99,7 +99,7 @@ Class.define("{Framework}.ui.view.ListView", ScrollableView, {
      */
     insertChild: function(view, index) {
         // FIXME: use instanceof instead
-        if (view.toString() !== "{Framework}.ui.view.ListItem") {
+        if (view.toString() !== "framework.ui.view.ListItem") {
             throw "The view must be a List Item";
         }
         view.saveAbsoluteInfo();
@@ -116,7 +116,7 @@ Class.define("{Framework}.ui.view.ListView", ScrollableView, {
      */
     removeChild: function(view) {
         // FIXME: use instanceof instead
-        if (view.toString() !== "{Framework}.ui.view.ListItem") {
+        if (view.toString() !== "framework.ui.view.ListItem") {
             throw "The view must be a List Item";
         }
         view.resetToNoLayout();

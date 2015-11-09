@@ -1,0 +1,7 @@
+{
+    "appName": "HWAView",
+    "debug": {
+        "paintFPS": true,
+        "dirtyRect": true
+    }    
+}

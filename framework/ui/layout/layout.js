@@ -7,7 +7,7 @@ var YObject = require("../../yobject");
  * @class Layout
  * @extends YObject
  */
-Class.define("{Framework}.ui.layout.Layout", YObject, {
+Class.define("framework.ui.layout.Layout", YObject, {
     initialize: function() {
         YObject.prototype.initialize.apply(this, arguments);
 

@@ -2,7 +2,7 @@
 var Class = require("../../class");
 var YObject = require("../../yobject");
 
-Class.define("{Framework}.ui.layout.LayoutParam", YObject, {
+Class.define("framework.ui.layout.LayoutParam", YObject, {
     initialize: function(layout) {
         YObject.prototype.initialize.apply(this, arguments);
 

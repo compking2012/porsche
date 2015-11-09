@@ -8,7 +8,7 @@ var Input = require("./input");
  * @class LongPressRecognizer
  * @extends GestureRecognizer
  */
-Class.define("{Framework}.ui.gesture.LongPressRecognizer", GestureRecognizer, {
+Class.define("framework.ui.gesture.LongPressRecognizer", GestureRecognizer, {
     /**
      * @constructor
      */

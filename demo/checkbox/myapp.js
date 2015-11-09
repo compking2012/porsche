@@ -1,17 +1,13 @@
-define(function(require, exports, module) {
-define(function(require, exports, module) {
-define(function(require, exports, module) {
-define(function(require, exports, module) {define(function(require, exports, module) {
-
 "use strict";
-var Class = require("/framework/class");
-var App = require("/framework/app/app");
-var CheckBox = require("/framework/ui/view/checkbox");
-var TextView = require("/framework/ui/view/textview");
+var fx = require("cloudappfx");
+var Class = fx.import("framework.Class");
+var CloudApp = fx.import("framework.app.CloudApp");
+var CheckBox = fx.import("framework.ui.view.CheckBox");
+var TextView = fx.import("framework.ui.view.TextView");
 
-Class.define("MyApp", App, {
+Class.define("MyApp", CloudApp, {
     initialize: function() {
-        App.prototype.initialize.apply(this, arguments);
+        CloudApp.prototype.initialize.apply(this, arguments);
 
         this.textView = new TextView();
         this.textView.width = 320;
@@ -21,7 +17,7 @@ Class.define("MyApp", App, {
         this.textView.fontStyle = "normal";
         this.textView.background = "#FF0000";
         this.textView.color = "#00FF00";
-        this.textView.text = "Click the Checkbox";
+        this.textView.text = "Tap the Checkbox";
         this.window.addChild(this.textView);
 
         this.checkbox = new CheckBox();
@@ -29,7 +25,7 @@ Class.define("MyApp", App, {
         this.checkbox.top = 50;
         this.checkbox.width = 100;
         this.checkbox.height = 100;
-        this.checkbox.addEventListener("click", this.onClick.bind(this));
+        this.checkbox.addEventListener("tap", this.onTap.bind(this));
         this.window.addChild(this.checkbox);
     },
 
@@ -38,7 +34,7 @@ Class.define("MyApp", App, {
         this.checkbox = null;
     },
 
-    onClick: function() {
+    onTap: function() {
         if (this.checkbox.value) {
             this.textView.text = "Checkbox is on";
         } else {
@@ -46,9 +42,3 @@ Class.define("MyApp", App, {
         }
     }
 }, module);
-
-});
-});
-});
-});
-});

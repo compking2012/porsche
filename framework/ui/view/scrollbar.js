@@ -7,7 +7,7 @@ var ProgressView = require("./progressview");
  * @class ScrollBar
  * @extends View
  */
-Class.define("{Framework}.ui.view.ScrollBar", ProgressView, {
+Class.define("framework.ui.view.ScrollBar", ProgressView, {
     /**
      * Constructor that create a view
      * @method ScrollBar#initialize
