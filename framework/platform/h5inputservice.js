@@ -7,7 +7,7 @@ Class.define("framework.ui.platform.H5InputService", EventEmitter, {
         EventEmitter.prototype.initialize.apply(this, arguments);
 
         this._canvas = target;
-        this._canvas.addEventListener("touchstart", this.onTouchStartFunc = this.onTouchStart.bind(this));
+        this._canvas.addEventListener("touchstart", this._onTouchStartFunc = this.onTouchStart.bind(this));
         this._canvas.addEventListener("touchmove", this._onTouchMoveFunc = this.onTouchMove.bind(this));
         this._canvas.addEventListener("touchend", this._onTouchEndFunc = this.onTouchEnd.bind(this));
         this._canvas.addEventListener("touchcancel", this._onTouchCancelFunc = this.onTouchCancel.bind(this));
@@ -27,18 +27,34 @@ Class.define("framework.ui.platform.H5InputService", EventEmitter, {
     },
 
     onTouchStart: function(e) {
-        this.dispatchEvent("input", "touchstart", {x: e.touches[0], y: e.y});
+        var points = [];
+        for (var i = 0; i < e.targetTouches.length; i++) {
+            points.push({x: e.targetTouches[i].clientX, y: e.targetTouches[i].clientY});
+        }
+        this.dispatchEvent("input", "touchstart", points);
     },
 
     onTouchMove: function(e) {
-        this.dispatchEvent("input", "touchmove", {x: e.x, y: e.y});
+        var points = [];
+        for (var i = 0; i < e.targetTouches.length; i++) {
+            points.push({x: e.targetTouches[i].clientX, y: e.targetTouches[i].clientY});
+        }
+        this.dispatchEvent("input", "touchmove", points);
     },
 
     onTouchEnd: function(e) {
-        this.dispatchEvent("input", "touchend", {x: e.x, y: e.y});
+        var points = [];
+        for (var i = 0; i < e.changedTouches.length; i++) {
+            points.push({x: e.changedTouches[i].clientX, y: e.changedTouches[i].clientY});
+        }
+        this.dispatchEvent("input", "touchend", points);
     },
 
     onTouchCancel: function(e) {
-        this.dispatchEvent("input", "touchcancel", {x: e.x, y: e.y});
+        var points = [];
+        for (var i = 0; i < e.changedTouches.length; i++) {
+            points.push({x: e.changedTouches[i].clientX, y: e.changedTouches[i].clientY});
+        }
+        this.dispatchEvent("input", "touchcancel", points);
     }
 }, module);

@@ -23,6 +23,7 @@ Class.define("framework.ui.platform.InputService", EventEmitter, {
         e.x = Number(e.x);
         e.y = Number(e.y);
 
+        // FIXME: only support single touch
         var points = [];
         points.push({x: e.x, y: e.y});
         if (e.type === 0) {

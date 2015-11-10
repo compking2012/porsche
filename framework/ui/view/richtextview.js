@@ -79,7 +79,6 @@ Class.define("framework.ui.view.RichTextView", TextView, {
     draw: function(context) {
         context.save();
         context.beginPath();
-        context.addFont(this._chsFont);
         context.font = this.fontWeight + " " + this.fontStyle + this.fontSize + " " + this.fontFamily; 
         var match = this.text.match(/<\s*br\s*\/>|<\s*class=["|']([^"|']+)["|']\s*\>([^>]+)<\s*\/class\s*\>|<\s*style=["|']([^"|']+)["|']\s*\>([^>]+)<\s*\/style\s*\>|[^<]+/g);
         var proFont = [];

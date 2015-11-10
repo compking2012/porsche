@@ -1,0 +1,47 @@
+*) animation
+H5:     passed
+Node:   passed
+
+*) animation-image
+H5:     no pass
+Node:   passed
+
+*) animationgroup
+H5:     passed
+Node:   passed
+
+*) audioplayer
+H5:     N/A
+Node:   no pass
+
+*) audiorecorder
+H5:     N/A
+Node:   no pass
+
+*) autolayout
+H5:     no pass
+Node:   passed
+
+*) autolayout-relayout
+H5:     no pass
+Node:   passed
+
+*) backgroundimage
+H5:     no pass
+Node:   passed
+
+*) barcode
+H5:     passed
+Node:   passed
+
+*) button
+H5:     no pass
+Node:   no pass
+
+*) chart
+H5:     passed
+Node:   passed
+
+*) checkbox
+H5:     no pass
+Node:   

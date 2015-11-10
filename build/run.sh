@@ -3,8 +3,8 @@
 if [ $1 == "h5" ]
 then
     ./build.sh h5
+    open -a "/Applications/Google Chrome.app" "http://localhost:8080/$2/index.html"
     http-server ../out
-    #openbrowser $2
 elif [ $1 == "node" ]
 then
     ./build.sh node

@@ -2,7 +2,6 @@
 var Class = require("../../class");
 var View = require("./view");
 var TapRecognizer = require("../gesture/taprecognizer");
-var fs = require("fs");
 
 /**
  * Switch widget
@@ -13,11 +12,11 @@ Class.define("CompositeView.ui.view.Switch", View, {
     initialize: function () {
         View.prototype.initialize.apply(this, arguments);
 
-        this._disabledSrc = "/framework/resources/switchdisabled.png";
+        this._disabledSrc = global.AppFXRootPath + "/resources/switchdisabled.png";
         this._disabledImage = null;
-        this._offSrc = "/framework/resources/switchoff.png";
+        this._offSrc = global.AppFXRootPath + "/resources/switchoff.png";
         this._offImage = null;
-        this._onSrc = "/framework/resources/switchon.png";
+        this._onSrc = global.AppFXRootPath + "/resources/switchon.png";
         this._onImage = null;
         this._value = false;
         this.addGestureRecognizer(this._tapRecognizer = new TapRecognizer());

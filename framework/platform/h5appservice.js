@@ -12,7 +12,11 @@ Class.define("framework.ui.platform.H5AppService", EventEmitter, {
         EventEmitter.prototype.destroy.apply(this, arguments);
     },
 
-    getRootPath: function() {
+    getFXRootPath: function() {
+        return "/";
+    },
+
+    getAppRootPath: function() {
         return "/";
     },
 
@@ -21,7 +25,7 @@ Class.define("framework.ui.platform.H5AppService", EventEmitter, {
     },
 
     getAppName: function() {
-        return "";
+        return "App";
     },
 
     registerSelfToGlobal: function() {

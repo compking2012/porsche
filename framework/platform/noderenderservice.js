@@ -9,7 +9,7 @@ Class.define("framework.ui.platform.RenderService", EventEmitter, {
     initialize: function() {
         EventEmitter.prototype.initialize.apply(this, arguments);
 
-        this._uiServer = new UIServer();
+        this._uiServer = new UIServer("MyApp");
         this._canvasIdGen = 0;
         this._timer = null;
     },
@@ -43,6 +43,9 @@ Class.define("framework.ui.platform.RenderService", EventEmitter, {
         this._canvasIdGen++;
         var canvas = this._uiServer.createCanvas(String(this._canvasIdGen), 0, 0, width, height, 0);
         this._uiServer.setCanvasTouchRegion(canvas, 0, 0, width, height);
+        var chsFont = new Canvas.Font("sans-serif", "/system/bin/ui_res/chsfont2.ttf");
+        canvas.getContext("2d").addFont(chsFont);
+
         return canvas;
     },
 

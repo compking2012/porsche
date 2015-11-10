@@ -45,6 +45,7 @@ Class.define("framework.app.App", EventEmitter, {
         this._appService.registerSelfToGlobal();
         this._renderService.registerImageToGlobal();
         global.app = this;
+        global.AppFXRootPath = this._appService.getFXRootPath();
     },
 
     /**
@@ -59,7 +60,6 @@ Class.define("framework.app.App", EventEmitter, {
         this._window.destroy();
         this._window = null;
         this._rootController = null;
-        this._manifest = null;
         this._appService.removeEventListener("start", this._onStartFunc);
         this._onStartFunc = null;
         this._appService.removeEventListener("background", this._onInactiveFunc);
@@ -140,7 +140,7 @@ Class.define("framework.app.App", EventEmitter, {
     },
 
     get rootPath() {
-        return this._appService.getRootPath();
+        return this._appService.getAppRootPath();
     },
 
     processDebug: function(debug) {

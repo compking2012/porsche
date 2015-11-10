@@ -14,9 +14,9 @@ Class.define("framework.ui.view.CheckBox", Switch, {
      */
     initialize: function () {
         Switch.prototype.initialize.apply(this, arguments);
-        this._disabledSrc = "/framework/resources/checkboxdisabled.png";
-        this._offSrc = "/framework/resources/checkboxoff.png";
-        this._onSrc = "/framework/resources/checkboxon.png";
+        this._disabledSrc = global.AppFXRootPath + "/resources/checkboxdisabled.png";
+        this._offSrc = global.AppFXRootPath + "/resources/checkboxoff.png";
+        this._onSrc = global.AppFXRootPath + "/resources/checkboxon.png";
     },
 
     /**

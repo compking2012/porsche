@@ -3,7 +3,7 @@ var fx = require("framework");
 var Class = fx.import("framework.Class");
 var App = fx.import("framework.app.App");
 var CompositeView = fx.import("framework.ui.view.CompositeView");
-var TextView = fx.import("framework.ui.view.TextView");
+var View = fx.import("framework.ui.view.View");
 var AutoLayout = fx.import("framework.ui.layout.AutoLayout");
 
 Class.define("MyApp", App, {
@@ -14,23 +14,23 @@ Class.define("MyApp", App, {
         compositeView.width = 320;
         compositeView.height = 320;
 
-        var view1 = new TextView();
+        var view1 = new View();
         view1.background = "#FF0000";
         compositeView.addChild(view1);
 
-        var view2 = new TextView();
+        var view2 = new View();
         view2.background = "#00FF00";
         compositeView.addChild(view2);
 
-        var view3 = new TextView();
+        var view3 = new View();
         view3.background = "#0000FF";
         compositeView.addChild(view3);
 
-        var view4 = new TextView();
+        var view4 = new View();
         view4.background = "#FFFF00";
         compositeView.addChild(view4);
 
-        var view5 = new TextView();
+        var view5 = new View();
         view5.background = "#00FFFF";
         compositeView.addChild(view5);
 

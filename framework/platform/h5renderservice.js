@@ -26,7 +26,7 @@ Class.define("framework.ui.platform.H5RenderService", EventEmitter, {
     },
 
     createCanvas: function(width, height) {
-        this._canvas.style.border = "solid 1px #000000";
+        this._canvas.style.background = "#000000";
         this._canvas.width = width;
         this._canvas.height = height;
         return this._canvas;

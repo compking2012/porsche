@@ -155,7 +155,7 @@ Class.define("framework.ui.WindowManager", EventEmitter, {
                 global.FXFrameCount++;
                 var time = new Date().getTime() - global.FXTimestamp;
                 if (time >= 1000) {
-                    console.log("[FX]PaintFPS: ", Math.round(global.FXFrameCount / time * 1000));
+                    console.log("[AppFX]PaintFPS: ", Math.round(global.FXFrameCount / time * 1000));
                     global.FXFrameCount = 0;
                     global.FXTimestamp = 0;
                 }
@@ -167,19 +167,21 @@ Class.define("framework.ui.WindowManager", EventEmitter, {
     processTouchEvent: function(type, e) {
         // TODO: currently, only support single-touch, multi-touch is not supported yet.
         // TODO: only assign touches[], need plus changedTouches[] and targetTouches[]
+        var touchPoints = e;
 
         var activeWindow = this._dialog !== null ? this._dialog : this._mainWindow;
         var view = null;
         if (type === "touchstart") {
-            this._touchstartPoint.assign(e.x, e.y);
+            this._touchstartPoint.assign(touchPoints[0].x, touchPoints[0].y);
+            this._lastTouchPoint.assign(touchPoints[0].x, touchPoints[0].y);
             this._touchTimestamp = new Date().getTime();
             view = activeWindow.findViewAtPoint(this._touchstartPoint);
             this._identifier = 0;
         } else if (type === "touchmove") {
-            if (e.x === this._lastTouchPoint.x && e.y === this._lastTouchPoint.y) {
+            if (touchPoints[0].x === this._lastTouchPoint.x && touchPoints[0].y === this._lastTouchPoint.y) {
                 return;
             }
-            this._lastTouchPoint.assign(e.x, e.y);
+            this._lastTouchPoint.assign(touchPoints[0].x, touchPoints[0].y);
             view = activeWindow.findViewAtPoint(this._lastTouchPoint);
             if (this._activeView !== view) {
                 return;
@@ -200,8 +202,8 @@ Class.define("framework.ui.WindowManager", EventEmitter, {
             this._activeView = view;
         }
 
-        var x = e.x;
-        var y = e.y;
+        var x = touchPoints[0].x;
+        var y = touchPoints[0].y;
         var dx = x;
         var dy = y;
         var v = this._activeView;
@@ -219,8 +221,8 @@ Class.define("framework.ui.WindowManager", EventEmitter, {
         if (type === "touchstart" || type === "touchmove") {
             touches.push({
                 identifier: this._identifier,
-                screenX: e.x,
-                screenY: e.y,
+                screenX: touchPoints[0].x,
+                screenY: touchPoints[0].y,
                 clientX: x,
                 clientY: y,
                 pageX: x,
@@ -230,8 +232,8 @@ Class.define("framework.ui.WindowManager", EventEmitter, {
 
             targetTouches.push({
                 identifier: this._identifier,
-                screenX: e.x,
-                screenY: e.y,
+                screenX: touchPoints[0].x,
+                screenY: touchPoints[0].y,
                 clientX: x,
                 clientY: y,
                 pageX: x,
@@ -241,8 +243,8 @@ Class.define("framework.ui.WindowManager", EventEmitter, {
         }
         changedTouches.push({
             identifier: this._identifier,
-            screenX: e.x,
-            screenY: e.y,
+            screenX: touchPoints[0].x,
+            screenY: touchPoints[0].y,
             clientX: x,
             clientY: y,
             pageX: x,

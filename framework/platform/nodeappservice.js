@@ -14,7 +14,11 @@ Class.define("framework.ui.platform.NodeAppService", EventEmitter, {
         EventEmitter.prototype.destroy.apply(this, arguments);
     },
 
-    getRootPath: function() {
+    getFXRootPath: function() {
+        return path.dirname(__dirname);
+    },
+
+    getAppRootPath: function() {
         return path.dirname(require.main.filename);
     },
 
@@ -26,7 +30,7 @@ Class.define("framework.ui.platform.NodeAppService", EventEmitter, {
     },
 
     getAppName: function() {
-        return "";
+        return "App";
     },
 
     registerSelfToGlobal: function() {

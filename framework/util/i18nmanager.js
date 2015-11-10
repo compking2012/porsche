@@ -3,7 +3,6 @@ var Class = require("../class");
 var YObject = require("../yobject");
 var I18next = require("../vendor/i18next");
 var fs = require("fs");
-var path = require("path");
 
 Class.define("framework.util.I18nManager", YObject, {
     initialize: function() {
@@ -30,9 +29,8 @@ Class.define("framework.util.I18nManager", YObject, {
     },
 
     initLocale: function() {
-        var dir = path.dirname(require.main.filename);
         var locale = this.getLocale();
-        var json = JSON.parse(fs.readFileSync(dir + "/locales/" + locale + "/strings.json").toString());
+        var json = JSON.parse(fs.readFileSync(global.app.rootPath + "/locales/" + locale + "/strings.json").toString());
         var store = {};
         store[locale] = {
             translation: json

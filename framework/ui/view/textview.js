@@ -33,7 +33,6 @@ Class.define("framework.ui.view.TextView", View, {
 
         this._width = 100;
         this._height = 20;
-        this._chsFont = new Canvas.Font("sans-serif", "/system/bin/ui_res/chsfont2.ttf");
     },
 
     /**
@@ -201,7 +200,6 @@ Class.define("framework.ui.view.TextView", View, {
     draw: function(context) {
         context.save();
         context.beginPath();
-        context.addFont(this._chsFont);
         context.textDrawingMode = this._highQuality ? "path" : "glyph";
         context.antialias = "none";
         context.fillStyle = this._color;
