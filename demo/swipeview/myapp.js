@@ -40,7 +40,7 @@ Class.define("MyApp", App, {
         // view2.addChild(textView2);
 
         // var imageView = new ImageView();
-        // imageView.src = __dirname + "/res/bg_1.png";
+        // imageView.src = global.app.rootPath + "/res/bg_1.png";
         // imageView.width = 320;
         // imageView.height = 320;
         // swipeView.addChild(imageView);

@@ -54,7 +54,7 @@ Class.define("MyApp", App, {
                     break;
             }
             if (/^TwoLinesWithImage/.test(item.mode)) {
-                item.image.src = __dirname + "/ic_measure.png";
+                item.image.src = global.app.rootPath + "/ic_measure.png";
             }
             item.mainText.text = "Item " + i;
             item.commentText.text = "This is an item.";

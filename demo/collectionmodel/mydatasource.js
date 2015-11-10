@@ -10,13 +10,13 @@ Class.define("MyDataSource", DataSource, {
     initialize: function() {
         DataSource.prototype.initialize.apply(this, arguments);
 
-        this.metafile = __dirname + "/data/list.data";
+        this.metafile = global.app.rootPath + "/data/list.data";
     },
 
     create: function(entity, callback) {
         if (entity instanceof Book) {
             var model = entity;
-            var file = __dirname + "/data/item-" + model.id + ".data";
+            var file = global.app.rootPath + "/data/item-" + model.id + ".data";
             var exists = fs.existsSync(file);
             if (exists) {
                 if (callback !== undefined) {
@@ -31,7 +31,7 @@ Class.define("MyDataSource", DataSource, {
             var models = entity;
             var length = models.length;
             for (var i = 0; i < length; i++) {
-                var file = __dirname + "/data/item-" + models[i].id + ".data";
+                var file = global.app.rootPath + "/data/item-" + models[i].id + ".data";
                 var exists = fs.existsSync(this.file);
                 if (exists) {
                     if (callback !== undefined) {
@@ -53,7 +53,7 @@ Class.define("MyDataSource", DataSource, {
     retrieve: function(entity, callback) {
         if (entity instanceof Book) {
             var model = entity;
-            var file = __dirname + "/data/item-" + model.id + ".data";
+            var file = global.app.rootPath + "/data/item-" + model.id + ".data";
             var exists = fs.existsSync(file);
             if (!exists) {
                 if (callback !== undefined) {
@@ -70,7 +70,7 @@ Class.define("MyDataSource", DataSource, {
             models.splice(0, models.length);
             var count = fs.readFileSync(this.metafile);
             for (var i = 0; i < count; i++) {
-                var file = __dirname + "/data/item-" + this._models[i].id + ".data";
+                var file = global.app.rootPath + "/data/item-" + this._models[i].id + ".data";
                 var exists = fs.existsSync(file);
                 if (!exists) {
                     if (callback !== undefined) {
@@ -92,7 +92,7 @@ Class.define("MyDataSource", DataSource, {
     update: function(entity, callback) {
         if (entity instanceof Book) {
             var model = entity;
-            var file = __dirname + "/data/item-" + model.id + ".data";
+            var file = global.app.rootPath + "/data/item-" + model.id + ".data";
             var exists = fs.existsSync(file);
             if (!exists) {
                 if (callback !== undefined) {
@@ -107,7 +107,7 @@ Class.define("MyDataSource", DataSource, {
             var models = entity;
             var length = models.length;
             for (var i = 0; i < length; i++) {
-                var file = __dirname + "/data/item-" + models[i].id + ".data";
+                var file = global.app.rootPath + "/data/item-" + models[i].id + ".data";
                 var exists = fs.existsSync(this.file);
                 if (!exists) {
                     if (callback !== undefined) {
@@ -129,7 +129,7 @@ Class.define("MyDataSource", DataSource, {
     delete: function(entity, callback) {
         if (entity instanceof Book) {
             var model = entity;
-            var file = __dirname + "/data/item-" + model.id + ".data";
+            var file = global.app.rootPath + "/data/item-" + model.id + ".data";
             var exists = fs.existsSync(file);
             if (!exists) {
                 if (callback !== undefined) {
@@ -143,7 +143,7 @@ Class.define("MyDataSource", DataSource, {
             var models = entity;
             var length = models.length;
             for (var i = 0; i < length; i++) {
-                var file = __dirname + "/data/item-" + models[i].id + ".data";
+                var file = global.app.rootPath + "/data/item-" + models[i].id + ".data";
                 var exists = fs.existsSync(this.file);
                 if (!exists) {
                     if (callback !== undefined) {

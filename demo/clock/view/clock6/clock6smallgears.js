@@ -9,12 +9,12 @@ Class.define("framework.apps.simpleclock.Clock6SmallGears", CompositeView, {
         CompositeView.prototype.initialize.apply(this, arguments);
 
         this.smallGearBg = new ImageView();
-        this.smallGearBg.src = __dirname + "/../../res/6/small_gear_bg.png";
+        this.smallGearBg.src = global.app.rootPath + "/../../res/6/small_gear_bg.png";
         this.smallGearBg.width = 70;
         this.smallGearBg.height = 70;
 
         this.smallGear1 = new ImageView();
-        this.smallGear1.src = __dirname + "/../../res/6/small_gear_1.png";
+        this.smallGear1.src = global.app.rootPath + "/../../res/6/small_gear_1.png";
         this.smallGear1.originX = 30;
         this.smallGear1.originY = 30;
         this.smallGear1.left = 27 - 30;
@@ -23,7 +23,7 @@ Class.define("framework.apps.simpleclock.Clock6SmallGears", CompositeView, {
         this.smallGear1.height = 60;
 
         this.smallGear12 = new ImageView();
-        this.smallGear12.src = __dirname + "/../../res/6/small_gear_1.png";
+        this.smallGear12.src = global.app.rootPath + "/../../res/6/small_gear_1.png";
         this.smallGear12.originX = 30;
         this.smallGear12.originY = 30;
         this.smallGear12.left = 21 - 30;
@@ -32,7 +32,7 @@ Class.define("framework.apps.simpleclock.Clock6SmallGears", CompositeView, {
         this.smallGear12.height = 60;
 
         this.smallGear2 = new ImageView();
-        this.smallGear2.src = __dirname + "/../../res/6/small_gear_2.png";
+        this.smallGear2.src = global.app.rootPath + "/../../res/6/small_gear_2.png";
         this.smallGear2.originX = 19;
         this.smallGear2.originY = 19;
         this.smallGear2.left = 55 - 19;
@@ -41,7 +41,7 @@ Class.define("framework.apps.simpleclock.Clock6SmallGears", CompositeView, {
         this.smallGear2.height = 38;
 
         this.smallGearBgProjection = new ImageView();
-        this.smallGearBgProjection.src = __dirname + "/../../res/6/small_gear_bg_projection.png";
+        this.smallGearBgProjection.src = global.app.rootPath + "/../../res/6/small_gear_bg_projection.png";
         this.smallGearBgProjection.width = 70;
         this.smallGearBgProjection.height = 70;
 

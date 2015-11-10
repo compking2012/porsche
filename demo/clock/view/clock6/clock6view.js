@@ -12,12 +12,12 @@ Class.define("framework.apps.simpleclock.Clock6View", CompositeView, {
         CompositeView.prototype.initialize.apply(this, arguments);
 
         this.bg = new ImageView();
-        this.bg.src = __dirname + "/../../res/6/bg_1.png";
+        this.bg.src = global.app.rootPath + "/../../res/6/bg_1.png";
         this.bg.width = 320;
         this.bg.height = 320;
 
         this.bigGearBg = new ImageView();
-        this.bigGearBg.src = __dirname + "/../../res/6/big_gear_bg.png";
+        this.bigGearBg.src = global.app.rootPath + "/../../res/6/big_gear_bg.png";
         this.bigGearBg.left = 115 - 52;
         this.bigGearBg.top = 205 - 52;
         this.bigGearBg.width = 104;
@@ -30,7 +30,7 @@ Class.define("framework.apps.simpleclock.Clock6View", CompositeView, {
         this.bigGears.height = 104;
 
         this.bg2 = new ImageView();
-        this.bg2.src = __dirname + "/../../res/6/bg_2.png";
+        this.bg2.src = global.app.rootPath + "/../../res/6/bg_2.png";
         this.bg2.left = 160 - 75;
         this.bg2.top = 160 - 75;
         this.bg2.width = 150;

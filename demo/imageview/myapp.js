@@ -9,7 +9,7 @@ Class.define("MyApp", App, {
         App.prototype.initialize.apply(this, arguments);
 
         var imageView = new ImageView();
-        imageView.src = "./res/bg_1.png";
+        imageView.src = global.app.rootPath + "/res/bg_1.png";
         imageView.left = 40;
         imageView.top = 40;
         imageView.width = 240;

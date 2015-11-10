@@ -64,18 +64,18 @@ Class.define("MyApp", App, {
         this.menuButton = new ImageButton();
         this.menuButton.width = 48;
         this.menuButton.height = 48;
-        this.menuButton.src = __dirname + "/res/btn_menu.png";
-        this.menuButton.pressedSrc = __dirname + "/res/btn_menu_press.png";
-        this.menuButton.disabledSrc = __dirname + "/res/btn_menu_disable.png";
+        this.menuButton.src = global.app.rootPath + "/res/btn_menu.png";
+        this.menuButton.pressedSrc = global.app.rootPath + "/res/btn_menu_press.png";
+        this.menuButton.disabledSrc = global.app.rootPath + "/res/btn_menu_disable.png";
         this.menuButton.addEventListener("click", this.onclickmenu.bind(this));
         this.compositeView.addChild(this.menuButton);
 
         this.recordStopButton = new ImageButton();
         this.recordStopButton.width = 72;
         this.recordStopButton.height = 72;
-        this.recordStopButton.src = __dirname + "/res/btn_start.png";
-        this.recordStopButton.pressedSrc = __dirname + "/res/btn_start.png";
-        this.recordStopButton.disabledSrc = __dirname + "/res/btn_stop.png";
+        this.recordStopButton.src = global.app.rootPath + "/res/btn_start.png";
+        this.recordStopButton.pressedSrc = global.app.rootPath + "/res/btn_start.png";
+        this.recordStopButton.disabledSrc = global.app.rootPath + "/res/btn_stop.png";
         this.recordStopButton.addEventListener("click", this.onclickrecstop.bind(this));
         this.compositeView.addChild(this.recordStopButton);
 
@@ -84,9 +84,9 @@ Class.define("MyApp", App, {
         this.doneButton.height = 48;
         this.doneButton.align = "right";
         this.doneButton.verticalAlign = "bottom";
-        this.doneButton.src = __dirname + "/res/btn_done_normal.png";
-        this.doneButton.pressedSrc = __dirname + "/res/btn_done_press.png";
-        this.doneButton.disabledSrc = __dirname + "/res/btn_done_disable.png";
+        this.doneButton.src = global.app.rootPath + "/res/btn_done_normal.png";
+        this.doneButton.pressedSrc = global.app.rootPath + "/res/btn_done_press.png";
+        this.doneButton.disabledSrc = global.app.rootPath + "/res/btn_done_disable.png";
         this.doneButton.enabled = false;
         this.compositeView.addChild(this.doneButton);
 

@@ -26,7 +26,7 @@ Class.define("MyApp", App, {
         this.slider.top = 200;
         this.slider.width = 280;
         this.slider.height = 80;
-        // this.slider.thumb = __dirname + "/res/sliderthumb.png";
+        // this.slider.thumb = global.app.rootPath + "/res/sliderthumb.png";
         this.slider.addEventListener("change", this.onChange.bind(this));
         this.window.addChild(this.slider);
 

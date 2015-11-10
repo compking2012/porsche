@@ -3,6 +3,7 @@ var Class = require("../class");
 var EventEmitter = require("../eventemitter");
 var UIServer = require("core/ui");
 var Canvas = require("canvas/lib/canvas");
+var fs = require("fs");
 
 Class.define("framework.ui.platform.RenderService", EventEmitter, {
     initialize: function() {
@@ -24,6 +25,14 @@ Class.define("framework.ui.platform.RenderService", EventEmitter, {
 
     registerImageToGlobal: function() {
         global.Image = Canvas.Image;
+        global.Image.prototype.__defineSetter__("src", function(val) {
+            if ("string" === typeof val && 0 === val.indexOf("data:")) {
+                val = val.slice(val.indexOf(",") + 1);
+                this.source = new Buffer(val, "base64");
+            } else {
+                this.source = new Buffer(fs.readFileSync(val), "base64");
+            }
+        });
     },
 
     getTarget: function() {

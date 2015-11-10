@@ -13,19 +13,19 @@ Class.define("framework.apps.simpleclock.Clock6BigGears", CompositeView, {
         this.bigGear2.height = 104;
         this.bigGear2.originX = 52;
         this.bigGear2.originY = 52;
-        this.bigGear2.src = __dirname + "/../../res/6/big_gear_2.png";
+        this.bigGear2.src = global.app.rootPath + "/../../res/6/big_gear_2.png";
 
         this.bigGear1 = new ImageView();
         this.bigGear1.width = 104;
         this.bigGear1.height = 104;
         this.bigGear1.originX = 52;
         this.bigGear1.originY = 52;
-        this.bigGear1.src = __dirname + "/../../res/6/big_gear_1.png";
+        this.bigGear1.src = global.app.rootPath + "/../../res/6/big_gear_1.png";
 
         this.bigGearBgProjection = new ImageView();
         this.bigGearBgProjection.width = 104;
         this.bigGearBgProjection.height = 104;
-        this.bigGearBgProjection.src = __dirname + "/../../res/6/big_gear_bg_projection.png";
+        this.bigGearBgProjection.src = global.app.rootPath + "/../../res/6/big_gear_bg_projection.png";
 
         this.addChild(this.bigGear2);
         this.addChild(this.bigGear1);

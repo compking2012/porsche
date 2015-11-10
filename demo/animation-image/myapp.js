@@ -13,7 +13,7 @@ Class.define("MyApp", App, {
 
         for (var i = 0; i < 10; i++) {
             var imageView = new ImageView();
-            imageView.src = __dirname + "/res/ic_launcher.png";
+            imageView.src = global.app.rootPath + "/res/ic_launcher.png";
             imageView.left = 10 + i * 20;
             imageView.top = 10 + (i % 5) * 20;
             imageView.originX = 50;

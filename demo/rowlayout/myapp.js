@@ -43,9 +43,9 @@ Class.define("MyApp", App, {
         scrollableView.addChild(this.cv);
 
         this.imageButton = new ImageButton();
-        this.imageButton.src = __dirname + "/res/wall3.png";
-        this.imageButton.pressedSrc = __dirname + "/res/wall1.png";
-        this.imageButton.disabledSrc = __dirname + "/res/wall2.png";
+        this.imageButton.src = global.app.rootPath + "/res/wall3.png";
+        this.imageButton.pressedSrc = global.app.rootPath + "/res/wall1.png";
+        this.imageButton.disabledSrc = global.app.rootPath + "/res/wall2.png";
         this.imageButton.width = 100;
         this.imageButton.height = 100;
         this.imageButton.addEventListener("click", this.onClick.bind(this));

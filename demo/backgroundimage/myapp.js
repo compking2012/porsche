@@ -9,7 +9,7 @@ Class.define("MyApp", App, {
         App.prototype.initialize.apply(this, arguments);
 
         var view = new View();
-        view.background = "url(" + __dirname + "/background.gif" + ") repeat";
+        view.background = "url(" + global.app.rootPath + "/background.gif" + ") repeat";
         view.left = 110;
         view.top = 110;
         view.width = 100;

@@ -9,7 +9,7 @@ Class.define("framework.apps.simpleclock.Clock6Pointers", CompositeView, {
         CompositeView.prototype.initialize.apply(this, arguments);
 
         this.secondHand = new ImageView();
-        this.secondHand.src = __dirname + "/../../res/6/second_hand.png";
+        this.secondHand.src = global.app.rootPath + "/../../res/6/second_hand.png";
         this.secondHand.originX = 3;
         this.secondHand.originY = 127;
         this.secondHand.left = 160 - 3;
@@ -18,7 +18,7 @@ Class.define("framework.apps.simpleclock.Clock6Pointers", CompositeView, {
         this.secondHand.height = 12;
 
         this.minuteHandProjection = new ImageView();
-        this.minuteHandProjection.src = __dirname + "/../../res/6/minute_hand_projection.png";
+        this.minuteHandProjection.src = global.app.rootPath + "/../../res/6/minute_hand_projection.png";
         this.minuteHandProjection.originX = 15;
         this.minuteHandProjection.originY = 113;
         this.minuteHandProjection.left = 160 - 15;
@@ -27,7 +27,7 @@ Class.define("framework.apps.simpleclock.Clock6Pointers", CompositeView, {
         this.minuteHandProjection.height = 126;
 
         this.minuteHand = new ImageView();
-        this.minuteHand.src = __dirname + "/../../res/6/minute_hand.png";
+        this.minuteHand.src = global.app.rootPath + "/../../res/6/minute_hand.png";
         this.minuteHand.originX = 15;
         this.minuteHand.originY = 113;
         this.minuteHand.left = 160 - 15;
@@ -36,7 +36,7 @@ Class.define("framework.apps.simpleclock.Clock6Pointers", CompositeView, {
         this.minuteHand.height = 126;
 
         this.hourHandProjection = new ImageView();
-        this.hourHandProjection.src = __dirname + "/../../res/6/hour_hand_projection.png";
+        this.hourHandProjection.src = global.app.rootPath + "/../../res/6/hour_hand_projection.png";
         this.hourHandProjection.originX = 15;
         this.hourHandProjection.originY = 113;
         this.hourHandProjection.left = 160 - 15;
@@ -45,7 +45,7 @@ Class.define("framework.apps.simpleclock.Clock6Pointers", CompositeView, {
         this.hourHandProjection.height = 126;
 
         this.hourHand = new ImageView();
-        this.hourHand.src = __dirname + "/../../res/6/hour_hand.png";
+        this.hourHand.src = global.app.rootPath + "/../../res/6/hour_hand.png";
         this.hourHand.originX = 15;
         this.hourHand.originY = 113;
         this.hourHand.left = 160 - 15;
@@ -54,7 +54,7 @@ Class.define("framework.apps.simpleclock.Clock6Pointers", CompositeView, {
         this.hourHand.height = 126;
 
         this.point = new ImageView();
-        this.point.src = __dirname + "/../../res/6/point.png";
+        this.point.src = global.app.rootPath + "/../../res/6/point.png";
         this.point.left = 160 - 4;
         this.point.top = 160 - 4;
         this.point.width = 8;

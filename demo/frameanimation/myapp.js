@@ -11,7 +11,7 @@ Class.define("MyApp", App, {
         App.prototype.initialize.apply(this, arguments);
 
         var imageView = new ImageView();
-        imageView.src = __dirname + "/coin.png";
+        imageView.src = global.app.rootPath + "/coin.png";
         imageView.scaleType = "matrix";
         imageView.width = 1000;
         imageView.height = 100;

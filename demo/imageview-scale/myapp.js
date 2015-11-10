@@ -15,7 +15,7 @@ Class.define("MyApp", App, {
         this.index = 0;
 
         this.imageView = new ImageView();
-        this.imageView.src = __dirname + "/res/big.png";
+        this.imageView.src = global.app.rootPath + "/res/big.png";
         this.imageView.scaleType = "centercrop";
         this.imageView.left = 0;
         this.imageView.top = 0;
