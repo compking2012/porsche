@@ -1,7 +1,7 @@
 "use strict";
-var fx = require("cloudappfx");
+var fx = require("framework");
 var Class = fx.import("framework.Class");
-var CloudApp = fx.import("framework.app.CloudApp");
+var App = fx.import("framework.app.App");
 var View = fx.import("framework.ui.view.View");
 
 Class.define("Recorder.WaveView", View, {

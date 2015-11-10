@@ -1,13 +1,13 @@
 "use strict";
-var fx = require("cloudappfx");
+var fx = require("framework");
 var Class = fx.import("framework.Class");
-var CloudApp = fx.import("framework.app.CloudApp");
+var App = fx.import("framework.app.App");
 var CompositeView = fx.import("framework.ui.view.CompositeView");
 var View = fx.import("framework.ui.view.View");
 
-Class.define("MyApp", CloudApp, {
+Class.define("MyApp", App, {
     initialize: function() {
-        CloudApp.prototype.initialize.apply(this, arguments);
+        App.prototype.initialize.apply(this, arguments);
 
         var compositeView1 = new CompositeView();
         compositeView1.background = "#FF0000";

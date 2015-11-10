@@ -1,13 +1,13 @@
 "use strict";
-var fx = require("cloudappfx");
+var fx = require("framework");
 var Class = fx.import("framework.Class");
-var CloudApp = fx.import("framework.app.CloudApp");
+var App = fx.import("framework.app.App");
 var ffi = require("ffi");
 // var ref = require("ref");
 
-Class.define("MyApp", CloudApp, {
+Class.define("MyApp", App, {
     initialize: function() {
-        CloudApp.prototype.initialize.apply(this, arguments);
+        App.prototype.initialize.apply(this, arguments);
 
         var libtest = ffi.Library("libtest", {
             "myapi": ["int", ["int"]]

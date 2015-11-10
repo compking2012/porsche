@@ -1,7 +1,6 @@
 "use strict";
 var Class = require("../../class");
 var ProgressView = require("./progressview");
-var Canvas = require("canvas/lib/canvas");
 var Rectangle = require("../rectangle");
 var TapRecognizer = require("../gesture/taprecognizer");
 
@@ -14,8 +13,8 @@ Class.define("framework.ui.view.Slider", ProgressView, {
     initialize: function() {
         ProgressView.prototype.initialize.apply(this, arguments);
 
-        this._thumb = new Canvas.Image();
-        this._thumb.src = global.CloudAppFXRootPath + "/resources/sliderthumb.png";
+        this._thumb = new Image();
+        this._thumb.src = global.AppFXRootPath + "/resources/sliderthumb.png";
         this._thumbRect = new Rectangle();
         this._continuous = true;
 
@@ -47,7 +46,7 @@ Class.define("framework.ui.view.Slider", ProgressView, {
     },
 
     set thumb(value) {
-        this._thumb = new Canvas.Image();
+        this._thumb = new Image();
         this._thumb.src = value;
         this.invalidate();
     },

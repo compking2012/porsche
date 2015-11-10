@@ -1,5 +1,5 @@
 "use strict";
-var fx = require("cloudappfx");
+var fx = require("framework");
 var Class = fx.import("framework.Class");
 var Collection = fx.import("framework.model.Collection");
 var MyDataSource = require("./mydatasource");

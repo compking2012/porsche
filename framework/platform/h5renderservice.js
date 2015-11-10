@@ -7,7 +7,7 @@ Class.define("framework.ui.platform.H5RenderService", EventEmitter, {
         EventEmitter.prototype.initialize.apply(this, arguments);
 
         this._canvas = document.createElement("canvas");
-        document.body.addChild(this._canvas);
+        document.body.appendChild(this._canvas);
     },
 
     destroy: function() {
@@ -17,13 +17,18 @@ Class.define("framework.ui.platform.H5RenderService", EventEmitter, {
         EventEmitter.prototype.destroy.apply(this, arguments);
     },
 
+    registerImageToGlobal: function() {
+        // Nothing need to do
+    },
+
     getTarget: function() {
         return this._canvas;
     },
 
     createCanvas: function(width, height) {
-        this._canvas.style.width = width + "px";
-        this._canvas.style.height = height + "px";
+        this._canvas.style.border = "solid 1px #000000";
+        this._canvas.width = width;
+        this._canvas.height = height;
         return this._canvas;
     },
 

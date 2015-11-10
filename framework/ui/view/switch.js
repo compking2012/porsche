@@ -2,7 +2,6 @@
 var Class = require("../../class");
 var View = require("./view");
 var TapRecognizer = require("../gesture/taprecognizer");
-var Canvas = require("canvas/lib/canvas");
 var fs = require("fs");
 
 /**
@@ -54,8 +53,8 @@ Class.define("CompositeView.ui.view.Switch", View, {
         if (!this._enabled) {
             if (this._disabledSrc) {
                 if (this._disabledImage === null) {
-                    this._disabledImage = new Canvas.Image();
-                    this._disabledImage.src = fs.readFileSync(this._disabledSrc);
+                    this._disabledImage = new Image();
+                    this._disabledImage.src = this._disabledSrc;
                 }
                 context.drawImage(this._disabledImage, (this._width - this._disabledImage.width) / 2, (this._height - this._disabledImage.height) / 2, this._disabledImage.width, this._disabledImage.height);
                 return;
@@ -65,8 +64,8 @@ Class.define("CompositeView.ui.view.Switch", View, {
         if (this._value) {
             if (this._onSrc) {
                 if (this._onImage === null) {
-                    this._onImage = new Canvas.Image();
-                    this._onImage.src = fs.readFileSync(this._onSrc);
+                    this._onImage = new Image();
+                    this._onImage.src = this._onSrc;
                 }
                 context.drawImage(this._onImage, (this._width - this._onImage.width) / 2, (this._height - this._onImage.height) / 2, this._onImage.width, this._onImage.height);
                 return;
@@ -74,8 +73,8 @@ Class.define("CompositeView.ui.view.Switch", View, {
         } else {
             if (this._offSrc) {
                 if (this._offImage === null) {
-                    this._offImage = new Canvas.Image();
-                    this._offImage.src = fs.readFileSync(this._offSrc);
+                    this._offImage = new Image();
+                    this._offImage.src = this._offSrc;
                 }
                 context.drawImage(this._offImage, (this._width - this._offImage.width) / 2, (this._height - this._offImage.height) / 2, this._offImage.width, this._offImage.height);
                 return;

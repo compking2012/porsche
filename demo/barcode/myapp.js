@@ -1,12 +1,12 @@
 "use strict";
-var fx = require("cloudappfx");
+var fx = require("framework");
 var Class = fx.import("framework.Class");
-var CloudApp = fx.import("framework.app.CloudApp");
+var App = fx.import("framework.app.App");
 var BarCode = fx.import("framework.ui.view.BarCode");
 
-Class.define("MyApp", CloudApp, {
+Class.define("MyApp", App, {
     initialize: function() {
-        CloudApp.prototype.initialize.apply(this, arguments);
+        App.prototype.initialize.apply(this, arguments);
 
         this.barcode = new BarCode();
         this.barcode.width = 300;

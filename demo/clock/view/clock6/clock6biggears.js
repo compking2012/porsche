@@ -1,5 +1,5 @@
 "use strict";
-var fx = require("cloudappfx");
+var fx = require("framework");
 var Class = fx.import("framework.Class");
 var CompositeView = fx.import("framework.ui.view.CompositeView");
 var ImageView = fx.import("framework.ui.view.ImageView");

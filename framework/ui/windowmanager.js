@@ -56,6 +56,8 @@ Class.define("framework.ui.WindowManager", EventEmitter, {
     },
 
     addWindow: function(win) {
+        win.width = this._renderService.getWidth();
+        win.height = this._renderService.getHeight();
         win.windowManager = this;
         this._windows.push(win);
 

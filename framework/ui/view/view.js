@@ -5,7 +5,6 @@ var Rectangle = require("../rectangle");
 var Matrix = require("../matrix");
 var GradientParser = require("../../util/gradientparser");
 var GestureManager = require("../gesture/gesturemanager");
-var Canvas = require("canvas/lib/canvas");
 var fs = require("fs");
 
 /**
@@ -286,8 +285,8 @@ Class.define("framework.ui.view.View", EventEmitter, {
         } else if (/^url/.test(this._background)) {
             var group = this._background.match(/^url\(([\w|\.|\/|\-]+)\)\s+(\w+)/);
             var url = group[1];
-            var image = new Canvas.Image();
-            image.src = fs.readFileSync(url);
+            var image = new Image();
+            image.src = url;
             this._backgroundObject = image;
         } else {
             this._backgroundObject = null;
@@ -915,11 +914,11 @@ Class.define("framework.ui.view.View", EventEmitter, {
     },
 
     viewDebug: function(context) {
-        if (global.CloudAppFXDebugDirtyRect) {
+        if (global.AppFXDebugDirtyRect) {
             context.strokeStyle = "#FFFFFF";
             context.lineWidth = 3;
             context.strokeRect(this._dirtyRect.left, this._dirtyRect.top, this._dirtyRect.width, this._dirtyRect.height);
-            console.log("[CloudAppFX]dirtyRect: ", this.toString(), this._dirtyRect.toString());
+            console.log("[AppFX]dirtyRect: ", this.toString(), this._dirtyRect.toString());
         }
     },
 

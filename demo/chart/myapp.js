@@ -1,11 +1,11 @@
 "use strict";
-var fx = require("cloudappfx");
+var fx = require("framework");
 var Class = fx.import("framework.Class");
-var CloudApp = fx.import("framework.app.CloudApp");
+var App = fx.import("framework.app.App");
 var Chart = fx.import("framework.ui.view.Chart");
-Class.define("MyApp", CloudApp, {
+Class.define("MyApp", App, {
     initialize: function() {
-        CloudApp.prototype.initialize.apply(this, arguments);
+        App.prototype.initialize.apply(this, arguments);
         var dataset1 = [8, 48, 4, 19, 26, 27, 90, 34, 36];
         var labelset1 = ["0", "1", "2", "3", "4", "5", "6", "7", "8", "9"];
         var chart1 = new Chart(dataset1, labelset1);

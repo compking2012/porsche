@@ -51,8 +51,8 @@ Class.define("framework.ui.view.ImageButton", ImageView, {
             this._pressedImage = null;
         } else {
             this._pressedSrc = value;
-            this._pressedImage = new Canvas.Image();
-            this._pressedImage.src = fs.readFileSync(value);
+            this._pressedImage = new Image();
+            this._pressedImage.src = value;
         }
         this.invalidate();
     },
@@ -67,8 +67,8 @@ Class.define("framework.ui.view.ImageButton", ImageView, {
             this._focusedImage = null;
         } else {
             this._focusedSrc = value;
-            this._focusedImage = new Canvas.Image();
-            this._focusedImage.src = fs.readFileSync(value);
+            this._focusedImage = new Image();
+            this._focusedImage.src = value;
         }
         this.invalidate();
     },
@@ -83,8 +83,8 @@ Class.define("framework.ui.view.ImageButton", ImageView, {
             this._disabledImage = null;
         } else {
             this._disabledSrc = value;
-            this._disabledImage = new Canvas.Image();
-            this._disabledImage.src = fs.readFileSync(value);
+            this._disabledImage = new Image();
+            this._disabledImage.src = value;
         }
         this.invalidate();
     },

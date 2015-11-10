@@ -1,13 +1,13 @@
 "use strict";
-var fx = require("cloudappfx");
+var fx = require("framework");
 var Class = fx.import("framework.Class");
-var CloudApp = fx.import("framework.app.CloudApp");
+var App = fx.import("framework.app.App");
 var ImageButton = fx.import("framework.ui.view.ImageButton");
 var TextView = fx.import("framework.ui.view.TextView");
 
-Class.define("MyApp", CloudApp, {
+Class.define("MyApp", App, {
     initialize: function() {
-        CloudApp.prototype.initialize.apply(this, arguments);
+        App.prototype.initialize.apply(this, arguments);
 
         this.textView = new TextView();
         this.textView.width = 320;

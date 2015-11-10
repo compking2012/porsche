@@ -2,6 +2,7 @@
 var Class = require("../class");
 var EventEmitter = require("../eventemitter");
 var UIServer = require("core/ui");
+var Canvas = require("canvas/lib/canvas");
 
 Class.define("framework.ui.platform.RenderService", EventEmitter, {
     initialize: function() {
@@ -19,6 +20,10 @@ Class.define("framework.ui.platform.RenderService", EventEmitter, {
         this._uiServer = null;
 
         EventEmitter.prototype.destroy.apply(this, arguments);
+    },
+
+    registerImageToGlobal: function() {
+        global.Image = Canvas.Image;
     },
 
     getTarget: function() {

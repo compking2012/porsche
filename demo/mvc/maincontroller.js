@@ -1,5 +1,5 @@
 "use strict";
-var fx = require("cloudappfx");
+var fx = require("framework");
 var Class = fx.import("framework.Class");
 var Controller = fx.import("framework.controller.Controller");
 var View = fx.import("framework.ui.view.View");

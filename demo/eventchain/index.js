@@ -1,11 +1,11 @@
-    var fx = require('cloudappfx'),
-        CloudApp = fx.import('framework.app.CloudApp'),
+    var fx = require('framework'),
+        App = fx.import('framework.app.App'),
         Class = fx.import('framework.Class'),
         View = fx.import("framework.ui.view.View");
 
-    Class.define('main', CloudApp, {
+    Class.define('main', App, {
         initialize: function(){
-            CloudApp.prototype.initialize.apply(this, arguments);
+            App.prototype.initialize.apply(this, arguments);
 
             this.view = new View();
             this.view.width = this.width;

@@ -239,7 +239,7 @@ Class.define("framework.ui.view.TwoLineListItem", ListItem, {
     showNavigator: function(flag) {
         if (flag) {
             this._navigator = new ImageView();
-            this._navigator.src = global.CloudAppFXRootPath + "/resources/navigator.png";
+            this._navigator.src = global.AppFXRootPath + "/resources/navigator.png";
             this._navigator.left = 270;
             this._navigator.top = 40;
             this._navigator.width = 13;

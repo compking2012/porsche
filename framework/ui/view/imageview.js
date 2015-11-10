@@ -47,8 +47,8 @@ Class.define("framework.ui.view.ImageView", View, {
             this._image = null;
         } else {
             this._src = value;
-            this._image = new Canvas.Image();
-            this._image.src = fs.readFileSync(value);
+            this._image = new Image();
+            this._image.src = value;
         }
         this.invalidate();
     },

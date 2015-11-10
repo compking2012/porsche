@@ -1,12 +1,12 @@
 "use strict";
-var fx = require("cloudappfx");
+var fx = require("framework");
 var Class = fx.import("framework.Class");
-var CloudApp = fx.import("framework.app.CloudApp");
+var App = fx.import("framework.app.App");
 var RichTextView = fx.import("framework.ui.view.RichTextView");
 
-Class.define("MyApp", CloudApp, {
+Class.define("MyApp", App, {
     initialize: function(){
-        CloudApp.prototype.initialize.apply(this, arguments);
+        App.prototype.initialize.apply(this, arguments);
 
         var str = '2. In the last decades, advances in medical technology have made it possible for people to live longer than in the past.';
         var str1 = '我喜欢<class="blue">蓝色</class   ><style="font-family:default; font-size:42px; color:#FF0000">零一二三四五六七八九十</style>零一二三四五六<br />七八九十<class="big"  >零一二三四五<   /class   >六七八九十!';

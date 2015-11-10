@@ -4,8 +4,9 @@ var EventEmitter = require("../eventemitter");
 var Window = require("../ui/view/window");
 var WindowManager = require("../ui/windowmanager");
 var I18nManager = require("../util/i18nmanager");
-var InputService = require("./platform/inputservice");
-var RenderService = require("./platform/renderservice");
+var AppService = typeof window !== "undefined" ? require("../platform/h5appservice") : require("../platform/nodeappservice");
+var InputService = typeof window !== "undefined" ? require("../platform/h5inputservice") : require("../platform/nodeinputservice");
+var RenderService = typeof window !== "undefined" ? require("../platform/h5renderservice") : require("../platform/noderenderservice");
 
 /**
  * Base App class
@@ -21,39 +22,28 @@ Class.define("framework.app.App", EventEmitter, {
     initialize: function() {
         EventEmitter.prototype.initialize.apply(this, arguments);
 
-        this._manifest = this.loadManifest();
-        this._appName = this._manifest.appName;
+        this._appService = new AppService();
+        this._renderService = new RenderService();
+        this._inputService = new InputService(this._renderService.getTarget());
+
+        this._appName = this._appService.getAppName();
         this._rootController = null;
 
         this._i18nManager = new I18nManager();
-        // this._i18nManager.locale = "zh-CN";
-
-        this._renderService = new RenderService();
-        this._inputService = new InputService(this._renderService.getTarget());
+        this._i18nManager.locale = "zh-CN";
 
         this._windowManager = new WindowManager(this._inputService, this._renderService);
 
         this._window = new Window(this._appName);
-        this._window.width = this._uiServer.getScreenSize().width;
-        this._window.height = this._uiServer.getScreenSize().height;
         this._windowManager.addWindow(this._window);
 
-        // this.window.on("apptofront", this.bringAppToFront.bind(this));
-        // this.window.on("hideapp", this.hideApp.bind(this));
-        // this._uiServer.on("start", function() {
-            this.bringAppToFront(this._appName);
-            this.onStart.call(this);
-        // }.bind(this));
+        this._appService.addEventListener("start", this._onStartFunc = this.onStart.bind(this));
+        this._appService.addEventListener("background", this._onInactiveFunc = this.onInactive.bind(this));
+        this._appService.addEventListener("foreground", this._onActiveFunc = this.onActive.bind(this));
+        this._appService.addEventListener("finish", this._onFinishFunc = this.onFinish.bind(this));
 
-        this._uiServer.on("state", function(state) {
-            if (state === UIServer.BACKGROUND) {
-                this.onInactive.call(this);
-            } else if (state === UIServer.FOREGROUND) {
-                this._uiServer.invalidateAll();
-                this.onActive.call(this);
-            }
-        }.bind(this));
-
+        this._appService.registerSelfToGlobal();
+        this._renderService.registerImageToGlobal();
         global.app = this;
     },
 
@@ -62,7 +52,6 @@ Class.define("framework.app.App", EventEmitter, {
      * @method App#destroy
      */
     destroy: function() {
-        this._uiServer = null;
         this._i18nManager.destroy();
         this._i18nManager = null;
         this._windowManager.destroy();
@@ -71,7 +60,16 @@ Class.define("framework.app.App", EventEmitter, {
         this._window = null;
         this._rootController = null;
         this._manifest = null;
+        this._appService.removeEventListener("start", this._onStartFunc);
+        this._onStartFunc = null;
+        this._appService.removeEventListener("background", this._onInactiveFunc);
+        this._onInactiveFunc = null;
+        this._appService.removeEventListener("foreground", this._onActiveFunc);
+        this._onActiveFunc = null;
+        this._appService.removeEventListener("finish", this._onFinishFunc);
+        this._onFinishFunc = null;
         global.app = null;
+
         EventEmitter.prototype.destroy.apply(this, arguments);
     },
 
@@ -142,29 +140,15 @@ Class.define("framework.app.App", EventEmitter, {
     },
 
     get rootPath() {
-        return path.dirname(require.main.filename);
-    },
-
-    loadManifest: function() {
-        var manifestFile = this.rootPath + "/manifest.json";
-        if (!fs.existsSync(manifestFile)) {
-            return {};
-        }
-        var json = JSON.parse(fs.readFileSync(manifestFile));
-
-        if (json.debug) {
-            this.processDebug(json.debug);
-        }
-
-        return json;
+        return this._appService.getRootPath();
     },
 
     processDebug: function(debug) {
         if (debug.paintFPS) {
-            global.CloudAppFXDebugPaintFPS = true;
+            global.AppFXDebugPaintFPS = true;
         }
         if (debug.dirtyRect) {
-            global.CloudAppFXDebugDirtyRect = true;
+            global.AppFXDebugDirtyRect = true;
         }
     }
 }, module);

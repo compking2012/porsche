@@ -1,12 +1,12 @@
 "use strict";
-var fx = require("cloudappfx");
+var fx = require("framework");
 var Class = fx.import("framework.Class");
-var CloudApp = fx.import("framework.app.CloudApp");
+var App = fx.import("framework.app.App");
 var Clock6View = require("./view/clock6/clock6view");
 
-Class.define("framework.apps.simpleclock.ClockApp", CloudApp, {
+Class.define("framework.apps.simpleclock.ClockApp", App, {
     initialize: function() {
-        CloudApp.prototype.initialize.apply(this, arguments);
+        App.prototype.initialize.apply(this, arguments);
 
         this.clockView = new Clock6View();
         this.clockView.width = 320;

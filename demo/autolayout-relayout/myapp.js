@@ -1,15 +1,15 @@
 "use strict";
-var fx = require("cloudappfx");
+var fx = require("framework");
 var Class = fx.import("framework.Class");
-var CloudApp = fx.import("framework.app.CloudApp");
+var App = fx.import("framework.app.App");
 var CompositeView = fx.import("framework.ui.view.CompositeView");
 var TextView = fx.import("framework.ui.view.TextView");
 var AutoLayout = fx.import("framework.ui.layout.AutoLayout");
 var TapRecognizer = fx.import("framework.ui.gesture.TapRecognizer");
 
-Class.define("MyApp", CloudApp, {
+Class.define("MyApp", App, {
     initialize: function() {
-        CloudApp.prototype.initialize.apply(this, arguments);
+        App.prototype.initialize.apply(this, arguments);
 
         this.window.addGestureRecognizer(new TapRecognizer());
         this.window.addEventListener("tap", this.onTap.bind(this));

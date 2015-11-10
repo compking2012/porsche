@@ -1,5 +1,5 @@
 "use strict";
-var fx = require("cloudappfx");
+var fx = require("framework");
 var Class = fx.import("framework.Class");
 
 Class.define("MyClass", {

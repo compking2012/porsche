@@ -1,14 +1,14 @@
 "use strict";
-var fx = require("cloudappfx");
+var fx = require("framework");
 var Class = fx.import("framework.Class");
-var CloudApp = fx.import("framework.app.CloudApp");
+var App = fx.import("framework.app.App");
 var AlertDialog = fx.import("framework.ui.view.AlertDialog");
 var ConfirmDialog = fx.import("framework.ui.view.ConfirmDialog");
 var Button = fx.import("framework.ui.view.Button");
 
-Class.define("MyApp", CloudApp, {
+Class.define("MyApp", App, {
     initialize: function() {
-        CloudApp.prototype.initialize.apply(this, arguments);
+        App.prototype.initialize.apply(this, arguments);
 
         this.buttonAlert = new Button();
         this.buttonAlert.top = 50;
