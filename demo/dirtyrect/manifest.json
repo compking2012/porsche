@@ -1,7 +1,0 @@
-{
-    "appName": "DirtyRect",
-    "debug": {
-        "paintFPS": true,
-        "dirtyRect": true
-    }
-}

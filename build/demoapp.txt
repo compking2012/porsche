@@ -35,8 +35,8 @@ H5:     passed
 Node:   passed
 
 *) button
-H5:     no pass
-Node:   no pass
+H5:     passed
+Node:   passed
 
 *) chart
 H5:     passed
@@ -44,4 +44,187 @@ Node:   passed
 
 *) checkbox
 H5:     no pass
+Node:   passed
+
+*) circleprogressview
+H5:     passed
+Node:   passed
+
+*) circleprogressview-animation
+H5:     passed
+Node:   passed
+
+*) classsystem
+H5:     passed
+Node:   passed
+
+*) clock
+H5:     no pass
+Node:   no pass
+
+*) collectionmodel
+H5:     no pass
+Node:   no pass
+
+*) columnlayout
+H5:     no pass
+Node:   no pass
+
+*) dialog
+H5:     passed
+Node:   passed
+
+*) dragdrop
+H5:     passed
+Node:   passed
+
+*) eventchain
+H5:     N/A
+Node:   N/A
+
+*) flowlayout
+H5:     no pass
+Node:   no pass
+
+*) frameanimation
+H5:     no pass
+Node:   passed
+
+*) gesture
+H5:     passed
+Node:   passed
+
+*) gradientcolor
+H5:     
 Node:   
+
+*) gridlayout
+H5:     no pass
+Node:   no pass
+
+*) helloworld
+H5:     passed
+Node:   passed
+
+*) hwaview
+H5:     no pass
+Node:   no pass
+
+*) hwaview-animation
+H5:     no pass
+Node:   no pass
+
+*) i18n
+H5:     no pass
+Node:   passed
+
+*) imagebutton
+H5:     no pass
+Node:   passed
+
+*) imageview
+H5:     no pass
+Node:   passed
+
+*) imageview-scale
+H5:     no pass
+Node:   passed
+
+*) interop
+H5:     N/A
+Node:   no pass
+
+*) listview
+H5:     no pass
+Node:   no pass
+
+*) mvc
+H5:     no pass
+Node:   no pass
+
+*) progressview
+H5:     passed
+Node:   passed
+
+*) progressview-animation
+H5:     passed
+Node:   passed
+
+*) qrcode
+H5:     passed
+Node:   passed
+
+*) relativelayout
+H5:     passed
+Node:   passed
+
+*) richtextview
+H5:     no pass
+Node:   no pass
+
+*) rowlayout
+H5:     no pass
+Node:   no pass
+
+*) scrollableview
+H5:     passed
+Node:   passed
+
+*) scrollableview-scrollbar
+H5:     passed
+Node:   passed
+
+*) scrollableview-small
+H5:     passed
+Node:   passed
+
+*) scrollableview-vertical
+H5:     no pass
+Node:   no pass
+
+*) slider
+H5:     no pass
+Node:   passed
+
+*) stackview
+H5:     passed
+Node:   passed
+
+*) swipeview
+H5:     no pass
+Node:   no pass
+
+*) switch
+H5:     no pass
+Node:   passed
+
+*) textview
+H5:     passed
+Node:   passed
+
+*) transform2d
+H5:     passed
+Node:   passed
+
+*) transform2d-animation
+H5:     passed
+Node:   passed
+
+*) twolinelistitem
+H5:     no pass
+Node:   no pass
+
+*) viewhierarchy
+H5:     passed
+Node:   passed
+
+*) viewhierarchy-overlap
+H5:     passed
+Node:   passed
+
+
+
+
+
+
+
