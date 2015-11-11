@@ -1,3 +1,4 @@
+### GUI ###
 *) animation
 H5:     passed
 Node:   passed
@@ -10,20 +11,12 @@ Node:   passed
 H5:     passed
 Node:   passed
 
-*) audioplayer
-H5:     N/A
-Node:   no pass
-
-*) audiorecorder
-H5:     N/A
-Node:   no pass
-
 *) autolayout
-H5:     no pass
+H5:     passed
 Node:   passed
 
 *) autolayout-relayout
-H5:     no pass
+H5:     passed
 Node:   passed
 
 *) backgroundimage
@@ -54,18 +47,6 @@ Node:   passed
 H5:     passed
 Node:   passed
 
-*) classsystem
-H5:     passed
-Node:   passed
-
-*) clock
-H5:     no pass
-Node:   no pass
-
-*) collectionmodel
-H5:     no pass
-Node:   no pass
-
 *) columnlayout
 H5:     no pass
 Node:   no pass
@@ -95,8 +76,8 @@ H5:     passed
 Node:   passed
 
 *) gradientcolor
-H5:     
-Node:   
+H5:     no pass
+Node:   no pass
 
 *) gridlayout
 H5:     no pass
@@ -114,10 +95,6 @@ Node:   no pass
 H5:     no pass
 Node:   no pass
 
-*) i18n
-H5:     no pass
-Node:   passed
-
 *) imagebutton
 H5:     no pass
 Node:   passed
@@ -130,15 +107,7 @@ Node:   passed
 H5:     no pass
 Node:   passed
 
-*) interop
-H5:     N/A
-Node:   no pass
-
 *) listview
-H5:     no pass
-Node:   no pass
-
-*) mvc
 H5:     no pass
 Node:   no pass
 
@@ -223,6 +192,39 @@ H5:     passed
 Node:   passed
 
 
+
+### App Model ###
+*) classsystem
+H5:     passed
+Node:   passed
+
+*) collectionmodel
+H5:     no pass
+Node:   no pass
+
+*) i18n
+H5:     no pass
+Node:   passed
+
+*) interop
+H5:     N/A
+Node:   no pass
+
+*) mvc
+H5:     no pass
+Node:   no pass
+
+
+
+
+### System ###
+*) audioplayer
+H5:     N/A
+Node:   no pass
+
+*) audiorecorder
+H5:     N/A
+Node:   no pass
 
 
 
