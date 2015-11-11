@@ -45,12 +45,16 @@ Class.define("framework.ui.view.ImageView", View, {
         if (value === null) {
             this._src = null;
             this._image = null;
+            this.invalidate();
         } else {
             this._src = value;
             this._image = new Image();
+            this._image.onload = function() {
+                this._image.onload = null;
+                this.invalidate();
+            }.bind(this);
             this._image.src = value;
         }
-        this.invalidate();
     },
 
     /**

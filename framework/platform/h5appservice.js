@@ -13,11 +13,11 @@ Class.define("framework.ui.platform.H5AppService", EventEmitter, {
     },
 
     getFXRootPath: function() {
-        return "/";
+        return ".";
     },
 
     getAppRootPath: function() {
-        return "/";
+        return ".";
     },
 
     loadFile: function(file) {

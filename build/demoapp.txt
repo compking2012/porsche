@@ -87,14 +87,6 @@ Node:   no pass
 H5:     passed
 Node:   passed
 
-*) hwaview
-H5:     no pass
-Node:   no pass
-
-*) hwaview-animation
-H5:     no pass
-Node:   no pass
-
 *) imagebutton
 H5:     no pass
 Node:   passed
@@ -226,7 +218,13 @@ Node:   no pass
 H5:     N/A
 Node:   no pass
 
+*) hwaview
+H5:     no pass
+Node:   no pass
 
+*) hwaview-animation
+H5:     no pass
+Node:   no pass
 
 
 
