@@ -1,7 +1,7 @@
 "use strict";
 var Class = require("../../class");
 var Layout = require("./layout");
-var AutoLayoutJS = require("../../vendor/autolayout.js");
+var AutoLayoutJS = require("./autolayout/autolayout");
 var AutoLayoutParam = require("./autolayoutparam");
 
 /**
