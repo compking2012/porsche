@@ -13,8 +13,8 @@ Class.define("framework.ui.view.Slider", ProgressView, {
     initialize: function() {
         ProgressView.prototype.initialize.apply(this, arguments);
 
-        this._thumb = new Image();
-        this._thumb.src = global.AppFXRootPath + "/resources/sliderthumb.png";
+        this._defaultThumbSrc = global.AppFXRootPath + "/resources/sliderthumb.png";
+        this._thumbImage = new Image();
         this._thumbRect = new Rectangle();
         this._continuous = true;
 
@@ -23,10 +23,17 @@ Class.define("framework.ui.view.Slider", ProgressView, {
         this.addEventListener("touchend", this.onTouchEndFunc = this.onTouchEnd.bind(this));
         this.addGestureRecognizer(this._tapRecognizer = new TapRecognizer());
         this.addEventListener("tap", this._onTapFunc = this.onTap.bind(this));
+
+        this.thumb = this._defaultThumbSrc;
     },
 
     destroy: function() {
-        this._thumb = null;
+        this._thumbImage.onload = null;
+        this._thumbImage = null;
+
+        this._thumbRect.destroy();
+        this._thumbRect = null;
+
         this.removeEventListener("touchstart", this.onTouchStartFunc);
         this.onTouchStartFunc = null;
         this.removeEventListener("touchmove", this.onTouchMoveFunc);
@@ -42,13 +49,20 @@ Class.define("framework.ui.view.Slider", ProgressView, {
     },
 
     get thumb() {
-        return this._thumb;
+        return this._thumbImage.src;
     },
 
     set thumb(value) {
-        this._thumb = new Image();
-        this._thumb.src = value;
-        this.invalidate();
+        if (value === null) {
+            this._thumbImage.src = this._defaultThumbSrc;
+        } else {
+            // FIXME: should support addEventListener insteadof onload event.
+            this._thumbImage.onload = function() {
+                this._thumbImage.onload = null;
+                this.invalidate();
+            }.bind(this);
+            this._thumbImage.src = value;
+        }
     },
 
     get continuous() {
@@ -62,7 +76,7 @@ Class.define("framework.ui.view.Slider", ProgressView, {
 
     drawBackground: function(context) {
         var halfHeight = this._height / 2;
-        var w = this._thumb.width;
+        var w = this._thumbImage.width;
         var dw = w / 2;
 
         context.save();
@@ -75,7 +89,7 @@ Class.define("framework.ui.view.Slider", ProgressView, {
             var linear = this._backgroundObject;
             var colorStopStart = linear[0].colorStops[0];
             var colorStopEnd = linear[0].colorStops[1];
-            var gradient = context.createLinearGradient(0, 0, this._width - this._thumb.width, this._height);
+            var gradient = context.createLinearGradient(0, 0, this._width - this._thumbImage.width, this._height);
             gradient.addColorStop(0, colorStopStart.type === "hex" ? "#" + colorStopStart.value : colorStopStart.value);
             gradient.addColorStop(1, colorStopEnd.type === "hex" ? "#" + colorStopEnd.value : colorStopEnd.value);
             context.strokeStyle = gradient;
@@ -94,7 +108,7 @@ Class.define("framework.ui.view.Slider", ProgressView, {
             this.drawThumb(context);
         }
         var halfHeight = this._height / 2;
-        var w = this._thumb.width;
+        var w = this._thumbImage.width;
         var dw = w / 2;
 
         context.save();
@@ -125,19 +139,19 @@ Class.define("framework.ui.view.Slider", ProgressView, {
 
     drawThumb: function(context) {
         context.save();
-        var w = this._thumb.width;
-        var h = this._thumb.height;
+        var w = this._thumbImage.width;
+        var h = this._thumbImage.height;
         var x = (this._width - w) * this._value;
         var y = this._height / 2 - h / 2;
-        context.drawImage(this._thumb, x, y, w, h);
+        context.drawImage(this._thumbImage, x, y, w, h);
         context.restore();
     },
 
     onTouchStart: function(e) {
         var x = e.targetTouches[0].pageX;
         var y = e.targetTouches[0].pageY;
-        var w = this._thumb.width;
-        var h = this._thumb.height;
+        var w = this._thumbImage.width;
+        var h = this._thumbImage.height;
         var halfHeight = this._height / 2;
         var tx = (this._width - w) * this._value + w / 2;
         var ty = halfHeight - h / 2;
@@ -151,7 +165,7 @@ Class.define("framework.ui.view.Slider", ProgressView, {
     onTouchMove: function(e) {
         var x = e.targetTouches[0].pageX;
         if (this._dragging) {
-            var w = this._thumb.width;
+            var w = this._thumbImage.width;
             var value = (x - w / 2) / (this._width - w);
             if (value < 0) {
                 value = 0;
@@ -181,8 +195,8 @@ Class.define("framework.ui.view.Slider", ProgressView, {
     onTap: function(/*e*/) {
         var x = this._lastX;
         var y = this._lastY;
-        var w = this._thumb.width;
-        var h = this._thumb.height;
+        var w = this._thumbImage.width;
+        var h = this._thumbImage.height;
         var halfHeight = this._height / 2;
         var tx = (this._width - w) * this._value + w / 2;
         var ty = halfHeight - h / 2;

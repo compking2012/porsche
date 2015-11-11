@@ -49,6 +49,7 @@ Class.define("framework.ui.view.ImageView", View, {
         } else {
             this._src = value;
             this._image = new Image();
+            // FIXME: should support addEventListener insteadof onload event.
             this._image.onload = function() {
                 this._image.onload = null;
                 this.invalidate();

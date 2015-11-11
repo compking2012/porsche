@@ -68,7 +68,7 @@ H5:     no pass
 Node:   no pass
 
 *) frameanimation
-H5:     no pass
+H5:     passed
 Node:   passed
 
 *) gesture
@@ -88,15 +88,15 @@ H5:     passed
 Node:   passed
 
 *) imagebutton
-H5:     no pass
+H5:     passed
 Node:   passed
 
 *) imageview
-H5:     no pass
+H5:     passed
 Node:   passed
 
 *) imageview-scale
-H5:     no pass
+H5:     passed
 Node:   passed
 
 *) listview
@@ -144,7 +144,7 @@ H5:     no pass
 Node:   no pass
 
 *) slider
-H5:     no pass
+H5:     passed
 Node:   passed
 
 *) stackview
