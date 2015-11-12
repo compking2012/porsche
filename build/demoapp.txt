@@ -36,7 +36,7 @@ H5:     passed
 Node:   passed
 
 *) checkbox
-H5:     no pass
+H5:     passed
 Node:   passed
 
 *) circleprogressview
@@ -156,7 +156,7 @@ H5:     no pass
 Node:   no pass
 
 *) switch
-H5:     no pass
+H5:     passed
 Node:   passed
 
 *) textview
