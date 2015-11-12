@@ -22,12 +22,13 @@ Class.define("MyApp", App, {
 
         this.imageButton = new ImageButton();
         this.imageButton.left = 50;
-        this.imageButton.top = 50;
-        this.imageButton.width = 100;
-        this.imageButton.height = 100;
-        this.imageButton.src = global.app.rootPath + "/res/wall3.png";
-        this.imageButton.pressedSrc = global.app.rootPath + "/res/wall1.png";
-        this.imageButton.disabledSrc = global.app.rootPath + "/res/wall2.png";
+        this.imageButton.top = 100;
+        this.imageButton.width = 216;
+        this.imageButton.height = 88;
+        this.imageButton.src = global.app.rootPath + "/res/button_normal.png";
+        this.imageButton.pressedImageSrc = global.app.rootPath + "/res/button_pressed.png";
+        this.imageButton.focusedImageSrc = global.app.rootPath + "/res/button_focused.png";
+        this.imageButton.disabledImageSrc = global.app.rootPath + "/res/button_disabled.png";
         this.imageButton.addEventListener("click", this.onClick.bind(this));
         this.window.addChild(this.imageButton);
     },

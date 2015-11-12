@@ -53,14 +53,16 @@ Class.define("framework.ui.view.Slider", ProgressView, {
     },
 
     set thumb(value) {
+        // FIXME: should support addEventListener insteadof onload event.
+        this._thumbImage.onload = function() {
+            this._thumbImage.onload = null;
+            this.invalidate();
+        }.bind(this);
+
         if (value === null) {
             this._thumbImage.src = this._defaultThumbSrc;
         } else {
-            // FIXME: should support addEventListener insteadof onload event.
-            this._thumbImage.onload = function() {
-                this._thumbImage.onload = null;
-                this.invalidate();
-            }.bind(this);
+
             this._thumbImage.src = value;
         }
     },

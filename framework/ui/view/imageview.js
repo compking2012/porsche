@@ -16,7 +16,7 @@ Class.define("framework.ui.view.ImageView", View, {
     initialize: function() {
         View.prototype.initialize.apply(this, arguments);
 
-        this._image = null;
+        this._image = new Image();
         this._offsetX = 0;
         this._offsetY = 0;
         this._scaleType = "fitcenter";
@@ -48,13 +48,12 @@ Class.define("framework.ui.view.ImageView", View, {
             this.invalidate();
         } else {
             this._src = value;
-            this._image = new Image();
             // FIXME: should support addEventListener insteadof onload event.
             this._image.onload = function() {
                 this._image.onload = null;
                 this.invalidate();
             }.bind(this);
-            this._image.src = value;
+            this._image.src = this._src;
         }
     },
 
@@ -92,11 +91,7 @@ Class.define("framework.ui.view.ImageView", View, {
     },
 
     draw: function(context) {
-        if (this._image === null) {
-            return;
-        }
-        var image = this._image;
-        this.drawImage(context, image);
+        this.drawImage(context, this._image);
     },
 
     drawImage: function(context, image) {

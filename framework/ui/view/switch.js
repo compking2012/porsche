@@ -13,21 +13,46 @@ Class.define("CompositeView.ui.view.Switch", View, {
         View.prototype.initialize.apply(this, arguments);
 
         this._disabledImageSrc = global.AppFXRootPath + "/resources/switchdisabled.png";
+        this._disabledImage = new Image();
         this._offImageSrc = global.AppFXRootPath + "/resources/switchoff.png";
+        this._offImage = new Image();
         this._onImageSrc = global.AppFXRootPath + "/resources/switchon.png";
-        this._image = new Image();
+        this._onImage = new Image();
+        this._image = this._onImage;
+
+        // FIXME: should support addEventListener insteadof onload event.
+        this._onImage.onload = function() {
+            this._onImage.onload = null;
+            this._offImage.onload = function() {
+                this._offImage.onload = null;
+                this._disabledImage.onload = function() {
+                    this._disabledImage.onload = null;
+
+                    this.value = true;
+                }.bind(this);
+                this._disabledImage.src = this._disabledImageSrc;
+            }.bind(this);
+            this._offImage.src = this._offImageSrc;
+        }.bind(this);
+        this._onImage.src = this._onImageSrc;
 
         this.addGestureRecognizer(this._tapRecognizer = new TapRecognizer());
         this.addEventListener("tap", this._onTapFunc = this.onTap.bind(this));
-
-        this.value = false;
     },
 
     destroy: function() {
         this._disabledImageSrc = null;
+        this._disabledImage.onload = null;
+        this._disabledImage = null;
+
         this._offImageSrc = null;
+        this._offImage.onload = null;
+        this._offImage = null;
+
         this._onImageSrc = null;
-        this._image.onload = null;
+        this._onImage.onload = null;
+        this._onImage = null;
+
         this._image = null;
 
         this.removeGestureRecognizer(this._tapRecognizer);
@@ -62,25 +87,21 @@ Class.define("CompositeView.ui.view.Switch", View, {
     },
 
     onTap: function(/*e*/) {
-        this.value = !this.value;
+        this.value = !this._value;
         this.invalidate();
     },
 
     updateImage: function() {
-        // FIXME: should support addEventListener insteadof onload event.
-        this._image.onload = function() {
-            this._image.onload = null;
-            this.invalidate();
-        }.bind(this);
         if (!this._enabled) {
-            this._image.src = this._disabledImageSrc;
+            this._image = this._disabledImage;
         } else {
             if (this._value) {
-                this._image.src = this._onImageSrc;
+                this._image = this._onImage;
             } else {
-                this._image.src = this._offImageSrc;
+                this._image = this._offImage;
             }
         }
+        this.invalidate();
     },
 
     draw: function(context) {

@@ -1,11 +1,12 @@
 "use strict";
 var Class = require("../../class");
 var ImageView = require("./imageview");
+var TapRecognizer = require("../gesture/taprecognizer");
 
 /**
  * ImageButton widget
  * @class ImageButton
- * @extends Button
+ * @extends ImageView
  */
 Class.define("framework.ui.view.ImageButton", ImageView, {
     /**
@@ -15,11 +16,11 @@ Class.define("framework.ui.view.ImageButton", ImageView, {
     initialize: function() {
         ImageView.prototype.initialize.apply(this, arguments);
 
-        this._pressedSrc = null;
+        this._pressedImageSrc = null;
         this._pressedImage = null;
-        this._focusedSrc = null;
+        this._focusedImageSrc = null;
         this._focusedImage = null;
-        this._disabledSrc = null;
+        this._disabledImageSrc = null;
         this._disabledImage = null;
 
         this.addEventListener("touchstart", this.onTouchStartFunc = this.onTouchStart.bind(this));
@@ -31,61 +32,99 @@ Class.define("framework.ui.view.ImageButton", ImageView, {
      * @method ImageButton#destroy
      */
     destroy: function() {
-        this._pressedImage = null;
-        this._focusedImage = null;
-        this._disabledImage = null;
+        this._pressedImageSrc = null;
+        if (this._pressedImage !== null) {
+            this._pressedImage.onload = null;
+            this._pressedImage = null;
+        }
+
+        this._focusedImageSrc = null;
+        if (this._focusedImage !== null) {
+            this._focusedImage.onload = null;
+            this._focusedImage = null;
+        }
+
+        this._disabledImageSrc = null;
+        if (this._disabledImage !== null) {
+            this._disabledImage.onload = null;
+            this._disabledImage = null;
+        }
+
         this.removeEventListener("touchstart", this.onTouchStartFunc);
         this.onTouchStartFunc = null;
         this.removeEventListener("touchend", this.onTouchEndFunc);
         this.onTouchEndFunc = null;
+
         ImageView.prototype.destroy.apply(this, arguments);
     },
 
-    get pressedSrc() {
-        return this._pressedSrc;
+    get pressedImageSrc() {
+        return this._pressedImageSrc;
     },
 
-    set pressedSrc(value) {
+    set pressedImageSrc(value) {
         if (value === null) {
-            this._pressedSrc = null;
+            this._pressedImageSrc = null;
             this._pressedImage = null;
         } else {
-            this._pressedSrc = value;
+            this._pressedImageSrc = value;
             this._pressedImage = new Image();
-            this._pressedImage.src = value;
+            // FIXME: should support addEventListener insteadof onload event.
+            this._pressedImage.onload = function() {
+                this._pressedImage.onload = null;
+                this.invalidate();
+            }.bind(this);
+            this._pressedImage.src = this._pressedImageSrc;
         }
-        this.invalidate();
     },
 
-    get focusedSrc() {
+    get focusedImageSrc() {
         return this._focusedSrc;
     },
 
-    set focusedSrc(value) {
+    set focusedImageSrc(value) {
         if (value === null) {
-            this._focusedSrc = null;
+            this._focusedImageSrc = null;
             this._focusedImage = null;
+            this.invalidate();
         } else {
-            this._focusedSrc = value;
+            this._focusedImageSrc = value;
             this._focusedImage = new Image();
-            this._focusedImage.src = value;
+            // FIXME: should support addEventListener insteadof onload event.
+            this._focusedImage.onload = function() {
+                this._focusedImage.onload = null;
+                this.invalidate();
+            }.bind(this);
+            this._focusedImage.src = this._focusedImageSrc;
         }
-        this.invalidate();
     },
 
-    get disabledSrc() {
+    get disabledImageSrc() {
         return this._disabledSrc;
     },
 
-    set disabledSrc(value) {
+    set disabledImageSrc(value) {
         if (value === null) {
-            this._disabledSrc = null;
+            this._disabledImageSrc = null;
             this._disabledImage = null;
+            this.invalidate();
         } else {
-            this._disabledSrc = value;
+            this._disabledImageSrc = value;
             this._disabledImage = new Image();
-            this._disabledImage.src = value;
+            // FIXME: should support addEventListener insteadof onload event.
+            this._disabledImage.onload = function() {
+                this._disabledImage.onload = null;
+                this.invalidate();
+            }.bind(this);
+            this._disabledImage.src = this._disabledImageSrc;
         }
+    },
+
+    onTouchStart: function() {
+        this.invalidate();
+    },
+
+    onTouchEnd: function() {
         this.invalidate();
     },
 
@@ -98,17 +137,7 @@ Class.define("framework.ui.view.ImageButton", ImageView, {
         } else {
             image = this._image;
         }
-        if (image === null) {
-            return;
-        }
+
         this.drawImage(context, image);
-    },
-
-    onTouchStart: function() {
-        this.updateImage();
-    },
-
-    onTouchEnd: function() {
-        this.updateImage();
     }
 }, module);
