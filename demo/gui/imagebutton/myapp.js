@@ -17,7 +17,7 @@ Class.define("MyApp", App, {
         this.textView.fontStyle = "normal";
         this.textView.background = "#FF0000";
         this.textView.color = "#00FF00";
-        this.textView.text = "Click the ImageButton";
+        this.textView.text = "Tap the ImageButton";
         this.window.addChild(this.textView);
 
         this.imageButton = new ImageButton();
@@ -29,7 +29,7 @@ Class.define("MyApp", App, {
         this.imageButton.pressedImageSrc = global.app.rootPath + "/res/button_pressed.png";
         this.imageButton.focusedImageSrc = global.app.rootPath + "/res/button_focused.png";
         this.imageButton.disabledImageSrc = global.app.rootPath + "/res/button_disabled.png";
-        this.imageButton.addEventListener("click", this.onClick.bind(this));
+        this.imageButton.addEventListener("tap", this.onTap.bind(this));
         this.window.addChild(this.imageButton);
     },
 
@@ -38,7 +38,7 @@ Class.define("MyApp", App, {
         this.imageButton = null;
     },
 
-    onClick: function() {
+    onTap: function() {
         this.textView.text = "Hello!";
     }
 }, module);

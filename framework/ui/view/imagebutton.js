@@ -25,6 +25,7 @@ Class.define("framework.ui.view.ImageButton", ImageView, {
 
         this.addEventListener("touchstart", this.onTouchStartFunc = this.onTouchStart.bind(this));
         this.addEventListener("touchend", this.onTouchEndFunc = this.onTouchEnd.bind(this));
+        this.addGestureRecognizer(this._tapRecognizer = new TapRecognizer());
     },
 
     /**
@@ -32,6 +33,9 @@ Class.define("framework.ui.view.ImageButton", ImageView, {
      * @method ImageButton#destroy
      */
     destroy: function() {
+        this.removeGestureRecognizer(this._tapRecognizer);
+        this._tapRecognizer = null;
+
         this._pressedImageSrc = null;
         if (this._pressedImage !== null) {
             this._pressedImage.onload = null;
