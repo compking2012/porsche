@@ -21,7 +21,7 @@ Node:   passed
 
 *) backgroundimage
 H5:     no pass
-Node:   passed
+Node:   no pass
 
 *) barcode
 H5:     passed
@@ -140,8 +140,8 @@ H5:     passed
 Node:   passed
 
 *) scrollableview-vertical
-H5:     no pass
-Node:   no pass
+H5:     passed
+Node:   passed
 
 *) slider
 H5:     passed
@@ -198,14 +198,9 @@ Node:   no pass
 H5:     no pass
 Node:   passed
 
-*) interop
-H5:     N/A
-Node:   no pass
-
 *) mvc
 H5:     no pass
 Node:   no pass
-
 
 
 
@@ -226,5 +221,7 @@ Node:   no pass
 H5:     no pass
 Node:   no pass
 
-
+*) interop
+H5:     N/A
+Node:   no pass
 
