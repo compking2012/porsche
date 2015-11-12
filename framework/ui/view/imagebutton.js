@@ -105,10 +105,10 @@ Class.define("framework.ui.view.ImageButton", ImageView, {
     },
 
     onTouchStart: function() {
-        this.invalidate();
+        this.updateImage();
     },
 
     onTouchEnd: function() {
-        this.invalidate();
+        this.updateImage();
     }
 }, module);
