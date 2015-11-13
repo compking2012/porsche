@@ -17,11 +17,8 @@ Class.define("framework.ui.view.ScrollableView", CompositeView, {
     initialize: function() {
         CompositeView.prototype.initialize.apply(this, arguments);
 
-        this.addGestureRecognizer(this._panRecognizer = new PanRecognizer());
-        this.addEventListener("touchstart", this._onTouchStartFunc = this.onTouchStart.bind(this));
-        this.addEventListener("touchmove", function() {
-            console.log("[ListView] onTouchMove");
-        });
+        this.addGestureRecognizer(this._panRecognizer = new PanRecognizer({threshold: 1}));
+        this.addEventListener("panstart", this._onPanStartFunc = this.onPanStart.bind(this));
         this.addEventListener("panmove", this._onPanMoveFunc = this.onPanMove.bind(this));
         this.addEventListener("panend", this._onPanEndCancelFunc = this.onPanEndCancel.bind(this));
         this.addEventListener("pancancel", this._onPanCancelFunc);
@@ -53,7 +50,7 @@ Class.define("framework.ui.view.ScrollableView", CompositeView, {
 
         this.removeGestureRecognizer(this._panRecognizer);
         this._panRecognizer = null;
-        this.removeEventListener("touchstart", this._onTouchStartFunc);
+        this.removeEventListener("panstart", this._onPanStartFunc);
         this._onTouchStartFunc = null;
         this.removeEventListener("panmove", this._onPanMoveFunc);
         this._onPanFunc = null;
@@ -235,45 +232,21 @@ Class.define("framework.ui.view.ScrollableView", CompositeView, {
         }
     },
 
-    onTouchStart: function(/*e*/) {
+    onPanStart: function(/*e*/) {
         this.stopAutoScroll();
 
         this._startScrollX = this._scrollX;
         this._startScrollY = this._scrollY;
-        console.log("[ListView] onTouchStart: ", this._startScrollX, this._startScrollY);
     },
 
     onPanMove: function(e) {
-        // console.log("[ListView] onPanMove: ", e.deltaX, e.deltaY);
         this.stopAutoScroll();
 
-        if (this._orientation !== "horizontal") {
-            var scrollY = this._startScrollY - e.deltaY;
-            console.log("[ListView] scrollY, contentHeight:", scrollY, this._contentHeight);
-            if (!this._overScroll) {
-                if (scrollY > this._contentHeight - this._height) {
-                    this.scrollY = this._contentHeight - this._height;
-                } else if (scrollY < 0) {
-                    this.scrollY = 0;
-                } else {
-                    this.scrollY = scrollY;
-                }
-            } else {
-                if (scrollY <= -10) {
-                    this.scrollY = Math.round(scrollY * this._elastic - 10 * (1 - this._elastic));
-                } else if (scrollY >= Math.max(this._contentHeight - this._height + 10, 0)) {
-                    this.scrollY = Math.round(scrollY * this._elastic + Math.max(this._contentHeight - this._height + 10, 0) * (1 - this._elastic));
-                } else {
-                    this.scrollY = scrollY;
-                }
-            }
-        }
-        if (this._orientation !== "vertical") {
+        if (this._orientation === "horizontal" || this._orientation === "all") {
             var scrollX = this._startScrollX - e.deltaX;
-            console.log("[ListView] scrollX, contentWidth:", scrollX, this._contentWidth);
             if (!this._overScroll) {
-                if (scrollX > this._contentWidth - this._width) {
-                    this.scrollX = this._contentWidth - this._width;
+                if (scrollX > Math.max(0, this._contentWidth - this._width)) {
+                    this.scrollX = Math.max(0, this._contentWidth - this._width);
                 } else if (scrollX < 0) {
                     this.scrollX = 0;
                 } else {
@@ -290,7 +263,26 @@ Class.define("framework.ui.view.ScrollableView", CompositeView, {
             }
         }
 
-        // console.log("[ListView] scrollX, scrollY: ", this._scrollX, this._scrollY);
+        if (this._orientation === "vertical" || this._orientation === "all") {
+            var scrollY = this._startScrollY - e.deltaY;
+            if (!this._overScroll) {
+                if (scrollY > Math.max(0, this._contentHeight - this._height)) {
+                    this.scrollY = Math.max(0, this._contentHeight - this._height);
+                } else if (scrollY < 0) {
+                    this.scrollY = 0;
+                } else {
+                    this.scrollY = scrollY;
+                }
+            } else {
+                if (scrollY <= -10) {
+                    this.scrollY = Math.round(scrollY * this._elastic - 10 * (1 - this._elastic));
+                } else if (scrollY >= Math.max(this._contentHeight - this._height + 10, 0)) {
+                    this.scrollY = Math.round(scrollY * this._elastic + Math.max(this._contentHeight - this._height + 10, 0) * (1 - this._elastic));
+                } else {
+                    this.scrollY = scrollY;
+                }
+            }
+        }
     },
 
     onPanEndCancel: function(e) {
@@ -299,20 +291,20 @@ Class.define("framework.ui.view.ScrollableView", CompositeView, {
         this._velocityX = e.velocityX * 1000;
         this._velocityY = e.velocityY * 1000;
         if (this._orientation === "horizontal") {
-            if (this._scrollX > 0 && this._scrollX < this._contentWidth - this._width) {
+            if (this._scrollX > 0 && this._scrollX < Math.max(0, this._contentWidth - this._width)) {
                 this.startAutoScroll(this._velocityX, 0);
                 return;
             }
         } else if (this._orientation === "vertical") {
-            if (this._scrollY > 0 && this._scrollY < this._contentHeight - this._height) {
+            if (this._scrollY > 0 && this._scrollY < Math.max(0, this._contentHeight - this._height)) {
                 this.startAutoScroll(0, this._velocityY);
                 return;
             }
         } else {
-            if (this._scrollX < 0 || this._scrollX > this._contentWidth - this._width) {
+            if (this._scrollX < 0 || this._scrollX > Math.max(0, this._contentWidth - this._width)) {
                 this._velocityX = 0;
             }
-            if (this._scrollY < 0 || this._scrollY > this._contentHeight - this._height) {
+            if (this._scrollY < 0 || this._scrollY > Math.max(0, this._contentHeight - this._height)) {
                 this._velocityY = 0;
             }
             if (this._velocityY !== 0 || this._velocityX !== 0) {
@@ -363,24 +355,24 @@ Class.define("framework.ui.view.ScrollableView", CompositeView, {
                 startTime = new Date().getTime();
 
                 if (totalTime > 0) {
-                    if (scrollY <= 0) {
-                        this.scrollY = 0;
-                        isEndY = true;
-                    } else if (scrollY >= this._contentHeight - this._height) {
-                        this.scrollY = this._contentHeight - this._height;
-                        isEndY = true;
-                    } else {
-                        this.scrollY = scrollY;
-                    }
-
                     if (scrollX <= 0) {
                         this.scrollX = 0;
                         isEndX = true;
-                    } else if (scrollX >= this._contentWidth - this._width) {
-                        this.scrollX = this._contentWidth - this._width;
+                    } else if (scrollX >= Math.max(0, this._contentWidth - this._width)) {
+                        this.scrollX = Math.max(0, this._contentWidth - this._width);
                         isEndX = true;
                     } else {
                         this.scrollX = scrollX;
+                    }
+
+                    if (scrollY <= 0) {
+                        this.scrollY = 0;
+                        isEndY = true;
+                    } else if (scrollY >= Math.max(0, this._contentHeight - this._height)) {
+                        this.scrollY = Math.max(0, this._contentHeight - this._height);
+                        isEndY = true;
+                    } else {
+                        this.scrollY = scrollY;
                     }
 
                     if (isEndX && isEndY) {
@@ -393,8 +385,8 @@ Class.define("framework.ui.view.ScrollableView", CompositeView, {
                     this.stopAutoScroll();
                     return;
                 }
-                this._scrollingTimer = setTimeout(animationFunc, 10);
-            }.bind(this), 10);
+                this._scrollingTimer = setTimeout(animationFunc, 16);
+            }.bind(this), 16);
         }
     },
 

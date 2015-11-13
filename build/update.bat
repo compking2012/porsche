@@ -1,6 +1,6 @@
-adb shell rm -rf /system/framework/cloudappfx
-adb shell mkdir /system/framework/cloudappfx
-adb push ../cloudappfx/com /system/framework/cloudappfx/com
-adb push ../cloudappfx/package.json /system/framework/cloudappfx
-adb push ../cloudappfx/resources /system/framework/cloudappfx/resources
-adb push ../cloudappfx/index.js /system/framework/cloudappfx
+adb shell rm -rf /system/framework/framework
+adb shell mkdir /system/framework/framework
+adb push ../out/framework/com /system/framework/framework
+adb push ../out/framework/package.json /system/framework/framework
+adb push ../out/framework/resources /system/framework/framework/resources
+adb push ../out/framework/index.js /system/framework/framework

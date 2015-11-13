@@ -159,6 +159,10 @@ Node:   no pass
 H5:     passed
 Node:   passed
 
+*) textfield
+H5:     no pass
+Node:   no pass
+
 *) textview
 H5:     passed
 Node:   passed

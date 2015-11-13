@@ -19,7 +19,7 @@ Class.define("MyApp", App, {
             var view = new View();
             view.background = colors[i % colors.length];
             view.top = i * 100;
-            view.width = 320;
+            view.width = 200;
             view.height = 100;
 
             this.scrollableView.addChild(view);

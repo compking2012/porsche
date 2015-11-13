@@ -183,6 +183,7 @@ Class.define("framework.ui.WindowManager", EventEmitter, {
             }
             this._lastTouchPoint.assign(touchPoints[0].x, touchPoints[0].y);
             view = activeWindow.findViewAtPoint(this._lastTouchPoint);
+
             if (this._activeView !== view) {
                 return;
             }

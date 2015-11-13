@@ -249,14 +249,7 @@ Class.define("framework.ui.view.CompositeView", View, {
             return null;
         }
 
-        var x = this._left;
-        var y = this._top;
-        if (this._parent !== null) {
-            x -= this._parent.scrollX;
-            y -= this._parent.scrollY;
-        }
-
-        point.offset(-x, -y);
+        point.offset(-this._left + this._scrollX, -this._top + this._scrollY);
         var findChild = this;
         var length = this._children.length;
         for (var i = length - 1; i >= 0; i--) {
@@ -266,7 +259,7 @@ Class.define("framework.ui.view.CompositeView", View, {
                 break;
             }
         }
-        point.offset(x, y);
+        point.offset(this._left - this._scrollX, this._top - this._scrollY);
         return findChild;
     },
 
