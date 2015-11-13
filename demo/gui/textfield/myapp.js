@@ -9,23 +9,13 @@ Class.define("MyApp", App, {
         App.prototype.initialize.apply(this, arguments);
 
         this.textField = new TextField();
-        this.textField.background = "#FF0000";
         this.textField.left = 60;
         this.textField.top = 110;
         this.textField.width = 200;
         this.textField.height = 100;
-        this.textField.text = "Press Key...";
-        this.textField.addEventListener("keydown", this.onKeyDown.bind(this));
-        this.textField.addEventListener("keyup", this.onKeyUp.bind(this));
+        this.textField.fontSize = "36px";
+        this.textField.placeholder = "input...";
 
         this.window.addChild(this.textField);
-    },
-
-    onKeyDown: function(e) {
-        this.textField.text = "KeyDown: " + String.fromCharCode(e.keyCode);
-    },
-
-    onKeyUp: function(e) {
-        this.textField.text = "KeyUp: " + String.fromCharCode(e.keyCode);
     }
 }, module);

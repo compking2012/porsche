@@ -21,7 +21,6 @@ Class.define("framework.ui.view.TextField", TextView, {
         }
         global.textFields.push(this);
 
-        this._placeHolderColor = "#BFBEBD";
         this._readonly = false;
         this._maxlength = 0;
         this._padding = 5;
@@ -31,7 +30,11 @@ Class.define("framework.ui.view.TextField", TextView, {
         this._borderRadius = 3;
         this._selectionColor = "rgba(179, 212, 253, 0.8)";
         this._inputIndex = global.textFields.length - 1;
-        this._placeHolder = "";
+        this._color = "#000000";
+        this._background = "#FFFFFF";
+        this._cursorColor = "#0000FF";
+        this._placeholderColor = "#BFBEBD";
+        this._placeholder = "";
 
         this._cursor = false;
         this._cursorPos = 0;
@@ -57,6 +60,15 @@ Class.define("framework.ui.view.TextField", TextView, {
         TextView.prototype.destroy.apply(this, arguments);
     },
 
+    get placeholder() {
+        return this._placeholder;
+    },
+
+    set placeholder(value) {
+        this._placeholder = value;
+        this.invalidate();
+    },
+
     onTouchStart: function(/*e*/) {
         this.focus();
     },
@@ -68,22 +80,22 @@ Class.define("framework.ui.view.TextField", TextView, {
             if (e.keyCode === 8) {
                 // Pressed Backspace key
                 if (this._cursorPos > 0) {
-                    this._value = this._value.substr(0, this._cursorPos - 1) + this._value.substr(this._cursorPos, this._value.length);
+                    this._text = this._text.substr(0, this._cursorPos - 1) + this._text.substr(this._cursorPos, this._text.length);
                     this._cursorPos--;
                 }
-            }
-            if (e.keyCode === 46) {
+            } else if (e.keyCode === 46) {
                 // Pressed Delete key
-                if (this._cursorPos < this._value.length) {
-                    this._value = this._value.substr(0, this._cursorPos) + this._value.substr(this._cursorPos + 1, this._value.length);
+                if (this._cursorPos < this._text.length) {
+                    this._text = this._text.substr(0, this._cursorPos) + this._text.substr(this._cursorPos + 1, this._text.length);
                 }
             } else if (e.keyCode === 37) {
                 // Pressed Left arrow key
                 this._cursorPos--;
             } else if (e.keyCode === 39) {
                 // Pressed Right arrow key
-                this.cursorPos++;
+                this._cursorPos++;
             } else if (e.keyCode === 13) {
+                // Pressed Enter key
                 var textFields = global.textFields;
                 var length = textFields.length;
                 for (var i = 0; i < length; i++) {
@@ -96,6 +108,7 @@ Class.define("framework.ui.view.TextField", TextView, {
                     }
                 }
             } else if (e.keyCode === 9) {
+                // Pressed Tab key
                 cursorVal = false;
                 this.blur();
                 var obj = global.textFields[this._inputIndex + 1];
@@ -105,9 +118,10 @@ Class.define("framework.ui.view.TextField", TextView, {
                     }.bind(this), 1);
                 }
             } else {
+                // Pressed other keys
                 var key = this.mapKeyPressToActualCharacter(e.shiftKey, e.keyCode);
                 if (key !== null) {
-                    this._value += key;
+                    this._text += key;
                     this._cursorPos++;
                 }
             }
@@ -134,8 +148,8 @@ Class.define("framework.ui.view.TextField", TextView, {
             this.invalidate();
         }.bind(this), 500);
 
-        if (this._value === this._placeholder) {
-            this._value = "";
+        if (this._text === this._placeholder) {
+            this._text = "";
         }
         this.invalidate();
     },
@@ -150,18 +164,18 @@ Class.define("framework.ui.view.TextField", TextView, {
             this._cursorInterval = null;
         }
         this._cursor = false;
-        if (this._value === "") {
-            this._value = this._placeholder;
+        if (this._text === "") {
+            this._text = this._placeholder;
         }
         this.invalidate();
     },
 
     mapKeyPressToActualCharacter: function(isShiftKey, characterCode) {
         if (characterCode === 27 || characterCode === 8 || characterCode === 9 || characterCode === 20 || characterCode === 16 || characterCode === 17 || characterCode === 91 || characterCode === 13 || characterCode === 92 || characterCode === 18) {
-            return false;
+            return null;
         }
         if (typeof isShiftKey !== "boolean" || typeof characterCode !== "number") {
-            return false;
+            return null;
         }
         var characterMap = [];
         characterMap[192] = "~";
@@ -211,17 +225,14 @@ Class.define("framework.ui.view.TextField", TextView, {
         return character;
     },
 
+    drawBackground: function(context) {
+        context.fillStyle = this._background;
+        context.roundRect(0, 0, this._width, this._height, this._borderRadius);
+        context.fill();
+    },
+
     draw: function(context) {
-        context.fillStyle = this._focused ? "#000000" : this._defaultStrokeColor;
-        context.fillRect(this._xPos, this._yPos, this._width, this._height);
-
-        context.fillStyle = this._focused ? "#EFEFEF" : this._defaultBackgroundColor;
-        context.fillRect(this._xPos, this.yPos, this.width, this.height);
-
-        context.fillStyle = this.defaultFontColor;
-        context.font = this._fontStyle + " " + this._fontWeight + " " + this._fontSize + " " + this._fontFamily;
-
-        var text = this._type === "password" && this._value !== this._placeholder ? this._value.replace(/./g, "\u25CF") : this._value;
+        var text = this._type === "password" && this._text !== this._placeholder ? this._text.replace(/./g, "\u25CF") : this._text;
         var textWidth = context.measureText(text).width;
         var textHeight = parseInt(this._fontSize);
         var offset = this._padding;
@@ -231,9 +242,13 @@ Class.define("framework.ui.view.TextField", TextView, {
         } else if (this._center) {
             offset = this._width / 2 - textWidth / 2;
         }
+
+        context.fillStyle = this._color;
+        context.font = this._fontStyle + " " + this._fontWeight + " " + this._fontSize + " " + this._fontFamily;
         context.fillText(text, this._xPos + offset, this._yPos + this._height / 2 + textHeight / 2);
+
         if (this._cursor) {
-            context.fillStyle = this._color;
+            context.fillStyle = this._cursorColor;
             var cursorOffset = context.measureText(text.substring(0, this._cursorPos)).width;
             if (this._center) {
                 cursorOffset += offset - this._padding;
