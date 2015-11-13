@@ -16,56 +16,107 @@ Class.define("framework.ui.view.TextField", TextView, {
     initialize: function() {
         TextView.prototype.initialize.apply(this, arguments);
 
+        if (!global.hasOwnProperty("textFields")) {
+            global.textFields = [];
+        }
+        global.textFields.push(this);
+
         this._placeHolderColor = "#BFBEBD";
         this._readonly = false;
         this._maxlength = 0;
         this._padding = 5;
+        this._alignCenter = false;
         this._borderWidth = 1;
         this._borderColor = "#959595";
         this._borderRadius = 3;
-        this._boxShadow = "1px 1px 0px rgba(255, 255, 255, 1)";
-        this._innerShadow = "0px 0px 4px rgba(0, 0, 0, 0.4)";
         this._selectionColor = "rgba(179, 212, 253, 0.8)";
+        this._inputIndex = global.textFields.length - 1;
         this._placeHolder = "";
 
         this._cursor = false;
         this._cursorPos = 0;
+        this._cursorInterval = null;
+        this._xPos = 0;
+        this._yPos = this._height / 2;
         this._selection = [0, 0];
         this._wasOver = false;
 
         this.addGestureRecognizer(this._tapRecognizer = new TapRecognizer());
-
+        this.addEventListener("touchstart", this._onTouchStartFunc = this.onTouchStart.bind(this));
         this.addEventListener("keydown", this._onKeyDownFunc = this.onKeyDown.bind(this));
         this.addEventListener("keyup", this._onKeyUpFunc = this.onKeyUp.bind(this));
-
     },
 
     destroy: function() {
         this.removeGestureRecognizer(this._tapRecognizer);
+        this.removeEventListener("touchstart", this._onTouchStartFunc = this.onTouchStart.bind(this));
+        this.removeEventListener("keydown", this._onKeyDownFunc = this.onKeyDown.bind(this));
+        this.removeEventListener("keyup", this._onKeyUpFunc = this.onKeyUp.bind(this));
         this._tapRecognizer = null;
 
         TextView.prototype.destroy.apply(this, arguments);
     },
 
-    get placeHolderColor() {
-
-    },
-
-    set placeHolderColor(value) {
-
+    onTouchStart: function(/*e*/) {
+        this.focus();
     },
 
     onKeyDown: function(e) {
         if (this._focused) {
-            this.dispatchEvent("keydown", e);
+            // e.preventDefault();
+            var cursorVal = true;
+            if (e.keyCode === 8) {
+                // Pressed Backspace key
+                if (this._cursorPos > 0) {
+                    this._value = this._value.substr(0, this._cursorPos - 1) + this._value.substr(this._cursorPos, this._value.length);
+                    this._cursorPos--;
+                }
+            }
+            if (e.keyCode === 46) {
+                // Pressed Delete key
+                if (this._cursorPos < this._value.length) {
+                    this._value = this._value.substr(0, this._cursorPos) + this._value.substr(this._cursorPos + 1, this._value.length);
+                }
+            } else if (e.keyCode === 37) {
+                // Pressed Left arrow key
+                this._cursorPos--;
+            } else if (e.keyCode === 39) {
+                // Pressed Right arrow key
+                this.cursorPos++;
+            } else if (e.keyCode === 13) {
+                var textFields = global.textFields;
+                var length = textFields.length;
+                for (var i = 0; i < length; i++) {
+                    var input = textFields[i];
+                    if (input.type === "submit") {
+                        cursorVal = false;
+                        this.blur();
+                        input.focus();
+                        break;
+                    }
+                }
+            } else if (e.keyCode === 9) {
+                cursorVal = false;
+                this.blur();
+                var obj = global.textFields[this._inputIndex + 1];
+                if (obj !== undefined) {
+                    setTimeout(function() {
+                        return obj.focus();
+                    }.bind(this), 1);
+                }
+            } else {
+                var key = this.mapKeyPressToActualCharacter(e.shiftKey, e.keyCode);
+                if (key !== null) {
+                    this._value += key;
+                    this._cursorPos++;
+                }
+            }
+            this._cursor = cursorVal;
+            this.invalidate();
         }
-        this.invalidate();
     },
 
     onKeyUp: function(e) {
-        if (this._focused) {
-            this.dispatchEvent("keydown", e);
-        }
         this.invalidate();
     },
 
@@ -74,215 +125,120 @@ Class.define("framework.ui.view.TextField", TextView, {
      * either at the end of the text or where the user clicked.
      */
     focus: function() {
-        // remove selection
-        if (!this._selectionUpdated) {
-            this._selection = [0, 0];
-        }
-
-        // if this is readonly, don't allow it to get focus
-        if (this._readonly) {
+        if (this._focused) {
             return;
         }
         this._focused = true;
-
-        // update the cursor position
-        this._cursorPos = this.clipText().length;
-
-        // clear the place holder
-        if (this._placeHolder === this._text) {
-            this._text = "";
-        }
-
-        this._cursor = true;
-
-        // setup cursor interval
-        if (this._cursorInterval) {
-            clearInterval(this._cursorInterval);
-        }
         this._cursorInterval = setInterval(function() {
             this._cursor = !this._cursor;
             this.invalidate();
         }.bind(this), 500);
+
+        if (this._value === this._placeholder) {
+            this._value = "";
+        }
+        this.invalidate();
     },
 
     /**
      * Removes focus from the CanvasInput box.
-     * @param  {Object} _this Reference to this.
-     * @return {CanvasInput}
      */
-    blur: function(_this) {
-      var self = _this || this;
-
-      self._onblur(self);
-
-      if (self._cursorInterval) {
-        clearInterval(self._cursorInterval);
-      }
-      self._hasFocus = false;
-      self._cursor = false;
-      self._selection = [0, 0];
-      self._hiddenInput.blur();
-
-      // fill the place holder
-      if (self._value === '') {
-        self._value = self._placeHolder;
-      }
-
-      return self.render();
+    blur: function() {
+        this._focused = false;
+        if (this._cursorInterval !== null) {
+            clearInterval(this._cursorInterval);
+            this._cursorInterval = null;
+        }
+        this._cursor = false;
+        if (this._value === "") {
+            this._value = this._placeholder;
+        }
+        this.invalidate();
     },
 
-    /**
-     * Clip the text string to only return what fits in the visible text box.
-     * @param  {String} value The text to clip.
-     * @return {String} The clipped text.
-     */
-    clipText: function(value) {
-        value = value === undefined ? this._text : value;
+    mapKeyPressToActualCharacter: function(isShiftKey, characterCode) {
+        if (characterCode === 27 || characterCode === 8 || characterCode === 9 || characterCode === 20 || characterCode === 16 || characterCode === 17 || characterCode === 91 || characterCode === 13 || characterCode === 92 || characterCode === 18) {
+            return false;
+        }
+        if (typeof isShiftKey !== "boolean" || typeof characterCode !== "number") {
+            return false;
+        }
+        var characterMap = [];
+        characterMap[192] = "~";
+        characterMap[49] = "!";
+        characterMap[50] = "@";
+        characterMap[51] = "#";
+        characterMap[52] = "$";
+        characterMap[53] = "%";
+        characterMap[54] = "^";
+        characterMap[55] = "&";
+        characterMap[56] = "*";
+        characterMap[57] = "(";
+        characterMap[48] = ")";
+        characterMap[109] = "_";
+        characterMap[107] = "+";
+        characterMap[219] = "{";
+        characterMap[221] = "}";
+        characterMap[220] = "|";
+        characterMap[59] = ":";
+        characterMap[222] = "\"";
+        characterMap[188] = "<";
+        characterMap[190] = ">";
+        characterMap[187] = "+";
+        characterMap[191] = "?";
+        characterMap[32] = " ";
 
-        var textWidth = this.getTextWidth(value);
-        var fillPer = textWidth / (self._width - self._padding),
-        text = fillPer > 1 ? value.substr(-1 * Math.floor(value.length / fillPer)) : value;
-
-      return text + '';
+        var character = "";
+        if (isShiftKey) {
+            if (characterCode >= 65 && characterCode <= 90) {
+                character = String.fromCharCode(characterCode);
+            } else {
+                character = characterMap[characterCode];
+            }
+        } else {
+            if (characterCode >= 65 && characterCode <= 90) {
+                character = String.fromCharCode(characterCode).toLowerCase();
+            } else {
+                if (characterCode === 188) {
+                    character = ",";
+                } else if (characterCode === 190) {
+                    character = ".";
+                } else {
+                    character = String.fromCharCode(characterCode);
+                }
+            }
+        }
+        return character;
     },
 
     draw: function(context) {
-        w = self.outerW,
-        h = self.outerH,
-        br = self._borderRadius,
-        bw = self._borderWidth,
-        sw = self.shadowW,
-        sh = self.shadowH;
+        context.fillStyle = this._focused ? "#000000" : this._defaultStrokeColor;
+        context.fillRect(this._xPos, this._yPos, this._width, this._height);
 
-      if (!ctx) {
-        return;
-      }
+        context.fillStyle = this._focused ? "#EFEFEF" : this._defaultBackgroundColor;
+        context.fillRect(this._xPos, this.yPos, this.width, this.height);
 
-      // clear the canvas
-      ctx.clearRect(0, 0, ctx.canvas.width, ctx.canvas.height);
+        context.fillStyle = this.defaultFontColor;
+        context.font = this._fontStyle + " " + this._fontWeight + " " + this._fontSize + " " + this._fontFamily;
 
-      // setup the box shadow
-      ctx.shadowOffsetX = self._boxShadow.x;
-      ctx.shadowOffsetY = self._boxShadow.y;
-      ctx.shadowBlur = self._boxShadow.blur;
-      ctx.shadowColor = self._boxShadow.color;
-
-      // draw the border
-      if (self._borderWidth > 0) {
-        ctx.fillStyle = self._borderColor;
-        self._roundedRect(ctx, self.shadowL, self.shadowT, w - sw, h - sh, br);
-        ctx.fill();
-
-        ctx.shadowOffsetX = 0;
-        ctx.shadowOffsetY = 0;
-        ctx.shadowBlur = 0;
-      }
-
-      // draw the text box background
-      // only draw the background shape if no image is being used
-      if (self._backgroundImage === '') {
-        ctx.fillStyle = self._backgroundColor;
-        self._roundedRect(ctx, bw + self.shadowL, bw + self.shadowT, w - bw * 2 - sw, h - bw * 2 - sh, br);
-        ctx.fill();
-      } else {
-          ctx.drawImage(this._background, 0, 0, img.width, img.height, bw + self.shadowL, bw + self.shadowT, w, h);
-      }
-
-
-
-        // make sure all shadows are reset
-        ctx.shadowOffsetX = 0;
-        ctx.shadowOffsetY = 0;
-        ctx.shadowBlur = 0;
-
-        // clip the text so that it fits within the box
-        var text = self._clipText(context);
-
-        // draw the selection
-        var paddingBorder = self._padding + self._borderWidth + self.shadowT;
-        if (self._selection[1] > 0) {
-          var selectOffset = self._textWidth(text.substring(0, self._selection[0])),
-            selectWidth = self._textWidth(text.substring(self._selection[0], self._selection[1]));
-
-          ctx.fillStyle = self._selectionColor;
-          ctx.fillRect(paddingBorder + selectOffset, paddingBorder, selectWidth, self._height);
+        var text = this._type === "password" && this._value !== this._placeholder ? this._value.replace(/./g, "\u25CF") : this._value;
+        var textWidth = context.measureText(text).width;
+        var textHeight = parseInt(this._fontSize);
+        var offset = this._padding;
+        var ratio = textWidth / (this._width - this._padding - 3);
+        if (ratio > 1) {
+            text = text.substr(-1 * Math.floor(text.length / ratio));
+        } else if (this._center) {
+            offset = this._width / 2 - textWidth / 2;
         }
-
-        // draw the cursor
-        if (self._cursor) {
-          var cursorOffset = self._textWidth(text.substring(0, self._cursorPos));
-          ctx.fillStyle = self._fontColor;
-          ctx.fillRect(paddingBorder + cursorOffset, paddingBorder, 1, self._height);
+        context.fillText(text, this._xPos + offset, this._yPos + this._height / 2 + textHeight / 2);
+        if (this._cursor) {
+            context.fillStyle = this._color;
+            var cursorOffset = context.measureText(text.substring(0, this._cursorPos)).width;
+            if (this._center) {
+                cursorOffset += offset - this._padding;
+            }
+            context.fillRect(this._xPos + this._padding + cursorOffset, this._yPos + this._padding, 1, this._height - 2 * this._padding);
         }
-
-        // draw the text
-        var textX = self._padding + self._borderWidth + self.shadowL,
-          textY = Math.round(paddingBorder + self._height / 2);
-
-        // only remove the placeholder text if they have typed something
-        text = (text === '' && self._placeHolder) ? self._placeHolder : text;
-
-        ctx.fillStyle = (self._value !== '' && self._value !== self._placeHolder) ? self._fontColor : self._placeHolderColor;
-        ctx.font = self._fontStyle + ' ' + self._fontWeight + ' ' + self._fontSize + 'px ' + self._fontFamily;
-        ctx.textAlign = 'left';
-        ctx.textBaseline = 'middle';
-        ctx.fillText(text, textX, textY);
-
-        // parse inner shadow
-        var innerShadow = self._innerShadow.split('px '),
-          isOffsetX = self._innerShadow === 'none' ? 0 : parseInt(innerShadow[0], 10),
-          isOffsetY = self._innerShadow === 'none' ? 0 : parseInt(innerShadow[1], 10),
-          isBlur = self._innerShadow === 'none' ? 0 : parseInt(innerShadow[2], 10),
-          isColor = self._innerShadow === 'none' ? '' : innerShadow[3];
-
-        // draw the inner-shadow (damn you canvas, this should be easier than this...)
-        if (isBlur > 0) {
-          var shadowCtx = self._shadowCtx,
-            scw = shadowCtx.canvas.width,
-            sch = shadowCtx.canvas.height;
-
-          shadowCtx.clearRect(0, 0, scw, sch);
-          shadowCtx.shadowBlur = isBlur;
-          shadowCtx.shadowColor = isColor;
-
-          // top shadow
-          shadowCtx.shadowOffsetX = 0;
-          shadowCtx.shadowOffsetY = isOffsetY;
-          shadowCtx.fillRect(-1 * w, -100, 3 * w, 100);
-
-          // right shadow
-          shadowCtx.shadowOffsetX = isOffsetX;
-          shadowCtx.shadowOffsetY = 0;
-          shadowCtx.fillRect(scw, -1 * h, 100, 3 * h);
-
-          // bottom shadow
-          shadowCtx.shadowOffsetX = 0;
-          shadowCtx.shadowOffsetY = isOffsetY;
-          shadowCtx.fillRect(-1 * w, sch, 3 * w, 100);
-
-          // left shadow
-          shadowCtx.shadowOffsetX = isOffsetX;
-          shadowCtx.shadowOffsetY = 0;
-          shadowCtx.fillRect(-100, -1 * h, 100, 3 * h);
-
-          // create a clipping mask on the main canvas
-          self._roundedRect(ctx, bw + self.shadowL, bw + self.shadowT, w - bw * 2 - sw, h - bw * 2 - sh, br);
-          ctx.clip();
-
-          // draw the inner-shadow from the off-DOM canvas
-          ctx.drawImage(self._shadowCanvas, 0, 0, scw, sch, bw + self.shadowL, bw + self.shadowT, scw, sch);
-        }
-
-        // draw to the visible canvas
-        if (self._ctx) {
-          self._ctx.clearRect(self._x, self._y, ctx.canvas.width, ctx.canvas.height);
-          self._ctx.drawImage(self._renderCanvas, self._x, self._y);
-        }
-
-        return self;
-
-      });
     }
-
-
 }, module);

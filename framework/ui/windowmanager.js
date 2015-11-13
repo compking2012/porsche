@@ -2,6 +2,7 @@
 var Class = require("../class");
 var EventEmitter = require("../eventemitter");
 var TouchEvent = require("./event/touchevent");
+var KeyboardEvent = require("./event/keyboardevent");
 var Point = require("./point");
 
 Class.define("framework.ui.WindowManager", EventEmitter, {
@@ -27,7 +28,7 @@ Class.define("framework.ui.WindowManager", EventEmitter, {
         this._screenCanvas = this._renderService.createCanvas(this._renderService.getWidth(), this._renderService.getHeight());
         this._screenContext = this.getContext(this._screenCanvas);
 
-        this._inputService.addEventListener("input", this._processTouchEventFunc = this.processTouchEvent.bind(this));
+        this._inputService.addEventListener("input", this._processInputEventFunc = this.processInputEvent.bind(this));
     },
 
     destroy: function() {
@@ -164,6 +165,14 @@ Class.define("framework.ui.WindowManager", EventEmitter, {
         }.bind(this));
     },
 
+    processInputEvent: function(type, e) {
+        if (type === "touchstart" || type === "touchmove" || type === "touchend" || type === "touchcancel") {
+            this.processTouchEvent(type, e);
+        } else if (type === "keydown" || type === "keyup") {
+            this.processKeyboardEvent(type, e);
+        }
+    },
+
     processTouchEvent: function(type, e) {
         // TODO: currently, only support single-touch, multi-touch is not supported yet.
         // TODO: only assign touches[], need plus changedTouches[] and targetTouches[]
@@ -263,6 +272,20 @@ Class.define("framework.ui.WindowManager", EventEmitter, {
         });
 
         this.chainedDispatchEvent(this._activeView, touchEvent);
+    },
+
+    processKeyboardEvent: function(type, e) {
+        if (this._activeView === null) {
+            return;
+        }
+
+        var keyboardEvent = new KeyboardEvent({
+            type: type,
+            timestamp: new Date().getTime(),
+            target: this._activeView,
+            keyCode: e.keyCode
+        });
+        this.chainedDispatchEvent(this._activeView, keyboardEvent);
     },
 
     chainedDispatchEvent: function(view, event) {

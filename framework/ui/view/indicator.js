@@ -1,6 +1,6 @@
 "use strict";
-var View = require("./view");
 var Class = require("../../class");
+var View = require("./view");
 
 /**
  * Indicator widget only use for swipeview

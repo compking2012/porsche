@@ -11,6 +11,8 @@ Class.define("framework.ui.platform.H5InputService", EventEmitter, {
         this._canvas.addEventListener("touchmove", this._onTouchMoveFunc = this.onTouchMove.bind(this));
         this._canvas.addEventListener("touchend", this._onTouchEndFunc = this.onTouchEnd.bind(this));
         this._canvas.addEventListener("touchcancel", this._onTouchCancelFunc = this.onTouchCancel.bind(this));
+        window.addEventListener("keydown", this._onKeyDownFunc = this.onKeyDown.bind(this));
+        window.addEventListener("keyup", this._onKeyUpFunc = this.onKeyUp.bind(this));
     },
 
     destroy: function() {
@@ -22,6 +24,10 @@ Class.define("framework.ui.platform.H5InputService", EventEmitter, {
         this._onTouchEndFunc = null;
         this._canvas.removeEventListener("touchcancel", this._onTouchCancelFunc);
         this._onTouchCancelFunc = null;
+        window.removeEventListener("keydown", this._onKeyDownFunc);
+        this._onKeyDownFunc = null;
+        window.removeEventListener("keyup", this._onKeyUpFunc);
+        this._onKeyUpFunc = null;
 
         EventEmitter.prototype.destroy.apply(this, arguments);
     },
@@ -56,5 +62,13 @@ Class.define("framework.ui.platform.H5InputService", EventEmitter, {
             points.push({x: e.changedTouches[i].clientX, y: e.changedTouches[i].clientY});
         }
         this.dispatchEvent("input", "touchcancel", points);
+    },
+
+    onKeyDown: function(e) {
+        this.dispatchEvent("input", "keydown", {keyCode: e.keyCode});
+    },
+
+    onKeyUp: function(e) {
+        this.dispatchEvent("input", "keyup", {keyCode: e.keyCode});
     }
 }, module);
