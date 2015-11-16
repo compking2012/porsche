@@ -703,6 +703,14 @@ Class.define("framework.ui.view.View", EventEmitter, {
         this.processHardwareAcceleration();
     },
 
+    get focused() {
+        return this._focused;
+    },
+
+    set focused(value) {
+        this._focused = value;
+    },
+
     /**
      * Remove this view from its parent.
      * @method View#removeFromParent

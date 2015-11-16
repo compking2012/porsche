@@ -12,6 +12,7 @@
 var Class = require("../../class");
 var TextView = require("./textview");
 var TapRecognizer = require("../gesture/taprecognizer");
+var Point = require("../point");
 
 /**
  * Text field.
@@ -45,27 +46,67 @@ Class.define("framework.ui.view.TextField", TextView, {
         this._cursorColor = "#0000FF";
         this._placeholderColor = "#BFBEBD";
         this._placeholder = "";
+        this._selection = {start: -1, end: -1};
 
         this._cursor = false;
         this._cursorPos = 0;
         this._cursorInterval = null;
-        this._selection = [0, 0];
+        this._selectionStartPoint = new Point(0, 0);
+        this._selectionLastPoint = new Point(0, 0);
         this._wasOver = false;
 
         this.addGestureRecognizer(this._tapRecognizer = new TapRecognizer());
         this.addEventListener("touchstart", this._onTouchStartFunc = this.onTouchStart.bind(this));
+        this.addEventListener("touchmove", this._onTouchMoveFunc = this.onTouchMove.bind(this));
+        this.addEventListener("touchend", this._onTouchEndCancelFunc = this.onTouchEndCancel.bind(this));
+        this.addEventListener("touchcancel", this._onTouchEndCancelFunc);
         this.addEventListener("keydown", this._onKeyDownFunc = this.onKeyDown.bind(this));
         this.addEventListener("keyup", this._onKeyUpFunc = this.onKeyUp.bind(this));
     },
 
     destroy: function() {
         this.removeGestureRecognizer(this._tapRecognizer);
-        this.removeEventListener("touchstart", this._onTouchStartFunc = this.onTouchStart.bind(this));
-        this.removeEventListener("keydown", this._onKeyDownFunc = this.onKeyDown.bind(this));
-        this.removeEventListener("keyup", this._onKeyUpFunc = this.onKeyUp.bind(this));
+        this._tapRecognizer.destroy();
         this._tapRecognizer = null;
 
+        this.removeEventListener("touchstart", this._onTouchStartFunc);
+        this._onTouchStartFunc = null;
+
+        this.removeEventListener("touchmove", this._onTouchMoveFunc);
+        this._onTouchMoveFunc = null;
+
+        this.removeEventListener("touchend", this._onTouchEndCancelFunc);
+        this.removeEventListener("touchcancel", this._onTouchEndCancelFunc);
+        this._onTouchEndCancelFunc = null;
+
+        this.removeEventListener("keydown", this._onKeyDownFunc);
+        this._onKeyDownFunc = null;
+
+        this.removeEventListener("keyup", this._onKeyUpFunc);
+        this._onKeyUpFunc = null;
+
+        this._selectionStartPoint.destroy();
+        this._selectionStartPoint = null;
+
+        this._selectionLastPoint.destroy();
+        this._selectionLastPoint = null;
+
         TextView.prototype.destroy.apply(this, arguments);
+    },
+
+    /**
+     * @name TextView#text
+     * @type {String}
+     * @description Text content.
+     */
+    get text() {
+        return this._text;
+    },
+
+    set text(value) {
+        this._text = value;
+        this._cursorPos = this._text.length;
+        this.invalidate();
     },
 
     get placeholder() {
@@ -77,8 +118,34 @@ Class.define("framework.ui.view.TextField", TextView, {
         this.invalidate();
     },
 
-    onTouchStart: function(/*e*/) {
+    onTouchStart: function(e) {
+        var x = e.targetTouches[0].pageX;
+        var y = e.targetTouches[0].pageY;
+
         this.focus();
+        // start the selection drag if inside the input
+        if (this._focused) {
+            this._selectionStartPoint.assign(x, y);
+            this.invalidate();
+        }
+    },
+
+    onTouchMove: function(e) {
+        var x = e.targetTouches[0].pageX;
+        var y = e.targetTouches[0].pageY;
+
+        if (this._focused) {
+            this._selectionLastPoint.assign(x, y);
+            this.invalidate();
+        }
+    },
+
+    onTouchEndCancel: function(/*e*/) {
+        if (this._focused) {
+            this._selectionStartPoint.assign(-1, -1);
+            this._selectionLastPoint.assign(-1, -1);
+            this.invalidate();
+        }
     },
 
     onKeyDown: function(e) {
@@ -108,27 +175,20 @@ Class.define("framework.ui.view.TextField", TextView, {
                 }
             } else if (e.keyCode === 13) {
                 // Pressed Enter key
-                var textFields = global.textFields;
-                var length = textFields.length;
-                for (var i = 0; i < length; i++) {
-                    var input = textFields[i];
-                    if (input.type === "submit") {
-                        cursorVal = false;
-                        this.blur();
-                        input.focus();
-                        break;
-                    }
-                }
+                cursorVal = false;
             } else if (e.keyCode === 9) {
                 // Pressed Tab key
                 cursorVal = false;
-                this.blur();
-                var obj = global.textFields[this._inputIndex + 1];
-                if (obj !== undefined) {
-                    setTimeout(function() {
-                        return obj.focus();
-                    }.bind(this), 1);
-                }
+                // this.blur();
+                // var obj = global.textFields[this._inputIndex + 1];
+                // if (obj !== undefined) {
+                //     setTimeout(function() {
+                //         return obj.focus();
+                //     }.bind(this), 1);
+                // }
+            } else if (e.keyCode === 65 && (e.ctrlKey || e.metaKey)) {
+                // Pressed Ctrl/Cmd+A to selection all
+                this.selectText(0, this._text.length);
             } else {
                 // Pressed other keys
                 var key = this.mapKeyPressToActualCharacter(e.shiftKey, e.keyCode);
@@ -155,7 +215,16 @@ Class.define("framework.ui.view.TextField", TextView, {
             return;
         }
 
+        // remove focus from all other inputs
+        for (var i = 0; i < global.textFields.length; i++) {
+            if (global.textFields[i].focused) {
+                global.textFields[i].blur();
+            }
+        }
+
         this._focused = true;
+        this._selection.start = -1;
+        this._selection.end = -1;
         this._cursor = true;
 
         if (this._cursorInterval !== null) {
@@ -179,8 +248,28 @@ Class.define("framework.ui.view.TextField", TextView, {
             clearInterval(this._cursorInterval);
             this._cursorInterval = null;
         }
+        this._selection.start = -1;
+        this._selection.end = -1;
         this._cursor = false;
         this.invalidate();
+    },
+
+    selectText: function(start, end) {
+        this._selection.start = start;
+        this._selection.end = end;
+        this.invalidate();
+    },
+
+    removeSelectedText: function() {
+        if (this._selection.start >= 0) {
+            // clear the selected contents
+            var start = this._selection.start;
+            var end = this._selection.end;
+            this._text = this._text.substr(0, start) + this._text.substr(end);
+            this._cursorPos = start;
+            this._selection.start = 0;
+            this._selection.end = 0;
+        }
     },
 
     mapKeyPressToActualCharacter: function(isShiftKey, characterCode) {
@@ -239,16 +328,19 @@ Class.define("framework.ui.view.TextField", TextView, {
     },
 
     drawBackground: function(context) {
+        // Draw background
         context.save();
         context.fillStyle = this._background;
         context.roundRect(0, 0, this._width, this._height, this._borderRadius);
         context.fill();
 
+        // Draw border
         context.fillStyle = this._borderColor;
         context.roundRect(0, 0, this._width, this._height, this._borderRadius);
         context.fill();
         context.restore();
 
+        // Draw placeholder
         if (!this._focused && this._text === "") {
             context.beginPath();
             context.textDrawingMode = this._highQuality ? "path" : "glyph";
@@ -273,6 +365,7 @@ Class.define("framework.ui.view.TextField", TextView, {
     },
 
     draw: function(context) {
+        // Draw text
         context.save();
         context.beginPath();
         context.textDrawingMode = this._highQuality ? "path" : "glyph";
@@ -302,6 +395,29 @@ Class.define("framework.ui.view.TextField", TextView, {
         }
         context.fillText(text, textX, textY);
 
+        // Draw selection
+        if (this._selectionStartPoint.x >= 0 && this._selectionStartPoint.y >= 0 && this._selectionLastPoint.x >= 0 && this._selectionLastPoint.y >= 0) {
+            for (var i = 0; i < text.length - 1; i++) {
+                var w1 = context.measureText(text.substr(0, i)).width;
+                var w2 = context.measureText(text.substr(0, i + 1)).width;
+                if (w1 <= this._selectionStartPoint.x && w2 >= this._selectionStartPoint.x) {
+                    this._selection.start = i;
+                }
+                if (w1 <= this._selectionLastPoint.x && w2 >= this._selectionLastPoint.x) {
+                    this._selection.end = i;
+                }
+            }
+        }
+
+        if (this._selection.start >= 0) {
+            var paddingBorder = this._padding + this._borderWidth;
+            var selectOffset = context.measureText(text.substring(0, this._selection.start)).width;
+            var selectWidth = context.measureText(text.substring(this._selection.start, this._selection.end)).width;
+            context.fillStyle = this._selectionColor;
+            context.fillRect(paddingBorder + selectOffset, paddingBorder, selectWidth, this._height);
+        }
+
+        // Draw cursor
         if (this._cursor) {
             context.fillStyle = this._cursorColor;
             var cursorOffset = context.measureText(text.substring(0, this._cursorPos)).width;

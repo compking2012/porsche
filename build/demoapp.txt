@@ -199,7 +199,7 @@ H5:     no pass
 Node:   no pass
 
 *) i18n
-H5:     no pass
+H5:     passed
 Node:   passed
 
 *) mvc

@@ -293,7 +293,11 @@ Class.define("framework.ui.WindowManager", EventEmitter, {
             type: type,
             timestamp: new Date().getTime(),
             target: this._activeView,
-            keyCode: e.keyCode
+            keyCode: e.keyCode,
+            shiftKey: e.shiftKey,
+            ctrlKey: e.ctrlKey,
+            altKey: e.altKey,
+            metaKey: e.metaKey
         });
         this.chainedDispatchEvent(this._activeView, keyboardEvent);
     },

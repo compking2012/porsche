@@ -49,5 +49,8 @@ Class.define("MyApp", App, {
         this.lastNameTextField.fontSize = "18px";
         this.lastNameTextField.placeholder = "last name...";
         this.window.addChild(this.lastNameTextField);
+
+        this.firstNameTextField.text = "This is my First Name";
+        this.lastNameTextField.text = "This is my Last Name";
     }
 }, module);
