@@ -7,9 +7,7 @@ var TextView = fx.import("framework.ui.view.TextView");
 var Button = fx.import("framework.ui.view.Button");
 
 Class.define("MyApp", App, {
-    initialize: function() {
-        App.prototype.initialize.apply(this, arguments);
-
+    onStart: function() {
         var compositeView = new CompositeView();
         compositeView.left = 50;
         compositeView.top = 50;

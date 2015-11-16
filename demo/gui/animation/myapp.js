@@ -6,9 +6,7 @@ var View = fx.import("framework.ui.view.View");
 var Animation = fx.import("framework.ui.animation.Animation");
 
 Class.define("MyApp", App, {
-    initialize: function() {
-        App.prototype.initialize.apply(this, arguments);
-
+    onStart: function() {
         this.view = new View();
         this.view.background = "#FF0000";
         this.view.left = 110;

@@ -6,9 +6,7 @@ var ImageView = fx.import("framework.ui.view.ImageView");
 var TextView = fx.import("framework.ui.view.TextView");
 
 Class.define("MyApp", App, {
-    initialize: function() {
-        App.prototype.initialize.apply(this, arguments);
-
+    onStart: function() {
         this.window.addEventListener("touchend", this.onTouchEnd.bind(this));
 
         this.scaleTypes = ["matrix", "fitxy", "fitstart", "fitcenter", "fitend", "center", "centercrop", "centerinside"];

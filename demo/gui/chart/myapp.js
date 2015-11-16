@@ -3,9 +3,9 @@ var fx = require("framework");
 var Class = fx.import("framework.Class");
 var App = fx.import("framework.app.App");
 var Chart = fx.import("framework.ui.view.Chart");
+
 Class.define("MyApp", App, {
-    initialize: function() {
-        App.prototype.initialize.apply(this, arguments);
+    onStart: function() {
         var dataset1 = [8, 48, 4, 19, 26, 27, 90, 34, 36];
         var labelset1 = ["0", "1", "2", "3", "4", "5", "6", "7", "8", "9"];
         var chart1 = new Chart(dataset1, labelset1);
@@ -25,8 +25,9 @@ Class.define("MyApp", App, {
         chart1.yLabelFontSize = "10px";
         chart1.yLabelFontFamily = "Times New Roman";
         chart1.yLabelFontColor = "#00FF00";
-        chart1.labelMargin = 10; 
+        chart1.labelMargin = 10;
         this.window.addChild(chart1);
+
         var dataset2 = [];
         dataset2 = [28, 48, 40, 19, 86, 27, 90, 34];
         var labelset2 = ["0", "1", "2", "3", "4", "5", "6", "7"];
@@ -45,6 +46,5 @@ Class.define("MyApp", App, {
         chart2.showGridLine = false;
         chart2.bezierCurve = true;
         this.window.addChild(chart2);
-        setTimeout(function(){alert("Hello world");},1000000);
     }
 }, module);

@@ -42,6 +42,23 @@ files.forEach(function(file) {
             return newLine;
         });
     }
+
+    if (file.endsWith("app/app.js")) {
+        var fxAppService = "var AppService = require(\"../platform/appservice\");";
+        var fxInputService = "var InputService = require(\"../platform/inputservice\");";
+        var fxRenderService = "var RenderService = require(\"../platform/renderservice\");";
+        if (mode === "h5") {
+            var fxH5AppService = "var AppService = require(\"../platform/h5appservice\");";
+            var fxH5InputService = "var InputService = require(\"../platform/h5inputservice\");";
+            var fxH5RenderService = "var RenderService = require(\"../platform/h5renderservice\");";
+            content = content.replace(fxAppService, fxH5AppService).replace(fxInputService, fxH5InputService).replace(fxRenderService, fxH5RenderService);
+        } else {
+            var fxNodeAppService = "var AppService = require(\"../platform/nodeappservice\");";
+            var fxNodeInputService = "var InputService = require(\"../platform/nodeinputservice\");";
+            var fxNodeRenderService = "var RenderService = require(\"../platform/noderenderservice\");";
+            content = content.replace(fxAppService, fxNodeAppService).replace(fxInputService, fxNodeInputService).replace(fxRenderService, fxNodeRenderService);
+        }
+    }
     var dstFile = path.join(dstDir, file);
     fs.writeFileSync(dstFile, content);
 });

@@ -10,12 +10,11 @@
 
 "use strict";
 var Class = require("../class");
-var YObject = require("../yobject");
-var fs = require("fs");
+var EventEmitter = require("../eventemitter");
 
-Class.define("framework.util.I18nManager", YObject, {
+Class.define("framework.util.I18nManager", EventEmitter, {
     initialize: function() {
-        YObject.prototype.initialize.apply(this, arguments);
+        EventEmitter.prototype.initialize.apply(this, arguments);
 
         this._i18next = this.getI18next();
     },
@@ -23,7 +22,7 @@ Class.define("framework.util.I18nManager", YObject, {
     destroy: function() {
         this._i18next = null;
 
-        YObject.prototype.destroy.apply(this, arguments);
+        EventEmitter.prototype.destroy.apply(this, arguments);
     },
 
     get locale() {
@@ -32,29 +31,31 @@ Class.define("framework.util.I18nManager", YObject, {
 
     set locale(value) {
         this._locale = value;
+        this.initLocale();
     },
 
     getString: function(key) {
-        if (!this._initialized) {
-            this.initLocale();
-        }
         return this._i18next.t(key);
     },
 
     initLocale: function() {
         var locale = this.getLocale();
-        var json = JSON.parse(fs.readFileSync(global.app.rootPath + "/locales/" + locale + "/strings.json").toString());
-        var store = {};
-        store[locale] = {
-            translation: json
-        };
+        // FIXME: should integrated with platform filesystem in future
+        global.app.appService.loadFile(global.app.rootPath + "/locales/" + locale + "/strings.json", function(content) {
+            var json = JSON.parse(content);
+            var store = {};
+            store[locale] = {
+                translation: json
+            };
 
-        this._i18next.init({
-            lng: locale,
-            load: "current",
-            fallbackLng: false,
-            resStore: store
-        });
+            this._i18next.init({
+                lng: locale,
+                load: "current",
+                fallbackLng: false,
+                resStore: store
+            });
+            this.dispatchEvent("load");
+        }.bind(this));
     },
 
     getLocale: function() {

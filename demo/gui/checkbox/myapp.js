@@ -6,9 +6,7 @@ var CheckBox = fx.import("framework.ui.view.CheckBox");
 var TextView = fx.import("framework.ui.view.TextView");
 
 Class.define("MyApp", App, {
-    initialize: function() {
-        App.prototype.initialize.apply(this, arguments);
-
+    onStart: function() {
         this.textView = new TextView();
         this.textView.width = 320;
         this.textView.height = 50;
@@ -27,11 +25,6 @@ Class.define("MyApp", App, {
         this.checkbox.height = 100;
         this.checkbox.addEventListener("tap", this.onTap.bind(this));
         this.window.addChild(this.checkbox);
-    },
-
-    destroy: function() {
-        this.checkbox.destroy();
-        this.checkbox = null;
     },
 
     onTap: function() {

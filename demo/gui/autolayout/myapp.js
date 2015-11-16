@@ -7,9 +7,7 @@ var View = fx.import("framework.ui.view.View");
 var AutoLayout = fx.import("framework.ui.layout.AutoLayout");
 
 Class.define("MyApp", App, {
-    initialize: function() {
-        App.prototype.initialize.apply(this, arguments);
-
+    onStart: function() {
         var compositeView = new CompositeView();
         compositeView.width = 320;
         compositeView.height = 320;

@@ -30,15 +30,26 @@ Class.define("framework.ui.platform.H5AppService", EventEmitter, {
         return ".";
     },
 
-    loadFile: function(file) {
-
+    loadFile: function(file, callback) {
+        var xhr = new XMLHttpRequest();
+        xhr.addEventListener("readystatechange", function() {
+            if (xhr.readyState === 4) {
+                if (xhr.status === 200) {
+                    callback(xhr.responseText);
+                } else {
+                    callback(null);
+                }
+            }
+        }.bind(this));
+        xhr.open("GET", file, true);
+        xhr.send(null);
     },
 
     getAppName: function() {
         return "App";
     },
 
-    registerSelfToGlobal: function() {
+    registerGlobal: function() {
         window.global = window;
     }
 }, module);

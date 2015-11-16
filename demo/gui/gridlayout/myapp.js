@@ -10,9 +10,7 @@ var LayoutParam = fx.import("framework.ui.layout.LayoutParam");
 var ScrollableView = fx.import("framework.ui.view.ScrollableView");
 
 Class.define("MyApp", App, {
-    initialize: function() {
-        App.prototype.initialize.apply(this, arguments);
-
+    onStart: function() {
         var scrollableView = new ScrollableView();
         scrollableView.width = this.window.width;
         scrollableView.height = this.window.height;;
@@ -58,7 +56,5 @@ Class.define("MyApp", App, {
         view.width = 180;
         view.height = 180;
         cv.addChild(view);
-
-        setTimeout(function(){console.log("Hello world");},1000000);
     }
 }, module);

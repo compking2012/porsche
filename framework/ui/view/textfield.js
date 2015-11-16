@@ -33,7 +33,7 @@ Class.define("framework.ui.view.TextField", TextView, {
 
         this._readonly = false;
         this._maxlength = 0;
-        this._padding = 5;
+        this._padding = 0;
         this._alignCenter = false;
         this._borderWidth = 1;
         this._borderColor = "#959595";
@@ -49,8 +49,6 @@ Class.define("framework.ui.view.TextField", TextView, {
         this._cursor = false;
         this._cursorPos = 0;
         this._cursorInterval = null;
-        this._xPos = 0;
-        this._yPos = this._height / 2;
         this._selection = [0, 0];
         this._wasOver = false;
 
@@ -100,10 +98,14 @@ Class.define("framework.ui.view.TextField", TextView, {
                 }
             } else if (e.keyCode === 37) {
                 // Pressed Left arrow key
-                this._cursorPos--;
+                if (this._cursorPos > 0) {
+                    this._cursorPos--;
+                }
             } else if (e.keyCode === 39) {
                 // Pressed Right arrow key
-                this._cursorPos++;
+                if (this._cursorPos < this._text.length) {
+                    this._cursorPos++;
+                }
             } else if (e.keyCode === 13) {
                 // Pressed Enter key
                 var textFields = global.textFields;
@@ -131,7 +133,7 @@ Class.define("framework.ui.view.TextField", TextView, {
                 // Pressed other keys
                 var key = this.mapKeyPressToActualCharacter(e.shiftKey, e.keyCode);
                 if (key !== null) {
-                    this._text += key;
+                    this._text = this._text.substr(0, this._cursorPos) + key + this._text.substr(this._cursorPos, this._text.length);
                     this._cursorPos++;
                 }
             }
@@ -152,15 +154,19 @@ Class.define("framework.ui.view.TextField", TextView, {
         if (this._focused) {
             return;
         }
+
         this._focused = true;
+        this._cursor = true;
+
+        if (this._cursorInterval !== null) {
+            clearInterval(this._cursorInterval);
+            this._cursorInterval = null;
+        }
         this._cursorInterval = setInterval(function() {
             this._cursor = !this._cursor;
             this.invalidate();
         }.bind(this), 500);
 
-        if (this._text === this._placeholder) {
-            this._text = "";
-        }
         this.invalidate();
     },
 
@@ -174,9 +180,6 @@ Class.define("framework.ui.view.TextField", TextView, {
             this._cursorInterval = null;
         }
         this._cursor = false;
-        if (this._text === "") {
-            this._text = this._placeholder;
-        }
         this.invalidate();
     },
 
@@ -236,26 +239,68 @@ Class.define("framework.ui.view.TextField", TextView, {
     },
 
     drawBackground: function(context) {
+        context.save();
         context.fillStyle = this._background;
         context.roundRect(0, 0, this._width, this._height, this._borderRadius);
         context.fill();
+
+        context.fillStyle = this._borderColor;
+        context.roundRect(0, 0, this._width, this._height, this._borderRadius);
+        context.fill();
+        context.restore();
+
+        if (!this._focused && this._text === "") {
+            context.beginPath();
+            context.textDrawingMode = this._highQuality ? "path" : "glyph";
+            context.antialias = "none";
+            context.fillStyle = this._placeholderColor;
+            context.font = this._fontStyle + " " + this._fontWeight + " " + this._fontSize + " " + this._fontFamily;
+            context.textBaseline = this._baseline;
+
+            var textHeight = parseInt(this._fontSize);
+            var offset = this._padding;
+            var textX = offset;
+            var textY = 0;
+            if (this._verticalAlign === "middle") {
+                textY = this._height - textHeight;
+            } else if (this._verticalAlign === "top") {
+                textY = this._height / 2 - textHeight / 2;
+            } else if (this._verticalAlign === "bottom") {
+                textY = this._height - textHeight / 2;
+            }
+            context.fillText(this._placeholder, textX, textY);
+        }
     },
 
     draw: function(context) {
+        context.save();
+        context.beginPath();
+        context.textDrawingMode = this._highQuality ? "path" : "glyph";
+        context.antialias = "none";
+        context.fillStyle = this._color;
+        context.font = this._fontStyle + " " + this._fontWeight + " " + this._fontSize + " " + this._fontFamily;
+        context.textBaseline = this._baseline;
+
         var text = this._type === "password" && this._text !== this._placeholder ? this._text.replace(/./g, "\u25CF") : this._text;
         var textWidth = context.measureText(text).width;
         var textHeight = parseInt(this._fontSize);
         var offset = this._padding;
-        var ratio = textWidth / (this._width - this._padding - 3);
+        var ratio = textWidth / (this._width - this._padding);
         if (ratio > 1) {
             text = text.substr(-1 * Math.floor(text.length / ratio));
         } else if (this._center) {
             offset = this._width / 2 - textWidth / 2;
         }
-
-        context.fillStyle = this._color;
-        context.font = this._fontStyle + " " + this._fontWeight + " " + this._fontSize + " " + this._fontFamily;
-        context.fillText(text, this._xPos + offset, this._yPos + this._height / 2 + textHeight / 2);
+        var textX = offset;
+        var textY = 0;
+        if (this._verticalAlign === "middle") {
+            textY = this._height - textHeight;
+        } else if (this._verticalAlign === "top") {
+            textY = this._height / 2 - textHeight / 2;
+        } else if (this._verticalAlign === "bottom") {
+            textY = this._height - textHeight / 2;
+        }
+        context.fillText(text, textX, textY);
 
         if (this._cursor) {
             context.fillStyle = this._cursorColor;
@@ -263,7 +308,8 @@ Class.define("framework.ui.view.TextField", TextView, {
             if (this._center) {
                 cursorOffset += offset - this._padding;
             }
-            context.fillRect(this._xPos + this._padding + cursorOffset, this._yPos + this._padding, 1, this._height - 2 * this._padding);
+            context.fillRect(this._padding + cursorOffset, this._padding, 1, this._height - 2 * this._padding);
         }
+        context.restore();
     }
 }, module);

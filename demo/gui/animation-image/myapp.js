@@ -6,11 +6,7 @@ var ImageView = fx.import("framework.ui.view.ImageView");
 var Animation = fx.import("framework.ui.animation.Animation");
 
 Class.define("MyApp", App, {
-    initialize: function() {
-        App.prototype.initialize.apply(this, arguments);
-
-        global.AppFXDebugPaintFPS = true;
-
+    onStart: function() {
         for (var i = 0; i < 10; i++) {
             var imageView = new ImageView();
             imageView.src = global.app.rootPath + "/res/ic_launcher.png";

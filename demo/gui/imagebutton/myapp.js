@@ -6,9 +6,7 @@ var ImageButton = fx.import("framework.ui.view.ImageButton");
 var TextView = fx.import("framework.ui.view.TextView");
 
 Class.define("MyApp", App, {
-    initialize: function() {
-        App.prototype.initialize.apply(this, arguments);
-
+    onStart: function() {
         this.textView = new TextView();
         this.textView.width = 320;
         this.textView.height = 50;
@@ -31,11 +29,6 @@ Class.define("MyApp", App, {
         this.imageButton.disabledImageSrc = global.app.rootPath + "/res/button_disabled.png";
         this.imageButton.addEventListener("tap", this.onTap.bind(this));
         this.window.addChild(this.imageButton);
-    },
-
-    destroy: function() {
-        this.imageButton.destroy();
-        this.imageButton = null;
     },
 
     onTap: function() {

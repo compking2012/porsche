@@ -5,9 +5,7 @@ var App = fx.import("framework.app.App");
 var CircleProgressView = fx.import("framework.ui.view.CircleProgressView");
 
 Class.define("MyApp", App, {
-    initialize: function() {
-        App.prototype.initialize.apply(this, arguments);
-
+    onStart: function() {
         this.circleProgressView = new CircleProgressView();
         this.circleProgressView.width = 320;
         this.circleProgressView.height = 320;

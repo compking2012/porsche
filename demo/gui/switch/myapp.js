@@ -6,9 +6,7 @@ var Switch = fx.import("framework.ui.view.Switch");
 var TextView = fx.import("framework.ui.view.TextView");
 
 Class.define("MyApp", App, {
-    initialize: function() {
-        App.prototype.initialize.apply(this, arguments);
-
+    onStart: function() {
         this.textView = new TextView();
         this.textView.width = 320;
         this.textView.height = 50;

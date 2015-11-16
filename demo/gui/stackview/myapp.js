@@ -7,9 +7,7 @@ var Button = fx.import("framework.ui.view.Button");
 var View = fx.import("framework.ui.view.View");
 
 Class.define("MyApp", App, {
-    initialize: function() {
-        App.prototype.initialize.apply(this, arguments);
-
+    onStart: function() {
         var buttonPush = new Button();
         buttonPush.width = 160;
         buttonPush.height = 100;

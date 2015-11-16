@@ -5,9 +5,7 @@ var App = fx.import("framework.app.App");
 var ImageView = fx.import("framework.ui.view.ImageView");
 
 Class.define("MyApp", App, {
-    initialize: function() {
-        App.prototype.initialize.apply(this, arguments);
-
+    onStart: function() {
         var imageView = new ImageView();
         imageView.src = global.app.rootPath + "/res/big.png";
         imageView.left = 40;

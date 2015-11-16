@@ -5,9 +5,7 @@ var App = fx.import("framework.app.App");
 var ProgressView = fx.import("framework.ui.view.ProgressView");
 
 Class.define("MyApp", App, {
-    initialize: function() {
-        App.prototype.initialize.apply(this, arguments);
-
+    onStart: function() {
         this.progressView = new ProgressView();
         this.progressView.left = 20;
         this.progressView.top = 50;

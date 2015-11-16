@@ -8,9 +8,7 @@ var Animation = fx.import("framework.ui.animation.Animation");
 var AnimationGroup = fx.import("framework.ui.animation.AnimationGroup");
 
 Class.define("MyApp", App, {
-    initialize: function() {
-        App.prototype.initialize.apply(this, arguments);
-
+    onStart: function() {
         var compositeView = new CompositeView();
         compositeView.width = 200;
         compositeView.height = 200;

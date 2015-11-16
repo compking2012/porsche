@@ -15,7 +15,6 @@ var Rectangle = require("../rectangle");
 var Matrix = require("../matrix");
 var GradientParser = require("../../util/gradientparser");
 var GestureManager = require("../gesture/gesturemanager");
-var fs = require("fs");
 
 /**
  * Base view for all UI elements

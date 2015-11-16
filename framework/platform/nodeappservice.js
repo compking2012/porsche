@@ -32,18 +32,25 @@ Class.define("framework.ui.platform.NodeAppService", EventEmitter, {
         return path.dirname(require.main.filename);
     },
 
-    loadFile: function(file) {
+    loadFile: function(file, callback) {
         if (!fs.existsSync(file)) {
-            return {};
+            callback(null);
+            return;
         }
-        return JSON.parse(fs.readFileSync(file));
+        fs.readFile(file, function(err, data) {
+            if (err) {
+                callback(null);
+                return;
+            }
+            callback(data);
+        }.bind(this));
     },
 
     getAppName: function() {
         return "App";
     },
 
-    registerSelfToGlobal: function() {
+    registerGlobal: function() {
         // Nothing need to do
     }
 }, module);

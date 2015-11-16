@@ -5,9 +5,7 @@ var App = fx.import("framework.app.App");
 var Button = fx.import("framework.ui.view.Button");
 
 Class.define("MyApp", App, {
-    initialize: function() {
-        App.prototype.initialize.apply(this, arguments);
-
+    onStart: function() {
         this.button = new Button();
         this.button.text = "Hello";
         this.button.fontSize = "32px";

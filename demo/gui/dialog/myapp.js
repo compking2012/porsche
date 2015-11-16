@@ -7,9 +7,7 @@ var ConfirmDialog = fx.import("framework.ui.view.ConfirmDialog");
 var Button = fx.import("framework.ui.view.Button");
 
 Class.define("MyApp", App, {
-    initialize: function() {
-        App.prototype.initialize.apply(this, arguments);
-
+    onStart: function() {
         this.buttonAlert = new Button();
         this.buttonAlert.top = 50;
         this.buttonAlert.left = 40;

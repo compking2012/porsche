@@ -9,9 +9,7 @@ var SwipeRecognizer = fx.import("framework.ui.gesture.SwipeRecognizer");
 var PanRecognizer = fx.import("framework.ui.gesture.PanRecognizer");
 
 Class.define("MyApp", App, {
-    initialize: function() {
-        App.prototype.initialize.apply(this, arguments);
-
+    onStart: function() {
         this.textView = new TextView();
         this.textView.width = 320;
         this.textView.height = 320;

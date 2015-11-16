@@ -7,9 +7,7 @@ var TextView = fx.import("framework.ui.view.TextView");
 var View = fx.import("framework.ui.view.View");
 
 Class.define("MyApp", App, {
-    initialize: function() {
-        App.prototype.initialize.apply(this, arguments);
-
+    onStart: function() {
         this.window.id = "window";
 
         var compositeView = new CompositeView();

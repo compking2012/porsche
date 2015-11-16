@@ -6,9 +6,7 @@ var ListView = fx.import("framework.ui.view.ListView");
 var TwoLineListItem = fx.import("framework.ui.view.TwoLineListItem");
 
 Class.define("MyApp", App, {
-    initialize: function() {
-        App.prototype.initialize.apply(this, arguments);
-
+    onStart: function() {
         this.list = new ListView();
         this.list.width = this.width;
         this.list.height = this.height;
@@ -54,7 +52,7 @@ Class.define("MyApp", App, {
                     break;
             }
             if (/^TwoLinesWithImage/.test(item.mode)) {
-                item.image.src = global.app.rootPath + "/ic_measure.png";
+                item.image.src = global.app.rootPath + "/res/ic_measure.png";
             }
             item.mainText.text = "Item " + i;
             item.commentText.text = "This is an item.";

@@ -7,9 +7,7 @@ var Animation = fx.import("framework.ui.animation.Animation");
 var AnimationGroup = fx.import("framework.ui.animation.AnimationGroup");
 
 Class.define("MyApp", App, {
-    initialize: function() {
-        App.prototype.initialize.apply(this, arguments);
-
+    onStart: function() {
         this.circleProgressView1 = new CircleProgressView();
         this.circleProgressView1.left = 90;
         this.circleProgressView1.top = 90;

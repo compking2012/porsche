@@ -6,9 +6,7 @@ var SwipeView = fx.import("framework.ui.view.SwipeView");
 var View = fx.import("framework.ui.view.View");
 
 Class.define("MyApp", App, {
-    initialize: function() {
-        App.prototype.initialize.apply(this, arguments);
-
+    onStart: function() {
         var swipeView = new SwipeView();
         swipeView.orientation = "horizental";
         swipeView.width = 320;

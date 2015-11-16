@@ -8,9 +8,7 @@ var AutoLayout = fx.import("framework.ui.layout.AutoLayout");
 var TapRecognizer = fx.import("framework.ui.gesture.TapRecognizer");
 
 Class.define("MyApp", App, {
-    initialize: function() {
-        App.prototype.initialize.apply(this, arguments);
-
+    onStart: function() {
         this.window.addGestureRecognizer(new TapRecognizer());
         this.window.addEventListener("tap", this.onTap.bind(this));
 

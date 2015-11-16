@@ -7,11 +7,7 @@ var CompositeView = fx.import("framework.ui.view.CompositeView");
 var TextView = fx.import("framework.ui.view.TextView");
 
 Class.define("MyApp", App, {
-    initialize: function() {
-        App.prototype.initialize.apply(this, arguments);
-
-        global.AppFXDebugPaintFPS = true;
-
+    onStart: function() {
         var scrollableView = new ScrollableView();
         scrollableView.width = 200;
         scrollableView.height = 200;

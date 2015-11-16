@@ -11,7 +11,6 @@
 "use strict";
 var View = require("./view");
 var Class = require("../../class");
-var Canvas = require("canvas/lib/canvas");
 
 /**
  * TextView widget

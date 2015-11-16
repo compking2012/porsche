@@ -9,9 +9,7 @@ var ScrollableView = fx.import("framework.ui.view.ScrollableView");
 var ImageButton = fx.import("framework.ui.view.ImageButton");
 
 Class.define("MyApp", App, {
-    initialize: function() {
-        App.prototype.initialize.apply(this, arguments);
-
+    onStart: function() {
         var scrollableView = new ScrollableView();
         scrollableView.width = this.window.width;
         scrollableView.height = this.window.height;;
@@ -58,12 +56,6 @@ Class.define("MyApp", App, {
             view.height = 200;
             this.cv.addChild(view);
         }
-        setTimeout(function(){alert("Hello world");},1000000);
-    },
-
-    destroy: function() {
-        this.imageButton.destroy();
-        this.imageButton = null;
     },
 
     onClick: function() {

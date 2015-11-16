@@ -14,9 +14,9 @@ var EventEmitter = require("../eventemitter");
 var Window = require("../ui/view/window");
 var WindowManager = require("../ui/windowmanager");
 var I18nManager = require("../util/i18nmanager");
-var AppService = typeof window !== "undefined" ? require("../platform/h5appservice") : require("../platform/nodeappservice");
-var InputService = typeof window !== "undefined" ? require("../platform/h5inputservice") : require("../platform/nodeinputservice");
-var RenderService = typeof window !== "undefined" ? require("../platform/h5renderservice") : require("../platform/noderenderservice");
+var AppService = require("../platform/appservice");
+var InputService = require("../platform/inputservice");
+var RenderService = require("../platform/renderservice");
 
 /**
  * Base App class
@@ -36,26 +36,29 @@ Class.define("framework.app.App", EventEmitter, {
         this._renderService = new RenderService();
         this._inputService = new InputService(this._renderService.getTarget());
 
-        this._appName = this._appService.getAppName();
-        this._rootController = null;
-
-        this._i18nManager = new I18nManager();
-        this._i18nManager.locale = "zh-CN";
-
-        this._windowManager = new WindowManager(this._inputService, this._renderService);
-
-        this._window = new Window(this._appName);
-        this._windowManager.addWindow(this._window);
-
         this._appService.addEventListener("start", this._onStartFunc = this.onStart.bind(this));
         this._appService.addEventListener("background", this._onInactiveFunc = this.onInactive.bind(this));
         this._appService.addEventListener("foreground", this._onActiveFunc = this.onActive.bind(this));
         this._appService.addEventListener("finish", this._onFinishFunc = this.onFinish.bind(this));
-
-        this._appService.registerSelfToGlobal();
+        this._appService.registerGlobal();
         this._renderService.registerImageToGlobal();
+
         global.app = this;
         global.AppFXRootPath = this._appService.getFXRootPath();
+
+        this._appName = this._appService.getAppName();
+        this._rootController = null;
+
+        this._i18nManager = new I18nManager();
+        this._i18nManager.addEventListener("load", this._onLoadI18nFunc = function() {
+            this._windowManager = new WindowManager(this._inputService, this._renderService);
+
+            this._window = new Window(this._appName);
+            this._windowManager.addWindow(this._window);
+
+            this.onStart();
+        }.bind(this));
+        this._i18nManager.locale = "zh-CN";
     },
 
     /**
@@ -63,6 +66,8 @@ Class.define("framework.app.App", EventEmitter, {
      * @method App#destroy
      */
     destroy: function() {
+        this._i18nManager.removeEventListener("load", this._onLoadI18nFunc);
+        this._onLoadI18nFunc = null;
         this._i18nManager.destroy();
         this._i18nManager = null;
         this._windowManager.destroy();
@@ -107,6 +112,10 @@ Class.define("framework.app.App", EventEmitter, {
 
     get windowManager() {
         return this._windowManager;
+    },
+
+    get appService() {
+        return this._appService;
     },
 
     getI18nString: function(key) {

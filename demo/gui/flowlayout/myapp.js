@@ -10,9 +10,7 @@ var ScrollableView = fx.import("framework.ui.view.ScrollableView");
 var Switch = fx.import("framework.ui.view.Switch");
 
 Class.define("MyApp", App, {
-    initialize: function() {
-        App.prototype.initialize.apply(this, arguments);
-
+    onStart: function() {
         var scrollableView = new ScrollableView();
         scrollableView.width = this.window.width;
         scrollableView.height = this.window.height;
@@ -27,7 +25,7 @@ Class.define("MyApp", App, {
         this.flow.header = 30;// set the spacing of header
         this.flow.defaultParam.itemSpacing = 10;
 
-        this.cv = new  CompositeView();
+        this.cv = new CompositeView();
         this.cv.left = 0;
         this.cv.top = 0;
         this.cv.height = 300;
@@ -45,13 +43,11 @@ Class.define("MyApp", App, {
             var view = new View();
             view.background = colors[i % 5];
             view.width = 80;
-            view.height =height[i];
+            view.height = height[i];
             this.cv.addChild(view);
         }
 
         this.window.addChild(scrollableView);
-        setTimeout(function(){console.log("Hello world");},1000000);
-
     }
 
 }, module);

@@ -5,9 +5,7 @@ var App = fx.import("framework.app.App");
 var BarCode = fx.import("framework.ui.view.BarCode");
 
 Class.define("MyApp", App, {
-    initialize: function() {
-        App.prototype.initialize.apply(this, arguments);
-
+    onStart: function() {
         this.barcode = new BarCode();
         this.barcode.width = 300;
         this.barcode.height = 150;

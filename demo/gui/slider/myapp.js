@@ -6,9 +6,7 @@ var TextView = fx.import("framework.ui.view.TextView");
 var Slider = fx.import("framework.ui.view.Slider");
 
 Class.define("MyApp", App, {
-    initialize: function() {
-        App.prototype.initialize.apply(this, arguments);
-
+    onStart: function() {
         this.textview = new TextView();
         this.textview.fontSize = "40px";
         this.textview.textAlign = "center";

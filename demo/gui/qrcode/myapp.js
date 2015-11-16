@@ -5,9 +5,7 @@ var App = fx.import("framework.app.App");
 var QRCode = fx.import("framework.ui.view.QRCode");
 
 Class.define("MyApp", App, {
-    initialize: function() {
-        App.prototype.initialize.apply(this, arguments);
-
+    onStart: function() {
         this.qrcode = new QRCode();
         this.qrcode.background = "#FFFFFF";
         this.qrcode.width = 180;

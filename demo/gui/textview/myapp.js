@@ -5,9 +5,7 @@ var App = fx.import("framework.app.App");
 var TextView = fx.import("framework.ui.view.TextView");
 
 Class.define("MyApp", App, {
-    initialize: function() {
-        App.prototype.initialize.apply(this, arguments);
-
+    onStart: function() {
         var textview = new TextView();
         textview.text = "1234567890!";
         textview.fontSize = "24px";

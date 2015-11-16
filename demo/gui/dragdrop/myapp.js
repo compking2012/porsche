@@ -6,9 +6,7 @@ var Button = fx.import("framework.ui.view.Button");
 var Point = fx.import("framework.ui.Point");
 
 Class.define("MyApp", App, {
-    initialize: function() {
-        App.prototype.initialize.apply(this, arguments);
-
+    onStart: function() {
         this.startPoint = new Point(0, 0);
         this.buttonPoint = new Point(0, 0);
 

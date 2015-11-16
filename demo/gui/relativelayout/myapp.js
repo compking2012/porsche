@@ -8,9 +8,7 @@ var View = fx.import("framework.ui.view.View");
 var TapRecognizer = fx.import("framework.ui.gesture.TapRecognizer");
 
 Class.define("MyApp", App, {
-    initialize: function() {
-        App.prototype.initialize.apply(this, arguments);
-
+    onStart: function() {
         this.windowLayout = new RelativeLayout();
         this.windowLayout.setLayoutParam(0, "align", {center: "parent", middle: "parent"});
         this.window.layout = this.windowLayout;

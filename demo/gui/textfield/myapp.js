@@ -2,20 +2,52 @@
 var fx = require("framework");
 var Class = fx.import("framework.Class");
 var App = fx.import("framework.app.App");
+var CompositeView = fx.import("framework.ui.view.CompositeView");
+var TextView = fx.import("framework.ui.view.TextView");
 var TextField = fx.import("framework.ui.view.TextField");
 
 Class.define("MyApp", App, {
-    initialize: function() {
-        App.prototype.initialize.apply(this, arguments);
+    onStart: function() {
+        this.compositeView = new CompositeView();
+        this.compositeView.left = 10;
+        this.compositeView.top = 10;
+        this.compositeView.width = 300;
+        this.compositeView.height = 160;
+        this.compositeView.background = "#AAAAAA";
+        this.window.addChild(this.compositeView);
 
-        this.textField = new TextField();
-        this.textField.left = 60;
-        this.textField.top = 110;
-        this.textField.width = 200;
-        this.textField.height = 100;
-        this.textField.fontSize = "36px";
-        this.textField.placeholder = "input...";
+        this.firstNameLabel = new TextView();
+        this.firstNameLabel.left = 10;
+        this.firstNameLabel.top = 30;
+        this.firstNameLabel.width = 120;
+        this.firstNameLabel.height = 40;
+        this.firstNameLabel.text = "First Name:";
+        this.window.addChild(this.firstNameLabel);
 
-        this.window.addChild(this.textField);
+        this.firstNameTextField = new TextField();
+        this.firstNameTextField.left = 140;
+        this.firstNameTextField.top = 30;
+        this.firstNameTextField.width = 160;
+        this.firstNameTextField.height = 40;
+        this.firstNameTextField.fontSize = "18px";
+        this.firstNameTextField.placeholder = "first name...";
+        this.window.addChild(this.firstNameTextField);
+
+        this.lastNameLabel = new TextView();
+        this.lastNameLabel.left = 10;
+        this.lastNameLabel.top = 100;
+        this.lastNameLabel.width = 120;
+        this.lastNameLabel.height = 40;
+        this.lastNameLabel.text = "Last Name:";
+        this.window.addChild(this.lastNameLabel);
+
+        this.lastNameTextField = new TextField();
+        this.lastNameTextField.left = 140;
+        this.lastNameTextField.top = 100;
+        this.lastNameTextField.width = 160;
+        this.lastNameTextField.height = 40;
+        this.lastNameTextField.fontSize = "18px";
+        this.lastNameTextField.placeholder = "last name...";
+        this.window.addChild(this.lastNameTextField);
     }
 }, module);

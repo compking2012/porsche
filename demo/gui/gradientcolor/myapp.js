@@ -6,9 +6,7 @@ var View = fx.import("framework.ui.view.View");
 var Animation = fx.import("framework.ui.animation.Animation");
 
 Class.define("MyApp", App, {
-    initialize: function() {
-        App.prototype.initialize.apply(this, arguments);
-
+    onStart: function() {
         var view1 = new View();
         view1.background = "linear-gradient(#0065B5, #FFFFFF)";
         view1.left = 10;

@@ -9,9 +9,7 @@ var ListItem = fx.import("framework.ui.view.ListItem");
 var ScrollBar = fx.import("framework.ui.view.ScrollBar");
 
 Class.define("MyApp", App, {
-    initialize: function() {
-        App.prototype.initialize.apply(this, arguments);
-
+    onStart: function() {
         this.list = new ScrollableView();
         this.list.width = this.window.width;
         this.list.height = this.window.height;

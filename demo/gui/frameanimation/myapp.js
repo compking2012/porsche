@@ -7,9 +7,7 @@ var CompositeView = fx.import("framework.ui.view.CompositeView");
 var FrameAnimation = fx.import("framework.ui.animation.FrameAnimation");
 
 Class.define("MyApp", App, {
-    initialize: function() {
-        App.prototype.initialize.apply(this, arguments);
-
+    onStart: function() {
         var imageView = new ImageView();
         imageView.src = global.app.rootPath + "/coin.png";
         imageView.scaleType = "matrix";
