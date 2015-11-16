@@ -20,7 +20,9 @@ function Class() {}
         }
 
         var newClass = function() {
-            this.initialize.apply(this, arguments);
+            if (typeof this.initialize === "function") {
+                this.initialize.apply(this, arguments);
+            }
         };
 
         if (superClass) {

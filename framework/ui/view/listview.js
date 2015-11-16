@@ -91,7 +91,7 @@ Class.define("framework.ui.view.ListView", ScrollableView, {
      */
     addChild: function(view) {
         // FIXME: use instanceof instead
-        if (view.toString() !== "framework.ui.view.ListItem") {
+        if (view instanceof ListItem) {
             throw "The view must be a List Item";
         }
         view.saveAbsoluteInfo();
@@ -109,7 +109,7 @@ Class.define("framework.ui.view.ListView", ScrollableView, {
      */
     insertChild: function(view, index) {
         // FIXME: use instanceof instead
-        if (view.toString() !== "framework.ui.view.ListItem") {
+        if (view instanceof ListItem) {
             throw "The view must be a List Item";
         }
         view.saveAbsoluteInfo();
@@ -126,7 +126,7 @@ Class.define("framework.ui.view.ListView", ScrollableView, {
      */
     removeChild: function(view) {
         // FIXME: use instanceof instead
-        if (view.toString() !== "framework.ui.view.ListItem") {
+        if (view instanceof ListItem) {
             throw "The view must be a List Item";
         }
         view.resetToNoLayout();

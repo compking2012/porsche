@@ -306,8 +306,7 @@ Class.define("framework.ui.WindowManager", EventEmitter, {
         do {
             view.dispatchEvent(event.type, event);
 
-            // FIXME: use instanceof instead
-            if (event.toString() === "framework.ui.event.TouchEvent") {
+            if (event instanceof TouchEvent) {
                 var length = event.touches.length;
                 for (var i = 0; i < length; i++) {
                     event.touches[i].clientX += view.left;

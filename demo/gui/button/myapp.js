@@ -29,30 +29,25 @@ Class.define("MyApp", App, {
     onTouchStart: function(e) {
         this.button.background = "#00FF00";
         e.stopPropagation();
-        console.log("button: onTouchStart");
     },
 
     onTouchMove: function(e) {
         this.button.background = "#FFFF00";
         e.stopPropagation();
-        console.log("button: onTouchMove");
     },
 
     onTouchEnd: function(e) {
         this.button.background = "#FF0000";
         e.stopPropagation();
-        console.log("button: onTouchEnd");
     },
 
     onTouchCancel: function(e) {
         this.button.background = "#0000FF";
         e.stopPropagation();
-        console.log("button: onTouchCancel");
     },
 
     onTap: function(e) {
         this.button.text = "Well done!";
         e.stopPropagation();
-        console.log("button: onTap");
     }
 }, module);
