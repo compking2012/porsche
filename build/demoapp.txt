@@ -60,8 +60,8 @@ H5:     passed
 Node:   passed
 
 *) eventchain
-H5:     N/A
-Node:   N/A
+H5:     passed
+Node:   passed
 
 *) flowlayout
 H5:     no pass
@@ -160,8 +160,8 @@ H5:     passed
 Node:   passed
 
 *) textfield
-H5:     no pass
-Node:   no pass
+H5:     passed
+Node:   passed
 
 *) textview
 H5:     passed
