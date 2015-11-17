@@ -24,7 +24,7 @@ Class.define("framework.ui.Matrix", YObject, {
      * @param {Matrix} matrix the matrix array.
      */
     initialize: function(matrix) {
-        this.super.initialize.apply(this, arguments);
+        this.super.initialize();
 
         if (!matrix) {
             matrix = [

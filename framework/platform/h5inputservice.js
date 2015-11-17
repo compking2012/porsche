@@ -14,7 +14,7 @@ var EventEmitter = require("../eventemitter");
 
 Class.define("framework.ui.platform.H5InputService", EventEmitter, {
     initialize: function(target) {
-        this.super.initialize.apply(this);
+        this.super.initialize();
 
         this._canvas = target;
         this._canvas.addEventListener("touchstart", this._onTouchStartFunc = this.onTouchStart.bind(this));
@@ -39,7 +39,7 @@ Class.define("framework.ui.platform.H5InputService", EventEmitter, {
         window.removeEventListener("keyup", this._onKeyUpFunc);
         this._onKeyUpFunc = null;
 
-        this.super.destroy.apply(this);
+        this.super.destroy();
     },
 
     onTouchStart: function(e) {

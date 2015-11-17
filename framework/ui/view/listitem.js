@@ -19,10 +19,10 @@ var CompositeView = require("./compositeview");
  */
 Class.define("framework.ui.view.ListItem", CompositeView, {
     initialize: function() {
-        this.super.initialize.apply(this, arguments);
+        this.super.initialize();
     },
 
     destroy: function() {
-        this.super.destroy.apply(this, arguments);
+        this.super.destroy();
     }
 }, module);

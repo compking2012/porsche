@@ -14,12 +14,12 @@ var EventEmitter = require("../yobject");
 
 Class.define("framework.model.DataSource", EventEmitter, {
     initialize: function() {
-        this.super.initialize.apply(this, arguments);
+        this.super.initialize();
 
     },
 
     destroy: function() {
-        this.super.destroy.apply(this, arguments);
+        this.super.destroy();
     },
 
     /**

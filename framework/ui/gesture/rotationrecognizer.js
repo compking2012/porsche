@@ -23,11 +23,11 @@ Class.define("framework.ui.gesture.RotationRecognizer", GestureRecognizer, {
      * @constructor
      */
     initialize: function(/*options*/) {
-        this.super.initialize.apply(this, arguments);
+        this.super.initialize();
     },
 
     destroy: function() {
-        this.super.destroy.apply(this, arguments);
+        this.super.destroy();
     },
 
     static: {

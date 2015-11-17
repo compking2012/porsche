@@ -25,7 +25,7 @@ Class.define("framework.ui.view.ScrollableView", CompositeView, {
      * @method ScrollableView#initialize
      */
     initialize: function() {
-        this.super.initialize.apply(this, arguments);
+        this.super.initialize();
 
         this.addGestureRecognizer(this._panRecognizer = new PanRecognizer({threshold: 1}));
         this.addEventListener("panstart", this._onPanStartFunc = this.onPanStart.bind(this));
@@ -68,7 +68,7 @@ Class.define("framework.ui.view.ScrollableView", CompositeView, {
         this.removeEventListener("pancancel", this._onPanEndCancelFunc);
         this._onPanEndCancelFunc = null;
 
-        this.super.destroy.apply(this, arguments);
+        this.super.destroy();
     },
 
     /**

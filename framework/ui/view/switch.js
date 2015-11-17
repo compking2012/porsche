@@ -20,7 +20,7 @@ var TapRecognizer = require("../gesture/taprecognizer");
  */
 Class.define("CompositeView.ui.view.Switch", View, {
     initialize: function () {
-        this.super.initialize.apply(this, arguments);
+        this.super.initialize();
 
         this._disabledImageSrc = global.AppFXRootPath + "/resources/switchdisabled.png";
         this._disabledImage = new Image();
@@ -69,7 +69,7 @@ Class.define("CompositeView.ui.view.Switch", View, {
         this.removeEventListener("tap", this._onTapFunc);
         this._onTapFunc = null;
 
-        this.super.destroy.apply(this, arguments);
+        this.super.destroy();
     },
 
     get value() {

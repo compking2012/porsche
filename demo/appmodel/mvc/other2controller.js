@@ -6,7 +6,7 @@ var View = fx.import("framework.ui.view.View");
 
 Class.define("MyApp.Other2Controller", Controller, {
     initialize: function() {
-        this.super.initialize.apply(this, arguments);
+        this.super.initialize();
 
         var view = new View();
         view.background = "#0000FF";

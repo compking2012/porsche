@@ -14,7 +14,7 @@ var EventEmitter = require("../yobject");
 
 Class.define("framework.model.Model", EventEmitter, {
     initialize: function(attributes) {
-        this.super.initialize.apply(this);
+        this.super.initialize();
 
         this._attributes = {};
         this._changedAttributes = {};
@@ -40,7 +40,8 @@ Class.define("framework.model.Model", EventEmitter, {
     destroy: function() {
         this._attributes = null;
         this._changedAttributes = null;
-        this.super.destroy.apply(this);
+
+        this.super.destroy();
     },
 
     get id() {

@@ -18,7 +18,7 @@ var GestureEvent = require("../event/gestureevent");
 
 Class.define("framework.ui.gesture.GestureManager", EventEmitter, {
     initialize: function(view) {
-        this.super.initialize.apply(this, arguments);
+        this.super.initialize();
 
         this._handlers = {};
         this._session = {};
@@ -35,7 +35,7 @@ Class.define("framework.ui.gesture.GestureManager", EventEmitter, {
         this._input = null;
         this._view = null;
 
-        this.super.destroy.apply(this, arguments);
+        this.super.destroy();
     },
 
     static: {

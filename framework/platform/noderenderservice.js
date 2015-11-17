@@ -17,7 +17,7 @@ var fs = require("fs");
 
 Class.define("framework.ui.platform.RenderService", EventEmitter, {
     initialize: function() {
-        this.super.initialize.apply(this);
+        this.super.initialize();
 
         this._uiServer = new UIServer("MyApp");
         this._canvasIdGen = 0;
@@ -30,7 +30,7 @@ Class.define("framework.ui.platform.RenderService", EventEmitter, {
 
         this._uiServer = null;
 
-        this.super.destroy.apply(this);
+        this.super.destroy();
     },
 
     registerImageToGlobal: function() {

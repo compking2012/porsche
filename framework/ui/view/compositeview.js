@@ -23,7 +23,7 @@ Class.define("framework.ui.view.CompositeView", View, {
      * @method CompositeView#initialize
      */
     initialize: function() {
-        this.super.initialize.apply(this, arguments);
+        this.super.initialize();
 
         this._children = [];
         this._layout = null;
@@ -41,7 +41,7 @@ Class.define("framework.ui.view.CompositeView", View, {
         }
         this._layout = null;
 
-        this.super.destroy.apply(this, arguments);
+        this.super.destroy();
     },
 
     set needRelayout(value) {

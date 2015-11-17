@@ -20,7 +20,7 @@ var ColumnLayoutParam = require("./columnlayoutparam");
  */
 Class.define("framework.ui.layout.ColumnLayout", Layout, {
     initialize: function() {
-        this.super.initialize.apply(this, arguments);
+        this.super.initialize();
 
         this._paddingLeft = 0;
         this._paddingRight = 0;
@@ -28,7 +28,7 @@ Class.define("framework.ui.layout.ColumnLayout", Layout, {
     },
 
     destroy: function() {
-        this.super.destroy.apply(this, arguments);
+        this.super.destroy();
     },
 
     /**

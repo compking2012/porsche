@@ -14,7 +14,7 @@ var YObject = require("../../yobject");
 
 Class.define("framework.ui.layout.LayoutParam", YObject, {
     initialize: function(layout) {
-        this.super.initialize.apply(this, arguments);
+        this.super.initialize();
 
         this._width = -1;
         this._height = -1;

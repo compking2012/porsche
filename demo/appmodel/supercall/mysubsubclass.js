@@ -5,7 +5,7 @@ var MySubClass = require("./mysubclass");
 
 Class.define("MySubSubClass", MySubClass, {
     initialize: function() {
-        this.super.initialize.apply(this, arguments);
+        this.super.initialize();
 
         this._instanceProperty = "MySubSubClass Instance Property";
         console.log("MySubSubClass object is initialized.");
@@ -13,13 +13,13 @@ Class.define("MySubSubClass", MySubClass, {
 
     static: {
         takeStaticAction: function() {
-            this.super.takeStaticAction.apply(this, arguments);
+            this.super.takeStaticAction();
             console.log("MySubSubClass takeStaticAction method invoked. staticProperty is " + this._staticProperty);
         }
     },
 
     takeInstanceAction: function() {
-        this.super.takeInstanceAction.apply(this, arguments);
+        this.super.takeInstanceAction();
         console.log("MySubSubClass takeInstanceAction method invoked. instanceProperty is " + this._instanceProperty);
     }
 }, module);

@@ -8,7 +8,7 @@ var fs = require("fs");
 
 Class.define("MyDataSource", DataSource, {
     initialize: function() {
-        this.super.initialize.apply(this, arguments);
+        this.super.initialize();
 
         this.metafile = global.app.rootPath + "/data/list.data";
     },

@@ -19,7 +19,7 @@ var LayoutParam = require("./layoutparam");
  */
 Class.define("framework.ui.layout.FlowLayoutParam", LayoutParam, {
     initialize: function() {
-        this.super.initialize.apply(this, arguments);
+        this.super.initialize();
 
         this._itemSpacing = 10; // vertical spacing betwwen views and and parent container
     },

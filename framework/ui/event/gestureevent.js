@@ -23,7 +23,7 @@ Class.define("framework.ui.event.GestureEvent", UIEvent, {
      * @method GestureEvent#initialize
      */
     initialize: function(options) {
-        this.super.initialize.apply(this, arguments);
+        this.super.initialize();
 
         this._deltaX = options.deltaX;
         this._deltaY = options.deltaY;
@@ -63,7 +63,7 @@ Class.define("framework.ui.event.GestureEvent", UIEvent, {
         this._changedPointers = null;
         this._pointers = null;
 
-        this.super.destroy.apply(this, arguments);
+        this.super.destroy();
     },
 
     /**

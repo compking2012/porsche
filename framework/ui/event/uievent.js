@@ -24,7 +24,7 @@ Class.define("framework.ui.event.UIEvent", Event, {
      * @method UIEvent#initialize
      */
     initialize: function(/*options*/) {
-        this.super.initialize.apply(this, arguments);
+        this.super.initialize();
 
         this._propagation = true;
         this._defaultBehavior = true;

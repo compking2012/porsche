@@ -17,7 +17,7 @@ var Button = require("./button");
 
 Class.define("framework.ui.view.ConfirmDialog", Dialog, {
     initialize: function(options) {
-        this.super.initialize.apply(this, arguments);
+        this.super.initialize();
 
         this.layout = new RelativeLayout();
         this.layout.setLayoutParam(0, "align", {left: "parent", top: "parent", right: "parent"});
@@ -81,7 +81,7 @@ Class.define("framework.ui.view.ConfirmDialog", Dialog, {
         this._cancelButton.destroy();
         this._cancelButton = null;
 
-        this.super.destroy.apply(this, arguments);
+        this.super.destroy();
     },
 
     onTapConfirm: function() {

@@ -7,7 +7,7 @@ var OtherController = require("./othercontroller");
 
 Class.define("MyApp.MainController", Controller, {
     initialize: function() {
-        this.super.initialize.apply(this, arguments);
+        this.super.initialize();
 
         var view = new View();
         view.background = "#FF0000";

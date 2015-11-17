@@ -7,7 +7,7 @@ var Book = require("./book");
 
 Class.define("Library", Collection, {
     initialize: function() {
-        this.super.initialize.apply(this, arguments);
+        this.super.initialize();
 
         this._dataSource = new MyDataSource();
     },

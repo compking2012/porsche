@@ -23,7 +23,7 @@ Class.define("framework.ui.view.CircleProgressView", ProgressView, {
      * @method CircleProgressView#initialize
      */
     initialize: function() {
-        this.super.initialize.apply(this, arguments);
+        this.super.initialize();
 
         this._lineWidth = 1;
     },
@@ -33,7 +33,7 @@ Class.define("framework.ui.view.CircleProgressView", ProgressView, {
      * @method CircleProgressView#destroy
      */
     destroy: function() {
-        this.super.destroy.apply(this, arguments);
+        this.super.destroy();
     },
 
     drawBackground: function(context) {

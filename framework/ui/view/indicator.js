@@ -19,7 +19,8 @@ var View = require("./view");
  **/
 Class.define("framework.ui.view.Indicator", View, {
     initialize: function() {
-        this.super.initialize.apply(this, arguments);
+        this.super.initialize();
+
         this._count = 1;
         this._currentpos = 1;
         this._margin = 10;
@@ -28,7 +29,7 @@ Class.define("framework.ui.view.Indicator", View, {
     },
 
     destroy: function() {
-        this.super.destroy.apply(this, arguments);
+        this.super.destroy();
     },
 
     /**

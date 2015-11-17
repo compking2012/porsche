@@ -30,7 +30,7 @@ Class.define("framework.app.App", EventEmitter, {
      * @method App#initialize
      */
     initialize: function() {
-        this.super.initialize.apply(this, arguments);
+        this.super.initialize();
 
         this._appService = new AppService();
         this._renderService = new RenderService();
@@ -85,7 +85,7 @@ Class.define("framework.app.App", EventEmitter, {
         this._onFinishFunc = null;
         global.app = null;
 
-        this.super.destroy.apply(this, arguments);
+        this.super.destroy();
     },
 
     get rootController() {

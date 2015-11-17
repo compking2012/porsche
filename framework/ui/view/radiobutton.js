@@ -13,11 +13,11 @@ var Class = require("../../class");
 var CheckBox = require("./checkbox");
 
 Class.define("framework.ui.view.RadioButton", CheckBox, {
-    initialize: function () {
-        this.super.initialize.apply(this, arguments);
+    initialize: function() {
+        this.super.initialize();
     },
 
     destroy: function() {
-        this.super.destroy.apply(this, arguments);
+        this.super.destroy();
     }
 }, module);

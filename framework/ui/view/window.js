@@ -23,7 +23,7 @@ Class.define("framework.ui.view.Window", CompositeView, {
      * @method Window#initialize
      */
     initialize: function(title) {
-        this.super.initialize.apply(this, arguments);
+        this.super.initialize();
 
         this._title = title;
         this._windowManager = null;
@@ -37,7 +37,7 @@ Class.define("framework.ui.view.Window", CompositeView, {
         this._windowManager.destroy();
         this._windowManager = null;
 
-        this.super.destroy.apply(this, arguments);
+        this.super.destroy();
     },
 
     /**

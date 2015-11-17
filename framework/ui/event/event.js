@@ -23,7 +23,7 @@ Class.define("framework.ui.event.Event", YObject, {
      * @method Event#initialize
      */
     initialize: function(options) {
-        this.super.initialize.apply(this, arguments);
+        this.super.initialize();
 
         this._target = options.target !== undefined ? options.target : null;
         this._type = options.type !== undefined ? options.type : "";
@@ -38,7 +38,7 @@ Class.define("framework.ui.event.Event", YObject, {
     destroy: function() {
         this._target = null;
 
-        this.super.destroy.apply(this, arguments);
+        this.super.destroy();
     },
 
     /**
