@@ -23,7 +23,7 @@ Class.define("framework.ui.gesture.LongPressRecognizer", GestureRecognizer, {
      * @constructor
      */
     initialize: function(/*options*/) {
-        GestureRecognizer.prototype.initialize.apply(this, arguments);
+        this.super.initialize.apply(this, arguments);
 
         this._timer = null;
         this._input = null;
@@ -34,7 +34,7 @@ Class.define("framework.ui.gesture.LongPressRecognizer", GestureRecognizer, {
         this._timer = null;
         this._input = null;
 
-        GestureRecognizer.prototype.destroy.apply(this, arguments);
+        this.super.destroy.apply(this, arguments);
     },
 
     static: {

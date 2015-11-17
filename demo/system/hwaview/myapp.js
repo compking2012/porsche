@@ -6,9 +6,7 @@ var CompositeView = fx.import("framework.ui.view.CompositeView");
 var View = fx.import("framework.ui.view.View");
 
 Class.define("MyApp", App, {
-    initialize: function() {
-        App.prototype.initialize.apply(this, arguments);
-
+    onStart: function() {
         var compositeView1 = new CompositeView();
         compositeView1.background = "#FF0000";
         compositeView1.left = 10;

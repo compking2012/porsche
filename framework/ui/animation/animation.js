@@ -20,7 +20,7 @@ Class.define("framework.ui.animation.Animation", EventEmitter, {
      * @method Animation#initialize
      */
     initialize: function(view) {
-        EventEmitter.prototype.initialize.apply(this, arguments);
+        this.super.initialize.apply(this);
 
         this._view = view;
         this._from = {};
@@ -53,7 +53,7 @@ Class.define("framework.ui.animation.Animation", EventEmitter, {
         this._timer = null;
         this._animators = null;
 
-        EventEmitter.prototype.destroy.apply(this, arguments);
+        this.super.destroy.apply(this);
     },
 
     get from() {

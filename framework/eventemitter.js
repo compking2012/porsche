@@ -23,7 +23,7 @@ Class.define("framework.EventEmitter", YObject, {
      * @method EventEmitter#initialize
      */
     initialize: function() {
-        YObject.prototype.initialize.apply(this, arguments);
+        this.super.initialize.apply(this, arguments);
 
         this.events = {};
     },
@@ -36,7 +36,7 @@ Class.define("framework.EventEmitter", YObject, {
         this.removeAllEventListeners();
         this.events = null;
 
-        YObject.prototype.destroy.apply(this, arguments);
+        this.super.destroy.apply(this, arguments);
     },
 
     /**

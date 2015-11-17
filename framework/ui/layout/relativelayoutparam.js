@@ -14,7 +14,7 @@ var LayoutParam = require("./layoutparam");
 
 Class.define("framework.ui.layout.RelativeLayoutParam", LayoutParam, {
     initialize: function() {
-        LayoutParam.prototype.initialize.apply(this, arguments);
+        this.super.initialize.apply(this, arguments);
 
         this._alignTargetLeft = -1;
         this._alignTargetRight = -1;
@@ -32,7 +32,7 @@ Class.define("framework.ui.layout.RelativeLayoutParam", LayoutParam, {
     },
 
     destroy: function() {
-        LayoutParam.prototype.destroy.apply(this, arguments);
+        this.super.destroy.apply(this, arguments);
     },
 
     /**

@@ -27,7 +27,7 @@ Class.define("framework.ui.gesture.TapRecognizer", GestureRecognizer, {
      * @constructor
      */
     initialize: function(/*options*/) {
-        GestureRecognizer.prototype.initialize.apply(this, arguments);
+        this.super.initialize.apply(this, arguments);
 
         // previous time and center,
         // used for tap counting
@@ -44,7 +44,7 @@ Class.define("framework.ui.gesture.TapRecognizer", GestureRecognizer, {
         this._timer = null;
         this._input = null;
 
-        GestureRecognizer.prototype.destroy.apply(this, arguments);
+        this.super.destroy.apply(this, arguments);
     },
 
     static: {

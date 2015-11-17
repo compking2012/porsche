@@ -25,7 +25,7 @@ Class.define("framework.ui.view.ScrollableView", CompositeView, {
      * @method ScrollableView#initialize
      */
     initialize: function() {
-        CompositeView.prototype.initialize.apply(this, arguments);
+        this.super.initialize.apply(this, arguments);
 
         this.addGestureRecognizer(this._panRecognizer = new PanRecognizer({threshold: 1}));
         this.addEventListener("panstart", this._onPanStartFunc = this.onPanStart.bind(this));
@@ -68,7 +68,7 @@ Class.define("framework.ui.view.ScrollableView", CompositeView, {
         this.removeEventListener("pancancel", this._onPanEndCancelFunc);
         this._onPanEndCancelFunc = null;
 
-        CompositeView.prototype.destroy.apply(this, arguments);
+        this.super.destroy.apply(this, arguments);
     },
 
     /**
@@ -172,7 +172,7 @@ Class.define("framework.ui.view.ScrollableView", CompositeView, {
         if (view.bottom > this._contentHeight) {
             this._contentHeight = view.bottom;
         }
-        CompositeView.prototype.addChild.call(this, view);
+        this.super.addChild.call(this, view);
     },
 
     /**
@@ -189,7 +189,7 @@ Class.define("framework.ui.view.ScrollableView", CompositeView, {
         if (view.bottom > this._contentHeight) {
             this._contentHeight = view.bottom;
         }
-        CompositeView.prototype.insertChild.call(this, view, index);
+        this.super.insertChild.call(this, view, index);
     },
 
     /**
@@ -222,7 +222,7 @@ Class.define("framework.ui.view.ScrollableView", CompositeView, {
                 }
             }
         }
-        CompositeView.prototype.removeChild.call(this, view);
+        this.super.removeChild.call(this, view);
     },
 
     paintChildren: function(context) {

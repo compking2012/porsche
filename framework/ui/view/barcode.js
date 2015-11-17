@@ -23,7 +23,7 @@ Class.define("framework.ui.view.BarCode", View, {
      * @method BarCode#initialize
      */
     initialize: function(/*value*/) {
-        View.prototype.initialize.apply(this, arguments);
+        this.super.initialize.apply(this, arguments);
 
         this._barWidth = 2;
         this._barHeight = 100;
@@ -42,7 +42,7 @@ Class.define("framework.ui.view.BarCode", View, {
      * @method BarCode#destroy
      */
     destroy: function() {
-        View.prototype.destroy.apply(this, arguments);
+        this.super.destroy.apply(this, arguments);
     },
 
     /**

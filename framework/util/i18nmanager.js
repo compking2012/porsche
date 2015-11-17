@@ -14,7 +14,7 @@ var EventEmitter = require("../eventemitter");
 
 Class.define("framework.util.I18nManager", EventEmitter, {
     initialize: function() {
-        EventEmitter.prototype.initialize.apply(this, arguments);
+        this.super.initialize.apply(this, arguments);
 
         this._i18next = this.getI18next();
     },
@@ -22,7 +22,7 @@ Class.define("framework.util.I18nManager", EventEmitter, {
     destroy: function() {
         this._i18next = null;
 
-        EventEmitter.prototype.destroy.apply(this, arguments);
+        this.super.destroy.apply(this, arguments);
     },
 
     get locale() {

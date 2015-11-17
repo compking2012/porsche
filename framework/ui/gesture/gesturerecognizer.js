@@ -24,7 +24,7 @@ Class.define("framework.ui.gesture.GestureRecognizer", EventEmitter, {
      * @param {Object} options
      */
     initialize: function(options) {
-        EventEmitter.prototype.initialize.apply(this, arguments);
+        this.super.initialize.apply(this, arguments);
 
         // make sure, options are copied over to a new object to prevent leaking it outside
         this._options = Util.merge(Util.extend({}, options || {}), this.constructor.defaults);
@@ -44,7 +44,7 @@ Class.define("framework.ui.gesture.GestureRecognizer", EventEmitter, {
         this._simultaneous = null;
         this._requireFail = null;
 
-        EventEmitter.prototype.destroy.apply(this, arguments);
+        this.super.destroy.apply(this, arguments);
     },
 
     static: {

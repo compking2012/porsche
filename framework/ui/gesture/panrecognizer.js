@@ -23,14 +23,14 @@ Class.define("framework.ui.gesture.PanRecognizer", GestureRecognizer, {
      * @constructor
      */
     initialize: function(/*options*/) {
-        GestureRecognizer.prototype.initialize.apply(this, arguments);
+        this.super.initialize.apply(this, arguments);
 
         this._pX = null;
         this._pY = null;
     },
 
     destroy: function() {
-        GestureRecognizer.prototype.destroy.apply(this, arguments);
+        this.super.destroy.apply(this, arguments);
     },
 
     static: {
@@ -105,6 +105,6 @@ Class.define("framework.ui.gesture.PanRecognizer", GestureRecognizer, {
         if (direction) {
             input.additionalEvent = this._options.event + direction;
         }
-        GestureRecognizer.prototype.emit.call(this, input);
+        this.super.emit.call(this, input);
     }
 }, module);

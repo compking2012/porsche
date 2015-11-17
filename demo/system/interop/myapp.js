@@ -6,9 +6,7 @@ var ffi = require("ffi");
 // var ref = require("ref");
 
 Class.define("MyApp", App, {
-    initialize: function() {
-        App.prototype.initialize.apply(this, arguments);
-
+    onStart: function() {
         var libtest = ffi.Library("libtest", {
             "myapi": ["int", ["int"]]
         });

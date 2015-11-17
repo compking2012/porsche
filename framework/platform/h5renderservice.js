@@ -14,7 +14,7 @@ var EventEmitter = require("../eventemitter");
 
 Class.define("framework.ui.platform.H5RenderService", EventEmitter, {
     initialize: function() {
-        EventEmitter.prototype.initialize.apply(this, arguments);
+        this.super.initialize.apply(this);
 
         this._canvas = document.createElement("canvas");
         document.body.appendChild(this._canvas);
@@ -24,7 +24,7 @@ Class.define("framework.ui.platform.H5RenderService", EventEmitter, {
         document.body.removeChild(this._canvas);
         this._canvas = null;
 
-        EventEmitter.prototype.destroy.apply(this, arguments);
+        this.super.destroy.apply(this);
     },
 
     registerImageToGlobal: function() {

@@ -6,9 +6,7 @@ var Library = require("./library");
 var Book = require("./book");
 
 Class.define("MyApp", App, {
-    initialize: function() {
-        App.prototype.initialize.apply(this, arguments);
-
+    onStart: function() {
         // Test 1: create an empty library
         var library = new Library();
         library.create(function() {

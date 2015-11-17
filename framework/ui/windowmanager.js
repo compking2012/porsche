@@ -17,7 +17,7 @@ var Point = require("./point");
 
 Class.define("framework.ui.WindowManager", EventEmitter, {
     initialize: function(inputService, renderService) {
-        EventEmitter.prototype.initialize.apply(this, arguments);
+        this.super.initialize.apply(this, arguments);
 
         this._inputService = inputService;
         this._renderService = renderService;
@@ -63,7 +63,7 @@ Class.define("framework.ui.WindowManager", EventEmitter, {
         this._inputService.destroy();
         this._inputService = null;
 
-        EventEmitter.prototype.destroy.apply(this, arguments);
+        this.super.destroy.apply(this, arguments);
     },
 
     addWindow: function(win) {

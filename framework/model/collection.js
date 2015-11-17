@@ -14,7 +14,7 @@ var EventEmitter = require("../eventemitter");
 
 Class.define("framework.model.Collection", EventEmitter, {
     initialize: function() {
-        EventEmitter.prototype.initialize.apply(this, arguments);
+        this.super.initialize.apply(this, arguments);
 
         this._models = [];
     },
@@ -25,7 +25,7 @@ Class.define("framework.model.Collection", EventEmitter, {
             this._models[i].destroy();
         }
         this._models = null;
-        EventEmitter.prototype.destroy.apply(this, arguments);
+        this.super.destroy.apply(this, arguments);
     },
 
     add: function(model) {

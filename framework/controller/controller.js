@@ -14,14 +14,16 @@ var EventEmitter = require("../yobject");
 
 Class.define("framework.controller.Controller", EventEmitter, {
     initialize: function() {
-        EventEmitter.prototype.initialize.apply(this, arguments);
+        this.super.initialize.apply(this, arguments);
 
         this._parent = null;
         this._view = null;
     },
 
     destroy: function() {
-        EventEmitter.prototype.destroy.apply(this, arguments);
+        this._parent = null;
+        this._view = null;
+        this.super.destroy.apply(this, arguments);
     },
 
     get view() {

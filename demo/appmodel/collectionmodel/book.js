@@ -6,7 +6,7 @@ var MyDataSource = require("./mydatasource");
 
 Class.define("Book", Model, {
     initialize: function() {
-        Model.prototype.initialize.apply(this, arguments);
+        this.super.initialize.apply(this, arguments);
 
         this._dataSource = new MyDataSource();
     },

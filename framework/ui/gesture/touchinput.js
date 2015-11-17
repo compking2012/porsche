@@ -18,7 +18,7 @@ var Util = require("./util");
  */
 Class.define("framework.ui.gesture.TouchInput", Input, {
     initialize: function(/*manager*/) {
-        Input.prototype.initialize.apply(this, arguments);
+        this.super.initialize.apply(this, arguments);
 
         this._targetIds = {};
         this._manager.view.addEventListener("touchstart", this.handleTouchStartFunc = this.handleTouchStart.bind(this));
@@ -36,7 +36,7 @@ Class.define("framework.ui.gesture.TouchInput", Input, {
         this._manager.view.removeEventListener("touchend", this.handleTouchEndFunc);
         this.handleTouchEndFunc = null;
 
-        Input.prototype.destroy.apply(this, arguments);
+        this.super.destroy.apply(this, arguments);
     },
 
     static: {

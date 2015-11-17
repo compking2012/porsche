@@ -17,7 +17,7 @@ var Button = require("./button");
 
 Class.define("framework.ui.view.AlertDialog", Dialog, {
     initialize: function(options) {
-        Dialog.prototype.initialize.apply(this, arguments);
+        this.super.initialize.apply(this, arguments);
 
         this.layout = new RelativeLayout();
         this.layout.setLayoutParam(0, "align", {left: "parent", top: "parent", right: "parent"});
@@ -61,7 +61,7 @@ Class.define("framework.ui.view.AlertDialog", Dialog, {
         this._actionButton.destroy();
         this._actionButton = null;
 
-        Dialog.prototype.destroy.apply(this, arguments);
+        this.super.destroy.apply(this, arguments);
     },
 
     onTapAction: function() {

@@ -23,7 +23,8 @@ Class.define("framework.ui.view.Window", CompositeView, {
      * @method Window#initialize
      */
     initialize: function(title) {
-        CompositeView.prototype.initialize.apply(this, arguments);
+        this.super.initialize.apply(this, arguments);
+
         this._title = title;
         this._windowManager = null;
     },
@@ -35,7 +36,8 @@ Class.define("framework.ui.view.Window", CompositeView, {
     destroy: function() {
         this._windowManager.destroy();
         this._windowManager = null;
-        CompositeView.prototype.destroy.apply(this, arguments);
+
+        this.super.destroy.apply(this, arguments);
     },
 
     /**
@@ -68,7 +70,7 @@ Class.define("framework.ui.view.Window", CompositeView, {
      */
     paint: function(context) {
         context.clearRect(this._dirtyRect.left, this._dirtyRect.top, this._dirtyRect.width, this._dirtyRect.height);
-        CompositeView.prototype.paint.call(this, context);
+        this.super.paint.call(this, context);
     },
 
     /**
@@ -82,7 +84,7 @@ Class.define("framework.ui.view.Window", CompositeView, {
             rect = this.getBounds();
         }
 
-        CompositeView.prototype.invalidate.call(this, rect);
+        this.super.invalidate.call(this, rect);
         this.invalidateChild(this, rect);
     },
 
@@ -94,7 +96,7 @@ Class.define("framework.ui.view.Window", CompositeView, {
      * @protected
      */
     invalidateChild: function(view, rect) {
-        CompositeView.prototype.invalidateChild.call(this, view, rect);
+        this.super.invalidateChild.call(this, view, rect);
         if (this._windowManager !== null) {
             this._windowManager.draw();
         }

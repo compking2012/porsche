@@ -21,7 +21,8 @@ var LayoutParam = require("./layoutparam");
  */
 Class.define("framework.ui.layout.RowLayout", Layout, {
     initialize: function() {
-        Layout.prototype.initialize.apply(this, arguments);
+        this.super.initialize.apply(this, arguments);
+
         this._paddingTop = 0;
         this._paddingBottom = 0;
         this._defaultparam = new RowLayoutParam(this);
@@ -29,7 +30,8 @@ Class.define("framework.ui.layout.RowLayout", Layout, {
 
     destroy: function() {
         this._defaultparam = null;
-        Layout.prototype.destroy.apply(this, arguments);
+
+        this.super.destroy.apply(this, arguments);
     },
 
     /**
@@ -46,7 +48,7 @@ Class.define("framework.ui.layout.RowLayout", Layout, {
         this.invalidate();
     },
 
-        /**
+    /**
      * @name RowLayout#paddingLeft
      * @type {Number}
      * @description 

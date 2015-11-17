@@ -19,7 +19,7 @@ var LayoutParam = require("./layoutparam");
  */
 Class.define("framework.ui.layout.ColumnLayoutParam", LayoutParam, {
     initialize: function() {
-        LayoutParam.prototype.initialize.apply(this, arguments);
+        this.super.initialize.apply(this, arguments);
     },
 
     /**

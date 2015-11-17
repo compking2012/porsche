@@ -23,11 +23,11 @@ Class.define("framework.ui.gesture.PinchRecognizer", GestureRecognizer, {
      * @constructor
      */
     initialize: function(/*options*/) {
-        GestureRecognizer.prototype.initialize.apply(this, arguments);
+        this.super.initialize.apply(this, arguments);
     },
 
     destroy: function() {
-        GestureRecognizer.prototype.destroy.apply(this, arguments);
+        this.super.destroy.apply(this, arguments);
     },
 
     static: {
@@ -74,7 +74,7 @@ Class.define("framework.ui.gesture.PinchRecognizer", GestureRecognizer, {
             var inOut = input.scale < 1 ? "in" : "out";
             input.additionalEvent = this._options.event + inOut;
         }
-        GestureRecognizer.prototype.emit.call(this, input);
+        this.super.emit.call(this, input);
     }
 
 }, module);

@@ -20,7 +20,7 @@ var CubicBezier = require("../animation/cubicbezier");
  **/
 Class.define("framework.ui.view.SwipeView", CompositeView, {
     initialize: function() {
-        CompositeView.prototype.initialize.apply(this, arguments);
+        this.super.initialize.apply(this, arguments);
 
         this._orientation = "vertical";
         this._currentIndex = 0;
@@ -37,7 +37,14 @@ Class.define("framework.ui.view.SwipeView", CompositeView, {
     },
 
     destroy: function() {
+        this._forwardView = null;
+        this._currentView = null;
+        this._backwardView = null;
 
+        this._beziers.destroy();
+        this._beziers = null;
+
+        this.super.destroy.apply(this, arguments);
     },
 
     /**
@@ -63,7 +70,7 @@ Class.define("framework.ui.view.SwipeView", CompositeView, {
         child.width = this._width;
         child.height = this._height;
         child.visibility = "gone";
-        CompositeView.prototype.addChild.call(this, child);
+        this.super.addChild.call(this, child);
         this.showCurrentView();
     },
 
@@ -85,7 +92,7 @@ Class.define("framework.ui.view.SwipeView", CompositeView, {
             }
             this._needrepaint = false;
         }
-        CompositeView.prototype.paint.call(this, context);
+        this.super.paint.call(this, context);
     },
 
     showCurrentView: function() {
@@ -247,14 +254,14 @@ Class.define("framework.ui.view.SwipeView", CompositeView, {
         if (this._isAnimation) {
             return;
         }
-        CompositeView.prototype.handleTouchStart.call(this, e);
+        this.super.handleTouchStart.call(this, e);
     },
 
     handleTouchMove: function(e) {
         if (this._isAnimation) {
             return;
         }
-        CompositeView.prototype.handleTouchMove.call(this, e);
+        this.super.handleTouchMove.call(this, e);
     },
 
     handleTouchEnd: function(e) {
@@ -282,6 +289,6 @@ Class.define("framework.ui.view.SwipeView", CompositeView, {
                 this.nextBack(this._duration);
             }
         }
-        CompositeView.prototype.handleTouchEnd.call(this, e);
+        this.super.handleTouchEnd.call(this, e);
     }
 }, module);

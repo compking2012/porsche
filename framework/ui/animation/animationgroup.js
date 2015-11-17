@@ -18,7 +18,7 @@ Class.define("framework.ui.animation.AnimationGroup", EventEmitter, {
      * @method AnimationGroup#initialize
      */
     initialize: function(view) {
-        EventEmitter.prototype.initialize.apply(this, arguments);
+        this.super.initialize.apply(this);
 
         this._animations = [];
         this._view = view;
@@ -36,7 +36,7 @@ Class.define("framework.ui.animation.AnimationGroup", EventEmitter, {
         this._view = null;
         this._animationCompleteFunc = null;
 
-        EventEmitter.prototype.destroy.apply(this, arguments);
+        this.super.destroy.apply(this, arguments);
     },
 
     get type() {
