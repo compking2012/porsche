@@ -203,16 +203,16 @@ H5:     passed
 Node:   passed
 
 *) instanceof
-H5:     
-Node:   
+H5:     passed
+Node:   passed
 
 *) mvc
 H5:     no pass
 Node:   no pass
 
 *) super call
-H5:
-Node:   
+H5:     passed
+Node:   passed
 
 ### System ###
 *) audioplayer
