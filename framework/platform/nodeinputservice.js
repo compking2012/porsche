@@ -14,7 +14,7 @@ var EventEmitter = require("../eventemitter");
 
 Class.define("framework.ui.platform.InputService", EventEmitter, {
     initialize: function(target) {
-        this.super.initialize();
+        this.super.initialize.call(this);
 
         this._uiServer = target;
         this._uiServer.on("input", this._processInputEventFunc = this.processInputEvent.bind(this));
@@ -25,7 +25,7 @@ Class.define("framework.ui.platform.InputService", EventEmitter, {
         this._processInputEventFunc = null;
         this._uiServer = null;
 
-        this.super.destroy();
+        this.super.destroy.call(this);
     },
 
     processInputEvent: function(e) {

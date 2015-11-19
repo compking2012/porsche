@@ -5,6 +5,10 @@ var App = fx.import("framework.app.App");
 var View = fx.import("framework.ui.view.View");
 
 Class.define("MyApp", App, {
+    initialize: function() {
+        this.super.initialize.call(this);
+    },
+
     onStart: function() {
         var view = new View();
         view.background = "#FF0000";

@@ -19,7 +19,7 @@ var LayoutParam = require("./layoutparam");
  */
 Class.define("framework.ui.layout.RowLayoutParam", LayoutParam, {
     initialize: function() {
-        this.super.initialize();
+        this.super.initialize.call(this);
     },
 
     /**

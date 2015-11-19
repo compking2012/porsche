@@ -18,7 +18,7 @@ Class.define("framework.ui.animation.FrameAnimation", Animation, {
      * @method FrameAnimation#initialize
      */
     initialize: function(/*view*/) {
-        this.super.initialize();
+        this.super.initialize.call(this);
 
         this._frames = {};
     },
@@ -30,7 +30,7 @@ Class.define("framework.ui.animation.FrameAnimation", Animation, {
     destroy: function() {
         this._frames = null;
 
-        this.super.destroy();
+        this.super.destroy.call(this);
     },
 
     get frames() {

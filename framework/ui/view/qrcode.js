@@ -23,7 +23,7 @@ Class.define("framework.ui.view.QRCode", View, {
      * @method QRCode#initialize
      */
     initialize: function(/*value*/) {
-        this.super.initialize();
+        this.super.initialize.call(this);
 
         this._color = "#000000";
         this._value = "";
@@ -43,7 +43,7 @@ Class.define("framework.ui.view.QRCode", View, {
     destroy: function() {
         this._qrDraw = null;
 
-        this.super.destroy();
+        this.super.destroy.call(this);
     },
 
     /**

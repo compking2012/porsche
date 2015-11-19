@@ -19,7 +19,7 @@ var LayoutParam = require("./layoutparam");
  */
 Class.define("framework.ui.layout.GridLayoutParam", LayoutParam, {
     initialize: function() {
-        this.super.initialize();
+        this.super.initialize.call(this);
 
         this._align = "center"; // left right center fill-parent
         this._valign = "middle"; // top bottom middle fill-parent

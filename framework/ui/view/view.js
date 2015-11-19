@@ -27,7 +27,7 @@ Class.define("framework.ui.view.View", EventEmitter, {
      * @method View#initialize
      */
     initialize: function() {
-        this.super.initialize();
+        this.super.initialize.call(this);
 
         // Properties
         this._parent = null;
@@ -112,7 +112,7 @@ Class.define("framework.ui.view.View", EventEmitter, {
         this.removeEventListener("touchcancel", this.handleTouchEndCancelFunc);
         this.handleTouchEndCancelFunc = null;
 
-        this.super.destroy();
+        this.super.destroy.call(this);
     },
 
     /**

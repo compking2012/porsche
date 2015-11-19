@@ -24,7 +24,7 @@ Class.define("framework.ui.view.RichTextView", TextView, {
      * @param textValue {String} the text string that shows
      */
     initialize: function() {
-        this.super.initialize();
+        this.super.initialize.call(this);
 
         this._baseline = "bottom";
         this.savedClasses = [];
@@ -34,7 +34,7 @@ Class.define("framework.ui.view.RichTextView", TextView, {
     destroy: function() {
         this.savedClasses = null;
 
-        this.super.destroy();
+        this.super.destroy.call(this);
     },
 
     /**

@@ -25,7 +25,7 @@ Class.define("framework.ui.view.TextField", TextView, {
      * @constructor
      */
     initialize: function() {
-        this.super.initialize();
+        this.super.initialize.call(this);
 
         if (!global.hasOwnProperty("textFields")) {
             global.textFields = [];
@@ -91,7 +91,7 @@ Class.define("framework.ui.view.TextField", TextView, {
         this._selectionLastPoint.destroy();
         this._selectionLastPoint = null;
 
-        this.super.destroy();
+        this.super.destroy.call(this);
     },
 
     /**

@@ -22,12 +22,12 @@ Class.define("framework.ui.gesture.PinchRecognizer", GestureRecognizer, {
     /**
      * @constructor
      */
-    initialize: function(/*options*/) {
-        this.super.initialize();
+    initialize: function(options) {
+        this.super.initialize.call(this, options);
     },
 
     destroy: function() {
-        this.super.destroy();
+        this.super.destroy.call(this);
     },
 
     static: {

@@ -13,11 +13,11 @@ var Class = require("../../class");
 var CompositeView = require("./compositeview");
 
 Class.define("framework.ui.view.RadioGroup", CompositeView, {
-    initialize: function () {
-        this.super.initialize();
+    initialize: function() {
+        this.super.initialize.call(this);
     },
 
     destroy: function() {
-        this.super.destroy();
+        this.super.destroy.call(this);
     }
 }, module);

@@ -27,7 +27,7 @@ Class.define("framework.ui.Rectangle", YObject, {
      * @param {Number} height height edge of rectangle, in pixels.
      */
     initialize: function(left, top, width, height) {
-        this.super.initialize();
+        this.super.initialize.call(this);
 
         this._left = left;
         this._top = top;

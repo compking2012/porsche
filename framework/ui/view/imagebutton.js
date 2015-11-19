@@ -24,7 +24,7 @@ Class.define("framework.ui.view.ImageButton", ImageView, {
      * @method ImageButton#initialize
      */
     initialize: function() {
-        this.super.initialize();
+        this.super.initialize.call(this);
 
         this._pressedImageSrc = null;
         this._pressedImage = null;
@@ -69,7 +69,7 @@ Class.define("framework.ui.view.ImageButton", ImageView, {
         this.removeEventListener("touchend", this.onTouchEndFunc);
         this.onTouchEndFunc = null;
 
-        this.super.destroy();
+        this.super.destroy.call(this);
     },
 
     get pressedImageSrc() {

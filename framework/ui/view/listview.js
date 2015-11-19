@@ -25,7 +25,7 @@ Class.define("framework.ui.view.ListView", ScrollableView, {
      * @method ListView#initialize
      */
     initialize: function() {
-        this.super.initialize();
+        this.super.initialize.call(this);
 
         this.layout = new ColumnLayout();
         this.layout.paddingLeft = 10;
@@ -44,7 +44,7 @@ Class.define("framework.ui.view.ListView", ScrollableView, {
         this.layout.destroy();
         this.layout = null;
 
-        this.super.destroy();
+        this.super.destroy.call(this);
     },
 
     /**

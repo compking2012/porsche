@@ -22,15 +22,15 @@ Class.define("framework.ui.gesture.PanRecognizer", GestureRecognizer, {
     /**
      * @constructor
      */
-    initialize: function(/*options*/) {
-        this.super.initialize();
+    initialize: function(options) {
+        this.super.initialize.call(this, options);
 
         this._pX = null;
         this._pY = null;
     },
 
     destroy: function() {
-        this.super.destroy();
+        this.super.destroy.call(this);
     },
 
     static: {

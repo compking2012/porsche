@@ -21,7 +21,7 @@ var AutoLayoutParam = require("./autolayoutparam");
  */
 Class.define("framework.ui.layout.AutoLayout", Layout, {
     initialize: function() {
-        this.super.initialize();
+        this.super.initialize.call(this);
 
         this._autoLayoutView = new AutoLayoutJS.View({});
         this._constraints = [];
@@ -35,7 +35,7 @@ Class.define("framework.ui.layout.AutoLayout", Layout, {
         this._autoLayoutView = null;
         this._constraints = null;
 
-        this.super.destroy();
+        this.super.destroy.call(this);
     },
 
     addConstraints: function(constraints) {

@@ -18,7 +18,7 @@ var CheckBox = require("./checkbox");
 
 Class.define("framework.ui.view.TwoLineListItem", ListItem, {
     initialize: function() {
-        this.super.initialize();
+        this.super.initialize.call(this);
 
         this.mode = "TwoLinesOnly";
     },
@@ -32,7 +32,7 @@ Class.define("framework.ui.view.TwoLineListItem", ListItem, {
         this.showNavigator(false);
         this.showCheckBox(false);
 
-        this.super.destroy();
+        this.super.destroy.call(this);
     },
 
     get mode() {

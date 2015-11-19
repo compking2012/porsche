@@ -26,8 +26,8 @@ Class.define("framework.ui.gesture.TapRecognizer", GestureRecognizer, {
      * multi-taps being recognized.
      * @constructor
      */
-    initialize: function(/*options*/) {
-        this.super.initialize();
+    initialize: function(options) {
+        this.super.initialize.call(this, options);
 
         // previous time and center,
         // used for tap counting
@@ -44,7 +44,7 @@ Class.define("framework.ui.gesture.TapRecognizer", GestureRecognizer, {
         this._timer = null;
         this._input = null;
 
-        this.super.destroy();
+        this.super.destroy.call(this);
     },
 
     static: {

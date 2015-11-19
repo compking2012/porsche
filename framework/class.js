@@ -19,78 +19,89 @@ function Class() {}
             superClass = null;
         }
 
-        var bindMethodWithSuper = function(func, sc) {
-            return function() {
-                var currentSuperClass = this.super;
-                this.super = sc;
-                var ret = func.apply(this, arguments);
-                this.super = currentSuperClass;
-                return ret;
-            };
-        };
+        // var bindMethodWithSuper = function(func, sc) {
+        //     return function() {
+        //         var currentSuperClass = this.super;
+        //         this.super = sc;
+        //         var ret = func.apply(this, arguments);
+        //         this.super = currentSuperClass;
+        //         return ret;
+        //     };
+        // };
 
         var newClass = function() {
-            if (typeof this.initialize === "function") {
-                this.initialize.apply(this, arguments);
+            if (!this.initialize instanceof Function) {
+                throw "The constructor must be a function";
             }
+            this.initialize.apply(this, arguments);
         };
+        newClass.prototype.constructor = newClass;
+        newClass.prototype.className = myClass;
 
-        var scp = superClass ? superClass : null;
+        // Static properties and methods
+        if (superClass) {
+            for (var key in superClass) {
+                if (superClass.hasOwnProperty(key)) {
+                    var pd = Object.getOwnPropertyDescriptor(superClass, key);
+                    Object.defineProperty(newClass, key, pd);
+                }
+            }
+        }
+
         if (definition.hasOwnProperty("static")) {
             var statics = definition.static;
             delete definition.static;
             for (var key in statics) {
                 if (statics.hasOwnProperty(key)) {
                     var pd = Object.getOwnPropertyDescriptor(statics, key);
-                    if (pd.value instanceof Function) {
-                        pd.value = bindMethodWithSuper(pd.value, scp);
-                    } else if (pd.set instanceof Function || pd.get instanceof Function) {
-                        if (pd.set instanceof Function) {
-                            pd.set = bindMethodWithSuper(pd.set, scp);
-                        }
-                        if (pd.get instanceof Function) {
-                            pd.get = bindMethodWithSuper(pd.get, scp);
-                        }
-                    }
-
                     Object.defineProperty(newClass, key, pd);
                 }
             }
         }
-        newClass.super = scp;
 
+        // Instance properties and methods
         if (superClass) {
-            newClass.prototype = Object.create(superClass.prototype, {
-                constructor: {
-                    value: newClass,
-                    enumerable: false,
-                    writable: true,
-                    configurable: true
-                }
-            });
-            newClass.prototype.constructor = newClass;
-        }
+            var _super = superClass.prototype;
+            var prototype = new superClass();
 
-        scp = superClass ? superClass.prototype : null;
-        for (var property in definition) {
-            if (definition.hasOwnProperty(property)) {
-                var pd = Object.getOwnPropertyDescriptor(definition, property);
-                if (pd.value instanceof Function) {
-                    pd.value = bindMethodWithSuper(pd.value, scp);
-                } else if (pd.set instanceof Function || pd.get instanceof Function) {
-                    if (pd.set instanceof Function) {
-                        pd.set = bindMethodWithSuper(pd.set, scp);
+            // newClass.prototype = Object.create(superClass.prototype, {
+            //     constructor: {
+            //         value: newClass,
+            //         enumerable: false,
+            //         writable: true,
+            //         configurable: true
+            //     }
+            // });
+
+            for (var property in definition) {
+                if (definition.hasOwnProperty(property)) {
+                    var p = null;
+                    if (property === "initialize" && definition[property] instanceof Function && _super[property] instanceof Function) {
+                        p = function(property, fn) {
+                                return function () {
+                                    var tmp = this.super;
+                                    this.super = _super[property];
+                                    var ret = fn.apply(this, arguments);
+                                    this.super = tmp;
+                                    return ret;
+                                };
+                            }(property, definition[property]);
+                    } else {
+                        p = definition[property];
                     }
-                    if (pd.get instanceof Function) {
-                        pd.get = bindMethodWithSuper(pd.get, scp);
-                    }
+                    prototype[property] = p;
                 }
-                Object.defineProperty(newClass.prototype, property, pd);
+            }
+            newClass.prototype = prototype;
+        } else {
+            for (var property in definition) {
+                if (definition.hasOwnProperty(property)) {
+                    var pd = Object.getOwnPropertyDescriptor(definition, property);
+                    Object.defineProperty(newClass.prototype, property, pd);
+                }
             }
         }
-        newClass.prototype.super = scp;
-
-        newClass.prototype.className = myClass;
+        newClass.prototype.super = superClass ? new superClass() : null;
 
         if (module !== null) {
             module.exports = newClass;

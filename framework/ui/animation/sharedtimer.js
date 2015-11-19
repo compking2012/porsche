@@ -18,7 +18,7 @@ Class.define("framework.ui.animation.SharedTimer", YObject, {
      * @method SharedTimer#initialize
      */
     initialize: function() {
-        this.super.initialize();
+        this.super.initialize.call(this);
 
         this.constructor.refCount = 0;
         this._timerQueue = [];
@@ -38,7 +38,7 @@ Class.define("framework.ui.animation.SharedTimer", YObject, {
         this._timerQueue = [];
         clearInterval(this._timer);
 
-        this.super.destroy();
+        this.super.destroy.call(this);
     },
 
     static: {
@@ -88,7 +88,7 @@ Class.define("framework.ui.animation.SharedTimer", YObject, {
             if (true/*diffTime >= this._timerQueue[i].interval*/) {
                 this._timerQueue[i].lastTime = currentTime;
                 if (this._timerQueue[i].callback) {
-                    this._timerQueue[i].callback.call(this);
+                    this._timerQueue[i].callback();
                 }
             }
         }

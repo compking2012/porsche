@@ -22,8 +22,8 @@ Class.define("framework.ui.event.InputEvent", UIEvent, {
      * Constructor
      * @method InputEvent#initialize
      */
-    initialize: function(/*options*/) {
-        this.super.initialize();
+    initialize: function(options) {
+        this.super.initialize.call(this, options);
 
         this._ctrlKey = false;
         this._altKey = false;

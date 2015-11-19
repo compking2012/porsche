@@ -20,7 +20,7 @@ var FlowLayoutParam = require("./flowlayoutparam");
  */
 Class.define("framework.ui.layout.FlowLayout", Layout, {
     initialize: function() {
-        this.super.initialize();
+        this.super.initialize.call(this);
 
         this._align = "center";
         this._valign = "middle";
@@ -33,7 +33,7 @@ Class.define("framework.ui.layout.FlowLayout", Layout, {
     destroy: function() {
         this._defaultparam = null;
 
-        this.super.destroy();
+        this.super.destroy.call(this);
     },
 
     /**

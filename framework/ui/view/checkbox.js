@@ -22,9 +22,9 @@ Class.define("framework.ui.view.CheckBox", Switch, {
      * Constructor
      * @method CheckBox#initialize
      */
-    initialize: function () {
-        this.super.initialize();
-        
+    initialize: function() {
+        this.super.initialize.call(this);
+
         this._disabledSrc = global.AppFXRootPath + "/resources/checkboxdisabled.png";
         this._offSrc = global.AppFXRootPath + "/resources/checkboxoff.png";
         this._onSrc = global.AppFXRootPath + "/resources/checkboxon.png";
@@ -35,6 +35,6 @@ Class.define("framework.ui.view.CheckBox", Switch, {
      * @method CheckBox#destroy
      */
     destroy: function() {
-        this.super.destroy();
+        this.super.destroy.call(this);
     }
 }, module);

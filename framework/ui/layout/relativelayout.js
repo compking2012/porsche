@@ -20,13 +20,13 @@ var RelativeLayoutParam = require("./relativelayoutparam");
  */
 Class.define("framework.ui.layout.RelativeLayout", Layout, {
     initialize: function() {
-        this.super.initialize();
+        this.super.initialize.call(this);
 
         this._units = 0;
     },
 
     destroy: function() {
-        this.super.destroy();
+        this.super.destroy.call(this);
     },
 
     /**

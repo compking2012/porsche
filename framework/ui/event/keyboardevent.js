@@ -23,13 +23,13 @@ Class.define("framework.ui.event.KeyboardEvent", InputEvent, {
      * @method KeyboardEvent#initialize
      */
     initialize: function(options) {
-        this.super.initialize();
+        this.super.initialize.call(this, options);
 
         this._keyCode = options.keyCode !== undefined ? options.keyCode : 0;
     },
 
     destroy: function() {
-        this.super.destroy();
+        this.super.destroy.call(this);
     },
 
     get keyCode() {

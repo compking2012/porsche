@@ -19,10 +19,10 @@ var LayoutParam = require("./layoutparam");
  */
 Class.define("framework.ui.layout.AutoLayoutParam", LayoutParam, {
     initialize: function() {
-        this.super.initialize();
+        this.super.initialize.call(this);
     },
 
     destroy: function() {
-        this.super.destroy();
+        this.super.destroy.call(this);
     }
 }, module);

@@ -18,7 +18,7 @@ Class.define("framework.ui.animation.AnimationGroup", EventEmitter, {
      * @method AnimationGroup#initialize
      */
     initialize: function(view) {
-        this.super.initialize();
+        this.super.initialize.call(this);
 
         this._animations = [];
         this._view = view;
@@ -36,7 +36,7 @@ Class.define("framework.ui.animation.AnimationGroup", EventEmitter, {
         this._view = null;
         this._animationCompleteFunc = null;
 
-        this.super.destroy();
+        this.super.destroy.call(this);
     },
 
     get type() {
@@ -85,11 +85,11 @@ Class.define("framework.ui.animation.AnimationGroup", EventEmitter, {
                         this.dispatchEvent("complete");
                         return;
                     }
-                    func.call(this);
+                    func();
                 }.bind(this));
                 animation.start();
             };
-            func.call(this);
+            func();
         }
     },
 

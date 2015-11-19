@@ -25,7 +25,7 @@ Class.define("framework.ui.Point", YObject, {
      * @param {Number} y the y-axis value
      */
     initialize: function(x, y) {
-        this.super.initialize();
+        this.super.initialize.call(this);
 
         this._x = x;
         this._y = y;
@@ -67,7 +67,7 @@ Class.define("framework.ui.Point", YObject, {
     },
 
     clone: function() {
-        var obj = this.super.clone();
+        var obj = this.super.clone.call(this);
         obj.x = this._x;
         obj.y = this._y;
         return obj;

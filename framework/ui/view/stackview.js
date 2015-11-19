@@ -26,7 +26,7 @@ Class.define("framework.ui.view.StackView", CompositeView, {
      * @method StackView#initialize
      */
     initialize: function() {
-        this.super.initialize();
+        this.super.initialize.call(this);
 
         this.layout = new RelativeLayout();
         this.layout.setLayoutParam(0, "align", {left: "parent", top: "parent", right: "parent", bottom: "parent"});
@@ -58,7 +58,7 @@ Class.define("framework.ui.view.StackView", CompositeView, {
         this.removeGestureRecognizer(this._panRecognizer);
         this._panRecognizer = null;
 
-        this.super.destroy();
+        this.super.destroy.call(this);
     },
 
     /**

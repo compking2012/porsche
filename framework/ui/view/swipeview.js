@@ -20,7 +20,7 @@ var CubicBezier = require("../animation/cubicbezier");
  **/
 Class.define("framework.ui.view.SwipeView", CompositeView, {
     initialize: function() {
-        this.super.initialize();
+        this.super.initialize.call(this);
 
         this._orientation = "vertical";
         this._currentIndex = 0;
@@ -44,7 +44,7 @@ Class.define("framework.ui.view.SwipeView", CompositeView, {
         this._beziers.destroy();
         this._beziers = null;
 
-        this.super.destroy();
+        this.super.destroy.call(this);
     },
 
     /**
@@ -230,7 +230,7 @@ Class.define("framework.ui.view.SwipeView", CompositeView, {
                 this.invalidate();
 
                 if (callback) {
-                    callback.call(this);
+                    callback();
                 }
                 clearInterval(timer);
                 this._isAnimation = false;

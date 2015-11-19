@@ -7,7 +7,7 @@ var Other2Controller = require("./other2controller");
 
 Class.define("MyApp.Other2Controller", Controller, {
     initialize: function() {
-        this.super.initialize();
+        this.super.initialize.call(this);
 
         var view = new View();
         view.background = "#00FF00";

@@ -24,7 +24,7 @@ Class.define("framework.ui.view.Button", TextView, {
      * @method Button#initialize
      */
     initialize: function(/*value*/) {
-        this.super.initialize();
+        this.super.initialize.call(this);
 
         this._radius = 0;
         this.addGestureRecognizer(this._tapRecognizer = new TapRecognizer());
@@ -38,7 +38,7 @@ Class.define("framework.ui.view.Button", TextView, {
         this.removeGestureRecognizer(this._tapRecognizer);
         this._tapRecognizer = null;
 
-        this.super.destroy();
+        this.super.destroy.call(this);
     },
 
     get radius() {

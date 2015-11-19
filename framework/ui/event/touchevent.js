@@ -23,7 +23,7 @@ Class.define("framework.ui.event.TouchEvent", InputEvent, {
      * @method TouchEvent#initialize
      */
     initialize: function(options) {
-        this.super.initialize();
+        this.super.initialize.call(this, options);
 
         this._touches = options.touches !== undefined ? options.touches : [];
         this._targetTouches = options.targetTouches !== undefined ? options.targetTouches : [];
@@ -39,7 +39,7 @@ Class.define("framework.ui.event.TouchEvent", InputEvent, {
         this._targetTouches = null;
         this._changedTouches = null;
 
-        this.super.destroy();
+        this.super.destroy.call(this);
     },
 
     /**

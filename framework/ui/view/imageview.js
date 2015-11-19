@@ -24,7 +24,7 @@ Class.define("framework.ui.view.ImageView", View, {
      * @method ImageView#initialize
      */
     initialize: function() {
-        this.super.initialize();
+        this.super.initialize.call(this);
 
         this._image = new Image();
         this._offsetX = 0;
@@ -39,7 +39,7 @@ Class.define("framework.ui.view.ImageView", View, {
     destroy: function() {
         this._image = null;
 
-        this.super.destroy();
+        this.super.destroy.call(this);
     },
 
     /**
