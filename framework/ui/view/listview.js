@@ -28,8 +28,6 @@ Class.define("framework.ui.view.ListView", ScrollableView, {
         ScrollableView.prototype.initialize.apply(this, arguments);
 
         this.layout = new ColumnLayout();
-        this.layout.paddingLeft = 10;
-        this.layout.paddingRight = 10;
         this.layout.defaultLayoutParam = {align: "center", margin: {left: 0, right: 0, top: 0, bottom: 0}};
 
         this._orientation = "vertical";
@@ -91,7 +89,7 @@ Class.define("framework.ui.view.ListView", ScrollableView, {
      * @param {View} view - sub child view to be insert to the last, and show at top
      */
     addChild: function(view) {
-        if (view instanceof ListItem) {
+        if (!view instanceof ListItem) {
             throw "The view must be a List Item";
         }
         view.saveAbsoluteInfo();
@@ -108,7 +106,7 @@ Class.define("framework.ui.view.ListView", ScrollableView, {
      * @param {Number} index - the position at which to add the child
      */
     insertChild: function(view, index) {
-        if (view instanceof ListItem) {
+        if (!view instanceof ListItem) {
             throw "The view must be a List Item";
         }
         view.saveAbsoluteInfo();
@@ -124,7 +122,7 @@ Class.define("framework.ui.view.ListView", ScrollableView, {
      * @param {View} view - the child view to remove, or the position in this composite view to remove
      */
     removeChild: function(view) {
-        if (view instanceof ListItem) {
+        if (!view instanceof ListItem) {
             throw "The view must be a List Item";
         }
         view.resetToNoLayout();

@@ -179,6 +179,10 @@ Node:   passed
 H5:     no pass
 Node:   no pass
 
+*) viewbounds
+H5:     no pass
+Node:   no pass
+
 *) viewhierarchy
 H5:     passed
 Node:   passed
