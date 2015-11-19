@@ -203,9 +203,9 @@ Class.define("framework.ui.WindowManager", EventEmitter, {
             this._lastTouchPoint.assign(touchPoints[0].x, touchPoints[0].y);
             view = activeWindow.findViewAtPoint(this._lastTouchPoint);
 
-            if (this._activeView !== view) {
-                return;
-            }
+            // if (this._activeView !== view) {
+            //     return;
+            // }
         } else if (type === "touchend") {
             view = activeWindow.findViewAtPoint(this._lastTouchPoint);
             if (this._activeView !== view) {
@@ -214,11 +214,10 @@ Class.define("framework.ui.WindowManager", EventEmitter, {
             }
         }
 
-        if (view === null) {
-            return;
-        }
-
         if (type !== "touchcancel") {
+            if (view === null) {
+                return;
+            }
             this._activeView = view;
         }
 

@@ -21,20 +21,22 @@ Class.define("framework.ui.gesture.TouchInput", Input, {
         Input.prototype.initialize.apply(this, arguments);
 
         this._targetIds = {};
-        this._manager.view.addEventListener("touchstart", this.handleTouchStartFunc = this.handleTouchStart.bind(this));
-        this._manager.view.addEventListener("touchmove", this.handleTouchMoveFunc = this.handleTouchMove.bind(this));
-        this._manager.view.addEventListener("touchend", this.handleTouchEndFunc = this.handleTouchEnd.bind(this));
+        this._manager.view.addEventListener("touchstart", this._handleTouchStartFunc = this.handleTouchStart.bind(this));
+        this._manager.view.addEventListener("touchmove", this._handleTouchMoveFunc = this.handleTouchMove.bind(this));
+        this._manager.view.addEventListener("touchend", this._handleTouchEndCancelFunc = this.handleTouchEndCancel.bind(this));
+        this._manager.view.addEventListener("touchcancel", this._handleTouchEndCancelFunc);
     },
 
     destroy: function() {
         this._targetIds = null;
 
-        this._manager.view.removeEventListener("touchstart", this.handleTouchStartFunc);
-        this.handleTouchStartFunc = null;
-        this._manager.view.removeEventListener("touchmove", this.handleTouchMoveFunc);
-        this.handleTouchMoveFunc = null;
-        this._manager.view.removeEventListener("touchend", this.handleTouchEndFunc);
-        this.handleTouchEndFunc = null;
+        this._manager.view.removeEventListener("touchstart", this._handleTouchStartFunc);
+        this._handleTouchStartFunc = null;
+        this._manager.view.removeEventListener("touchmove", this._handleTouchMoveFunc);
+        this._handleTouchMoveFunc = null;
+        this._manager.view.removeEventListener("touchend", this._handleTouchEndCancelFunc);
+        this._manager.view.removeEventListener("touchcancel", this._handleTouchEndCancelFunc);
+        this._handleTouchEndFunc = null;
 
         Input.prototype.destroy.apply(this, arguments);
     },
@@ -56,7 +58,7 @@ Class.define("framework.ui.gesture.TouchInput", Input, {
         this.handleTouchEvent(e);
     },
 
-    handleTouchEnd: function(e) {
+    handleTouchEndCancel: function(e) {
         this.handleTouchEvent(e);
     },
 

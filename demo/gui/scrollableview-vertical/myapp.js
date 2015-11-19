@@ -13,7 +13,7 @@ Class.define("MyApp", App, {
         this.window.addChild(this.scrollableView);
 
         var colors = ["#FF0000", "#00FF00", "#0000FF", "#FFFF00", "#00FFFF", "#FF00FF"];
-        for (var i = 0; i < 8; i++) {
+        for (var i = 0; i < 100; i++) {
             var view = new View();
             view.background = colors[i % colors.length];
             view.top = i * 100;

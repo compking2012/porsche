@@ -21,7 +21,7 @@ var html = "<!DOCTYPE html>" +
                 "seajs.use(\"./index\");" +
             "</script>" +
             "</head>" +
-            "<body></body>" +
+            "<body style=\"overflow:hidden;\"></body>" +
             "</html>";
 
 prepare();

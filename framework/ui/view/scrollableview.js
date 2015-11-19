@@ -31,7 +31,7 @@ Class.define("framework.ui.view.ScrollableView", CompositeView, {
         this.addEventListener("panstart", this._onPanStartFunc = this.onPanStart.bind(this));
         this.addEventListener("panmove", this._onPanMoveFunc = this.onPanMove.bind(this));
         this.addEventListener("panend", this._onPanEndCancelFunc = this.onPanEndCancel.bind(this));
-        this.addEventListener("pancancel", this._onPanCancelFunc);
+        this.addEventListener("pancancel", this._onPanEndCancelFunc);
 
         this._overScroll = false;
         this._orientation = "all";
@@ -61,9 +61,9 @@ Class.define("framework.ui.view.ScrollableView", CompositeView, {
         this.removeGestureRecognizer(this._panRecognizer);
         this._panRecognizer = null;
         this.removeEventListener("panstart", this._onPanStartFunc);
-        this._onTouchStartFunc = null;
+        this._onPanStartFunc = null;
         this.removeEventListener("panmove", this._onPanMoveFunc);
-        this._onPanFunc = null;
+        this._onPanMoveFunc = null;
         this.removeEventListener("panend", this._onPanEndCancelFunc);
         this.removeEventListener("pancancel", this._onPanEndCancelFunc);
         this._onPanEndCancelFunc = null;
@@ -250,8 +250,6 @@ Class.define("framework.ui.view.ScrollableView", CompositeView, {
     },
 
     onPanMove: function(e) {
-        this.stopAutoScroll();
-
         if (this._orientation === "horizontal" || this._orientation === "all") {
             var scrollX = this._startScrollX - e.deltaX;
             if (!this._overScroll) {
@@ -296,8 +294,6 @@ Class.define("framework.ui.view.ScrollableView", CompositeView, {
     },
 
     onPanEndCancel: function(e) {
-        this.stopAutoScroll();
-
         this._velocityX = e.velocityX * 1000;
         this._velocityY = e.velocityY * 1000;
         if (this._orientation === "horizontal") {
@@ -317,12 +313,13 @@ Class.define("framework.ui.view.ScrollableView", CompositeView, {
             if (this._scrollY < 0 || this._scrollY > Math.max(0, this._contentHeight - this._height)) {
                 this._velocityY = 0;
             }
-            if (this._velocityY !== 0 || this._velocityX !== 0) {
+            if (this._velocityX !== 0 || this._velocityY !== 0) {
                 this.startAutoScroll(this._velocityX, this._velocityY);
                 return;
             }
         }
         if (this._overScroll) {
+            // FIXME
             if (this._scrollX < 0 ||
                 this._scrollX > this._contentWidth - this._width && this._scrollX > 0 ||
                 this._scrollY < 0 ||
