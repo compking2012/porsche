@@ -31,6 +31,7 @@ Class.define("framework.ui.view.ScrollBar", ProgressView, {
         this._background = "rgba(255, 255, 255, 0.2)";
         this._foreground = "#7AE464";
         this._radius = 3;
+        this._minBarOccupy = 0.4;
 
         this._associatedView = null;
     },
@@ -133,12 +134,12 @@ Class.define("framework.ui.view.ScrollBar", ProgressView, {
             var posX = 0;
             var posY = 0;
             if (this._orientation === "vertical" && this._associatedView.contentHeight > this._associatedView.height) {
-                barLength = this._height * this._associatedView.height / this._associatedView.contentHeight;
+                barLength = this._height * Math.max(this._minBarOccupy, this._associatedView.height / this._associatedView.contentHeight);
                 barWidth = this._width;
                 posY = this._value * this._height;
             } else if (this._orientation === "horizontal" && this._associatedView.contentWidth > this._associatedView.width) {
                 barLength = this._height;
-                barWidth = this._width * this._associatedView.width / this._associatedView.contentWidth;
+                barWidth = this._width * Math.max(this._minBarOccupy, this._associatedView.width / this._associatedView.contentWidth);
                 posX = this._value * this._width;
             }
             context.save();
