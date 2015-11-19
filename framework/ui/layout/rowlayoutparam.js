@@ -27,6 +27,10 @@ Class.define("framework.ui.layout.RowLayoutParam", LayoutParam, {
      * @type {Boolean}
      * @description 
      */
+    get align() {
+        return this._align;
+    },
+
     set align(value) {
         if (value === "bottom") {
             this.alignBottom = true;

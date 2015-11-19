@@ -12,6 +12,7 @@
 var Class = require("../../class");
 var ScrollableView = require("./scrollableview");
 var ColumnLayout = require("../layout/columnlayout");
+var ListItem = require("./listitem");
 
 /**
  * ListView widget, it can scroll vertically by touch.
@@ -90,7 +91,6 @@ Class.define("framework.ui.view.ListView", ScrollableView, {
      * @param {View} view - sub child view to be insert to the last, and show at top
      */
     addChild: function(view) {
-        // FIXME: use instanceof instead
         if (view instanceof ListItem) {
             throw "The view must be a List Item";
         }
@@ -108,7 +108,6 @@ Class.define("framework.ui.view.ListView", ScrollableView, {
      * @param {Number} index - the position at which to add the child
      */
     insertChild: function(view, index) {
-        // FIXME: use instanceof instead
         if (view instanceof ListItem) {
             throw "The view must be a List Item";
         }
@@ -125,7 +124,6 @@ Class.define("framework.ui.view.ListView", ScrollableView, {
      * @param {View} view - the child view to remove, or the position in this composite view to remove
      */
     removeChild: function(view) {
-        // FIXME: use instanceof instead
         if (view instanceof ListItem) {
             throw "The view must be a List Item";
         }

@@ -2,69 +2,36 @@
 var fx = require("framework");
 var Class = fx.import("framework.Class");
 var App = fx.import("framework.app.App");
-var View = fx.import("framework.ui.view.View");
-var CompositeView = fx.import("framework.ui.view.CompositeView");
 var RowLayout = fx.import("framework.ui.layout.RowLayout");
-var ScrollableView = fx.import("framework.ui.view.ScrollableView");
-var ImageButton = fx.import("framework.ui.view.ImageButton");
+var View = fx.import("framework.ui.view.View");
 
 Class.define("MyApp", App, {
     onStart: function() {
-        var scrollableView = new ScrollableView();
-        scrollableView.width = this.window.width;
-        scrollableView.height = this.window.height;;
-        this.window.addChild(scrollableView);
-
         var colors = ["#FF0000", "#00FF00", "#0000FF", "#FFFF00", "#00FFFF"];
 
         this.rowLayout = new RowLayout();
-        this.rowLayout.defaultparam.topmargin = 10;
-        this.rowLayout.defaultparam.leftmargin = 30;
-        this.rowLayout.defaultparam.layoutgravity = "middle";
+        this.rowLayout.paddingTop = 10;
+        this.rowLayout.paddingTop = 10;
+        this.rowLayout.defaultLayoutParam = {align: "top", margin: {left: 10}};
 
+        this.view1 = new View();
+        this.view1.width = 20;
+        this.view1.height = 80;
+        this.view1.background = colors[0];
+        this.window.addChild(this.view1);
 
-        this.cv = new CompositeView();
-        this.cv.width = 800;
-        this.cv.height = this.window.height;
+        this.view2 = new View();
+        this.view2.width = 50;
+        this.view2.height = 120;
+        this.view2.background = colors[1];
+        this.window.addChild(this.view2);
 
-        var layoutparam = this.rowLayout.getParamAtIndex(1);
-        layoutparam.layoutgravity = "top";
-        layoutparam.topmargin = 30;
-        layoutparam = this.rowLayout.getParamAtIndex(2);
-        layoutparam.layoutgravity = "bottom";
-        layoutparam = this.rowLayout.getParamAtIndex(3);
-        layoutparam.layoutgravity = "middle";
-        layoutparam = this.rowLayout.getParamAtIndex(4);
-        layoutparam.layoutgravity = "fill";
+        this.window.layout = this.rowLayout;
 
-        this.cv.layout = this.rowLayout;
-        scrollableView.addChild(this.cv);
-
-        this.imageButton = new ImageButton();
-        this.imageButton.src = global.app.rootPath + "/res/wall3.png";
-        this.imageButton.pressedSrc = global.app.rootPath + "/res/wall1.png";
-        this.imageButton.disabledSrc = global.app.rootPath + "/res/wall2.png";
-        this.imageButton.width = 100;
-        this.imageButton.height = 100;
-        this.imageButton.addEventListener("click", this.onClick.bind(this));
-        this.cv.addChild(this.imageButton);
-
-        for (var i = 0; i < 10; i++) {
-            var view = new View();
-            view.background = colors[i % 5];
-            view.width = 50;
-            view.height = 200;
-            this.cv.addChild(view);
-        }
-    },
-
-    onClick: function() {
-        console.log("lili clicked!");
-        var layoutparam = this.rowLayout.getParamAtIndex(1);
-        if (layoutparam.layoutgravity === "top") {
-            layoutparam.layoutgravity = "bottom";
-        }
-        else
-            layoutparam.layoutgravity = "top";
+        this.view3 = new View();
+        this.view3.width = 100;
+        this.view3.height = 160;
+        this.view3.background = colors[2];
+        this.window.addChild(this.view3);
     }
 }, module);

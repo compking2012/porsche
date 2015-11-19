@@ -20,8 +20,8 @@ H5:     passed
 Node:   passed
 
 *) backgroundimage
-H5:     no pass
-Node:   no pass
+H5:     passed
+Node:   passed
 
 *) barcode
 H5:     passed
@@ -48,8 +48,8 @@ H5:     passed
 Node:   passed
 
 *) columnlayout
-H5:     no pass
-Node:   no pass
+H5:     passed
+Node:   passed
 
 *) dialog
 H5:     passed
@@ -124,8 +124,8 @@ H5:     no pass
 Node:   no pass
 
 *) rowlayout
-H5:     no pass
-Node:   no pass
+H5:     passed
+Node:   passed
 
 *) scrollableview
 H5:     passed
