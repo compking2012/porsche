@@ -23,7 +23,7 @@ Class.define("framework.ui.animation.CubicBezier", YObject, {
      * @method CubicBezier#initialize
      */
     initialize: function(p1x, p1y, p2x, p2y) {
-        this.super.initialize.call(this);
+        YObject.prototype.initialize.apply(this, arguments);
 
         if (!(p1x >= 0 && p1x <= 1)) {
             throw new RangeError("'p1x' must be a number between 0 and 1. Got " + p1x + "instead.");
@@ -50,8 +50,8 @@ Class.define("framework.ui.animation.CubicBezier", YObject, {
     destroy: function() {
         this._p1 = null;
         this._p2 = null;
-
-        this.super.destroy.call(this);
+        
+        YObject.prototype.destroy.apply(this, arguments);
     },
 
     static: {

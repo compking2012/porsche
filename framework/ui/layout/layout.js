@@ -19,7 +19,7 @@ var YObject = require("../../yobject");
  */
 Class.define("framework.ui.layout.Layout", YObject, {
     initialize: function() {
-        this.super.initialize.call(this);
+        YObject.prototype.initialize.apply(this, arguments);
 
         this._associatedView = null;
         this._childparam = [];
@@ -31,7 +31,7 @@ Class.define("framework.ui.layout.Layout", YObject, {
             this._childparam[i] = null;
         }
 
-        this.super.destroy.call(this);
+        YObject.prototype.destroy.apply(this, arguments);
     },
 
     get view() {

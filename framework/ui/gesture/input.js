@@ -22,7 +22,7 @@ Class.define("framework.ui.gesture.Input", EventEmitter, {
      * @constructor
      */
     initialize: function(manager) {
-        this.super.initialize.call(this);
+        EventEmitter.prototype.initialize.apply(this, arguments);
 
         this._manager = manager;
     },
@@ -30,7 +30,7 @@ Class.define("framework.ui.gesture.Input", EventEmitter, {
     destroy: function() {
         this._manager = null;
 
-        this.super.destroy.call(this);
+        EventEmitter.prototype.destroy.apply(this, arguments);
     },
 
     static: {

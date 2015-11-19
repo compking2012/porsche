@@ -24,7 +24,7 @@ Class.define("framework.ui.view.Button", TextView, {
      * @method Button#initialize
      */
     initialize: function(/*value*/) {
-        this.super.initialize.call(this);
+        TextView.prototype.initialize.apply(this, arguments);
 
         this._radius = 0;
         this.addGestureRecognizer(this._tapRecognizer = new TapRecognizer());
@@ -38,7 +38,7 @@ Class.define("framework.ui.view.Button", TextView, {
         this.removeGestureRecognizer(this._tapRecognizer);
         this._tapRecognizer = null;
 
-        this.super.destroy.call(this);
+        TextView.prototype.destroy.apply(this, arguments);
     },
 
     get radius() {
@@ -54,7 +54,7 @@ Class.define("framework.ui.view.Button", TextView, {
         context.save();
         context.roundRect(0, 0, this._width , this._height, this._radius);
         context.clip();
-        this.super.drawBackground.call(this, context);
+        TextView.prototype.drawBackground.call(this, context);
         context.restore();
     },
 
@@ -63,7 +63,7 @@ Class.define("framework.ui.view.Button", TextView, {
         context.roundRect(0, 0, this._width , this._height, this._radius);
         context.clip();
         // TODO: Pressed state
-        this.super.draw.call(this, context);
+        TextView.prototype.draw.call(this, context);
         context.restore();
     }
 }, module);

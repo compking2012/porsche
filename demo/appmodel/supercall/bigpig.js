@@ -4,12 +4,22 @@ var Class = fx.import("framework.Class");
 var Pig = require("./pig");
 
 Class.define("BigPig", Pig, {
-    initialize: function () {
+    initialize: function(age, name, weight) {
+        this.super(age, name);
         console.log(typeof this.super === "function");
         console.log("BigPig created.");
+        this.weight = weight;
     },
 
-    getSuper: function () {
+    getSuper: function() {
         return this.super;
+    },
+
+    eat: function() {
+        return this.super.eat() + ", weight is " + this.weight + "kg!!!";
+    },
+
+    toString: function() {
+        return "BigPig";
     }
 }, module);

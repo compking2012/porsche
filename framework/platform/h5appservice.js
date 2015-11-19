@@ -14,12 +14,12 @@ var EventEmitter = require("../eventemitter");
 
 Class.define("framework.ui.platform.H5AppService", EventEmitter, {
     initialize: function() {
-        this.super.initialize.call(this);
+        EventEmitter.prototype.initialize.apply(this, arguments);
 
     },
 
     destroy: function() {
-        this.super.destroy.call(this);
+        EventEmitter.prototype.destroy.apply(this, arguments);
     },
 
     getFXRootPath: function() {

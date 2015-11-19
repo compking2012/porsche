@@ -23,8 +23,7 @@ Class.define("framework.ui.view.CompositeView", View, {
      * @method CompositeView#initialize
      */
     initialize: function() {
-        this.super.initialize.call(this);
-
+        View.prototype.initialize.apply(this, arguments);
         this._children = [];
         this._layout = null;
         this._needRelayout = false;
@@ -40,8 +39,7 @@ Class.define("framework.ui.view.CompositeView", View, {
             this._layout.destroy();
         }
         this._layout = null;
-
-        this.super.destroy.call(this);
+        View.prototype.destroy.apply(this, arguments);
     },
 
     set needRelayout(value) {
@@ -326,7 +324,7 @@ Class.define("framework.ui.view.CompositeView", View, {
      * @protected
      */
     setDirty: function(rect) {
-        this.super.setDirty.call(this, rect);
+        View.prototype.setDirty.call(this, rect);
         var length = this._children.length;
         for (var i = 0; i < length; i++) {
             var child = this._children[i];
@@ -338,6 +336,6 @@ Class.define("framework.ui.view.CompositeView", View, {
         if (self) {
             this.needRelayout = true;
         }
-        this.super.relayout.call(this, self);
+        View.prototype.relayout.call(this, self);
     }
 }, module);

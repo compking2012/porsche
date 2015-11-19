@@ -18,12 +18,13 @@ var CheckBox = require("./checkbox");
 
 Class.define("framework.ui.view.TwoLineListItem", ListItem, {
     initialize: function() {
-        this.super.initialize.call(this);
+        ListItem.prototype.initialize.apply(this, arguments);
 
         this.mode = "TwoLinesOnly";
     },
 
     destroy: function() {
+        ListItem.prototype.destroy.apply(this, arguments);
         this.showImage(false);
         this.showMainText(false);
         this.showCommentText(false);
@@ -31,8 +32,6 @@ Class.define("framework.ui.view.TwoLineListItem", ListItem, {
         this.showSwitch(false);
         this.showNavigator(false);
         this.showCheckBox(false);
-
-        this.super.destroy.call(this);
     },
 
     get mode() {

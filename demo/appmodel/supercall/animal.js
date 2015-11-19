@@ -29,5 +29,9 @@ Class.define("Animal", {
 
     drink: function() {
         return "good";
+    },
+
+    toString: function() {
+        return "Animal";
     }
 }, module);

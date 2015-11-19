@@ -12,13 +12,13 @@
 var Class = require("../../class");
 var EventEmitter = require("../../eventemitter");
 var Input = require("./input");
-var SingleTouchInput = require("./singletouchinput");
+var TouchInput = require("./touchinput");
 var GestureRecognizer = require("./gesturerecognizer");
 var GestureEvent = require("../event/gestureevent");
 
 Class.define("framework.ui.gesture.GestureManager", EventEmitter, {
     initialize: function(view) {
-        this.super.initialize.call(this);
+        EventEmitter.prototype.initialize.apply(this, arguments);
 
         this._handlers = {};
         this._session = {};
@@ -35,7 +35,7 @@ Class.define("framework.ui.gesture.GestureManager", EventEmitter, {
         this._input = null;
         this._view = null;
 
-        this.super.destroy.call(this);
+        EventEmitter.prototype.destroy.apply(this, arguments);
     },
 
     static: {
@@ -61,7 +61,7 @@ Class.define("framework.ui.gesture.GestureManager", EventEmitter, {
      * @returns {Input}
      */
     createInput: function() {
-        return new SingleTouchInput(this);
+        return new TouchInput(this);
         // if (SUPPORT_POINTER_EVENTS) {
         //     Type = PointerEventInput;
         // } else if (SUPPORT_ONLY_TOUCH) {

@@ -24,7 +24,7 @@ Class.define("framework.ui.view.ProgressView", View, {
      * @method ProgressView#initialize
      */
     initialize: function() {
-        this.super.initialize.call(this);
+        View.prototype.initialize.apply(this, arguments);
 
         this._value = 0;
         this._lineWidth = 5;
@@ -40,7 +40,7 @@ Class.define("framework.ui.view.ProgressView", View, {
         this._backgroundObject = null;
         this._foregroundObject = null;
 
-        this.super.destroy.call(this);
+        View.prototype.destroy.apply(this, arguments);
     },
 
     get foreground() {

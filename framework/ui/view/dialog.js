@@ -19,14 +19,13 @@ var Window = require("./window");
  */
 Class.define("framework.ui.view.Dialog", Window, {
     initialize: function(/*options*/) {
-        this.super.initialize.call(this);
-
+        Window.prototype.initialize.apply(this, arguments);
         this._width = 320;
         this._height = 320;
     },
 
     destroy: function() {
-        this.super.destroy.call(this);
+        Window.prototype.destroy.apply(this, arguments);
     },
 
     show: function() {

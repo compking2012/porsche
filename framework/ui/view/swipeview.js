@@ -20,7 +20,7 @@ var CubicBezier = require("../animation/cubicbezier");
  **/
 Class.define("framework.ui.view.SwipeView", CompositeView, {
     initialize: function() {
-        this.super.initialize.call(this);
+        CompositeView.prototype.initialize.apply(this, arguments);
 
         this._orientation = "vertical";
         this._currentIndex = 0;
@@ -37,14 +37,7 @@ Class.define("framework.ui.view.SwipeView", CompositeView, {
     },
 
     destroy: function() {
-        this._forwardView = null;
-        this._currentView = null;
-        this._backwardView = null;
 
-        this._beziers.destroy();
-        this._beziers = null;
-
-        this.super.destroy.call(this);
     },
 
     /**
@@ -70,7 +63,7 @@ Class.define("framework.ui.view.SwipeView", CompositeView, {
         child.width = this._width;
         child.height = this._height;
         child.visibility = "gone";
-        this.super.addChild.call(this, child);
+        CompositeView.prototype.addChild.call(this, child);
         this.showCurrentView();
     },
 
@@ -92,7 +85,7 @@ Class.define("framework.ui.view.SwipeView", CompositeView, {
             }
             this._needrepaint = false;
         }
-        this.super.paint.call(this, context);
+        CompositeView.prototype.paint.call(this, context);
     },
 
     showCurrentView: function() {
@@ -230,7 +223,7 @@ Class.define("framework.ui.view.SwipeView", CompositeView, {
                 this.invalidate();
 
                 if (callback) {
-                    callback();
+                    callback.call(this);
                 }
                 clearInterval(timer);
                 this._isAnimation = false;
@@ -254,14 +247,14 @@ Class.define("framework.ui.view.SwipeView", CompositeView, {
         if (this._isAnimation) {
             return;
         }
-        this.super.handleTouchStart.call(this, e);
+        CompositeView.prototype.handleTouchStart.call(this, e);
     },
 
     handleTouchMove: function(e) {
         if (this._isAnimation) {
             return;
         }
-        this.super.handleTouchMove.call(this, e);
+        CompositeView.prototype.handleTouchMove.call(this, e);
     },
 
     handleTouchEnd: function(e) {
@@ -289,6 +282,6 @@ Class.define("framework.ui.view.SwipeView", CompositeView, {
                 this.nextBack(this._duration);
             }
         }
-        this.super.handleTouchEnd.call(this, e);
+        CompositeView.prototype.handleTouchEnd.call(this, e);
     }
 }, module);

@@ -23,9 +23,9 @@ Class.define("framework.EventEmitter", YObject, {
      * @method EventEmitter#initialize
      */
     initialize: function() {
-        this.super.initialize.call(this);
+        YObject.prototype.initialize.apply(this, arguments);
 
-        this._events = {};
+        this.events = {};
     },
 
     /**
@@ -34,9 +34,9 @@ Class.define("framework.EventEmitter", YObject, {
      */
     destroy: function() {
         this.removeAllEventListeners();
-        this._events = null;
+        this.events = null;
 
-        this.super.destroy.call(this);
+        YObject.prototype.destroy.apply(this, arguments);
     },
 
     /**
@@ -46,7 +46,7 @@ Class.define("framework.EventEmitter", YObject, {
      * @method EventEmitter#dispatchEvent
      */
     dispatchEvent: function(event) {
-        if (!this._events[event]) {
+        if (!this.events[event]) {
             return;
         }
 
@@ -55,7 +55,7 @@ Class.define("framework.EventEmitter", YObject, {
             args.push(arguments[i]);
         }
 
-        var handlers = this._events[event] instanceof Array ? this._events[event] : [this._events[event]];
+        var handlers = this.events[event] instanceof Array ? this.events[event] : [this.events[event]];
         for (var k = 0; k < handlers.length; k++) {
             handlers[k].apply(this, args);
         }
@@ -72,12 +72,12 @@ Class.define("framework.EventEmitter", YObject, {
             return;
         }
 
-        if (!this._events[event]) {
-            this._events[event] = handler;
-        } else if (this._events[event] instanceof Array) {
-            this._events[event].push(handler);
+        if (!this.events[event]) {
+            this.events[event] = handler;
+        } else if (this.events[event] instanceof Array) {
+            this.events[event].push(handler);
         } else {
-            this._events[event] = [this._events[event], handler];
+            this.events[event] = [this.events[event], handler];
         }
     },
 
@@ -88,14 +88,14 @@ Class.define("framework.EventEmitter", YObject, {
      * @method EventEmitter#removeEventListener
      */
     removeEventListener: function(event, handler) {
-        if (!this._events[event]) {
+        if (!this.events[event]) {
             return;
         }
 
-        if (this._events[event] === handler) {
-            delete this._events[event];
-        } else if (this._events[event] instanceof Array) {
-            var handlers = this._events[event];
+        if (this.events[event] === handler) {
+            delete this.events[event];
+        } else if (this.events[event] instanceof Array) {
+            var handlers = this.events[event];
             for (var i = 0; i < handlers.length; i++) {
                 if (handlers[i] === handler) {
                     handlers.splice(i, 1);
@@ -103,7 +103,7 @@ Class.define("framework.EventEmitter", YObject, {
                 }
             }
             if (handlers.length === 1) {
-                this._events[event] = handlers[0];
+                this.events[event] = handlers[0];
             }
         }
     },
@@ -115,9 +115,9 @@ Class.define("framework.EventEmitter", YObject, {
      */
     removeAllEventListeners: function(event) {
         if (event) {
-            delete this._events[event];
+            delete this.events[event];
         } else {
-            this._events = {};
+            this.events = {};
         }
     },
 

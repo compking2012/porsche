@@ -19,17 +19,12 @@ var View = require("./view");
  **/
 Class.define("framework.ui.view.Indicator", View, {
     initialize: function() {
-        this.super.initialize.call(this);
-
+        View.prototype.initialize.apply(this, arguments);
         this._count = 1;
         this._currentpos = 1;
         this._margin = 10;
         this._radius = 10;
         this._color = "#ffffff";
-    },
-
-    destroy: function() {
-        this.super.destroy.call(this);
     },
 
     /**

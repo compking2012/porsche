@@ -22,7 +22,7 @@ Class.define("framework.ui.event.MotionEvent", UIEvent, {
      * Constructor
      * @method Motion#initialize
      */
-    initialize: function(options) {
-        this.super.initialize.call(this, options);
+    initialize: function(/*options*/) {
+        UIEvent.prototype.initialize.apply(this, arguments);
     }
 }, module);

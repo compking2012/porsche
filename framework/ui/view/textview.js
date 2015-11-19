@@ -23,7 +23,7 @@ Class.define("framework.ui.view.TextView", View, {
      * @method TextView#initialize
      */
     initialize: function() {
-        this.super.initialize.call(this);
+        View.prototype.initialize.apply(this, arguments);
 
         this._text = "";
         this._fontFamily = "sans-serif";
@@ -49,7 +49,7 @@ Class.define("framework.ui.view.TextView", View, {
      * @method TextView#destroy
      */
     destroy: function() {
-        this.super.destroy.call(this);
+
     },
 
     /**

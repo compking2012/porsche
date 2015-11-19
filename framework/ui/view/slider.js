@@ -21,7 +21,7 @@ var TapRecognizer = require("../gesture/taprecognizer");
  */
 Class.define("framework.ui.view.Slider", ProgressView, {
     initialize: function() {
-        this.super.initialize.call(this);
+        ProgressView.prototype.initialize.apply(this, arguments);
 
         this._defaultThumbSrc = global.AppFXRootPath + "/resources/sliderthumb.png";
         this._thumbImage = new Image();
@@ -55,7 +55,7 @@ Class.define("framework.ui.view.Slider", ProgressView, {
         this.removeEventListener("tap", this._onTapFunc);
         this._onTapFunc = null;
 
-        this.super.destroy.call(this);
+        ProgressView.prototype.destroy.apply(this, arguments);
     },
 
     get thumb() {

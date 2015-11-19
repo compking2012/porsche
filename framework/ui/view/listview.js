@@ -12,7 +12,6 @@
 var Class = require("../../class");
 var ScrollableView = require("./scrollableview");
 var ColumnLayout = require("../layout/columnlayout");
-var ListItem = require("./listitem");
 
 /**
  * ListView widget, it can scroll vertically by touch.
@@ -25,7 +24,7 @@ Class.define("framework.ui.view.ListView", ScrollableView, {
      * @method ListView#initialize
      */
     initialize: function() {
-        this.super.initialize.call(this);
+        ScrollableView.prototype.initialize.apply(this, arguments);
 
         this.layout = new ColumnLayout();
         this.layout.paddingLeft = 10;
@@ -44,7 +43,7 @@ Class.define("framework.ui.view.ListView", ScrollableView, {
         this.layout.destroy();
         this.layout = null;
 
-        this.super.destroy.call(this);
+        ScrollableView.prototype.destroy.apply(this, arguments);
     },
 
     /**
@@ -99,7 +98,7 @@ Class.define("framework.ui.view.ListView", ScrollableView, {
         view.width = this._width;
         view.height = this._itemHeight;
 
-        this.super.addChild.call(this, view);
+        ScrollableView.prototype.addChild.call(this, view);
     },
 
     /**
@@ -117,7 +116,7 @@ Class.define("framework.ui.view.ListView", ScrollableView, {
         view.width = this._width;
         view.height = this._itemHeight;
 
-        this.super.insertChild.call(this, view, index);
+        ScrollableView.prototype.insertChild.call(this, view, index);
     },
 
     /**
@@ -132,7 +131,7 @@ Class.define("framework.ui.view.ListView", ScrollableView, {
         }
         view.resetToNoLayout();
 
-        this.super.removeChild.call(this, view);
+        ScrollableView.prototype.removeChild.call(this, view);
     },
 
     scrollToItem: function(index) {

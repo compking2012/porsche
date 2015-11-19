@@ -19,8 +19,7 @@ var GridLayoutParam = require("./gridlayoutparam");
  */
 Class.define("framework.ui.layout.GridLayout", Layout, {
     initialize: function() {
-        this.super.initialize.call(this);
-
+        Layout.prototype.initialize.apply(this, arguments);
         this._defaultparam = new GridLayoutParam(-1, -1, this);
         this._defaultparam.setMargin(0, 0, 0, 0);
         this._rows = 1;

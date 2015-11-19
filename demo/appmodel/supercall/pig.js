@@ -24,6 +24,10 @@ Class.define("Pig", Animal, {
     },
 
     eat: function() {
-        return "very nice";
+        return this.name + ", very " + this.super.eat();
+    },
+
+    toString: function() {
+        return "Pig";
     }
 }, module);

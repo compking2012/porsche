@@ -25,7 +25,7 @@ Class.define("framework.ui.view.Chart", View, {
      * @param labelset {String[]} the labels of X Axis shows.
      */
     initialize: function(dataset, labelset) {
-        this.super.initialize.call(this);
+        View.prototype.initialize.apply(this, arguments);
 
         this._dataset = dataset;
         this._labels = labelset;
@@ -74,7 +74,7 @@ Class.define("framework.ui.view.Chart", View, {
         this._dataset = null;
         this._labels = null;
 
-        this.super.destroy.call(this);
+        View.prototype.destroy.apply(this, arguments);
     },
 
     /**

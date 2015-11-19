@@ -34,13 +34,13 @@ console.log("animal.age === 11: ", animal.age === 11);
 console.log("animal.eat() === \"nice\": ", animal.eat() === "nice");
 
 // Test subclass constructor, property and method
-var pig = new Pig(1, 11);
+var pig = new Pig(1, "yy");
 console.log("pig.testProp === \"animal\": ", pig.testProp === "animal");
 console.log("pig.climbTree() === \"nice\": ", pig.climbTree() === "nice");
-console.log("pig.eat() === \"very nice\": ", pig.eat() === "very nice");
+console.log("pig.eat() === \"yy, very nice\": ", pig.eat() === "yy, very nice");
 console.log("pig instanceof Pig: ", pig instanceof Pig);
 
-var bigPig = new BigPig();
+var bigPig = new BigPig(2, "mm", 100);
 // Test access super-super-class from sub-sub-class
 console.log("bigPig.testProp === \"animal\": ", bigPig.testProp === "animal");
 
@@ -51,3 +51,4 @@ console.log("bigPig instanceof BigPig: ", bigPig instanceof BigPig);
 // Test access this.super
 console.log("bigPig.getSuper() instanceof Pig: ", bigPig.getSuper() instanceof Pig);
 console.log("bigPig instanceof Animal: ", bigPig instanceof Animal);
+console.log("bigPig.eat() === \"yy, very nice!!!\": ", bigPig.eat() === "yy, very nice!!!");

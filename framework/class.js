@@ -19,26 +19,12 @@ function Class() {}
             superClass = null;
         }
 
-        // var bindMethodWithSuper = function(func, sc) {
-        //     return function() {
-        //         var currentSuperClass = this.super;
-        //         this.super = sc;
-        //         var ret = func.apply(this, arguments);
-        //         this.super = currentSuperClass;
-        //         return ret;
-        //     };
-        // };
-
         var newClass = function() {
-            if (!this.initialize instanceof Function) {
-                throw "The constructor must be a function";
+            if (typeof this.initialize === "function") {
+                this.initialize.apply(this, arguments);
             }
-            this.initialize.apply(this, arguments);
         };
-        newClass.prototype.constructor = newClass;
-        newClass.prototype.className = myClass;
 
-        // Static properties and methods
         if (superClass) {
             for (var key in superClass) {
                 if (superClass.hasOwnProperty(key)) {
@@ -59,49 +45,25 @@ function Class() {}
             }
         }
 
-        // Instance properties and methods
         if (superClass) {
-            var _super = superClass.prototype;
-            var prototype = new superClass();
-
-            // newClass.prototype = Object.create(superClass.prototype, {
-            //     constructor: {
-            //         value: newClass,
-            //         enumerable: false,
-            //         writable: true,
-            //         configurable: true
-            //     }
-            // });
-
-            for (var property in definition) {
-                if (definition.hasOwnProperty(property)) {
-                    var p = null;
-                    if (property === "initialize" && definition[property] instanceof Function && _super[property] instanceof Function) {
-                        p = function(property, fn) {
-                                return function () {
-                                    var tmp = this.super;
-                                    this.super = _super[property];
-                                    var ret = fn.apply(this, arguments);
-                                    this.super = tmp;
-                                    return ret;
-                                };
-                            }(property, definition[property]);
-                    } else {
-                        p = definition[property];
-                    }
-                    prototype[property] = p;
+            newClass.prototype = Object.create(superClass.prototype, {
+                constructor: {
+                    value: newClass,
+                    enumerable: false,
+                    writable: true,
+                    configurable: true
                 }
-            }
-            newClass.prototype = prototype;
-        } else {
-            for (var property in definition) {
-                if (definition.hasOwnProperty(property)) {
-                    var pd = Object.getOwnPropertyDescriptor(definition, property);
-                    Object.defineProperty(newClass.prototype, property, pd);
-                }
+            });
+            newClass.prototype.constructor = newClass;
+        }
+
+        for (var property in definition) {
+            if (definition.hasOwnProperty(property)) {
+                var pd = Object.getOwnPropertyDescriptor(definition, property);
+                Object.defineProperty(newClass.prototype, property, pd);
             }
         }
-        newClass.prototype.super = superClass ? new superClass() : null;
+        newClass.prototype.className = myClass;
 
         if (module !== null) {
             module.exports = newClass;

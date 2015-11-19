@@ -23,7 +23,7 @@ Class.define("framework.ui.view.ScrollBar", ProgressView, {
      * @method ScrollBar#initialize
      */
     initialize: function() {
-        this.super.initialize.call(this);
+        ProgressView.prototype.initialize.apply(this, arguments);
 
         this._orientation = "vertical";
         this._autoHidden = false;
@@ -38,7 +38,7 @@ Class.define("framework.ui.view.ScrollBar", ProgressView, {
     destroy: function() {
         this.removeAssociatedView();
 
-        this.super.destroy.call(this);
+        ProgressView.prototype.destroy.apply(this, arguments);
     },
 
     /**

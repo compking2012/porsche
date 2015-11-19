@@ -20,20 +20,13 @@ var FlowLayoutParam = require("./flowlayoutparam");
  */
 Class.define("framework.ui.layout.FlowLayout", Layout, {
     initialize: function() {
-        this.super.initialize.call(this);
-
+        Layout.prototype.initialize.apply(this, arguments);
         this._align = "center";
         this._valign = "middle";
         this._lineSpacing = 5; // horizontal spacing between views and parent container
         this._header = 10;
         this._defaultparam = new FlowLayoutParam(-1, -1, this); // default values
         this._defaultparam.setMargin(0, 0, 0, 0);
-    },
-
-    destroy: function() {
-        this._defaultparam = null;
-
-        this.super.destroy.call(this);
     },
 
     /**
@@ -94,6 +87,11 @@ Class.define("framework.ui.layout.FlowLayout", Layout, {
     set header(value) {
         this._header = value;
         this.invalidate();
+    },
+
+    destroy: function() {
+        this._defaultparam = null;
+        Layout.prototype.destroy.apply(this, arguments);
     },
 
     /**
