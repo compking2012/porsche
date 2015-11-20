@@ -11,6 +11,7 @@
 "use strict";
 var Class = require("../../class");
 var ScrollableView = require("./scrollableview");
+var RowLayout = require("../layout/rowlayout");
 var ColumnLayout = require("../layout/columnlayout");
 var ListItem = require("./listitem");
 
@@ -27,10 +28,15 @@ Class.define("framework.ui.view.ListView", ScrollableView, {
     initialize: function() {
         ScrollableView.prototype.initialize.apply(this, arguments);
 
-        this.layout = new ColumnLayout();
-        this.layout.defaultLayoutParam = {align: "center", margin: {left: 0, right: 0, top: 0, bottom: 0}};
+        this._rowLayout = new RowLayout();
+        this._rowLayout.defaultLayoutParam = {align: "middle", margin: {left: 0, right: 0, top: 0, bottom: 0}};
+        this._columnLayout = new ColumnLayout();
+        this._columnLayout.defaultLayoutParam = {align: "center", margin: {left: 0, right: 0, top: 0, bottom: 0}};
+
+        this.layout = this._columnLayout;
 
         this._orientation = "vertical";
+        this._itemWidth = -1;
         this._itemHeight = -1;
     },
 
@@ -60,7 +66,27 @@ Class.define("framework.ui.view.ListView", ScrollableView, {
             return;
         }
         this._orientation = value;
+        this.layout = this._orientation === "vertical" ? this._columnLayout : this._rowLayout;
         this.dispatchEvent("propertychange", "orientation", oldValue, value);
+        this.invalidate();
+    },
+
+    /**
+     * @name ListView#itemWidth
+     * @type {Number}
+     * @description the width of each list item.
+     */
+    get itemWidth() {
+        return this._itemWidth;
+    },
+
+    set itemWidth(value) {
+        var oldValue = this._itemWidth;
+        if (oldValue === value) {
+            return;
+        }
+        this._itemWidth = value;
+        this.dispatchEvent("propertychange", "itemWidth", oldValue, value);
         this.invalidate();
     },
 
@@ -74,7 +100,7 @@ Class.define("framework.ui.view.ListView", ScrollableView, {
     },
 
     set itemHeight(value) {
-        var oldValue = this._orientation;
+        var oldValue = this._itemHeight;
         if (oldValue === value) {
             return;
         }
@@ -93,8 +119,8 @@ Class.define("framework.ui.view.ListView", ScrollableView, {
             throw "The view must be a List Item";
         }
         view.saveAbsoluteInfo();
-        view.width = this._width;
-        view.height = this._itemHeight;
+        view.width = this._orientation === "vertical" ? this._width : this._itemWidth;
+        view.height = this._orientation === "vertical" ? this._itemHeight : this._height;
 
         ScrollableView.prototype.addChild.call(this, view);
     },
@@ -110,8 +136,8 @@ Class.define("framework.ui.view.ListView", ScrollableView, {
             throw "The view must be a List Item";
         }
         view.saveAbsoluteInfo();
-        view.width = this._width;
-        view.height = this._itemHeight;
+        view.width = this._orientation === "vertical" ? this._width : this._itemWidth;
+        view.height = this._orientation === "vertical" ? this._itemHeight : this._height;
 
         ScrollableView.prototype.insertChild.call(this, view, index);
     },
@@ -144,50 +170,6 @@ Class.define("framework.ui.view.ListView", ScrollableView, {
         
     },
 
-    // draw: function(context) {
-    //     var length = this._children.length;
-    //     var obj = context.getMatrix();
-    //     this._doLayout();
-    //     context.save();
-    //     context.beginPath();
-    //     if (this._repaint === false) {
-    //         // For scroll only
-    //         if (this._orientation === "vertical") {
-    //             this._moveMargin = this._scrollY - this._oldscrollY;
-    //             this._oldscrollY = this._scrollY;
-    //             if (this._moveMargin <= 0) {
-    //                 context.bitblt(obj.x0, obj.y0, this.width, this.height - Math.abs(this._moveMargin), obj.x0, obj.y0 + Math.abs(this._moveMargin));
-    //             } else {
-    //                 context.bitblt(obj.x0, obj.y0 + this._moveMargin, this.width, this.height - Math.abs(this._moveMargin), obj.x0, obj.y0);
-    //             }
-    //             context.rect(0, this._moveMargin > 0 ? this.height - this._moveMargin : 0, this.width, Math.abs(this._moveMargin));
-    //         } else {
-    //             this._moveMargin = this._scrollX - this._oldscrollX;
-    //             this._oldscrollX = this._scrollX;
-    //             if (this._moveMargin <= 0) {
-    //                 context.bitblt(obj.x0, obj.y0, this.width - Math.abs(this._moveMargin), this.height, obj.x0 + Math.abs(this._moveMargin), obj.y0);
-    //             } else {
-    //                 context.bitblt(obj.x0 + this._moveMargin, obj.y0, this.width - Math.abs(this._moveMargin), this.height, obj.x0, obj.y0);
-    //             }
-    //             context.rect(this._moveMargin > 0 ? this.height - this._moveMargin : 0, 0, Math.abs(this._moveMargin), this.height);
-    //         }
-    //     } else {
-    //         context.rect(0, 0, this.width, this.height);
-    //     }
-    //     context.clip();
-    //     context.save();
-    //     context.globalAlpha = this.opacity;
-    //     if(this._dirty) {
-    //         this.draw(context);
-    //         this._dirty = false;
-    //     }
-    //     if (this._repaint || this._moveMargin !== 0) {
-    //         this._paintItem(context, this._scrollX, this._scrollY, length);
-    //     }
-    //     context.restore();
-    //     context.restore();
-    // },
-
     /**
      * Find the view at the point
      * @method ListView#findViewAtPoint
@@ -205,8 +187,8 @@ Class.define("framework.ui.view.ListView", ScrollableView, {
 
         point.offset(-this._left + this._scrollX, -this._top + this._scrollY);
         var findChild = this;
-        var startIndex = Math.max(0, Math.floor(this._scrollY / this._itemHeight));
-        var endIndex = Math.min(this._children.length, Math.ceil((this._scrollY + this._height) / this._itemHeight));
+        var startIndex = this._orientation === "vertical" ? Math.max(0, Math.floor(this._scrollY / this._itemHeight)) : Math.max(0, Math.floor(this._scrollX / this._itemWidth));
+        var endIndex = this._orientation === "vertical" ? Math.min(this._children.length, Math.ceil((this._scrollY + this._height) / this._itemHeight)) : Math.min(this._children.length, Math.ceil((this._scrollX + this._width) / this._itemWidth));
         for (var i = endIndex - 1; i >= startIndex; i--) {
             var child = this._children[i].findViewAtPoint(point);
             if (child !== null) {
@@ -224,40 +206,14 @@ Class.define("framework.ui.view.ListView", ScrollableView, {
             this._needRelayout = false;
         }
 
-        if (this._orientation === "vertical") {
-            var startIndex = Math.max(0, Math.floor(this._scrollY / this._itemHeight));
-            var endIndex = Math.min(this._children.length, Math.ceil((this._scrollY + this._height) / this._itemHeight));
-            for (var i = startIndex; i < endIndex; i++) {
-                var listitem = this._children[i];
-                context.translate(listitem.left - this._scrollX, listitem.top - this._scrollY);
-                listitem.paint(context);
-                context.translate(-listitem.left + this._scrollX, -listitem.top + this._scrollY);
-            }
+        var startIndex = this._orientation === "vertical" ? Math.max(0, Math.floor(this._scrollY / this._itemHeight)) : Math.max(0, Math.floor(this._scrollX / this._itemWidth));
+        var endIndex = this._orientation === "vertical" ? Math.min(this._children.length, Math.ceil((this._scrollY + this._height) / this._itemHeight)) : Math.min(this._children.length, Math.ceil((this._scrollX + this._width) / this._itemWidth));
+        for (var i = startIndex; i < endIndex; i++) {
+            var listitem = this._children[i];
+            context.translate(listitem.left - this._scrollX, listitem.top - this._scrollY);
+            listitem.paint(context);
+            context.translate(-listitem.left + this._scrollX, -listitem.top + this._scrollY);
         }
-        // } else {
-        //     scrolloffset = scrolloffsetX;
-        //     ending = scrolloffset + this.width;
-        //     if (this._moveMargin < 0 && !this._repaint) {
-        //         begin = this.halfsearch(this._positionArray, scrolloffset, 0, length - 1);
-        //         ending = scrolloffset - this._moveMargin;
-        //     } else if (this._moveMargin > 0 && !this._repaint){
-        //         begin = this.halfsearch(this._positionArray, scrolloffset + this.height - this._moveMargin, 0, length - 1);
-        //     }
-        //     for(var j = Math.max(0, begin); j < length; j++) {
-        //         var view = this._children[j];
-        //         if (view.left + view._width > scrolloffset && view.left < ending) {
-        //             context.save();
-        //             context.translate(-scrolloffset, 0);
-        //             context.translate(view.left, view.top);
-        //             view.paint.call(view, context);
-        //             context.restore();
-        //             view = null;
-        //         } else if (view.left >= ending) {
-        //             break;
-        //         }
-        //     }
-        // }
-
     },
 
     /**
@@ -271,8 +227,8 @@ Class.define("framework.ui.view.ListView", ScrollableView, {
             rect = this._boundRect.clone();
         }
 
-        var startIndex = Math.max(0, Math.floor(this._scrollY / this._itemHeight));
-        var endIndex = Math.min(this._children.length, Math.ceil((this._scrollY + this._height) / this._itemHeight));
+        var startIndex = this._orientation === "vertical" ? Math.max(0, Math.floor(this._scrollY / this._itemHeight)) : Math.max(0, Math.floor(this._scrollX / this._itemWidth));
+        var endIndex = this._orientation === "vertical" ? Math.min(this._children.length, Math.ceil((this._scrollY + this._height) / this._itemHeight)) : Math.min(this._children.length, Math.ceil((this._scrollX + this._width) / this._itemWidth));
         for (var i = startIndex; i < endIndex; i++) {
             var child = this._children[i];
             child.setDirty(rect);
@@ -289,8 +245,8 @@ Class.define("framework.ui.view.ListView", ScrollableView, {
      */
     setDirty: function(rect) {
         ScrollableView.prototype.setDirty.call(this, rect);
-        var startIndex = Math.max(0, Math.floor(this._scrollY / this._itemHeight));
-        var endIndex = Math.min(this._children.length, Math.ceil((this._scrollY + this._height) / this._itemHeight));
+        var startIndex = this._orientation === "vertical" ? Math.max(0, Math.floor(this._scrollY / this._itemHeight)) : Math.max(0, Math.floor(this._scrollX / this._itemWidth));
+        var endIndex = this._orientation === "vertical" ? Math.min(this._children.length, Math.ceil((this._scrollY + this._height) / this._itemHeight)) : Math.min(this._children.length, Math.ceil((this._scrollX + this._width) / this._itemWidth));
         for (var i = startIndex; i < endIndex; i++) {
             var child = this._children[i];
             child.setDirty(rect);
