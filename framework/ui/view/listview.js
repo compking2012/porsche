@@ -188,6 +188,36 @@ Class.define("framework.ui.view.ListView", ScrollableView, {
     //     context.restore();
     // },
 
+    /**
+     * Find the view at the point
+     * @method ListView#findViewAtPoint
+     * @param {Point} point the point in put
+     * @return {View} return the view which point in the view and it has the max zOrder;
+     */
+    findViewAtPoint: function(point) {
+        if (this._visibility !== "visible") {
+            return null;
+        }
+
+        if (!this.containsPoint(point)) {
+            return null;
+        }
+
+        point.offset(-this._left + this._scrollX, -this._top + this._scrollY);
+        var findChild = this;
+        var startIndex = Math.max(0, Math.floor(this._scrollY / this._itemHeight));
+        var endIndex = Math.min(this._children.length, Math.ceil((this._scrollY + this._height) / this._itemHeight));
+        for (var i = endIndex - 1; i >= startIndex; i--) {
+            var child = this._children[i].findViewAtPoint(point);
+            if (child !== null) {
+                findChild = child;
+                break;
+            }
+        }
+        point.offset(this._left - this._scrollX, this._top - this._scrollY);
+        return findChild;
+    },
+
     paintChildren: function(context) {
         if (this._layout !== null && this._needRelayout) {
             this._layout.perform();
@@ -195,9 +225,9 @@ Class.define("framework.ui.view.ListView", ScrollableView, {
         }
 
         if (this._orientation === "vertical") {
-            var startIndex = Math.floor(this._scrollY / this._itemHeight);
-            var endIndex = Math.ceil((this._scrollY + this._height) / this._itemHeight);
-            for (var i = startIndex; i <= endIndex; i++) {
+            var startIndex = Math.max(0, Math.floor(this._scrollY / this._itemHeight));
+            var endIndex = Math.min(this._children.length, Math.ceil((this._scrollY + this._height) / this._itemHeight));
+            for (var i = startIndex; i < endIndex; i++) {
                 var listitem = this._children[i];
                 context.translate(listitem.left - this._scrollX, listitem.top - this._scrollY);
                 listitem.paint(context);
@@ -228,5 +258,42 @@ Class.define("framework.ui.view.ListView", ScrollableView, {
         //     }
         // }
 
+    },
+
+    /**
+     * Mark the area defined by dirty as needing to be drawn.
+     * @method CompositeView#invalidate
+     * @param {Rectangle} [rect] - the rectangle representing the bounds of the dirty region
+     * @protected
+     */
+    invalidate: function(rect) {
+        if (rect === undefined) {
+            rect = this._boundRect.clone();
+        }
+
+        var startIndex = Math.max(0, Math.floor(this._scrollY / this._itemHeight));
+        var endIndex = Math.min(this._children.length, Math.ceil((this._scrollY + this._height) / this._itemHeight));
+        for (var i = startIndex; i < endIndex; i++) {
+            var child = this._children[i];
+            child.setDirty(rect);
+        }
+
+        this.invalidateInternal(rect);
+    },
+
+    /**
+     * Set this composite view and all children dirty.
+     * @method ListView#setDirty
+     * @param {Rectangle} [rect] - the rectangle representing the bounds of the dirty region
+     * @protected
+     */
+    setDirty: function(rect) {
+        ScrollableView.prototype.setDirty.call(this, rect);
+        var startIndex = Math.max(0, Math.floor(this._scrollY / this._itemHeight));
+        var endIndex = Math.min(this._children.length, Math.ceil((this._scrollY + this._height) / this._itemHeight));
+        for (var i = startIndex; i < endIndex; i++) {
+            var child = this._children[i];
+            child.setDirty(rect);
+        }
     }
 }, module);

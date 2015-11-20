@@ -6,7 +6,6 @@ var ListView = fx.import("framework.ui.view.ListView");
 var TextView = fx.import("framework.ui.view.TextView");
 var ListItem = fx.import("framework.ui.view.ListItem");
 var ScrollBar = fx.import("framework.ui.view.ScrollBar");
-var TapRecognizer = fx.import("framework.ui.gesture.TapRecognizer");
 
 Class.define("MyApp", App, {
     onStart: function() {
@@ -23,7 +22,6 @@ Class.define("MyApp", App, {
         this.list.verticalScrollBar.height = 50;
         this.window.addChild(this.list.verticalScrollBar);
 
-        var tapRecognizer = new TapRecognizer();
         var colors = ["#FF0000", "#00FF00", "#0000FF", "#FFFF00", "#00FFFF", "#FF00FF"];
         for (var i = 0; i < 1000; i++) {
             var listItem = new ListItem();
@@ -33,11 +31,11 @@ Class.define("MyApp", App, {
             listItem.height = 100;
 
             var textView = new TextView();
+            textView.id = "text" + i;
             textView.width = listItem.width;
             textView.height = listItem.height;
             textView.fontSize = "36px";
             textView.color = "#FFFFFF";
-            textView.addGestureRecognizer(tapRecognizer);
             listItem.addChild(textView);
 
             this.list.addChild(listItem);
@@ -45,7 +43,7 @@ Class.define("MyApp", App, {
     },
 
     onTap: function(e) {
-        var item = e.target;
-        item.text = "Clicked";
+        var listItem = e.target;
+        listItem.children[0].text = "Clicked";
     }
 }, module);

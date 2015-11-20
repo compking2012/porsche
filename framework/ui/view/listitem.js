@@ -11,6 +11,7 @@
 "use strict";
 var Class = require("../../class");
 var CompositeView = require("./compositeview");
+var TapRecognizer = require("../gesture/taprecognizer");
 
 /**
  * ListItem widget, it is used for ListView, SwipeList.
@@ -20,9 +21,14 @@ var CompositeView = require("./compositeview");
 Class.define("framework.ui.view.ListItem", CompositeView, {
     initialize: function() {
         CompositeView.prototype.initialize.apply(this, arguments);
+
+        this.addGestureRecognizer(this._tapRecognizer = new TapRecognizer());
     },
 
     destroy: function() {
+        this.removeGestureRecognizer(this._tapRecognizer);
+        this._tapRecognizer = null;
+
         CompositeView.prototype.destroy.apply(this, arguments);
     }
 }, module);
