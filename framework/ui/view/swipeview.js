@@ -12,276 +12,207 @@
 var Class = require("../../class");
 var CompositeView = require("./compositeview");
 var CubicBezier = require("../animation/cubicbezier");
+var PanRecognizer = require("../gesture/panrecognizer");
 
 /**
- * swipeview widget, touch slider.
+ * Swipeview widget.
  * @class SwipeView
- * @extends ScrollableView
+ * @extends CompositeView
  **/
 Class.define("framework.ui.view.SwipeView", CompositeView, {
     initialize: function() {
         CompositeView.prototype.initialize.apply(this, arguments);
 
-        this._orientation = "vertical";
+        this.addGestureRecognizer(this._panRecognizer = new PanRecognizer({threshold: 3}));
+        this.addEventListener("panstart", this._onPanStartFunc = this.onPanStart.bind(this));
+        this.addEventListener("panmove", this._onPanMoveFunc = this.onPanMove.bind(this));
+        this.addEventListener("panend", this._onPanEndCancelFunc = this.onPanEndCancel.bind(this));
+        this.addEventListener("pancancel", this._onPanEndCancelFunc);
+
+        this._orientation = "horizontal";
         this._currentIndex = 0;
+        this._nextIndex = -1;
         this._duration = 250;
-
-        this._forwardView = null;
-        this._currentView = null;
-        this._backwardView = null;
-        this._needrepaint = true;
         this._beziers = CubicBezier.easeOut();
-        this._isAnimation = false;
-
-        this.showCurrentView();
+        this._autoTimer = null;
     },
 
     destroy: function() {
+        this.stopAutoSwipe();
 
+        this._beziers.destroy();
+        this._beziers = null;
+
+        this.removeEventListener("panstart", this._onPanStartFunc);
+        this._onPanStartFunc = null;
+
+        this.removeEventListener("panmove", this._onPanMoveFunc);
+        this._onPanMoveFunc = null;
+
+        this.removeEventListener("panend", this._onPanEndCancelFunc);
+        this.removeEventListener("pancancel", this._onPanEndCancelFunc);
+        this._onPanEndCancelFunc = null;
+
+        this.removeGestureRecognizer(this._panRecognizer);
+        this._panRecognizer.destroy();
+        this._panRecognizer = null;
+
+        CompositeView.prototype.destroy.apply(this, arguments);
     },
 
     /**
      * @name SwipeView#currentIndex
-     * @type {number}
+     * @type {Number}
      * @description current index
      */
-
     get currentIndex() {
         return this._currentIndex;
     },
 
     set currentIndex(value) {
-        var length = this._children.length;
-        if (value < 0 || value >= length) {
+        if (value < 0 || value >= this._children.length) {
             return;
         }
         this._currentIndex = value;
-        this.showCurrentView();
+        this.invalidate();
     },
 
     addChild: function(child) {
         child.width = this._width;
         child.height = this._height;
-        child.visibility = "gone";
         CompositeView.prototype.addChild.call(this, child);
-        this.showCurrentView();
     },
 
-    paint: function(context) {
-        if (this._needrepaint) {
-            var length = this._children.length;
-            for (var i = 0; i < length; i++) {
-                var child = this._children[i];
-                if (this._orientation === "horizontal") {
-                    child.left = i * this._width;
-                    child.top = 0;
-                    this._contentWidth = child.left + this._width;
+    insertChild: function(child) {
+        child.width = this._width;
+        child.height = this._height;
+        CompositeView.prototype.insertChild.call(this, child);
+    },
+
+    onPanStart: function(e) {
+        if (this._orientation === "horizontal") {
+            if (e.offsetDirection === "left") {
+                if (this._currentIndex < this._children.length - 1) {
+                    this._nextIndex = this._currentIndex + 1;
+                } else {
+                    this._nextIndex = -1;
                 }
-                if (this._orientation === "vertical") {
-                    child.top = i * this._height;
-                    child.left = 0;
-                    this._contentHeight = child.top + this._height;
+            } else if (e.offsetDirection === "right") {
+                if (this._currentIndex > 0) {
+                    this._nextIndex = this._currentIndex - 1;
+                } else {
+                    this._nextIndex = -1;
                 }
             }
-            this._needrepaint = false;
-        }
-        CompositeView.prototype.paint.call(this, context);
-    },
-
-    showCurrentView: function() {
-        if (this._children.length === 0) {
-            return;
-        }
-
-        if (this._forwardView !== null) {
-            this._forwardView.visibility = "gone";
-        }
-        if (this._backwardView !== null) {
-            this._backwardView.visibility = "gone";
-        }
-        if (this._currentView !== null) {
-            this._currentView.visibility = "gone";
-        }
-
-        if (this._currentIndex > 0) {
-            this._forwardView = this._children[this._currentIndex - 1];
-            this._forwardView.visibility = "visible";
         } else {
-            this._forwardView = null;
+            if (e.offsetDirection === "up") {
+                if (this._currentIndex < this._children.length - 1) {
+                    this._nextIndex = this._currentIndex + 1;
+                } else {
+                    this._nextIndex = -1;
+                }
+            } else if (e.offsetDirection === "down") {
+                if (this._currentIndex > 0) {
+                    this._nextIndex = this._currentIndex - 1;
+                } else {
+                    this._nextIndex = -1;
+                }
+            }
+        }
+        this.invalidate();
+    },
+
+    onPanMove: function(e) {
+        if (this._nextIndex === -1) {
+            return;
         }
 
-        this._currentView = this._children[this._currentIndex];
-        this._currentView.visibility = "visible";
+        var nextView = this._children[this._nextIndex];
+        var currentView = this._children[this._currentIndex];
 
-        if (this._currentIndex < this._children.length - 1) {
-            this._backwardView = this._children[this._currentIndex + 1];
-            this._backwardView.visibility = "visible";
+        if (this._orientation === "horizontal") {
+            currentView.left = e.deltaX;
+            nextView.left = (e.offsetDirection === "left" ? this._width : -this._width) + e.deltaX;
         } else {
-            this._backwardView = null;
+            currentView.top = e.deltaY;
+            nextView.top = (e.offsetDirection === "up" ? this._height : -this._height) + e.deltaY;
         }
-
-        if (this._orientation === "vertical") {
-            this._scrollX = 0;
-            this._scrollY = this._currentIndex * this._height;
-        } else if (this._orientation === "horizontal") {
-            this._scrollX = this._currentIndex * this._width;
-            this._scrollY = 0;
-        }
+        this.invalidate();
     },
 
-    swapToPrev: function(duration) {
-        if (this._forwardView === null || this._isAnimation) {
+    onPanEndCancel: function(e) {
+        if (this._nextIndex === -1) {
             return;
         }
 
-        var start = 0;
-        var distance = 0;
         if (this._orientation === "horizontal") {
-            start = this._scrollX;
-            distance = -this._scrollX + this._offsetX - this._width;
+            this.startAutoSwipe(e.offsetDirection, e.deltaX);
+        } else {
+            this.startAutoSwipe(e.offsetDirection, e.deltaY);
         }
-        if (this._orientation === "vertical") {
-            start = this._scrollY;
-            distance = -this._scrollY + this._offsetY - this._height;
-        }
-
-        this.swapAnimation(duration, start, distance, -1, function() {
-            this.currentIndex--;
-        }.bind(this));
     },
 
-    swapToNext: function(duration) {
-        if (this._backwardView === null || this._isAnimation) {
-            return;
+    paintChildren: function(context) {
+        if (this._nextIndex !== -1) {
+            var nextView = this._children[this._nextIndex];
+            context.translate(nextView.left, nextView.top);
+            nextView.paint(context);
+            context.translate(-nextView.left, -nextView.top);
         }
 
-        var start = 0;
-        var distance = 0;
-        if (this._orientation === "horizontal") {
-            start = this._scrollX;
-            distance = -this._scrollX + this._offsetX + this._width;
-        }
-        if (this._orientation === "vertical") {
-            start = this._scrollY;
-            distance = -this._scrollY + this._offsetY + this._height;
-        }
-
-        this.swapAnimation(duration, start, distance, 1, function() {
-            this.currentIndex++;
-        }.bind(this));
+        var currentView = this._children[this._currentIndex];
+        context.translate(currentView.left, currentView.top);
+        currentView.paint(context);
+        context.translate(-currentView.left, -currentView.top);
     },
 
-    prevBack: function(duration) {
-        if (this._isAnimation) {
-            return;
-        }
-        var start = 0;
-        var distance = 0;
-        if (this._orientation === "horizontal") {
-            start = this._scrollX;
-            distance = -this._scrollX + this._offsetX;
-        }
-        if (this._orientation === "vertical") {
-            start = this._scrollY;
-            distance = -this._scrollY + this._offsetY;
-        }
-
-        this.swapAnimation(duration, start, distance, -1);
-    },
-
-    nextBack: function(duration) {
-        if (this._isAnimation) {
-            return;
-        }
-
-        var start = 0;
-        var distance = 0;
-        if (this._orientation === "horizontal") {
-            start = this._scrollX;
-            distance = -this._scrollX + this._offsetX;
-        }
-        if (this._orientation === "vertical") {
-            start = this._scrollY;
-            distance = -this._scrollY + this._offsetY;
-        }
-
-        this.swapAnimation(duration, start, distance, 1);
-    },
-
-    swapAnimation: function(duration, start, distance, direction, callback) {
-        this._isAnimation = true;
+    startAutoSwipe: function(direction, startPosition) {
         var startTime = new Date().getTime();
-        var timer = setInterval(function() {
-            var time = new Date().getTime();
-            if (time - startTime >= duration) {
-                if (this._orientation === "horizontal") {
-                    this._scrollX = start + distance;
-                }
-                if (this._orientation === "vertical") {
-                    this._scrollY = start + distance;
-                }
-                this.invalidate();
 
-                if (callback) {
-                    callback.call(this);
+        var animationFunc = null;
+        this._autoTimer = setTimeout(animationFunc = function() {
+            var time = new Date().getTime();
+            var nextView = this._children[this._nextIndex];
+            var currentView = this._children[this._currentIndex];
+            var endPosition = 0;
+            if (this._orientation === "horizontal") {
+                endPosition = direction === "left" ? -this._width : this._width;
+            } else {
+                endPosition = direction === "up" ? -this._height : this._height;
+            }
+
+            if (time - startTime >= this._duration) {
+                if (this._orientation === "horizontal") {
+                    currentView.left = endPosition;
+                    nextView.left = (direction === "left" ? this._width : -this._width) + endPosition;
+                } else {
+                    currentView.top = endPosition;
+                    nextView.top = (direction === "up" ? this._height : -this._height) + endPosition;
                 }
-                clearInterval(timer);
-                this._isAnimation = false;
-                this.dispatchEvent("viewchanged", this._currentIndex);
+                this._currentIndex = this._nextIndex;
+                this._nextIndex = -1;
+                this.stopAutoSwipe();
                 return;
             }
-            var delta = this._beziers.getPointForT((time - startTime) / duration).y;
-            var offset = start + delta * distance;
+            var delta = this._beziers.getPointForT((time - startTime) / this._duration).y;
+            var distance = endPosition - startPosition;
 
             if (this._orientation === "horizontal") {
-                this._scrollX = offset;
-            }
-            if (this._orientation === "vertical") {
-                this._scrollY = offset;
+                currentView.left = startPosition + delta * distance;
+                nextView.left = (direction === "left" ? this._width : -this._width) + currentView.left;
+            } else {
+                currentView.top = startPosition + delta * distance;
+                nextView.top = (direction === "up" ? this._height : -this._height) + currentView.top;
             }
             this.invalidate();
+            this._autoTimer = setTimeout(animationFunc, 16);
         }.bind(this), 16);
     },
 
-    handleTouchStart: function(e) {
-        if (this._isAnimation) {
-            return;
-        }
-        CompositeView.prototype.handleTouchStart.call(this, e);
-    },
-
-    handleTouchMove: function(e) {
-        if (this._isAnimation) {
-            return;
-        }
-        CompositeView.prototype.handleTouchMove.call(this, e);
-    },
-
-    handleTouchEnd: function(e) {
-        if (this._isAnimation) {
-            return;
-        }
-        var offset = 0;
-        if (this._orientation === "horizontal") {
-            offset = this._scrollX - this._offsetX;
-        } else if (this._orientation === "vertical") {
-            offset = this._scrollY - this._offsetY;
-        }
-        // var v = Math.max(Math.abs(vel) / 100, 2);
-        var s = this._height / 3;
-        if (Math.abs(offset) > s) {
-            if (offset > 0) {
-                this.swapToNext(this._duration);
-            } else if (offset < 0) {
-                this.swapToPrev(this._duration);
-            }
-        } else {
-            if (offset < 0) {
-                this.prevBack(this._duration);
-            } else if (offset > 0) {
-                this.nextBack(this._duration);
-            }
-        }
-        CompositeView.prototype.handleTouchEnd.call(this, e);
+    stopAutoSwipe: function() {
+        clearTimeout(this._autoTimer);
+        this._autoTimer = null;
+        this._isAnimation = false;
+        this.invalidate();
     }
 }, module);

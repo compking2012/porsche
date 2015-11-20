@@ -38,7 +38,7 @@ Class.define("framework.ui.view.ScrollableView", CompositeView, {
         this._horizontalScrollBar = null;
         this._verticalScrollBar = null;
 
-        this._scrollingTimer = null;
+        this._autoTimer = null;
         this._velocityX = 0;
         this._velocityY = 0;
         this._rebackDuration = 200;
@@ -342,9 +342,9 @@ Class.define("framework.ui.view.ScrollableView", CompositeView, {
         totalTime *= 1000;
         var isEndX = false;
         var isEndY = false;
-        if (!this._scrollingTimer) {
+        if (!this._autoTimer) {
             var animationFunc = null;
-            this._scrollingTimer = setTimeout(animationFunc = function() {
+            this._autoTimer = setTimeout(animationFunc = function() {
                 var time = new Date().getTime();
                 var deltaX = this.calculateDelta(this._velocityX, amplitudeX, time - startTime);
                 var deltaY = this.calculateDelta(this._velocityY, amplitudeY, time - startTime);
@@ -392,17 +392,17 @@ Class.define("framework.ui.view.ScrollableView", CompositeView, {
                     this.stopAutoScroll();
                     return;
                 }
-                this._scrollingTimer = setTimeout(animationFunc, 16);
+                this._autoTimer = setTimeout(animationFunc, 16);
             }.bind(this), 16);
         }
     },
 
     stopAutoScroll: function() {
-        if (this._scrollingTimer !== null) {
-            clearTimeout(this._scrollingTimer);
+        if (this._autoTimer !== null) {
+            clearTimeout(this._autoTimer);
             this._velocityX = 0;
             this._velocityY = 0;
-            this._scrollingTimer = null;
+            this._autoTimer = null;
             this.invalidate();
         }
     },
@@ -461,18 +461,18 @@ Class.define("framework.ui.view.ScrollableView", CompositeView, {
         var startY = this._scrollY;
         var startTime = new Date().getTime();
         var animationFunc = null;
-        this._scrollingTimer = setTimeout(animationFunc = function() {
+        this._autoTimer = setTimeout(animationFunc = function() {
             var time = new Date().getTime();
             if (time - startTime >= this._rebackDuration) {
                 this.scrollX = targetX;
                 this.scrollY = targetY;
-                clearTimeout(this._scrollingTimer);
+                clearTimeout(this._autoTimer);
                 return;
             }
             var delta = beziers.getPointForT((time - startTime) / this._rebackDuration).y;
             this.scrollX = startX + delta * (targetX - startX);
             this.scrollY = startY + delta * (targetY - startY);
-            this._scrollingTimer = setTimeout(animationFunc, 10);
+            this._autoTimer = setTimeout(animationFunc, 10);
         }.bind(this), 10);
     },
 

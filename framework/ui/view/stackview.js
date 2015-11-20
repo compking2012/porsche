@@ -38,8 +38,9 @@ Class.define("framework.ui.view.StackView", CompositeView, {
         this.addEventListener("panend", this._onPanEndCancelFunc = this.onPanEndCancel.bind(this));
         this.addEventListener("pancancel", this._onPanEndCancelFunc);
 
+        this._beziers = new CubicBezier(0.33, 0.66, 0.66, 1);
         this._duration = 300;
-        this._panningTimer = null;
+        this._autoTimer = null;
     },
 
     /**
@@ -194,10 +195,9 @@ Class.define("framework.ui.view.StackView", CompositeView, {
 
     startAutoPan: function(view, startX, endX) {
         var startTime = new Date().getTime();
-        var beziers = new CubicBezier(0.33, 0.66, 0.66, 1);
 
         var animationFunc = null;
-        this._panningTimer = setTimeout(animationFunc = function() {
+        this._autoTimer = setTimeout(animationFunc = function() {
             var time = new Date().getTime();
             if (time - startTime >= this._duration) {
                 var child = this.popChild();
@@ -207,16 +207,16 @@ Class.define("framework.ui.view.StackView", CompositeView, {
                 this.stopAutoPan();
                 return;
             }
-            var delta = beziers.getPointForT((time - startTime) / this._duration).y;
+            var delta = this._beziers.getPointForT((time - startTime) / this._duration).y;
             view.left = startX + delta * (endX - startX);
             this.invalidate();
-            this._panningTimer = setTimeout(animationFunc, 10);
+            this._autoTimer = setTimeout(animationFunc, 10);
         }.bind(this), 10);
     },
 
     stopAutoPan: function() {
-        clearTimeout(this._panningTimer);
-        this._panningTimer = null;
+        clearTimeout(this._autoTimer);
+        this._autoTimer = null;
         this._panning = false;
         this.invalidate();
     }

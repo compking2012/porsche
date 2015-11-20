@@ -100,8 +100,12 @@ H5:     passed
 Node:   passed
 
 *) listview
-H5:     no pass
-Node:   no pass
+H5:     passed
+Node:   passed
+
+*) listview-horizontal
+H5:     passed
+Node:   passed
 
 *) progressview
 H5:     passed

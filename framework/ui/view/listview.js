@@ -45,8 +45,11 @@ Class.define("framework.ui.view.ListView", ScrollableView, {
      * @method ListView#destroy
      */
     destroy: function() {
-        this.layout.destroy();
-        this.layout = null;
+        this._rowLayout.destroy();
+        this._rowLayout = null;
+        this._columnLayout.destroy();
+        this._columnLayout = null;
+        this._layout = null;
 
         ScrollableView.prototype.destroy.apply(this, arguments);
     },
@@ -157,17 +160,9 @@ Class.define("framework.ui.view.ListView", ScrollableView, {
     },
 
     scrollToItem: function(index) {
-        if (this._orientation === "vertical") {
-            var offset = this._contentHeight - this._positionArray[index].top > this.height ? this._positionArray[index].top : this._contentHeight - this.height;
-            this.scrollY = offset;
-        } else if (this._orientation === "horizontal") {
-            var offset = this._contentWidth - this._positionArray[index].left > this.width ? this._positionArray[index].left : this._contentWidth - this.width;
-            this.scrollX = offset;
-        }
     },
 
     scrollToNearestItem: function() {
-        
     },
 
     /**
