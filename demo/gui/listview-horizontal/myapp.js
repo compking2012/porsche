@@ -18,6 +18,7 @@ Class.define("MyApp", App, {
         this.window.addChild(this.list);
 
         this.list.horizontalScrollBar = new ScrollBar();
+        this.list.horizontalScrollBar.orientation = "horizontal";
         this.list.horizontalScrollBar.top = 310;
         this.list.horizontalScrollBar.width = 50;
         this.list.horizontalScrollBar.height = 10;
@@ -27,7 +28,6 @@ Class.define("MyApp", App, {
         for (var i = 0; i < 1000; i++) {
             var listItem = new ListItem();
             listItem.background = colors[i % colors.length];
-            listItem.left = i * 100;
             listItem.height = this.list.height;
 
             var textView = new TextView();

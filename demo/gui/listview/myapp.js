@@ -26,9 +26,7 @@ Class.define("MyApp", App, {
         for (var i = 0; i < 1000; i++) {
             var listItem = new ListItem();
             listItem.background = colors[i % colors.length];
-            listItem.top = i * 100;
             listItem.width = this.list.width;
-            listItem.height = 100;
 
             var textView = new TextView();
             textView.id = "text" + i;
