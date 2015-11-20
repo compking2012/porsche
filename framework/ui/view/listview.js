@@ -188,20 +188,15 @@ Class.define("framework.ui.view.ListView", ScrollableView, {
     //     context.restore();
     // },
 
-    _paintChildren: function(context) {
+    paintChildren: function(context) {
         if (this._layout !== null && this._needRelayout) {
             this._layout.perform();
-
-            for (var i = 0; i < this._children.length; i++) {
-                console.log("[ListView] i, top: ", i, this._children[i].top);
-            }
             this._needRelayout = false;
         }
 
         if (this._orientation === "vertical") {
             var startIndex = Math.floor(this._scrollY / this._itemHeight);
             var endIndex = Math.ceil((this._scrollY + this._height) / this._itemHeight);
-            console.log("[ListView] paintChildren: ", startIndex, endIndex);
             for (var i = startIndex; i <= endIndex; i++) {
                 var listitem = this._children[i];
                 context.translate(listitem.left - this._scrollX, listitem.top - this._scrollY);
@@ -233,44 +228,5 @@ Class.define("framework.ui.view.ListView", ScrollableView, {
         //     }
         // }
 
-    },
-
-    halfsearch: function(array, key, low, high) {
-        if (low >= high) {
-            return high ;
-        }
-        var middle = parseInt((low + high) / 2);
-        if (middle <= low) {
-            return low;
-        }
-        if (middle >= high) {
-            return high;
-        }
-        if (middle + 1 > high) {
-            return middle;
-        }
-        if (middle - 1 < 0) {
-            return 0;
-        }
-        if (this._orientation === "vertical") {
-            console.log("mddle and high ", middle, high);
-            if (key <= array[middle + 1].top && key >= array[middle].top) {
-                return middle;
-            }
-            if (key < array[middle].top) {
-                return this.halfsearch(array, key, low, middle - 1);
-            } else if (key > array[middle + 1].top) {
-                return this.halfsearch(array, key, middle + 1, high);
-            }
-        } else {
-            if (key <= array[middle + 1].left && key >= array[middle].left) {
-                return middle;
-            }
-            if (key < array[middle].left) {
-                return this.halfsearch(array, key, low, middle - 1);
-            } else if (key > array[middle + 1].left) {
-                return this.halfsearch(array, key, middle + 1, high);
-            }
-        }
     }
 }, module);
