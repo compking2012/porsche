@@ -30,10 +30,10 @@ Class.define("framework.ui.view.TextView", View, {
         this._fontSize = "18px";
         this._fontWeight = "normal";
         this._fontStyle = "normal";
-        this._align = "center";
+        this._align = "left";
         this._verticalAlign = "middle";
-        this._baseline = "middle";
-        this._color = "#ffffff";
+        this._baseline = "top";
+        this._color = "#FFFFFF";
         this._multiLine = false;
         this._highQuality = false;
         this._antialias = false;

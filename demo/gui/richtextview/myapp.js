@@ -6,34 +6,32 @@ var RichTextView = fx.import("framework.ui.view.RichTextView");
 
 Class.define("MyApp", App, {
     onStart: function() {
-        var str = '2. In the last decades, advances in medical technology have made it possible for people to live longer than in the past.';
-        var str1 = '我喜欢<class="blue">蓝色</class   ><style="font-family:default; font-size:42px; color:#FF0000">零一二三四五六七八九十</style>零一二三四五六<br />七八九十<class="big"  >零一二三四五<   /class   >六七八九十!';
-        var str2 = 'If you usually work with <style="font-style: italic; font-family: Verdana; font-size: 28px; font-weight: bold; color: #00FFFF">HTML5< /style> Canvas, <class="big"> you will know for sure the difficulty of drawing styled text into it.</class> CanvasText is a library writte in JavasScript that lets you write<br/> with a similar HTML & CSS syntax.';
-        var richtextview = new RichTextView(str1);
+        var text = "In this example I don\'t care about <class=\"blue\">blue</class> or <class=\"pink\">pink</class>.\n\
+                I just care about the new and <class=\"blue\">exciting</class> <class=\"pink\">automatic</class>\n\
+                <class=\"blue\">multiline</class> feature!! <br />Just to be sure:<br />Lorem ipsum dolor sit amet, \n\
+                consectetur adipiscing elit. Nulla ut erat magna, quis commodo nulla.\n\
+                Vestibulum <class=\"pink\">eget</class> mi quis sapien lacinia porta eget eget neque. Aliquam lacus \n\
+                leo, sodales sit amet laoreet non, mollis ut nibh.";
+        var richTextView = new RichTextView();
+        richTextView.width = 320;
+        richTextView.height = 320;
+        richTextView.lineHeight = 24;
 
-        richtextview.defineClass("blue", {
-            _fontStyle: "italic",
-            _fontSize: "22px",
-            _fontColor: "#FA8072",
-            _fontFamily: "default",
-            _fontWeight: "bold"
+        richTextView.defineClass("blue", {
+            fontFamily: "sans-serif",
+            fontSize: "30px",
+            fontColor: "#29A1F1",
+            fontWeight: "normal",
+            textShadow: "2px 2px 2px #919191"
         });
-        richtextview.defineClass("big", {
-            _fontStyle: "italic",
-            _fontSize: "25px",
-            _fontColor: "#FA8072",
-            _fontFamily: "Verdana",
-            _fontWeight: "bold"
+        richTextView.defineClass("pink", {
+            fontFamily: "sans-serif",
+            fontSize: "30px",
+            fontColor: "#FF5E99",
+            fontWeight: "normal",
+            fontStyle: "italic"
         });
-
-        richtextview.fontSize = "20px";
-        richtextview.fontStyle = "normal";
-        richtextview.align = "left";
-        richtextview.left = 0;
-        richtextview.top = 0;
-        richtextview.width = 320;
-        richtextview.height = 200;
-        richtextview.isAdaptive = false;//true: compute the height of richtextview automatically and use the new height
-        this.window.addChild(richtextview);
+        richTextView.text = text;
+        this.window.addChild(richTextView);
     }
 }, module);

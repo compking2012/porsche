@@ -7,7 +7,29 @@
 * @license MIT
 * @copyright Yang Yang, 2015
 */
-
+/**
+ * Copyright (c) 2011 Pere Monfort Pàmies (http://www.pmphp.net)
+ * Official site: http://www.canvastext.com
+ *
+ * Permission is hereby granted, free of charge, to any person obtaining a
+ * copy of this software and associated documentation files (the
+ * "Software"), to deal in the Software without restriction, including
+ * without limitation the rights to use, copy, modify, merge, publish,
+ * distribute, sublicense, and/or sell copies of the Software, and to permit
+ * persons to whom the Software is furnished to do so, subject to the
+ * following conditions:
+ *
+ * The above copyright notice and this permission notice shall be included
+ * in all copies or substantial portions of the Software.
+ *
+ * THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS
+ * OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF
+ * MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN
+ * NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM,
+ * DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR
+ * OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE
+ * USE OR OTHER DEALINGS IN THE SOFTWARE.
+ */
 "use strict";
 var Class = require("../../class");
 var TextView = require("./textview");
@@ -21,397 +43,338 @@ Class.define("framework.ui.view.RichTextView", TextView, {
     /**
      * Constructor that create a view
      * @method RichTextView#initialize
-     * @param textValue {String} the text string that shows
      */
     initialize: function() {
         TextView.prototype.initialize.apply(this, arguments);
-        this._baseline = "bottom";
-        this.savedClasses = [];
-        this._isAdaptive = false;
+
+        this._savedClasses = [];
+        this._lineHeight = 16;
+        this._textShadow = null;
     },
 
     destroy: function() {
         TextView.prototype.destroy.apply(this, arguments);
     },
 
-    /**
-     * @name RichTextView#isAdaptive
-     * @type {Boolean}
-     * @description Whether to automatic calculate the height of the view.
-     */
-    get isAdaptive() {
-        return this._isAdaptive;
+    get lineHeight() {
+        return this._lineHeight;
     },
 
-    set isAdaptive(value) {
-        this._isAdaptive = value;
+    set lineHeight(value) {
+        this._lineHeight = value;
+        this.invalidate();
+    },
+
+    get textShadow() {
+        return this._textShadow;
+    },
+
+    set textShadow(value) {
+        this._textShadow = value;
+        this.invalidate();
     },
 
     /**
-     * @method RichtextView#defineClass
-     * @param {String} id - the id of new defined class
-     * @param {Object} definition - the property of the new defined class, such as { _fontStyle: "normal", _fontSize: "28px", _fontColor: "#FF0000", _fontFamily: "default", _fontWeight: "bold" }
-     * @description Define a new text class
+     * Save a new class definition.
      */
     defineClass: function(id, definition) {
-        if (typeof (definition) != "object") {
-            return false;
+        // A simple check.
+        if (typeof definition !== "object") {
+            throw "Invalid class.";
         }
-        this.savedClasses[id] = definition;
-        return true;
+        // Another simple check.
+        if (this.isEmpty(id)) {
+            throw "You must specify a Class Name.";
+        }
+
+        // Save it.
+        this._savedClasses[id] = definition;
     },
 
     /**
-     * @method RichtextView#getClass
-     * @param {String} id - the id of defined class
-     * @description Get the specific definition of the given id
-     * @private
+     * Returns a saved class.
      */
     getClass: function(id) {
-        if (this.savedClasses[id] !== undefined) {
-            return this.savedClasses[id];
+        if (this._savedClasses[id] !== undefined) {
+            return this._savedClasses[id];
         }
     },
-
-    /**
-     * @method RichtextView#isEmpty
-     * @param {String} the value to be checked
-     * @description Check if the given value is empty
-     * @private
-     */
-    isEmpty: function (str) {
-        // Remove white spaces.
-        str = str.replace(/^\s+|\s+$/, '');
-        return str.length == 0;
-    },
-
 
     draw: function(context) {
-        context.save();
-        context.beginPath();
-        context.font = this.fontWeight + " " + this.fontStyle + this.fontSize + " " + this.fontFamily; 
-        var match = this.text.match(/<\s*br\s*\/>|<\s*class=["|']([^"|']+)["|']\s*\>([^>]+)<\s*\/class\s*\>|<\s*style=["|']([^"|']+)["|']\s*\>([^>]+)<\s*\/style\s*\>|[^<]+/g);
+        var textInfo = {text: this._text, x: 0, y: 0};
+        // Save the textInfo into separated vars to work more comfortably.
+        var text = this._text;
+        var x = textInfo.x;
+        var y = textInfo.y;
+        // Needed vars for automatic line break;
+        var splittedText;
+        var xAux;
+        var textLines = [];
+        var boxWidth = this._width;
+        // Declaration of needed vars.
         var proFont = [];
-        var proText, properties, property, propertyName, propertyValue;
-        var classDefinition;
-        var proX, splittedText;
-        var LinesHeight = this.getLinesHeight(match, context);
-        if (this._isAdaptive === true) {
-            var adaptiveHeight = 0;
-            for (var i = 0; i< LinesHeight.length; i++) {
-                adaptiveHeight += LinesHeight[i] + this._lineMargin;
-            }
-            if(adaptiveHeight !== this.height) {
-                this.height = adaptiveHeight;
-                this._timer = setTimeout(function() {
-                    clearTimeout(this._timer);
-                    this.invalidate();
-                }.bind(this), 1);
-                context.restore();
-                return;
-            }
-        }
+        var properties, property, propertyName, propertyValue;
+        var classDefinition, proColor, proText, proShadow;
+
+        // The main regex. Looks for <style>, <class> or <br /> tags.
+        var match = text.match(/<\s*br\s*\/>|<\s*class=["|']([^"|']+)["|']\s*\>([^>]+)<\s*\/class\s*\>|<\s*style=["|']([^"|']+)["|']\s*\>([^>]+)<\s*\/style\s*\>|[^<]+/g);
         var innerMatch = null;
-        var x = 0, y = LinesHeight[0] + this._lineMargin;
-        var printLines = 0;
-        var textLines = [];
-        for(var i = 0; match != null && i < match.length; i++){
-            proFont.fontStyle = this.fontStyle;
-            proFont.fontWeight = this.fontWeight;
-            proFont.fontSize = this.fontSize;
-            proFont.fontFamily = this.fontFamily;
-            proFont.fontColor = this.color;
+
+        // Let's draw something for each match found.
+        for (var i = 0; i < match.length; i++) {
+            // Save the current context.
+            context.save();
+
+            // Default color
+            proColor = this._color;
+            // Default font
+            proFont.style = this._fontStyle;
+            proFont.weight = this._fontWeight;
+            proFont.size = this._fontSize;
+            proFont.family = this._fontFamily;
+
+            // Default shadow
+            proShadow = this._textShadow || undefined;
+
+            // Check if current fragment is an style tag.
             if (/<\s*style=/i.test(match[i])) {
+                // Looks the attributes and text inside the style tag.
                 innerMatch = match[i].match(/<\s*style=["|']([^"|']+)["|']\s*\>([^>]+)<\s*\/style\s*\>/);
+
+                // innerMatch[1] contains the properties of the attribute.
                 properties = innerMatch[1].split(";");
-                this.setStyleProperties(properties, proFont);
-                proText = innerMatch[2];
-            }else if (/<\s*class=/i.test(match[i])) {
-                innerMatch = match[i].match(/<\s*class=["|']([^"|']+)["|']\s*\>([^>]+)<\s*\/class\s*\>/);
-                classDefinition = this.getClass(innerMatch[1]);
-                this.setClassProperties(classDefinition, proFont);
-                proText = innerMatch[2];
-            }else if (/<\s*br\s*\/>/i.test(match[i])) {
-                printLines++;
-                y += LinesHeight[printLines] + this._lineMargin;
-                x = 0;
-                continue;
-            }else {
-                proText = match[i];
-            }
-            context.font = proFont.fontWeight + " " + proFont.fontStyle + " " + proFont.fontSize + " " + proFont.fontFamily;
-            context.fillStyle = proFont.fontColor;
-            context.textBaseline = this._baseline; 
-            context.textAlign = this._align; 
-            proText = proText.replace(/\s*\n\s*/g, " ");
-            textLines = [];
-            if (context.measureText(proText).width + x + this._x > this.width) {
-                splittedText = this.trim(proText).split("");
-                if (splittedText.length == 1) {
-                    textLines.push({text: this.trim(proText) + " ", linebreak: true});
-                } else {
-                    proX = x;
-                    var line=0;
-                    textLines[line] = {text: undefined, linebreak: false};
-                    var lineWidth = context.measureText("-").width;
-                    var pattern = /[a-z|A-Z|0-9]/;
-                    for (var k = 0; k < splittedText.length; k++) {
-                        splittedText[k] += "";
-                        var curPos = context.measureText(splittedText[k]).width + proX + this._x;
-                        if (curPos <= this.width) {
-                            if(pattern.test(splittedText[k]) && k < splittedText.length-1 && pattern.test(splittedText[k+1]) && curPos + context.measureText(splittedText[k+1]).width > this.width) {
-                                if (curPos + lineWidth <= this.width) {
-                                    if (textLines[line].text == undefined) {
-                                        textLines[line].text = splittedText[k] + "-";
-                                    } else {
-                                        textLines[line].text += splittedText[k] + "-";
-                                    }
-                                    line++;
-                                    textLines[line] = {text: undefined, linebreak:true};
-                                    proX = 0;
-                                }else {
-                                    if (k >= 1 && splittedText[k-1] !== " ") {
-                                        textLines[line].text += "-";
-                                    }
-                                    if(textLines[line].text != undefined) {
-                                        line++;
-                                    }
-                                    proX = 0;
-                                    textLines[line] = {text: splittedText[k], linebreak:true};
-                                    proX += context.measureText(splittedText[k]).width;
-                                }
-                            }else {
-                                if (textLines[line].text == undefined) {
-                                    textLines[line].text = splittedText[k];
-                                } else {
-                                    textLines[line].text += splittedText[k];
-                                }
-                                proX += context.measureText(splittedText[k]).width;
-                            }
-                        }else {
-                            proX = 0;
-                            if(textLines[line].text != undefined) {
-                                line++;
-                            }
-                            textLines[line] = {text: splittedText[k], linebreak: true};
-                            proX += context.measureText(splittedText[k]).width;
+
+                // Apply styles for each property.
+                for (var j = 0; j < properties.length; j++) {
+                    // Each property have a value. We split them.
+                    property = properties[j].split(":");
+                    // A simple check.
+                    if (this.isEmpty(property[0]) || this.isEmpty(property[1])) {
+                        // Wrong property name or value. We jump to the
+                        // next loop.
+                        continue;
+                    }
+                    // Again, save it into friendly-named variables to work comfortably.
+                    propertyName = property[0];
+                    propertyValue = property[1];
+
+                    switch (propertyName) {
+                    case "font":
+                        proFont = propertyValue;
+                        break;
+                    case "font-family":
+                        proFont.family = propertyValue;
+                        break;
+                    case "font-weight":
+                        proFont.weight = propertyValue;
+                        break;
+                    case "font-size":
+                        proFont.size = propertyValue;
+                        break;
+                    case "font-style":
+                        proFont.style = propertyValue;
+                        break;
+                    case "text-shadow":
+                        proShadow = this.trim(propertyValue);
+                        proShadow = proShadow.split(" ");
+                        if (proShadow.length !== 4) {
+                            proShadow = null;
                         }
+                        break;
+                    case "color":
+                        if (this.isHex(propertyValue)) {
+                            proColor = propertyValue;
+                        }
+                        break;
                     }
                 }
-            }
-            if (textLines.length == 0) {
-                textLines.push({text: this.trim(proText) + " ", linebreak: false}); 
-            }
-            for (var n = 0; n < textLines.length; n++) {
-                if(textLines[n].linebreak) {
-                    printLines++;
-                    y += parseInt(LinesHeight[printLines] + this._lineMargin);
-                    x = 0;
-                }
-                context.fillText(textLines[n].text, x, y);
-                x += context.measureText(textLines[n].text).width;
-            }
-        }
-        context.restore();
-    },
-
-    setStyleProperties: function(properties, proFont) {
-        var propertyName, propertyValue;
-        for (var j = 0; j < properties.length; j++) {
-            var property = properties[j].split(":");
-            if (this.isEmpty(property[0]) || this.isEmpty(property[1])) {
-            // wrong property Name or value, jump to the next loop and continue
-                continue;
-            }
-            propertyName = this.trim(property[0]);
-            propertyValue = this.trim(property[1]);
-            switch (propertyName) {
-                case "font-family":
-                    proFont.fontFamily = propertyValue;
-                    break;
-                case "font-weight":
-                    proFont.fontWeight = propertyValue;
-                    break;
-                case "font-size":
-                    proFont.fontSize = propertyValue;
-                    break;
-                case "font-style":
-                    proFont.fontStyle = propertyValue;
-                    break;
-                case "color":
-                    if (this.isHex(propertyValue)) {
-                        proFont.fontColor = propertyValue;
-                    }
-                    break;
-            }
-        }
-    },
-
-
-    setClassProperties: function(classDefinition, proFont) {
-        for (var attribute in classDefinition) {
-            switch(attribute) {
-                case "_fontFamily":
-                    proFont.fontFamily = classDefinition[attribute];
-                    break;
-                case "_fontWeight":
-                    proFont.fontWeight = classDefinition[attribute];
-                    break;
-                case "_fontSize":
-                    proFont.fontSize = classDefinition[attribute];
-                    break;
-                case "_fontStyle":
-                    proFont.fontStyle = classDefinition[attribute];
-                    break;
-                case "_fontColor":
-                    if (this.isHex(classDefinition[attribute])) {
-                        proFont.fontColor = classDefinition[attribute];
-                    }
-                    break;
-            }
-        }
-    },
-
-    getLinesHeight: function(match, context) {
-        var maxLineheight = Number(this.fontSize.substr(0, this.fontSize.length - 2));
-        var x = 0, proX, y, innerMatch = null;
-        var textLines = [];
-        var LinesHeight = [], linesNum = 0;
-        var proFont = [], proText, properties, splittedText, classDefinition;
-        context.save();
-        for (var i=0; match != null && i < match.length; i++) {
-            proFont.fontStyle = this.fontStyle;
-            proFont.fontWeight = this.fontWeight;
-            proFont.fontSize = this.fontSize;
-            proFont.fontFamily = this.fontFamily;
-            proFont.fontColor = this.color;
-            if (/<\s*style=/i.test(match[i])) {
-                innerMatch = match[i].match(/<\s*style=["|']([^"|']+)["|']\s*\>([^>]+)<\s*\/style\s*\>/);
-                properties = innerMatch[1].split(";");
-                this.setStyleProperties(properties, proFont);
                 proText = innerMatch[2];
-            }else if (/<\s*class=/i.test(match[i])) {
+            } else if (/<\s*class=/i.test(match[i])) { // Check if current fragment is a class tag.
+                // Looks the attributes and text inside the class tag.
                 innerMatch = match[i].match(/<\s*class=["|']([^"|']+)["|']\s*\>([^>]+)<\s*\/class\s*\>/);
+
                 classDefinition = this.getClass(innerMatch[1]);
-                this.setClassProperties(classDefinition, proFont);
+                /*
+                 * Loop the class properties.
+                 */
+                for (var attribute in classDefinition) {
+                    switch (attribute) {
+                    case "font":
+                        proFont = classDefinition[attribute];
+                        break;
+                    case "fontFamily":
+                        proFont.family = classDefinition[attribute];
+                        break;
+                    case "fontWeight":
+                        proFont.weight = classDefinition[attribute];
+                        break;
+                    case "fontSize":
+                        proFont.size = classDefinition[attribute];
+                        break;
+                    case "fontStyle":
+                        proFont.style = classDefinition[attribute];
+                        break;
+                    case "fontColor":
+                        if (this.isHex(classDefinition[attribute])) {
+                            proColor = classDefinition[attribute];
+                        }
+                        break;
+                    case "textShadow":
+                        proShadow = this.trim(classDefinition[attribute]);
+                        proShadow = proShadow.split(" ");
+                        if (proShadow.length !== 4) {
+                            proShadow = null;
+                        }
+                        break;
+                    }
+                }
                 proText = innerMatch[2];
-            }else if (/<\s*br\s*\/>/i.test(match[i])) {
-                linesNum++;
-                maxLineheight = Number(this.fontSize.substr(0, this.fontSize.length - 2)); 
-                LinesHeight[linesNum] = maxLineheight;
-                x = 0;
+            } else if (/<\s*br\s*\/>/i.test(match[i])) {
+                // Check if current fragment is a line break.
+                y += this._lineHeight * 1.5;
+                x = textInfo.x;
                 continue;
-            }else {
+            } else {
                 // Text without special style.
                 proText = match[i];
             }
-            if (maxLineheight <  Number(proFont.fontSize.substr(0, proFont.fontSize.length - 2))) {
-                maxLineheight = Number(proFont.fontSize.substr(0, proFont.fontSize.length - 2));
-                LinesHeight[linesNum] =  maxLineheight;
-            }
-            context.font = proFont.fontWeight + " " + proFont.fontStyle + proFont.fontSize + " " + proFont.fontFamily;
-            context.fillStyle = proFont.fontColor;
+
+            // Set the text Baseline
             context.textBaseline = this._baseline;
+            // Set the text align
             context.textAlign = this._align;
+            // Font styles.
+            if (proFont instanceof Array) {
+                context.font = proFont.style + " " + proFont.weight + " " + proFont.size + " " + proFont.family;
+            } else {
+                context.font = proFont;
+            }
+            context.font = proFont;
+            // Set the color.
+            context.fillStyle = proColor;
+            // Set the Shadow.
+            if (proShadow !== undefined) {
+                context.shadowOffsetX = proShadow[0].replace("px", "");
+                context.shadowOffsetY = proShadow[1].replace("px", "");
+                context.shadowBlur = proShadow[2].replace("px", "");
+                context.shadowColor = proShadow[3].replace("px", "");
+            }
+
+            // Reset textLines;
             textLines = [];
-            LinesHeight[linesNum] = maxLineheight;
+            // Clear javascript code line breaks.
             proText = proText.replace(/\s*\n\s*/g, " ");
-            var lineWidth = context.measureText("-").width;
-            var pattern = /[a-z|A-Z|0-9]/;
-            if (context.measureText(proText).width + this._x + x > this.width) {
-                splittedText = this.trim(proText).split("");
-                if (splittedText.length == 1) {
-                    textLines.push({text: this.trim(proText) + " ", linebreak: true});
-                    LinesHeight[linesNum] = maxLineheight;
-                    linesNum++;
-                    maxLineheight = Number(proFont.fontSize.substr(0, proFont.fontSize.length - 2)); 
-                } else {
-                    proX = x;
-                    var line=0;
-                    textLines[line] = {text: undefined, linebreak: false};
-                    for (var k = 0; k < splittedText.length; k++) {
-                        splittedText[k] += "";
-                        var curPos = context.measureText(splittedText[k]).width + proX + this._x;
-                        if (curPos <= this.width) {
-                            if(pattern.test(splittedText[k]) && k < splittedText.length-1 && pattern.test(splittedText[k+1]) && curPos + context.measureText(splittedText[k+1]).width > this.width) {
-                                if (curPos + lineWidth <= this.width) {
-                                    if (textLines[line].text == undefined) {
-                                        textLines[line].text = splittedText[k] + "-";
-                                    } else {
-                                        textLines[line].text += splittedText[k] + "-";
-                                    }
-                                    LinesHeight[linesNum] = maxLineheight;
-                                    textLines[line] = {text: splittedText[k], linebreak: true};
-                                    LinesHeight[linesNum] = maxLineheight;
-                                    proX += context.measureText(splittedText[k]).width;
-                                } else {
-                                    if (k >= 1 && splittedText[k-1] !== " ") {
-                                        textLines[line].text += "-";
-                                    }
-                                }
-                                proX = 0;
-                                linesNum++;
-                                maxLineheight = Number(proFont.fontSize.substr(0, proFont.fontSize.length - 2));
-                                LinesHeight[linesNum] = maxLineheight;
-                                if(textLines[line].text != undefined) {
-                                    line++;
-                                }
-                                textLines[line] = {text: splittedText[k], linebreak:true};
-                                proX += context.measureText(splittedText[k]).width;
-                            }else {
-                                if (textLines[line].text == undefined) {
+
+            // Automatic Line break
+            if (boxWidth !== undefined) {
+
+                // If returns true, it means we need a line break.
+                if (this.checkLineBreak(context, proText, boxWidth + textInfo.x, x)) {
+                    // Split text by words.
+                    splittedText = this.trim(proText).split(" ");
+
+                    // If there's only one word we don't need to make more checks.
+                    if (splittedText.length === 1) {
+                        textLines.push({text: this.trim(proText) + " ", linebreak: true});
+                    } else {
+                        // Reset vars.
+                        xAux = x;
+                        var line = 0;
+                        textLines[line] = {text: undefined, linebreak: false};
+
+                        // Loop words.
+                        for (var k = 0; k < splittedText.length; k++) {
+                            splittedText[k] += " ";
+                            // Check if the current text fits into the current line.
+                            if (!this.checkLineBreak(context, splittedText[k], boxWidth + textInfo.x, xAux)) {
+                                // Current text fit into the current line. So we save it
+                                // to the current textLine.
+                                if (textLines[line].text === undefined) {
                                     textLines[line].text = splittedText[k];
                                 } else {
                                     textLines[line].text += splittedText[k];
                                 }
-                                proX += context.measureText(splittedText[k]).width;
+
+                                xAux += context.measureText(splittedText[k]).width;
+                            } else {
+                                // Current text doesn't fit into the current line.
+                                // We are doing a line break, so we reset xAux
+                                // to initial x value.
+                                xAux = textInfo.x;
+                                if (textLines[line].text !== undefined) {
+                                    line++;
+                                }
+
+                                textLines[line] = {text: splittedText[k], linebreak: true};
+                                xAux += context.measureText(splittedText[k]).width;
                             }
-                        }else {
-                            proX = 0;
-                            LinesHeight[linesNum] = maxLineheight;
-                            linesNum++;
-                            if(textLines[line].text != undefined) {
-                                line++;
-                                maxLineheight = Number(proFont.fontSize.substr(0, proFont.fontSize.length - 2));
-                            }
-                            textLines[line] = {text: splittedText[k], linebreak: true};
-                            LinesHeight[linesNum] = maxLineheight;
-                            proX += context.measureText(splittedText[k]).width;
                         }
                     }
                 }
             }
-            if (textLines.length == 0) { 
-                textLines.push({text: this.trim(proText) + " ", linebreak: false}); 
+
+            // if textLines.length == 0 it means we doesn't need a linebreak.
+            if (textLines.length === 0) {
+                textLines.push({text: this.trim(proText) + " ", linebreak: false});
             }
+
+            // Let's draw the text
             for (var n = 0; n < textLines.length; n++) {
-                if(textLines[n].linebreak) {
-                    x = 0;
+                // Start a new line.
+                if (textLines[n].linebreak) {
+                    y += this._lineHeight;
+                    x = textInfo.x;
                 }
+                context.fillText(textLines[n].text, x, y);
+                // Increment X position based on current text measure.
                 x += context.measureText(textLines[n].text).width;
             }
+
+            context.restore();
         }
-        context.restore();
-        return LinesHeight;
     },
 
+    /**
+     * Check if a line break is needed.
+     */
+    checkLineBreak: function(context, text, boxWidth, x) {
+        return context.measureText(text).width + x > boxWidth;
+    },
 
+    /**
+     * A simple function to validate a Hex code.
+     */
     isHex: function(hex) {
-        return (/^(#[a-fA-F0-9]{3,6})$/i.test(hex));
+        return /^(#[a-fA-F0-9]{3,6})$/i.test(hex);
+    },
+
+    /**
+     * A simple function to check if the given value is a number.
+     */
+    isNumber: function(n) {
+        return !isNaN(parseFloat(n)) && isFinite(n);
+    },
+
+    /**
+     * A simple function to check if the given value is empty.
+     */
+    isEmpty: function(str) {
+        // Remove white spaces.
+        str = str.replace(/^\s+|\s+$/, "");
+        return str.length === 0;
     },
 
     /**
      * A simple function clear whitespaces.
      */
-    trim: function (str) {
+    trim: function(str) {
         var ws, i;
-        str = str.replace(/^\s\s*/, '');
+        str = str.replace(/^\s\s*/, "");
         ws = /\s/;
         i = str.length;
         while (ws.test(str.charAt(--i))) {
             continue;
         }
         return str.slice(0, i + 1);
-    },
-
+    }
 }, module);
