@@ -156,8 +156,8 @@ H5:     passed
 Node:   passed
 
 *) swipeview
-H5:     no pass
-Node:   no pass
+H5:     passed
+Node:   passed
 
 *) switch
 H5:     passed
