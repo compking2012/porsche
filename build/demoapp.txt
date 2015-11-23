@@ -124,8 +124,12 @@ H5:     passed
 Node:   passed
 
 *) richtextview
-H5:     no pass
-Node:   no pass
+H5:     passed
+Node:   passed
+
+*) richtextview-chinese
+H5:     passed
+Node:   passed
 
 *) rowlayout
 H5:     passed
@@ -180,8 +184,8 @@ H5:     passed
 Node:   passed
 
 *) twolinelistitem
-H5:     no pass
-Node:   no pass
+H5:     passed
+Node:   passed
 
 *) viewbounds
 H5:     no pass

@@ -8,13 +8,8 @@ var TwoLineListItem = fx.import("framework.ui.view.TwoLineListItem");
 Class.define("MyApp", App, {
     onStart: function() {
         this.list = new ListView();
-        this.list.width = this.width;
-        this.list.height = this.height;
-        this.list.topMargin = 10;
-        this.list.leftMargin = 10;
-        this.list.rightMargin = 10;
-        this.list.bottomMargin = 10;
-        this.list.margin = 10;
+        this.list.width = this.window.width;
+        this.list.height = this.window.height;
         this.list.itemHeight = 100;
 
         for (var i = 0; i < 10; i++) {
