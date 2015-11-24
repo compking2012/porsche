@@ -13,7 +13,7 @@ var Class = require("../../class");
 var EventEmitter = require("../../eventemitter");
 var Rectangle = require("../rectangle");
 var Matrix = require("../matrix");
-var GradientParser = require("../../util/gradientparser");
+var ColorManager = require("../../util/colormanager");
 var GestureManager = require("../gesture/gesturemanager");
 
 /**
@@ -83,6 +83,7 @@ Class.define("framework.ui.view.View", EventEmitter, {
         this._dirtyRect = new Rectangle(0, 0, 0, 0);
         this._boundRect = new Rectangle(0, 0, 0, 0);
 
+        this._colorManager = new ColorManager();
         this._gestureManager = new GestureManager(this);
 
         this.addEventListener("touchstart", this.handleTouchStartFunc = this.handleTouchStart.bind(this));
@@ -281,25 +282,7 @@ Class.define("framework.ui.view.View", EventEmitter, {
             return;
         }
         this._background = value;
-        if (/^linear\-gradient/.test(this._background)) {
-            var linear = GradientParser.parse(this._background);
-            this._backgroundObject = linear;
-        } else if (/^radial\-gradient/.test(this._background)) {
-            var radial = GradientParser.parse(this._background);
-            console.log("radial:", radial);
-            this._backgroundObject = null;
-        } else if (/^conic\-gradient/.test(this._background)) {
-            // var conical = GradientParser.parse(this._background);
-            this._backgroundObject = null;
-        } else if (/^url/.test(this._background)) {
-            var group = this._background.match(/^url\(([\w|\.|\/|\-]+)\)\s+(\w+)/);
-            var url = group[1];
-            var image = new Image();
-            image.src = url;
-            this._backgroundObject = image;
-        } else {
-            this._backgroundObject = null;
-        }
+        this._backgroundObject = this._colorManager.getColorObject(this._background);
         this.dispatchEvent("propertychange", "background", oldValue, value);
         this.invalidate();
     },
@@ -826,49 +809,8 @@ Class.define("framework.ui.view.View", EventEmitter, {
     drawBackground: function(context) {
         if (this._background !== "") {
             context.save();
-            if (/^linear\-gradient/.test(this._background)) {
-                var linear = this._backgroundObject;
-                var colorStopStart = linear[0].colorStops[0];
-                var colorStopEnd = linear[0].colorStops[1];
-                var gradient = context.createLinearGradient(0, 0, this._width, this._height);
-                gradient.addColorStop(0, colorStopStart.type === "hex" ? "#" + colorStopStart.value : colorStopStart.value);
-                gradient.addColorStop(1, colorStopEnd.type === "hex" ? "#" + colorStopEnd.value : colorStopEnd.value);
-                context.fillStyle = gradient;
-                context.fillRect(0, 0, this._width, this._height);
-            } else if (/^radial\-gradient/.test(this._background)) {
-                var radial = this._backgroundObject;
-                // context.fillStyle = null;
-                context.fillRect(0, 0, this._width, this._height);
-            } else if (/^conical\-gradient/.test(this._background)) {
-                var conical = this._backgroundObject;
-                // TODO: support conical gradient
-                var r1 = 251, g1 = 27, b1 = 84;
-                var r2 = 57, g2 = 3, b2 = 18;
-                var cx = this._width / 2;
-                var cy = this._height / 2;
-                for (var i = 0; i < 360; i += 0.1) {
-                    var rad = i * 2 * Math.PI / 360;
-                    var p = i / 360;
-                    var r = parseInt(r2 * p + r1 * (1 - p));
-                    var g = parseInt(g2 * p + g1 * (1 - p));
-                    var b = parseInt(b2 * p + b1 * (1 - p));
-                    context.strokeStyle = "rgb(" + r + "," + g + "," + b +")"; //"hsla(" + i + ", 100%, 50%, 1.0)";
-                    context.beginPath();
-                    context.moveTo(cx, cy);
-                    context.lineTo(cx + cx * Math.cos(rad), cy + cy * Math.sin(rad));
-                    context.stroke();
-                }
-                console.log("conical");
-            } else if (/^url/.test(this._background)) {
-                var group = this._background.match(/^url\(([\w|\.|\/|\-]+)\)\s+(\w+)/);
-                var repeat = group[2];
-                var pattern = context.createPattern(this._backgroundObject, repeat);
-                context.fillStyle = pattern;
-                context.fillRect(0, 0, this._width, this._height);
-            } else {
-                context.fillStyle = this._background;
-                context.fillRect(0, 0, this._width, this._height);
-            }
+            context.fillStyle = this._colorManager.getColor(context, this._width, this._height, this._background, this._backgroundObject);
+            context.fillRect(0, 0, this._width, this._height);
             context.restore();
         }
     },
@@ -904,7 +846,6 @@ Class.define("framework.ui.view.View", EventEmitter, {
         if (!this._dirty) {
             return false;
         }
-
 
         if (this._hardwareAccelerated) {
             context = this._bitmapBufferContext;

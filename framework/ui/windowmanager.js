@@ -14,6 +14,7 @@ var EventEmitter = require("../eventemitter");
 var TouchEvent = require("./event/touchevent");
 var KeyboardEvent = require("./event/keyboardevent");
 var Point = require("./point");
+var Ployfiller = require("../util/polyfiller");
 
 Class.define("framework.ui.WindowManager", EventEmitter, {
     initialize: function(inputService, renderService) {
@@ -94,47 +95,9 @@ Class.define("framework.ui.WindowManager", EventEmitter, {
 
     getContext: function(canvas) {
         var context = canvas.getContext("2d");
+        Ployfiller.polyfillContext(context);
         context.clearRect(0, 0, canvas.width, canvas.height);
 
-        if (context.roundRect === undefined) {
-            context.constructor.prototype.roundRect = function(x, y, width, height, radius) {
-                if (radius === undefined) {
-                    return;
-                }
-                this.beginPath();
-                this.moveTo(x + radius, y);
-                this.lineTo(x + width - radius, y);
-                this.quadraticCurveTo(x + width, y, x + width, y + radius);
-                this.lineTo(x + width, y + height - radius);
-                this.quadraticCurveTo(x + width, y + height, x + width - radius, y + height);
-                this.lineTo(x + radius, y + height);
-                this.quadraticCurveTo(x, y + height, x, y + height - radius);
-                this.lineTo(x, y + radius);
-                this.quadraticCurveTo(x, y, x + radius, y);
-                this.closePath();
-
-                return this;
-            };
-        }
-
-        if (context.drawLine === undefined) {
-            context.constructor.prototype.drawLine = function(coord) {
-                this.save();
-                this.beginPath();
-
-                if (coord.attr.type === "dashed") {
-                    this.setLineDash([coord.attr.dashWidth, coord.attr.spaceWidth]);
-                }
-                this.moveTo(coord.startX, coord.startY);
-                this.lineTo(coord.endX, coord.endY);
-                this.lineWidth = coord.thick;
-                this.strokeStyle = coord.color;
-                this.stroke();
-                this.restore();
-
-                return this;
-            };
-        }
         return context;
     },
 

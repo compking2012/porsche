@@ -98,20 +98,7 @@ Class.define("framework.ui.view.ProgressView", View, {
         context.beginPath();
         context.moveTo(0, halfHeight);
         context.lineTo(this._width, halfHeight);
-        if (/^linear\-gradient/.test(this._background)) {
-            var linear = this._backgroundObject;
-            var colorStopStart = linear[0].colorStops[0];
-            var colorStopEnd = linear[0].colorStops[1];
-            var gradient = context.createLinearGradient(0, 0, this._width, this._height);
-            gradient.addColorStop(0, colorStopStart.type === "hex" ? "#" + colorStopStart.value : colorStopStart.value);
-            gradient.addColorStop(1, colorStopEnd.type === "hex" ? "#" + colorStopEnd.value : colorStopEnd.value);
-            context.strokeStyle = gradient;
-        } else if (/^radial\-gradient/.test(this._background)) {
-            var radial = this._backgroundObject;
-            // context.strokeStyle = null;
-        } else {
-            context.strokeStyle = this._background;
-        }
+        context.strokeStyle = this.getBackground(context);
         context.stroke();
         context.restore();
     },

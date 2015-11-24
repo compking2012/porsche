@@ -10,7 +10,7 @@
 
 "use strict";
 var Class = require("../../class");
-var YObject = require("../../eventemitter");
+var YObject = require("../../yobject");
 
 Class.define("framework.ui.gesture.Util", YObject, {
     static: {
