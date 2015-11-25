@@ -80,12 +80,18 @@ Class.define("framework.ui.view.SwipeView", CompositeView, {
     addChild: function(child) {
         child.width = this._width;
         child.height = this._height;
+        if (this._children.length > 0) {
+            child.visibility = "gone";
+        }
         CompositeView.prototype.addChild.call(this, child);
     },
 
     insertChild: function(child) {
         child.width = this._width;
         child.height = this._height;
+        if (this._children.length > 0) {
+            child.visibility = "gone";
+        }
         CompositeView.prototype.insertChild.call(this, child);
     },
 
@@ -118,6 +124,9 @@ Class.define("framework.ui.view.SwipeView", CompositeView, {
                     this._nextIndex = -1;
                 }
             }
+        }
+        if (this._nextIndex !== -1) {
+            this._children[this._nextIndex].visibility = "visible";
         }
         this.invalidate();
     },
@@ -189,8 +198,10 @@ Class.define("framework.ui.view.SwipeView", CompositeView, {
                     currentView.top = endPosition;
                     nextView.top = (direction === "up" ? this._height : -this._height) + endPosition;
                 }
+                this._children[this._currentIndex].visibility = "gone";
                 this._currentIndex = this._nextIndex;
                 this._nextIndex = -1;
+
                 this.stopAutoSwipe();
                 return;
             }

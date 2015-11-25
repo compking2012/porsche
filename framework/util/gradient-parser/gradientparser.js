@@ -170,6 +170,8 @@ GradientParser.parse = (function() {
     repeatingLinearGradient: /^(\-(webkit|o|ms|moz)\-)?(repeating\-linear\-gradient)/i,
     radialGradient: /^(\-(webkit|o|ms|moz)\-)?(radial\-gradient)/i,
     repeatingRadialGradient: /^(\-(webkit|o|ms|moz)\-)?(repeating\-radial\-gradient)/i,
+    conicGradient: /^(\-(webkit|o|ms|moz)\-)?(conic\-gradient)/i,
+    repeatingConicGradient: /^(\-(webkit|o|ms|moz)\-)?(repeating\-conic\-gradient)/i,
     sideOrCorner: /^to (left (top|bottom)|right (top|bottom)|left|right|top|bottom)/i,
     extentKeywords: /^(closest\-side|closest\-corner|farthest\-side|farthest\-corner|contain|cover)/,
     positionKeywords: /^(left|center|right|top|bottom)/i,
@@ -228,6 +230,16 @@ GradientParser.parse = (function() {
           matchGradient(
             'repeating-radial-gradient',
             tokens.repeatingRadialGradient,
+            matchListRadialOrientations) ||
+
+          matchGradient(
+            'conic-gradient',
+            tokens.conicGradient,
+            matchListRadialOrientations) ||
+
+          matchGradient(
+            'repeating-conic-gradient',
+            tokens.repeatingConicGradient,
             matchListRadialOrientations);
   }
 
@@ -320,6 +332,10 @@ GradientParser.parse = (function() {
     }
 
     return radialType;
+  }
+
+  function matchListConicOrientations() {
+    
   }
 
   function matchCircle() {

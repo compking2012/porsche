@@ -79,8 +79,9 @@ Class.define("framework.util.ColorManager", YObject, {
             var radial = GradientParser.parse(color);
             return radial;
         } else if (/^conic\-gradient/.test(color)) {
-            // Conical gradient
-            var conical = GradientParser.parse(color);
+            // Conic gradient
+            // var conic = GradientParser.parse(color);
+            // return conic;
             return null;
         } else if (/^url/.test(color)) {
             // Background image
@@ -185,10 +186,13 @@ Class.define("framework.util.ColorManager", YObject, {
             // Radial gradient
             var radial = this._backgroundObject;
             return radial;
-        } else if (/^conical\-gradient/.test(color)) {
-            // Conical gradient
-            var conical = this._backgroundObject;
-            return conical;
+        } else if (/^conic\-gradient/.test(color)) {
+            // Conic gradient
+            var conic = this._backgroundObject;
+            var gradient = context.createConicalGradient(160, 160);
+            gradient.addColorStop(0, "#FF0000");
+            gradient.addColorStop(1, "#FFFFFF");
+            return conic;
         } else if (/^url/.test(color)) {
             // Background image
             var group = color.match(/^url\(([\w|\.|\/|\-]+)\)\s+(\w+)/);

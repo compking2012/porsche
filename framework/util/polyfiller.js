@@ -56,11 +56,30 @@ Class.define("framework.ui.util.Polyfiller", YObject, {
             }
 
             if (context.createConicalGradient === undefined) {
-                context.constructor.prototype.createConicalGradient = function(x0, y0, r) {
-                    function ConicalGradient(x0, y0, r) {
 
-                    }
+                var pd = Object.getOwnPropertyDescriptor(context.constructor.prototype, "fillStyle");
+                var fillStyleSetFunc = pd.set;
+                var fillStyleGetFunc = pd.get;
+                pd.set = function() {
+                    fillStyleSetFunc.apply(this, arguments);
                 };
+                pd.get = function() {
+                    fillStyleGetFunc.apply(this, arguments);
+                };
+                Object.defineProperty(context.constructor.prototype, "fillStyle", pd);
+
+                context.constructor.prototype.createConicalGradient = function(x0, y0) {
+                    function ConicalGradient(x0, y0) {
+                        this._x0 = x0;
+                        this._y0 = y0;
+                    }
+
+                    ConicalGradient.prototype.addColorStop = function() {
+                    };
+
+                    return new ConicalGradient(x0, y0);
+                };
+
             }
         }
     }
