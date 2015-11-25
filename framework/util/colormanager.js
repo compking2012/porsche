@@ -191,8 +191,9 @@ Class.define("framework.util.ColorManager", YObject, {
             var conic = this._backgroundObject;
             var gradient = context.createConicalGradient(160, 160);
             gradient.addColorStop(0, "#FF0000");
-            gradient.addColorStop(1, "#FFFFFF");
-            return conic;
+            gradient.addColorStop(0.3, "#FFFF00");
+            gradient.addColorStop(1, "#FF0000");
+            return gradient;
         } else if (/^url/.test(color)) {
             // Background image
             var group = color.match(/^url\(([\w|\.|\/|\-]+)\)\s+(\w+)/);
