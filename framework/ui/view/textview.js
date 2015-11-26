@@ -32,7 +32,7 @@ Class.define("framework.ui.view.TextView", View, {
         this._fontStyle = "normal";
         this._align = "left";
         this._verticalAlign = "middle";
-        this._baseline = "top";
+        this._baseline = "middle";
         this._color = "#FFFFFF";
         this._multiLine = false;
         this._highQuality = false;
@@ -252,11 +252,11 @@ Class.define("framework.ui.view.TextView", View, {
                     l = this._width;
                 }
 
-                if (this._baseline === "middle") {
+                if (this._verticalAlign === "middle") {
                     t = this._height / 2;
-                } else if (this._baseline === "top") {
+                } else if (this._verticalAlign === "top") {
                     t = 0;
-                } else if (this._baseline === "bottom") {
+                } else if (this._verticalAlign === "bottom") {
                     t = this._height;
                 }
                 context.textBaseline = this._baseline;

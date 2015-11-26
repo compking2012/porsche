@@ -26,6 +26,7 @@ Class.define("framework.ui.view.Button", TextView, {
     initialize: function(/*value*/) {
         TextView.prototype.initialize.apply(this, arguments);
 
+        this._align = "center";
         this._radius = 0;
         this.addGestureRecognizer(this._tapRecognizer = new TapRecognizer());
     },
