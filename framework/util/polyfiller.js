@@ -65,7 +65,7 @@ Class.define("framework.ui.util.Polyfiller", YObject, {
         },
 
         polyfillContextConicalGradient: function(context) {
-            if (true || context.constructor.prototype.createConicalGradient === undefined) {
+            if (context.constructor.prototype.createConicalGradient === undefined) {
                 function ConicalGradient(x0, y0) {
                     this._x0 = x0;
                     this._y0 = y0;
