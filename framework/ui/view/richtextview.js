@@ -76,6 +76,7 @@ Class.define("framework.ui.view.RichTextView", TextView, {
 
     /**
      * Save a new class definition.
+     * @method RichTextView#defineClass
      */
     defineClass: function(id, definition) {
         // A simple check.
@@ -93,6 +94,7 @@ Class.define("framework.ui.view.RichTextView", TextView, {
 
     /**
      * Returns a saved class.
+     * @method RichTextView#getClass
      */
     getClass: function(id) {
         if (this._savedClasses[id] !== undefined) {
@@ -336,6 +338,8 @@ Class.define("framework.ui.view.RichTextView", TextView, {
 
     /**
      * Check if a line break is needed.
+     * @method RichTextView#checkLineBreak
+     * @private
      */
     checkLineBreak: function(context, text, boxWidth, x) {
         return context.measureText(text).width + x > boxWidth;
@@ -343,6 +347,8 @@ Class.define("framework.ui.view.RichTextView", TextView, {
 
     /**
      * A simple function to validate a Hex code.
+     * @method RichTextView#isHex
+     * @private
      */
     isHex: function(hex) {
         return /^(#[a-fA-F0-9]{3,6})$/i.test(hex);
@@ -350,6 +356,8 @@ Class.define("framework.ui.view.RichTextView", TextView, {
 
     /**
      * A simple function to check if the given value is a number.
+     * @method RichTextView#isNumber
+     * @private
      */
     isNumber: function(n) {
         return !isNaN(parseFloat(n)) && isFinite(n);
@@ -357,6 +365,8 @@ Class.define("framework.ui.view.RichTextView", TextView, {
 
     /**
      * A simple function to check if the given value is empty.
+     * @method RichTextView#isEmpty
+     * @private
      */
     isEmpty: function(str) {
         // Remove white spaces.
@@ -366,6 +376,8 @@ Class.define("framework.ui.view.RichTextView", TextView, {
 
     /**
      * A simple function clear whitespaces.
+     * @method RichTextView#trim
+     * @private
      */
     trim: function(str) {
         var ws, i;

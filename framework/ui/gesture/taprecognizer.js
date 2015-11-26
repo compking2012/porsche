@@ -22,9 +22,10 @@ var Input = require("./input");
  */
 Class.define("framework.ui.gesture.TapRecognizer", GestureRecognizer, {
     /**
+     * Constructor
      * The eventData from the emitted event contains the property `tapCount`, which contains the amount of
      * multi-taps being recognized.
-     * @constructor
+     * @method TapRecognizer#initialize
      */
     initialize: function(/*options*/) {
         GestureRecognizer.prototype.initialize.apply(this, arguments);
@@ -131,6 +132,7 @@ Class.define("framework.ui.gesture.TapRecognizer", GestureRecognizer, {
 
     /**
      * Calculate the absolute distance between two points
+     * @method TapRecognizer#getDistance
      * @param {Object} p1 {x, y}
      * @param {Object} p2 {x, y}
      * @return {Number} distance

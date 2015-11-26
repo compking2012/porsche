@@ -14,7 +14,7 @@ var Input = require("./input");
 var Util = require("./util");
 
 /**
- * TouchInput
+ * @class SingleTouchInput
  */
 Class.define("framework.ui.gesture.SingleTouchInput", Input, {
     initialize: function(/*manager*/) {
@@ -88,7 +88,7 @@ Class.define("framework.ui.gesture.SingleTouchInput", Input, {
     },
 
     /**
-     * @this {TouchInput}
+     * @method TouchInput#normalizeSingleTouches
      * @param {Object} ev
      * @param {Number} type flag
      * @returns {undefined|Array} [all, changed]

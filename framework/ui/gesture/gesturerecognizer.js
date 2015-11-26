@@ -20,7 +20,8 @@ var Util = require("./util");
  */
 Class.define("framework.ui.gesture.GestureRecognizer", EventEmitter, {
     /**
-     * @constructor
+     * Constructor
+     * @method GestureRecognizer#initialize
      * @param {Object} options
      */
     initialize: function(options) {
@@ -73,6 +74,7 @@ Class.define("framework.ui.gesture.GestureRecognizer", EventEmitter, {
 
     /**
      * Set options
+     * @method GestureRecognizer#set
      * @param {Object} options
      */
     set: function(options) {
@@ -81,6 +83,7 @@ Class.define("framework.ui.gesture.GestureRecognizer", EventEmitter, {
 
     /**
      * Recognize simultaneous with an other gesture recognizer.
+     * @method GestureRecognizer#recognizeWith
      * @param {GestureRecognizer} otherRecognizer
      */
     recognizeWith: function(otherRecognizer) {
@@ -92,6 +95,7 @@ Class.define("framework.ui.gesture.GestureRecognizer", EventEmitter, {
 
     /**
      * Drop the simultaneous link. it doesnt remove the link on the other gesture recognizer.
+     * @method GestureRecognizer#dropRecognizeWith
      * @param {GestureRecognizer} otherRecognizer
      */
     dropRecognizeWith: function(otherRecognizer) {
@@ -100,6 +104,7 @@ Class.define("framework.ui.gesture.GestureRecognizer", EventEmitter, {
 
     /**
      * Gesture Recognizer can only run when an other is failing
+     * @method GestureRecognizer#requireFailure
      * @param {GestireRecognizer} otherRecognizer
      */
     requireFailure: function(otherRecognizer) {
@@ -111,6 +116,7 @@ Class.define("framework.ui.gesture.GestureRecognizer", EventEmitter, {
 
     /**
      * Drop the requireFailure link. it does not remove the link on the other recognizer.
+     * @method GestureRecognizer#dropRequireFailure
      * @param {Recognizer} otherRecognizer
      */
     dropRequireFailure: function(otherRecognizer) {
@@ -122,6 +128,7 @@ Class.define("framework.ui.gesture.GestureRecognizer", EventEmitter, {
 
     /**
      * Whether has require failures boolean
+     * @method GestureRecognizer#hasRequireFailures
      * @returns {Boolean}
      */
     hasRequireFailures: function() {
@@ -130,6 +137,7 @@ Class.define("framework.ui.gesture.GestureRecognizer", EventEmitter, {
 
     /**
      * If the gesture recognizer can recognize simultaneous with an other gesture recognizer
+     * @method GestureRecognizer#canRecognizeWith
      * @param {Recognizer} otherRecognizer
      * @returns {Boolean}
      */
@@ -140,6 +148,7 @@ Class.define("framework.ui.gesture.GestureRecognizer", EventEmitter, {
     /**
      * You should use "tryEmit" instead of "emit" directly to check
      * that all the needed recognizers has failed before emitting.
+     * @method GestureRecognizer#emit
      * @param {Object} input
      */
     emit: function(input) {
@@ -164,6 +173,7 @@ Class.define("framework.ui.gesture.GestureRecognizer", EventEmitter, {
      * Check that all the require failure recognizers has failed,
      * if true, it emits a gesture event,
      * otherwise, setup the state to FAILED.
+     * @method GestureRecognizer#tryEmit
      * @param {Object} input
      */
     tryEmit: function(input) {
@@ -176,6 +186,7 @@ Class.define("framework.ui.gesture.GestureRecognizer", EventEmitter, {
 
     /**
      * Can we emit?
+     * @method GestureRecognizer#canEmit
      * @returns {Boolean}
      */
     canEmit: function() {
@@ -191,8 +202,10 @@ Class.define("framework.ui.gesture.GestureRecognizer", EventEmitter, {
 
     /**
      * get a usable string, used as event postfix
+     * @method GestureRecognizer#stateStr
      * @param {Const} state
      * @returns {String} state
+     * @private
      */
     stateStr: function(state) {
         if (state & this.constructor.STATE_CANCELLED) {
@@ -209,8 +222,10 @@ Class.define("framework.ui.gesture.GestureRecognizer", EventEmitter, {
 
     /**
      * direction cons to string
+     * @method GestureRecognizer#directionStr
      * @param {Const} direction
      * @returns {String}
+     * @private
      */
     directionStr: function(direction) {
         if (direction === Input.DIRECTION_DOWN) {
@@ -227,6 +242,7 @@ Class.define("framework.ui.gesture.GestureRecognizer", EventEmitter, {
 
     /**
      * Update the recognizer
+     * @method GestureRecognizer#recognize
      * @param {Object} inputData
      */
     recognize: function(inputData) {
@@ -258,9 +274,10 @@ Class.define("framework.ui.gesture.GestureRecognizer", EventEmitter, {
     /**
      * Implement this to return the state of the recognizer
      * the actual recognizing happens in this method
-     * @override
+     * @method GestureRecognizer#process
      * @param {Object} inputData
      * @return {Const} STATE
+     * @override
      */
     process: function(/*input*/) {
         // TO BE IMPLEMENTED
@@ -269,6 +286,7 @@ Class.define("framework.ui.gesture.GestureRecognizer", EventEmitter, {
     /**
      * Implement this to be called when the gesture isn't allowed to recognize
      * like when another is being recognized or it is disabled
+     * @method GestureRecognizer#reset
      * @abstract
      */
     reset: function() {

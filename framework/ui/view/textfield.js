@@ -22,7 +22,7 @@ var Point = require("../point");
 Class.define("framework.ui.view.TextField", TextView, {
     /**
      * Constructor that create a view
-     * @constructor
+     * @method TextField#initialize
      */
     initialize: function() {
         TextView.prototype.initialize.apply(this, arguments);
@@ -209,6 +209,7 @@ Class.define("framework.ui.view.TextField", TextView, {
     /**
      * Place focus on the text field, placing the cursor
      * either at the end of the text or where the user clicked.
+     * @method TextField#focus
      */
     focus: function() {
         if (this._focused) {
@@ -241,6 +242,7 @@ Class.define("framework.ui.view.TextField", TextView, {
 
     /**
      * Removes focus from the CanvasInput box.
+     * @method TextField#blur
      */
     blur: function() {
         this._focused = false;

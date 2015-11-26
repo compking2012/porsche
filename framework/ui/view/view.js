@@ -764,6 +764,7 @@ Class.define("framework.ui.view.View", EventEmitter, {
     /**
      * Add a gesture recognizer to this view in order to recognize the specified gesture,
      * such as tap, longpress, pan and rotation etc.
+     * @method View#addGestureRecognizer
      * @param {GestureRecognizer} gestureRecognizer - the gesture recognizer
      */
     addGestureRecognizer: function(gestureRecognizer) {
@@ -772,6 +773,7 @@ Class.define("framework.ui.view.View", EventEmitter, {
 
     /**
      * Remove a gesture recognizer from this view
+     * @method View#removeGestureRecognizer
      * @param {GestureRecognizer} gestureRecognizer - the gesture recognizer
      */
     removeGestureRecognizer: function(gestureRecognizer) {

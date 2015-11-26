@@ -20,7 +20,8 @@ var Input = require("./input");
  */
 Class.define("framework.ui.gesture.SwipeRecognizer", GestureRecognizer, {
     /**
-     * @constructor
+     * Constructor
+     * @method SwipeRecognizer#initialize
      */
     initialize: function(/*options*/) {
         GestureRecognizer.prototype.initialize.apply(this, arguments);
@@ -42,6 +43,7 @@ Class.define("framework.ui.gesture.SwipeRecognizer", GestureRecognizer, {
 
     /**
      * Process the input and return the state for the recognizer
+     * @method SwipeRecognizer#process
      * @param {Object} input
      * @return {Const} State
      */
@@ -68,8 +70,10 @@ Class.define("framework.ui.gesture.SwipeRecognizer", GestureRecognizer, {
 
     /**
      * Used to check if it the recognizer receives valid input, like input.distance > 10.
+     * @method SwipeRecognizer#attrTest
      * @param {Object} input
      * @returns {Boolean} recognized
+     * @private
      */
     attrTest: function(input) {
         var direction = this._options.direction;

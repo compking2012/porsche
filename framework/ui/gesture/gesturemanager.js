@@ -58,6 +58,7 @@ Class.define("framework.ui.gesture.GestureManager", EventEmitter, {
     /**
      * Create new input type manager
      * called by the Manager constructor
+     * @method GestureManager#createInput
      * @returns {Input}
      */
     createInput: function() {
@@ -76,6 +77,7 @@ Class.define("framework.ui.gesture.GestureManager", EventEmitter, {
 
     /**
      * Add a recognizer to the manager
+     * @method GestureManager#add
      * @param {Recognizer} recognizer
      */
     add: function(recognizer) {
@@ -85,6 +87,7 @@ Class.define("framework.ui.gesture.GestureManager", EventEmitter, {
 
     /**
      * Remove a recognizer from the manager
+     * @method GestureManager#remove
      * @param {Recognizer} recognizer
      */
     remove: function(recognizer) {
@@ -99,6 +102,7 @@ Class.define("framework.ui.gesture.GestureManager", EventEmitter, {
 
     /**
      * emit event to the listeners
+     * @method GestureManager#emit
      * @param {String} event
      * @param {Object} data
      */
@@ -156,6 +160,7 @@ Class.define("framework.ui.gesture.GestureManager", EventEmitter, {
      * stop recognizing for this session.
      * This session will be discarded, when a new [input]start event is fired.
      * When forced, the recognizer cycle is stopped immediately.
+     * @method GestureManager#stop
      * @param {Boolean} [force]
      */
     stop: function(force) {
@@ -166,6 +171,7 @@ Class.define("framework.ui.gesture.GestureManager", EventEmitter, {
      * run the recognizers!
      * called by the inputHandler function on every movement of the pointers (touches)
      * it walks through all the recognizers and tries to detect the gesture that is being made
+     * @method GestureManager#recognize
      * @param {Object} inputData
      */
     recognize: function(inputData) {

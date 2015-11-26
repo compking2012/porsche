@@ -78,10 +78,11 @@ Class.define("framework.ui.gesture.TouchInput", Input, {
     },
 
     /**
-     * @this {TouchInput}
+     * @method TouchInput#getTouches
      * @param {Object} ev
      * @param {Number} type flag
      * @returns {undefined|Array} [all, changed]
+     * @private
      */
     getTouches: function(ev, type) {
         var allTouches = Util.toArray(ev.touches);

@@ -20,7 +20,8 @@ var Input = require("./input");
  */
 Class.define("framework.ui.gesture.RotationRecognizer", GestureRecognizer, {
     /**
-     * @constructor
+     * Constructor
+     * @method RotationRecognizer#initialize
      */
     initialize: function(/*options*/) {
         GestureRecognizer.prototype.initialize.apply(this, arguments);
@@ -40,6 +41,7 @@ Class.define("framework.ui.gesture.RotationRecognizer", GestureRecognizer, {
 
     /**
      * Process the input and return the state for the recognizer
+     * @method RotationRecognizer#process
      * @param {Object} input
      * @return {Const} State
      */

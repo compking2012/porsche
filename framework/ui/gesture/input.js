@@ -13,13 +13,14 @@ var Class = require("../../class");
 var EventEmitter = require("../../eventemitter");
 
 /**
- * Input
+ * @class Input
+ * @extends {EventEmitter}
  */
 Class.define("framework.ui.gesture.Input", EventEmitter, {
     /**
      * Constructor
+     * @method Input#initialize
      * @param {Manager} manager
-     * @constructor
      */
     initialize: function(manager) {
         EventEmitter.prototype.initialize.apply(this, arguments);
@@ -60,6 +61,7 @@ Class.define("framework.ui.gesture.Input", EventEmitter, {
 
     /**
      * Handle input events
+     * @method Input#handleInputEvent
      * @param {String} eventType
      * @param {Object} input
      */
@@ -89,6 +91,7 @@ Class.define("framework.ui.gesture.Input", EventEmitter, {
 
     /**
      * Extend the data with some usable properties like scale, rotate, velocity etc
+     * @method Input#computeInputData
      * @param {Object} input
      */
     computeInputData: function(input) {
@@ -148,6 +151,7 @@ Class.define("framework.ui.gesture.Input", EventEmitter, {
 
     /**
      * Create a simple clone from the input used for storage of firstInput and firstMultiple
+     * @method Input#simpleCloneInputData
      * @param {Object} input
      * @returns {Object} clonedInputData
      */
@@ -197,6 +201,7 @@ Class.define("framework.ui.gesture.Input", EventEmitter, {
 
     /**
      * Velocity is calculated every x ms
+     * @method Input#computeIntervalInputData
      * @param {Object} session
      * @param {Object} input
      */
@@ -232,6 +237,7 @@ Class.define("framework.ui.gesture.Input", EventEmitter, {
 
     /**
      * Get the center of all the pointers
+     * @method Input#getCenter
      * @param {Array} pointers
      * @return {Object} center contains `x` and `y` properties
      */
@@ -263,6 +269,7 @@ Class.define("framework.ui.gesture.Input", EventEmitter, {
 
     /**
      * Calculate the velocity between two points. unit is in px per ms.
+     * @method Input#getVelocity
      * @param {Number} deltaTime
      * @param {Number} x
      * @param {Number} y
@@ -277,6 +284,7 @@ Class.define("framework.ui.gesture.Input", EventEmitter, {
 
     /**
      * Get the direction between two points
+     * @method Input#getDirection
      * @param {Number} x
      * @param {Number} y
      * @return {Number} direction
@@ -294,6 +302,7 @@ Class.define("framework.ui.gesture.Input", EventEmitter, {
 
     /**
      * Calculate the absolute distance between two points
+     * @method Input#getDistance
      * @param {Object} p1 {x, y}
      * @param {Object} p2 {x, y}
      * @param {Array} [props] containing x and y keys
@@ -311,6 +320,7 @@ Class.define("framework.ui.gesture.Input", EventEmitter, {
 
     /**
      * Calculate the angle between two coordinates
+     * @method Input#getAngle
      * @param {Object} p1
      * @param {Object} p2
      * @param {Array} [props] containing x and y keys
@@ -327,6 +337,7 @@ Class.define("framework.ui.gesture.Input", EventEmitter, {
 
     /**
      * Calculate the rotation degrees between two pointersets
+     * @method Input#getRotation
      * @param {Array} start array of pointers
      * @param {Array} end array of pointers
      * @return {Number} rotation
@@ -338,6 +349,7 @@ Class.define("framework.ui.gesture.Input", EventEmitter, {
     /**
      * Calculate the scale factor between two pointersets
      * no scale is 1, and goes down to 0 when pinched together, and bigger when pinched out
+     * @method Input#getScale
      * @param {Array} start array of pointers
      * @param {Array} end array of pointers
      * @return {Number} scale
@@ -348,7 +360,7 @@ Class.define("framework.ui.gesture.Input", EventEmitter, {
 
     /**
      * find if a view is in the given parent
-     * @method hasParent
+     * @method Input#hasParent
      * @param {View} view
      * @param {View} parent
      * @return {Boolean} found

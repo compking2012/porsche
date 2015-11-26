@@ -67,7 +67,7 @@ Class.define("framework.YObject", {
      * takes into account the object's type and data.
      * The default implementation is equivalent to the following expression:
      * this.className
-     * @return {[type]} [description]
+     * @method YObject#toString
      */
     toString: function() {
         return this.className;

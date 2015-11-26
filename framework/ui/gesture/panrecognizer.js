@@ -20,7 +20,8 @@ var Input = require("./input");
  */
 Class.define("framework.ui.gesture.PanRecognizer", GestureRecognizer, {
     /**
-     * @constructor
+     * Constructor
+     * @method PanRecognizer#initialize
      */
     initialize: function(/*options*/) {
         GestureRecognizer.prototype.initialize.apply(this, arguments);
@@ -44,6 +45,7 @@ Class.define("framework.ui.gesture.PanRecognizer", GestureRecognizer, {
 
     /**
      * Process the input and return the state for the recognizer
+     * @method PanRecognizer#process
      * @param {Object} input
      * @return {Const} State
      */

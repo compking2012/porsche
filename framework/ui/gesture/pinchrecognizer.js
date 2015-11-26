@@ -20,7 +20,8 @@ var Input = require("./input");
  */
 Class.define("framework.ui.gesture.PinchRecognizer", GestureRecognizer, {
     /**
-     * @constructor
+     * Constructor
+     * @method PinchRecognizer#initialize
      */
     initialize: function(/*options*/) {
         GestureRecognizer.prototype.initialize.apply(this, arguments);
@@ -40,6 +41,7 @@ Class.define("framework.ui.gesture.PinchRecognizer", GestureRecognizer, {
 
     /**
      * Process the input and return the state for the recognizer
+     * @method PinchRecognizer#process
      * @param {Object} input
      * @return {Const} State
      */

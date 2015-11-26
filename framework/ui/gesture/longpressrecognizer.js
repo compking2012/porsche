@@ -20,7 +20,8 @@ var Input = require("./input");
  */
 Class.define("framework.ui.gesture.LongPressRecognizer", GestureRecognizer, {
     /**
-     * @constructor
+     * Constructor
+     * @method LongPressRecognizer#initialize
      */
     initialize: function(/*options*/) {
         GestureRecognizer.prototype.initialize.apply(this, arguments);
