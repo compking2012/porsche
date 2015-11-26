@@ -42,7 +42,8 @@ Class.define("MyApp", App, {
 
 
         this.conicGradients = [
-            "conic-gradient(center, red, orange, yellow, green, blue, indigo, violet)"
+            "conic-gradient(at center, #FF0000, #FFFF00 50%, #FF0000)",
+            "conic-gradient(at center, red, orange, yellow, green, blue, indigo, violet)"
         ];
         this.conicIndex = 0;
         this.conicGradientView.background = this.conicGradients[this.conicIndex];

@@ -23,7 +23,7 @@ Class.define("framework.ui.view.SwipeView", CompositeView, {
     initialize: function() {
         CompositeView.prototype.initialize.apply(this, arguments);
 
-        this.addGestureRecognizer(this._panRecognizer = new PanRecognizer({threshold: 3}));
+        this.addGestureRecognizer(this._panRecognizer = new PanRecognizer({threshold: 10}));
         this.addEventListener("panstart", this._onPanStartFunc = this.onPanStart.bind(this));
         this.addEventListener("panmove", this._onPanMoveFunc = this.onPanMove.bind(this));
         this.addEventListener("panend", this._onPanEndCancelFunc = this.onPanEndCancel.bind(this));
