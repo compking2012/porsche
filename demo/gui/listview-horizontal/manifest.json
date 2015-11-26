@@ -1,0 +1,7 @@
+{
+    "appName" : "ListView-Horizontal",
+    "debug": {
+        "paintFPS": true,
+        "dirtyRect": true
+    }
+}

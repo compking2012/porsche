@@ -1,0 +1,7 @@
+{
+    "appName" : "CircleProgressView-Animation",
+    "debug": {
+        "paintFPS": true,
+        "dirtyRect": true
+    }
+}

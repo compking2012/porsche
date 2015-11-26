@@ -1,0 +1,7 @@
+{
+    "appName": "RichTextView",
+    "debug": {
+        "paintFPS": true,
+        "dirtyRect": true
+    }
+}

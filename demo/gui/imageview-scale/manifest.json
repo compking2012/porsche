@@ -1,0 +1,7 @@
+{
+    "appName" : "ImageView-Scale",
+    "debug": {
+        "paintFPS": true,
+        "dirtyRect": true
+    }
+}

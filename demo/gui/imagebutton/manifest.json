@@ -1,0 +1,7 @@
+{
+    "appName" : "ImageButton",
+    "debug": {
+        "paintFPS": true,
+        "dirtyRect": true
+    }
+}

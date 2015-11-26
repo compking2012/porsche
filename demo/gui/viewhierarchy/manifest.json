@@ -1,0 +1,7 @@
+{
+    "appName": "ViewHierarchy",
+    "debug": {
+        "paintFPS": true,
+        "dirtyRect": true
+    }
+}

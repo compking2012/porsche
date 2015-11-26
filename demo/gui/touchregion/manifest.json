@@ -1,0 +1,7 @@
+{
+    "appName": "TouchRegion",
+    "debug": {
+        "paintFPS": true,
+        "dirtyRect": true
+    }
+}

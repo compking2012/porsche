@@ -1,0 +1,7 @@
+{
+    "appName": "Animation-Image",
+    "debug": {
+        "paintFPS": true,
+        "dirtyRect": false
+    }
+}

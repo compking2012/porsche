@@ -1,0 +1,7 @@
+{
+    "appName" : "ScrollableView-ScrollBar",
+    "debug": {
+        "paintFPS": true,
+        "dirtyRect": false
+    }
+}

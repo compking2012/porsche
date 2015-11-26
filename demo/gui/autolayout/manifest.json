@@ -1,0 +1,7 @@
+{
+    "appName": "AutoLayout",
+    "debug": {
+        "paintFPS": true,
+        "dirtyRect": false
+    }
+}

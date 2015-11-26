@@ -203,6 +203,32 @@ a {
   background-color: #eff0f1;
   border: 0; }
 
+div.demo {
+  zoom:1;
+}
+div.demo:after {
+  content: ".";
+  display: block;
+  height: 0;
+  clear: both;
+  visibility: hidden;
+}
+div.demo span {
+  display: block;
+}
+div.demo iframe {
+  display: block;
+  border: none;
+  width: 320px;
+  height: 320px;
+  float: left;
+}
+div.demo code {
+  display: block;
+  float: right;
+  width: 480px;
+}
+
 @media screen and (min-width: 64em) {
   .main-content {
     max-width: 64rem;

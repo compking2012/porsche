@@ -1,0 +1,7 @@
+{
+    "appName": "BackgroundImage",
+    "debug": {
+        "paintFPS": true,
+        "dirtyRect": true
+    }
+}

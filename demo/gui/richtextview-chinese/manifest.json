@@ -1,0 +1,7 @@
+{
+    "appName": "RichTextView-Chinese",
+    "debug": {
+        "paintFPS": true,
+        "dirtyRect": true
+    }
+}

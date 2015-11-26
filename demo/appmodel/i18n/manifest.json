@@ -1,0 +1,7 @@
+{
+    "appName": "i18n",
+    "debug": {
+        "paintFPS": true,
+        "dirtyRect": true
+    }
+}

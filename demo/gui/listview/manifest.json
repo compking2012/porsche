@@ -1,0 +1,7 @@
+{
+    "appName" : "ListView",
+    "debug": {
+        "paintFPS": true,
+        "dirtyRect": true
+    }
+}

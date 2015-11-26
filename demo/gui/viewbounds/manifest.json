@@ -1,0 +1,7 @@
+{
+    "appName": "ViewBounds",
+    "debug": {
+        "paintFPS": true,
+        "dirtyRect": true
+    }
+}

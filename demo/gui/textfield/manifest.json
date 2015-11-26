@@ -1,0 +1,7 @@
+{
+    "appName": "TextField",
+    "debug": {
+        "paintFPS": true,
+        "dirtyRect": true
+    }
+}

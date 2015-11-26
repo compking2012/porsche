@@ -1,0 +1,7 @@
+{
+    "appName": "GridLayout",
+    "debug": {
+        "paintFPS": true,
+        "dirtyRect": false
+    }
+}
