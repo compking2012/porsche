@@ -1,0 +1,566 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <title>Porsche.js API documentation: Source: ui/view/scrollableview.js</title>
+
+    <script src="scripts/prettify/prettify.js"> </script>
+    <script src="scripts/prettify/lang-css.js"> </script>
+    <!--[if lt IE 9]>
+      <script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+    <![endif]-->
+    <link type="text/css" rel="stylesheet" href="styles/prettify-tomorrow.css">
+    <link href="styles/bootstrap.css" rel="stylesheet">
+    <link href="styles/docs.css" rel="stylesheet">
+    <link href="styles/bootstrap-custom.css" rel="stylesheet">
+    <link href="http://netdna.bootstrapcdn.com/font-awesome/3.2.1/css/font-awesome.css" rel="stylesheet">
+    <script src="http://netdna.bootstrapcdn.com/twitter-bootstrap/2.3.2/js/bootstrap.min.js"></script>
+  </head>
+  <body>
+    <header class="header navbar navbar-inverse">
+      <div class="navbar-inner">
+        <div class="container-fluid">
+          <a class="brand" href="#"><strong>Porsche.js</strong> API documentation</a>
+        </div>
+      </div>
+    </header>
+
+    <div class="container-fluid">
+      <div class="row-fluid">
+          <div class="span3">
+              <h2><a href="index.html">Index</a></h2><div class="well well-small"><ul class="nav nav-list"><li class="nav-header">Modules</li><li><a href="module-AutoLayout.html">AutoLayout</a></li></ul></div><div class="well well-small"><ul class="nav nav-list"><li class="nav-header">Classes</li><li><a href="App.html"><i class="icon-shield" style="color: #0186d1"></i> App</a></li><li><a href="EventEmitter.html"><i class="icon-shield" style="color: #0186d1"></i> EventEmitter</a></li><li><a href="CubicBezier.html"><i class="icon-shield" style="color: #0186d1"></i> CubicBezier</a></li><li><a href="Event.html"><i class="icon-shield" style="color: #0186d1"></i> Event</a></li><li><a href="GestureEvent.html"><i class="icon-shield" style="color: #0186d1"></i> GestureEvent</a></li><li><a href="InputEvent.html"><i class="icon-shield" style="color: #0186d1"></i> InputEvent</a></li><li><a href="KeyboardEvent.html"><i class="icon-shield" style="color: #0186d1"></i> KeyboardEvent</a></li><li><a href="TouchEvent.html"><i class="icon-shield" style="color: #0186d1"></i> TouchEvent</a></li><li><a href="UIEvent.html"><i class="icon-shield" style="color: #0186d1"></i> UIEvent</a></li><li><a href="initialize.html"><i class="icon-shield" style="color: #0186d1"></i> initialize</a></li><li><a href="LongPressRecognizer.html"><i class="icon-shield" style="color: #0186d1"></i> LongPressRecognizer</a></li><li><a href="PanRecognizer.html"><i class="icon-shield" style="color: #0186d1"></i> PanRecognizer</a></li><li><a href="PinchRecognizer.html"><i class="icon-shield" style="color: #0186d1"></i> PinchRecognizer</a></li><li><a href="RotationRecognizer.html"><i class="icon-shield" style="color: #0186d1"></i> RotationRecognizer</a></li><li><a href="SwipeRecognizer.html"><i class="icon-shield" style="color: #0186d1"></i> SwipeRecognizer</a></li><li><a href="TapRecognizer.html"><i class="icon-shield" style="color: #0186d1"></i> TapRecognizer</a></li><li><a href="module-AutoLayout-View.html"><i class="icon-shield" style="color: #0186d1"></i> View</a></li><li><a href="ColumnLayout.html"><i class="icon-shield" style="color: #0186d1"></i> ColumnLayout</a></li><li><a href="ColumnLayoutParam.html"><i class="icon-shield" style="color: #0186d1"></i> ColumnLayoutParam</a></li><li><a href="FlowLayout.html"><i class="icon-shield" style="color: #0186d1"></i> FlowLayout</a></li><li><a href="FlowLayoutParam.html"><i class="icon-shield" style="color: #0186d1"></i> FlowLayoutParam</a></li><li><a href="GridLayout.html"><i class="icon-shield" style="color: #0186d1"></i> GridLayout</a></li><li><a href="GridLayoutParam.html"><i class="icon-shield" style="color: #0186d1"></i> GridLayoutParam</a></li><li><a href="Layout.html"><i class="icon-shield" style="color: #0186d1"></i> Layout</a></li><li><a href="RelativeLayout.html"><i class="icon-shield" style="color: #0186d1"></i> RelativeLayout</a></li><li><a href="RowLayout.html"><i class="icon-shield" style="color: #0186d1"></i> RowLayout</a></li><li><a href="RowLayoutParam.html"><i class="icon-shield" style="color: #0186d1"></i> RowLayoutParam</a></li><li><a href="Matrix.html"><i class="icon-shield" style="color: #0186d1"></i> Matrix</a></li><li><a href="Point.html"><i class="icon-shield" style="color: #0186d1"></i> Point</a></li><li><a href="Rectangle.html"><i class="icon-shield" style="color: #0186d1"></i> Rectangle</a></li><li><a href="BarCode.html"><i class="icon-shield" style="color: #0186d1"></i> BarCode</a></li><li><a href="Button.html"><i class="icon-shield" style="color: #0186d1"></i> Button</a></li><li><a href="Chart.html"><i class="icon-shield" style="color: #0186d1"></i> Chart</a></li><li><a href="CheckBox.html"><i class="icon-shield" style="color: #0186d1"></i> CheckBox</a></li><li><a href="CircleProgressView.html"><i class="icon-shield" style="color: #0186d1"></i> CircleProgressView</a></li><li><a href="CompositeView.html"><i class="icon-shield" style="color: #0186d1"></i> CompositeView</a></li><li><a href="Dialog.html"><i class="icon-shield" style="color: #0186d1"></i> Dialog</a></li><li><a href="ImageButton.html"><i class="icon-shield" style="color: #0186d1"></i> ImageButton</a></li><li><a href="ImageView.html"><i class="icon-shield" style="color: #0186d1"></i> ImageView</a></li><li><a href="Indicator.html"><i class="icon-shield" style="color: #0186d1"></i> Indicator</a></li><li><a href="ListItem.html"><i class="icon-shield" style="color: #0186d1"></i> ListItem</a></li><li><a href="ListView.html"><i class="icon-shield" style="color: #0186d1"></i> ListView</a></li><li><a href="ProgressView.html"><i class="icon-shield" style="color: #0186d1"></i> ProgressView</a></li><li><a href="QRCode.html"><i class="icon-shield" style="color: #0186d1"></i> QRCode</a></li><li><a href="RichTextView.html"><i class="icon-shield" style="color: #0186d1"></i> RichTextView</a></li><li><a href="ScrollableView.html"><i class="icon-shield" style="color: #0186d1"></i> ScrollableView</a></li><li><a href="ScrollBar.html"><i class="icon-shield" style="color: #0186d1"></i> ScrollBar</a></li><li><a href="Slider.html"><i class="icon-shield" style="color: #0186d1"></i> Slider</a></li><li><a href="StackView.html"><i class="icon-shield" style="color: #0186d1"></i> StackView</a></li><li><a href="SwipeView.html"><i class="icon-shield" style="color: #0186d1"></i> SwipeView</a></li><li><a href="Switch.html"><i class="icon-shield" style="color: #0186d1"></i> Switch</a></li><li><a href="TextField.html"><i class="icon-shield" style="color: #0186d1"></i> TextField</a></li><li><a href="TextView.html"><i class="icon-shield" style="color: #0186d1"></i> TextView</a></li><li><a href="View.html"><i class="icon-shield" style="color: #0186d1"></i> View</a></li><li><a href="Window.html"><i class="icon-shield" style="color: #0186d1"></i> Window</a></li><li><a href="YObject.html"><i class="icon-shield" style="color: #0186d1"></i> YObject</a></li></ul></div><div class="well well-small"><ul class="nav nav-list"><li class="nav-header">Namespaces</li><li><a href="VisualFormat.html"><i class="icon-code"></i> VisualFormat</a></li></ul></div><div class="well well-small"><ul class="nav nav-list"><li class="nav-header">Global</li><li><a href="global.html#createInput"><i class="icon-globe" style="color: black;"></i> createInput</a></li><li><a href="global.html#add"><i class="icon-globe" style="color: black;"></i> add</a></li><li><a href="global.html#remove"><i class="icon-globe" style="color: black;"></i> remove</a></li><li><a href="global.html#emit"><i class="icon-globe" style="color: black;"></i> emit</a></li><li><a href="global.html#stop"><i class="icon-globe" style="color: black;"></i> stop</a></li><li><a href="global.html#recognize"><i class="icon-globe" style="color: black;"></i> recognize</a></li><li><a href="global.html#set"><i class="icon-globe" style="color: black;"></i> set</a></li><li><a href="global.html#recognizeWith"><i class="icon-globe" style="color: black;"></i> recognizeWith</a></li><li><a href="global.html#dropRecognizeWith"><i class="icon-globe" style="color: black;"></i> dropRecognizeWith</a></li><li><a href="global.html#requireFailure"><i class="icon-globe" style="color: black;"></i> requireFailure</a></li><li><a href="global.html#dropRequireFailure"><i class="icon-globe" style="color: black;"></i> dropRequireFailure</a></li><li><a href="global.html#hasRequireFailures"><i class="icon-globe" style="color: black;"></i> hasRequireFailures</a></li><li><a href="global.html#canRecognizeWith"><i class="icon-globe" style="color: black;"></i> canRecognizeWith</a></li><li><a href="global.html#tryEmit"><i class="icon-globe" style="color: black;"></i> tryEmit</a></li><li><a href="global.html#canEmit"><i class="icon-globe" style="color: black;"></i> canEmit</a></li><li><a href="global.html#stateStr"><i class="icon-globe" style="color: black;"></i> stateStr</a></li><li><a href="global.html#directionStr"><i class="icon-globe" style="color: black;"></i> directionStr</a></li><li><a href="global.html#process"><i class="icon-globe" style="color: black;"></i> process</a></li><li><a href="global.html#reset"><i class="icon-globe" style="color: black;"></i> reset</a></li><li><a href="global.html#handleInputEvent"><i class="icon-globe" style="color: black;"></i> handleInputEvent</a></li><li><a href="global.html#computeInputData"><i class="icon-globe" style="color: black;"></i> computeInputData</a></li><li><a href="global.html#simpleCloneInputData"><i class="icon-globe" style="color: black;"></i> simpleCloneInputData</a></li><li><a href="global.html#computeIntervalInputData"><i class="icon-globe" style="color: black;"></i> computeIntervalInputData</a></li><li><a href="global.html#getCenter"><i class="icon-globe" style="color: black;"></i> getCenter</a></li><li><a href="global.html#getVelocity"><i class="icon-globe" style="color: black;"></i> getVelocity</a></li><li><a href="global.html#getDirection"><i class="icon-globe" style="color: black;"></i> getDirection</a></li><li><a href="global.html#getDistance"><i class="icon-globe" style="color: black;"></i> getDistance</a></li><li><a href="global.html#getAngle"><i class="icon-globe" style="color: black;"></i> getAngle</a></li><li><a href="global.html#getRotation"><i class="icon-globe" style="color: black;"></i> getRotation</a></li><li><a href="global.html#getScale"><i class="icon-globe" style="color: black;"></i> getScale</a></li><li><a href="global.html#hasParent"><i class="icon-globe" style="color: black;"></i> hasParent</a></li><li><a href="global.html#normalizeSingleTouches"><i class="icon-globe" style="color: black;"></i> normalizeSingleTouches</a></li><li><a href="global.html#attrTest"><i class="icon-globe" style="color: black;"></i> attrTest</a></li><li><a href="global.html#getTouches"><i class="icon-globe" style="color: black;"></i> getTouches</a></li><li><a href="global.html#Attribute"><i class="icon-globe" style="color: black;"></i> Attribute</a></li><li><a href="global.html#Relation"><i class="icon-globe" style="color: black;"></i> Relation</a></li><li><a href="global.html#Priority"><i class="icon-globe" style="color: black;"></i> Priority</a></li><li><a href="global.html#value"><i class="icon-globe" style="color: black;"></i> value</a></li><li><a href="global.html#defineClass"><i class="icon-globe" style="color: black;"></i> defineClass</a></li><li><a href="global.html#getClass"><i class="icon-globe" style="color: black;"></i> getClass</a></li><li><a href="global.html#checkLineBreak"><i class="icon-globe" style="color: black;"></i> checkLineBreak</a></li><li><a href="global.html#isHex"><i class="icon-globe" style="color: black;"></i> isHex</a></li><li><a href="global.html#isNumber"><i class="icon-globe" style="color: black;"></i> isNumber</a></li><li><a href="global.html#isEmpty"><i class="icon-globe" style="color: black;"></i> isEmpty</a></li><li><a href="global.html#trim"><i class="icon-globe" style="color: black;"></i> trim</a></li><li><a href="global.html#focus"><i class="icon-globe" style="color: black;"></i> focus</a></li><li><a href="global.html#blur"><i class="icon-globe" style="color: black;"></i> blur</a></li><li><a href="global.html#addGestureRecognizer"><i class="icon-globe" style="color: black;"></i> addGestureRecognizer</a></li><li><a href="global.html#removeGestureRecognizer"><i class="icon-globe" style="color: black;"></i> removeGestureRecognizer</a></li><li><a href="global.html#toString"><i class="icon-globe" style="color: black;"></i> toString</a></li></ul></div>
+          </div>
+
+          <div class="span9">
+              <h1 class="page-header">Source: ui/view/scrollableview.js</h1>
+              
+
+
+    
+    <section>
+        <article>
+            <pre class="prettyprint source"><code>/**
+* Porsche.js is licensed under the MIT license. If a copy of the
+* MIT-license was not distributed with this file, You can obtain one at:
+* http://opensource.org/licenses/mit-license.html.
+*
+* @author: Yang Yang (compking@gmail.com)
+* @license MIT
+* @copyright Yang Yang, 2015
+*/
+
+"use strict";
+var Class = require("../../class");
+var CompositeView = require("./compositeview");
+var CubicBezier = require("../animation/cubicbezier");
+var PanRecognizer = require("../gesture/panrecognizer");
+
+/**
+ * ScrollableView
+ * @class ScrollableView
+ * @extends CompositeView
+ */
+Class.define("framework.ui.view.ScrollableView", CompositeView, {
+    /**
+     * Constructor
+     * @method ScrollableView#initialize
+     */
+    initialize: function() {
+        CompositeView.prototype.initialize.apply(this, arguments);
+
+        this.addGestureRecognizer(this._panRecognizer = new PanRecognizer({threshold: 1}));
+        this.addEventListener("panstart", this._onPanStartFunc = this.onPanStart.bind(this));
+        this.addEventListener("panmove", this._onPanMoveFunc = this.onPanMove.bind(this));
+        this.addEventListener("panend", this._onPanEndCancelFunc = this.onPanEndCancel.bind(this));
+        this.addEventListener("pancancel", this._onPanEndCancelFunc);
+
+        this._overScroll = false;
+        this._orientation = "all";
+        this._horizontalScrollBar = null;
+        this._verticalScrollBar = null;
+
+        this._autoTimer = null;
+        this._velocityX = 0;
+        this._velocityY = 0;
+        this._rebackDuration = 200;
+        this._elastic = 0.2;
+
+        this._contentWidth = 0;
+        this._contentHeight = 0;
+    },
+
+    /**
+     * Destructor
+     * @method ScrollableView#destroy
+     */
+    destroy: function() {
+        this.stopAutoScroll();
+
+        this.removeHorizontalScrollBar();
+        this.removeVerticalScrollBar();
+
+        this.removeGestureRecognizer(this._panRecognizer);
+        this._panRecognizer = null;
+        this.removeEventListener("panstart", this._onPanStartFunc);
+        this._onPanStartFunc = null;
+        this.removeEventListener("panmove", this._onPanMoveFunc);
+        this._onPanMoveFunc = null;
+        this.removeEventListener("panend", this._onPanEndCancelFunc);
+        this.removeEventListener("pancancel", this._onPanEndCancelFunc);
+        this._onPanEndCancelFunc = null;
+
+        CompositeView.prototype.destroy.apply(this, arguments);
+    },
+
+    /**
+     * @name ScrollableView#horizontalScrollBar
+     * @type {ScrollBar}
+     * @description The associated horizontal scroll bar.
+     */
+    get horizontalScrollBar() {
+        return this._horizontalScrollBar;
+    },
+
+    set horizontalScrollBar(value) {
+        var oldValue = this._horizontalScrollBar;
+        if (oldValue === value) {
+            return;
+        }
+        this.removeHorizontalScrollBar();
+        this._horizontalScrollBar = value;
+        this._horizontalScrollBar.associatedView = this;
+        this.dispatchEvent("propertychange", "horizontalScrollBar", oldValue, value);
+        this.invalidate();
+    },
+
+    /**
+     * @name ScrollableView#verticalScrollBar
+     * @type {ScrollBar}
+     * @description The associated vertical scroll bar.
+     */
+    get verticalScrollBar() {
+        return this._verticalScrollBar;
+    },
+
+    set verticalScrollBar(value) {
+        var oldValue = this._verticalScrollBar;
+        if (oldValue === value) {
+            return;
+        }
+        this.removeVerticalScrollBar();
+        this._verticalScrollBar = value;
+        this._verticalScrollBar.associatedView = this;
+        this.dispatchEvent("propertychange", "verticalScrollBar", oldValue, value);
+        this.invalidate();
+    },
+
+    get contentWidth() {
+        return this._contentWidth;
+    },
+
+    get contentHeight() {
+        return this._contentHeight;
+    },
+
+    /**
+     * @name ScrollableView#orientation
+     * @type {String}
+     * @description The orientation for scroll, such as "horizontal", "vertical".
+     */
+    get orientation() {
+        return this._orientation;
+    },
+
+    set orientation(value) {
+        var oldValue = this._orientation;
+        if (oldValue === value) {
+            return;
+        }
+        this._orientation = value;
+        this.dispatchEvent("propertychange", "orientation", oldValue, value);
+        this.invalidate();
+    },
+
+    /**
+     * @name ScrollableView#overScroll
+     * @type {Boolean}
+     * @description Whether allows over scroll.
+     */
+    get overScroll() {
+        return this._overScroll;
+    },
+
+    set overScroll(value) {
+        var oldValue = this._overScroll;
+        if (oldValue === value) {
+            return;
+        }
+        this._overScroll = value;
+        this.dispatchEvent("propertychange", "overScroll", oldValue, value);
+        this.invalidate();
+    },
+
+    /**
+     * Add a view to specified parent view.
+     * @method ScrollableView#addChild
+     * @param {View} view - sub child view to be insert to the last, and show at top
+     */
+    addChild: function(view) {
+        view.addEventListener("propertychange", this._onPropertyChangeFunc = this.onPropertyChange.bind(this, view));
+        if (view.right > this._contentWidth) {
+            this._contentWidth = view.right;
+        }
+        if (view.bottom > this._contentHeight) {
+            this._contentHeight = view.bottom;
+        }
+        CompositeView.prototype.addChild.call(this, view);
+    },
+
+    /**
+     * Insert a child view in this composite view by the specified position.
+     * @method ScrollableView#insertChild
+     * @param {View} view - the child view to add
+     * @param {Number} index - the position at which to add the child
+     */
+    insertChild: function(view, index) {
+        view.addEventListener("propertychange", this._onPropertyChangeFunc = this.onPropertyChange.bind(this, view));
+        if (view.right > this._contentWidth) {
+            this._contentWidth = view.right;
+        }
+        if (view.bottom > this._contentHeight) {
+            this._contentHeight = view.bottom;
+        }
+        CompositeView.prototype.insertChild.call(this, view, index);
+    },
+
+    /**
+     * Remove the specified view from this composite view.
+     * @method ScrollableView#removeChild
+     * @param {View} view - the child view to remove, or the position in this composite view to remove
+     */
+    removeChild: function(view) {
+        view.removeEventListener("propertychange", this._onPropertyChangeFunc);
+        var length = this._children.length;
+        if (view.right === this._contentWidth) {
+            this._contentWidth = 0;
+            for (var i = 0; i &lt; length; i++) {
+                if (this._children[i] === view) {
+                    continue;
+                }
+                if (this._children[i].right > this._contentWidth) {
+                    this._contentWidth = this._children[i].right;
+                }
+            }
+        }
+        if (view.bottom === this._contentHeight) {
+            this._contentHeight = 0;
+            for (var j = 0; j &lt; length; j++) {
+                if (this._children[j] === view) {
+                    continue;
+                }
+                if (this._children[j].bottom > this._contentHeight) {
+                    this._contentHeight = this._children[j].bottom;
+                }
+            }
+        }
+        CompositeView.prototype.removeChild.call(this, view);
+    },
+
+    paintChildren: function(context) {
+        if (this._layout !== null &amp;&amp; this._needRelayout) {
+            this._layout.perform();
+            this._needRelayout = false;
+        }
+
+        var length = this._children.length;
+        for (var i = 0; i &lt; length; i++) {
+            var view = this._children[i];
+            if (view.bottom >= this._scrollY &amp;&amp; view.top &lt;= this._scrollY + this._height) {
+                context.translate(view.left - this._scrollX, view.top - this._scrollY);
+                view.paint(context);
+                context.translate(-view.left + this._scrollX, -view.top + this._scrollY);
+            }
+        }
+    },
+
+    onPanStart: function(/*e*/) {
+        this.stopAutoScroll();
+
+        this._startScrollX = this._scrollX;
+        this._startScrollY = this._scrollY;
+    },
+
+    onPanMove: function(e) {
+        if (this._orientation === "horizontal" || this._orientation === "all") {
+            var scrollX = this._startScrollX - e.deltaX;
+            if (!this._overScroll) {
+                if (scrollX > Math.max(0, this._contentWidth - this._width)) {
+                    this.scrollX = Math.max(0, this._contentWidth - this._width);
+                } else if (scrollX &lt; 0) {
+                    this.scrollX = 0;
+                } else {
+                    this.scrollX = scrollX;
+                }
+            } else {
+                if (scrollX &lt;= -10) {
+                    this.scrollX = Math.round(scrollX * this._elastic - 10 * (1 - this._elastic));
+                } else if (scrollX >= Math.max(this._contentWidth - this._width + 10, 0)) {
+                    this.scrollX = Math.round(scrollX * this._elastic + Math.max(this._contentWidth - this._width + 10, 0) * (1 - this._elastic));
+                } else {
+                    this.scrollX = scrollX;
+                }
+            }
+        }
+
+        if (this._orientation === "vertical" || this._orientation === "all") {
+            var scrollY = this._startScrollY - e.deltaY;
+            if (!this._overScroll) {
+                if (scrollY > Math.max(0, this._contentHeight - this._height)) {
+                    this.scrollY = Math.max(0, this._contentHeight - this._height);
+                } else if (scrollY &lt; 0) {
+                    this.scrollY = 0;
+                } else {
+                    this.scrollY = scrollY;
+                }
+            } else {
+                if (scrollY &lt;= -10) {
+                    this.scrollY = Math.round(scrollY * this._elastic - 10 * (1 - this._elastic));
+                } else if (scrollY >= Math.max(this._contentHeight - this._height + 10, 0)) {
+                    this.scrollY = Math.round(scrollY * this._elastic + Math.max(this._contentHeight - this._height + 10, 0) * (1 - this._elastic));
+                } else {
+                    this.scrollY = scrollY;
+                }
+            }
+        }
+    },
+
+    onPanEndCancel: function(e) {
+        this._velocityX = e.velocityX * 1000;
+        this._velocityY = e.velocityY * 1000;
+        if (this._orientation === "horizontal") {
+            if (this._scrollX > 0 &amp;&amp; this._scrollX &lt; Math.max(0, this._contentWidth - this._width)) {
+                this.startAutoScroll(this._velocityX, 0);
+                return;
+            }
+        } else if (this._orientation === "vertical") {
+            if (this._scrollY > 0 &amp;&amp; this._scrollY &lt; Math.max(0, this._contentHeight - this._height)) {
+                this.startAutoScroll(0, this._velocityY);
+                return;
+            }
+        } else {
+            if (this._scrollX &lt; 0 || this._scrollX > Math.max(0, this._contentWidth - this._width)) {
+                this._velocityX = 0;
+            }
+            if (this._scrollY &lt; 0 || this._scrollY > Math.max(0, this._contentHeight - this._height)) {
+                this._velocityY = 0;
+            }
+            if (this._velocityX !== 0 || this._velocityY !== 0) {
+                this.startAutoScroll(this._velocityX, this._velocityY);
+                return;
+            }
+        }
+        if (this._overScroll) {
+            // FIXME
+            if (this._scrollX &lt; 0 ||
+                this._scrollX > this._contentWidth - this._width &amp;&amp; this._scrollX > 0 ||
+                this._scrollY &lt; 0 ||
+                this._scrollY > 0 &amp;&amp; this._scrollY > this._contentHeight - this._height) {
+                this.reback();
+            }
+        }
+    },
+
+    startAutoScroll: function(amplitudeX, amplitudeY) {
+        var startTime = new Date().getTime();
+        var totalTime = 0;
+        if (amplitudeX !== 0 &amp;&amp; amplitudeY !== 0) {
+            totalTime = Math.max(this._velocityX / amplitudeX, this._velocityY / amplitudeY);
+        } else if (amplitudeX !== 0) {
+            totalTime = this._velocityX / amplitudeX;
+        } else if (amplitudeY !== 0) {
+            totalTime = this._velocityY / amplitudeY;
+        }
+        totalTime *= 1000;
+        var isEndX = false;
+        var isEndY = false;
+        if (!this._autoTimer) {
+            var animationFunc = null;
+            this._autoTimer = setTimeout(animationFunc = function() {
+                var time = new Date().getTime();
+                var deltaX = this.calculateDelta(this._velocityX, amplitudeX, time - startTime);
+                var deltaY = this.calculateDelta(this._velocityY, amplitudeY, time - startTime);
+                var scrollX = this._scrollX;
+                var scrollY = this._scrollY;
+
+                if (!isEndX) {
+                    scrollX -= deltaX;
+                }
+                if (!isEndY) {
+                    scrollY -= deltaY;
+                }
+
+                totalTime -= time - startTime;
+                startTime = new Date().getTime();
+
+                if (totalTime > 0) {
+                    if (scrollX &lt;= 0) {
+                        this.scrollX = 0;
+                        isEndX = true;
+                    } else if (scrollX >= Math.max(0, this._contentWidth - this._width)) {
+                        this.scrollX = Math.max(0, this._contentWidth - this._width);
+                        isEndX = true;
+                    } else {
+                        this.scrollX = scrollX;
+                    }
+
+                    if (scrollY &lt;= 0) {
+                        this.scrollY = 0;
+                        isEndY = true;
+                    } else if (scrollY >= Math.max(0, this._contentHeight - this._height)) {
+                        this.scrollY = Math.max(0, this._contentHeight - this._height);
+                        isEndY = true;
+                    } else {
+                        this.scrollY = scrollY;
+                    }
+
+                    if (isEndX &amp;&amp; isEndY) {
+                        this.stopAutoScroll();
+                        return;
+                    }
+                } else {
+                    this.scrollX = scrollX;
+                    this.scrollY = scrollY;
+                    this.stopAutoScroll();
+                    return;
+                }
+                this._autoTimer = setTimeout(animationFunc, 16);
+            }.bind(this), 16);
+        }
+    },
+
+    stopAutoScroll: function() {
+        if (this._autoTimer !== null) {
+            clearTimeout(this._autoTimer);
+            this._velocityX = 0;
+            this._velocityY = 0;
+            this._autoTimer = null;
+            this.invalidate();
+        }
+    },
+
+    removeHorizontalScrollBar: function() {
+        if (this._horizontalScrollBar !== null) {
+            this._horizontalScrollBar.removeEventListener("propertychange", this._onHorizontalScrollBarChangeFunc);
+            this._onHorizontalScrollBarChangeFunc = null;
+            this._horizontalScrollBar = null;
+        }
+    },
+
+    removeVerticalScrollBar: function() {
+        if (this._verticalScrollBar !== null) {
+            this._verticalScrollBar.removeEventListener("propertychange", this._onVerticalScrollBarChangeFunc);
+            this._onVerticalScrollBarChangeFunc = null;
+            this._verticalScrollBar = null;
+        }
+    },
+
+    calculateDelta: function(v, a, t) {
+        if (a &lt; 10 &amp;&amp; a > -10) {
+            return 0;
+        }
+        var vt = v;
+        var v0 = vt - a * t / 1000;
+        var delta = (Math.pow(vt, 2) - Math.pow(v0, 2)) * 0.5 / a;
+        if (v === this._velocityX) {
+            this._velocityX = v0;
+        }
+        if (v === this._velocityY) {
+            this._velocityY = v0;
+        }
+        return delta;
+    },
+
+    reback: function() {
+        var targetX = 0;
+        var targetY = 0;
+        var beziers = new CubicBezier(0.33, 0.66, 0.66, 1);
+        if (this._scrollX > Math.max(0, this._contentWidth - this._width)) {
+            targetX = Math.max(0, this._contentWidth - this._width);
+        } else if (this._scrollX &lt; 0) {
+            targetX = 0;
+        } else {
+            targetX = this._scrollX;
+        }
+        if (this._scrollY > Math.max(0, this._contentHeight - this._height)) {
+            targetY = Math.max(0, this._contentHeight - this._height);
+        } else if (this._scrollY &lt; 0) {
+            targetY = 0;
+        } else {
+            targetY = this._scrollY;
+        }
+        var startX = this._scrollX;
+        var startY = this._scrollY;
+        var startTime = new Date().getTime();
+        var animationFunc = null;
+        this._autoTimer = setTimeout(animationFunc = function() {
+            var time = new Date().getTime();
+            if (time - startTime >= this._rebackDuration) {
+                this.scrollX = targetX;
+                this.scrollY = targetY;
+                clearTimeout(this._autoTimer);
+                return;
+            }
+            var delta = beziers.getPointForT((time - startTime) / this._rebackDuration).y;
+            this.scrollX = startX + delta * (targetX - startX);
+            this.scrollY = startY + delta * (targetY - startY);
+            this._autoTimer = setTimeout(animationFunc, 10);
+        }.bind(this), 10);
+    },
+
+    onPropertyChange: function(view, property/*, oldValue, newValue*/) {
+        if (property === "left" || property === "top" || property === "bottom" || property === "right" || property === "width" || property === "height") {
+            var length = this._children.length;
+            this._contentWidth = 0;
+            for (var i = 0; i &lt; length; i++) {
+                var child = this._children[i];
+                if (child === view) {
+                    continue;
+                }
+                var right = child.right;
+                if (right > this._contentWidth) {
+                    this._contentWidth = right;
+                }
+            }
+
+            this._contentHeight = 0;
+            for (var j = 0; j &lt; length; j++) {
+                if (this._children[j] === view) {
+                    continue;
+                }
+                if (this._children[j].bottom > this._contentHeight) {
+                    this._contentHeight = this._children[j].bottom;
+                }
+            }
+        }
+    }
+}, module);
+</code></pre>
+        </article>
+    </section>
+
+
+
+
+          </div>
+      </div>
+
+        <br clear="both">
+
+      <footer>
+        Documentation generated by <a href="https://github.com/jsdoc3/jsdoc">JSDoc 3.3.2</a> on Thu Nov 26 2015 15:54:21 GMT+0800 (CST)
+        <br>
+      </footer>
+      <script> prettyPrint(); </script>
+    </div>
+  </body>
+</html>

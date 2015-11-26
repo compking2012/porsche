@@ -1,0 +1,5145 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <title>Porsche.js API documentation: <i class="icon-shield" style="color:#0186d1"></i> ListItem</title>
+
+    <script src="scripts/prettify/prettify.js"> </script>
+    <script src="scripts/prettify/lang-css.js"> </script>
+    <!--[if lt IE 9]>
+      <script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+    <![endif]-->
+    <link type="text/css" rel="stylesheet" href="styles/prettify-tomorrow.css">
+    <link href="styles/bootstrap.css" rel="stylesheet">
+    <link href="styles/docs.css" rel="stylesheet">
+    <link href="styles/bootstrap-custom.css" rel="stylesheet">
+    <link href="http://netdna.bootstrapcdn.com/font-awesome/3.2.1/css/font-awesome.css" rel="stylesheet">
+    <script src="http://netdna.bootstrapcdn.com/twitter-bootstrap/2.3.2/js/bootstrap.min.js"></script>
+  </head>
+  <body>
+    <header class="header navbar navbar-inverse">
+      <div class="navbar-inner">
+        <div class="container-fluid">
+          <a class="brand" href="#"><strong>Porsche.js</strong> API documentation</a>
+        </div>
+      </div>
+    </header>
+
+    <div class="container-fluid">
+      <div class="row-fluid">
+          <div class="span3">
+              <h2><a href="index.html">Index</a></h2><div class="well well-small"><ul class="nav nav-list"><li class="nav-header">Modules</li><li><a href="module-AutoLayout.html">AutoLayout</a></li></ul></div><div class="well well-small"><ul class="nav nav-list"><li class="nav-header">Classes</li><li><a href="App.html"><i class="icon-shield" style="color: #0186d1"></i> App</a></li><li><a href="EventEmitter.html"><i class="icon-shield" style="color: #0186d1"></i> EventEmitter</a></li><li><a href="CubicBezier.html"><i class="icon-shield" style="color: #0186d1"></i> CubicBezier</a></li><li><a href="Event.html"><i class="icon-shield" style="color: #0186d1"></i> Event</a></li><li><a href="GestureEvent.html"><i class="icon-shield" style="color: #0186d1"></i> GestureEvent</a></li><li><a href="InputEvent.html"><i class="icon-shield" style="color: #0186d1"></i> InputEvent</a></li><li><a href="KeyboardEvent.html"><i class="icon-shield" style="color: #0186d1"></i> KeyboardEvent</a></li><li><a href="TouchEvent.html"><i class="icon-shield" style="color: #0186d1"></i> TouchEvent</a></li><li><a href="UIEvent.html"><i class="icon-shield" style="color: #0186d1"></i> UIEvent</a></li><li><a href="initialize.html"><i class="icon-shield" style="color: #0186d1"></i> initialize</a></li><li><a href="LongPressRecognizer.html"><i class="icon-shield" style="color: #0186d1"></i> LongPressRecognizer</a></li><li><a href="PanRecognizer.html"><i class="icon-shield" style="color: #0186d1"></i> PanRecognizer</a></li><li><a href="PinchRecognizer.html"><i class="icon-shield" style="color: #0186d1"></i> PinchRecognizer</a></li><li><a href="RotationRecognizer.html"><i class="icon-shield" style="color: #0186d1"></i> RotationRecognizer</a></li><li><a href="SwipeRecognizer.html"><i class="icon-shield" style="color: #0186d1"></i> SwipeRecognizer</a></li><li><a href="TapRecognizer.html"><i class="icon-shield" style="color: #0186d1"></i> TapRecognizer</a></li><li><a href="module-AutoLayout-View.html"><i class="icon-shield" style="color: #0186d1"></i> View</a></li><li><a href="ColumnLayout.html"><i class="icon-shield" style="color: #0186d1"></i> ColumnLayout</a></li><li><a href="ColumnLayoutParam.html"><i class="icon-shield" style="color: #0186d1"></i> ColumnLayoutParam</a></li><li><a href="FlowLayout.html"><i class="icon-shield" style="color: #0186d1"></i> FlowLayout</a></li><li><a href="FlowLayoutParam.html"><i class="icon-shield" style="color: #0186d1"></i> FlowLayoutParam</a></li><li><a href="GridLayout.html"><i class="icon-shield" style="color: #0186d1"></i> GridLayout</a></li><li><a href="GridLayoutParam.html"><i class="icon-shield" style="color: #0186d1"></i> GridLayoutParam</a></li><li><a href="Layout.html"><i class="icon-shield" style="color: #0186d1"></i> Layout</a></li><li><a href="RelativeLayout.html"><i class="icon-shield" style="color: #0186d1"></i> RelativeLayout</a></li><li><a href="RowLayout.html"><i class="icon-shield" style="color: #0186d1"></i> RowLayout</a></li><li><a href="RowLayoutParam.html"><i class="icon-shield" style="color: #0186d1"></i> RowLayoutParam</a></li><li><a href="Matrix.html"><i class="icon-shield" style="color: #0186d1"></i> Matrix</a></li><li><a href="Point.html"><i class="icon-shield" style="color: #0186d1"></i> Point</a></li><li><a href="Rectangle.html"><i class="icon-shield" style="color: #0186d1"></i> Rectangle</a></li><li><a href="BarCode.html"><i class="icon-shield" style="color: #0186d1"></i> BarCode</a></li><li><a href="Button.html"><i class="icon-shield" style="color: #0186d1"></i> Button</a></li><li><a href="Chart.html"><i class="icon-shield" style="color: #0186d1"></i> Chart</a></li><li><a href="CheckBox.html"><i class="icon-shield" style="color: #0186d1"></i> CheckBox</a></li><li><a href="CircleProgressView.html"><i class="icon-shield" style="color: #0186d1"></i> CircleProgressView</a></li><li><a href="CompositeView.html"><i class="icon-shield" style="color: #0186d1"></i> CompositeView</a></li><li><a href="Dialog.html"><i class="icon-shield" style="color: #0186d1"></i> Dialog</a></li><li><a href="ImageButton.html"><i class="icon-shield" style="color: #0186d1"></i> ImageButton</a></li><li><a href="ImageView.html"><i class="icon-shield" style="color: #0186d1"></i> ImageView</a></li><li><a href="Indicator.html"><i class="icon-shield" style="color: #0186d1"></i> Indicator</a></li><li><a href="ListItem.html"><i class="icon-shield" style="color: #0186d1"></i> ListItem</a></li><li><a href="ListView.html"><i class="icon-shield" style="color: #0186d1"></i> ListView</a></li><li><a href="ProgressView.html"><i class="icon-shield" style="color: #0186d1"></i> ProgressView</a></li><li><a href="QRCode.html"><i class="icon-shield" style="color: #0186d1"></i> QRCode</a></li><li><a href="RichTextView.html"><i class="icon-shield" style="color: #0186d1"></i> RichTextView</a></li><li><a href="ScrollableView.html"><i class="icon-shield" style="color: #0186d1"></i> ScrollableView</a></li><li><a href="ScrollBar.html"><i class="icon-shield" style="color: #0186d1"></i> ScrollBar</a></li><li><a href="Slider.html"><i class="icon-shield" style="color: #0186d1"></i> Slider</a></li><li><a href="StackView.html"><i class="icon-shield" style="color: #0186d1"></i> StackView</a></li><li><a href="SwipeView.html"><i class="icon-shield" style="color: #0186d1"></i> SwipeView</a></li><li><a href="Switch.html"><i class="icon-shield" style="color: #0186d1"></i> Switch</a></li><li><a href="TextField.html"><i class="icon-shield" style="color: #0186d1"></i> TextField</a></li><li><a href="TextView.html"><i class="icon-shield" style="color: #0186d1"></i> TextView</a></li><li><a href="View.html"><i class="icon-shield" style="color: #0186d1"></i> View</a></li><li><a href="Window.html"><i class="icon-shield" style="color: #0186d1"></i> Window</a></li><li><a href="YObject.html"><i class="icon-shield" style="color: #0186d1"></i> YObject</a></li></ul></div><div class="well well-small"><ul class="nav nav-list"><li class="nav-header">Namespaces</li><li><a href="VisualFormat.html"><i class="icon-code"></i> VisualFormat</a></li></ul></div><div class="well well-small"><ul class="nav nav-list"><li class="nav-header">Global</li><li><a href="global.html#createInput"><i class="icon-globe" style="color: black;"></i> createInput</a></li><li><a href="global.html#add"><i class="icon-globe" style="color: black;"></i> add</a></li><li><a href="global.html#remove"><i class="icon-globe" style="color: black;"></i> remove</a></li><li><a href="global.html#emit"><i class="icon-globe" style="color: black;"></i> emit</a></li><li><a href="global.html#stop"><i class="icon-globe" style="color: black;"></i> stop</a></li><li><a href="global.html#recognize"><i class="icon-globe" style="color: black;"></i> recognize</a></li><li><a href="global.html#set"><i class="icon-globe" style="color: black;"></i> set</a></li><li><a href="global.html#recognizeWith"><i class="icon-globe" style="color: black;"></i> recognizeWith</a></li><li><a href="global.html#dropRecognizeWith"><i class="icon-globe" style="color: black;"></i> dropRecognizeWith</a></li><li><a href="global.html#requireFailure"><i class="icon-globe" style="color: black;"></i> requireFailure</a></li><li><a href="global.html#dropRequireFailure"><i class="icon-globe" style="color: black;"></i> dropRequireFailure</a></li><li><a href="global.html#hasRequireFailures"><i class="icon-globe" style="color: black;"></i> hasRequireFailures</a></li><li><a href="global.html#canRecognizeWith"><i class="icon-globe" style="color: black;"></i> canRecognizeWith</a></li><li><a href="global.html#tryEmit"><i class="icon-globe" style="color: black;"></i> tryEmit</a></li><li><a href="global.html#canEmit"><i class="icon-globe" style="color: black;"></i> canEmit</a></li><li><a href="global.html#stateStr"><i class="icon-globe" style="color: black;"></i> stateStr</a></li><li><a href="global.html#directionStr"><i class="icon-globe" style="color: black;"></i> directionStr</a></li><li><a href="global.html#process"><i class="icon-globe" style="color: black;"></i> process</a></li><li><a href="global.html#reset"><i class="icon-globe" style="color: black;"></i> reset</a></li><li><a href="global.html#handleInputEvent"><i class="icon-globe" style="color: black;"></i> handleInputEvent</a></li><li><a href="global.html#computeInputData"><i class="icon-globe" style="color: black;"></i> computeInputData</a></li><li><a href="global.html#simpleCloneInputData"><i class="icon-globe" style="color: black;"></i> simpleCloneInputData</a></li><li><a href="global.html#computeIntervalInputData"><i class="icon-globe" style="color: black;"></i> computeIntervalInputData</a></li><li><a href="global.html#getCenter"><i class="icon-globe" style="color: black;"></i> getCenter</a></li><li><a href="global.html#getVelocity"><i class="icon-globe" style="color: black;"></i> getVelocity</a></li><li><a href="global.html#getDirection"><i class="icon-globe" style="color: black;"></i> getDirection</a></li><li><a href="global.html#getDistance"><i class="icon-globe" style="color: black;"></i> getDistance</a></li><li><a href="global.html#getAngle"><i class="icon-globe" style="color: black;"></i> getAngle</a></li><li><a href="global.html#getRotation"><i class="icon-globe" style="color: black;"></i> getRotation</a></li><li><a href="global.html#getScale"><i class="icon-globe" style="color: black;"></i> getScale</a></li><li><a href="global.html#hasParent"><i class="icon-globe" style="color: black;"></i> hasParent</a></li><li><a href="global.html#normalizeSingleTouches"><i class="icon-globe" style="color: black;"></i> normalizeSingleTouches</a></li><li><a href="global.html#attrTest"><i class="icon-globe" style="color: black;"></i> attrTest</a></li><li><a href="global.html#getTouches"><i class="icon-globe" style="color: black;"></i> getTouches</a></li><li><a href="global.html#Attribute"><i class="icon-globe" style="color: black;"></i> Attribute</a></li><li><a href="global.html#Relation"><i class="icon-globe" style="color: black;"></i> Relation</a></li><li><a href="global.html#Priority"><i class="icon-globe" style="color: black;"></i> Priority</a></li><li><a href="global.html#value"><i class="icon-globe" style="color: black;"></i> value</a></li><li><a href="global.html#defineClass"><i class="icon-globe" style="color: black;"></i> defineClass</a></li><li><a href="global.html#getClass"><i class="icon-globe" style="color: black;"></i> getClass</a></li><li><a href="global.html#checkLineBreak"><i class="icon-globe" style="color: black;"></i> checkLineBreak</a></li><li><a href="global.html#isHex"><i class="icon-globe" style="color: black;"></i> isHex</a></li><li><a href="global.html#isNumber"><i class="icon-globe" style="color: black;"></i> isNumber</a></li><li><a href="global.html#isEmpty"><i class="icon-globe" style="color: black;"></i> isEmpty</a></li><li><a href="global.html#trim"><i class="icon-globe" style="color: black;"></i> trim</a></li><li><a href="global.html#focus"><i class="icon-globe" style="color: black;"></i> focus</a></li><li><a href="global.html#blur"><i class="icon-globe" style="color: black;"></i> blur</a></li><li><a href="global.html#addGestureRecognizer"><i class="icon-globe" style="color: black;"></i> addGestureRecognizer</a></li><li><a href="global.html#removeGestureRecognizer"><i class="icon-globe" style="color: black;"></i> removeGestureRecognizer</a></li><li><a href="global.html#toString"><i class="icon-globe" style="color: black;"></i> toString</a></li></ul></div>
+          </div>
+
+          <div class="span9">
+              <h1 class="page-header"><i class="icon-shield" style="color:#0186d1"></i> ListItem</h1>
+              
+
+
+
+<section>
+    
+<header>
+    <!--h2>
+    ListItem
+    </h2-->
+    
+</header>  
+
+<article>
+    <div class="container-overview hero-unit">
+    
+
+            
+        <ul class="breadcrumb">
+            <li>Extends</li>
+            <li><a href="CompositeView.html" class="btn btn-primary">CompositeView</a></li>
+        </ul>
+    
+
+    
+    
+    
+        
+<dt>
+    <h4 class="name" id="ListItem">new ListItem()</h4>
+    
+    
+</dt>
+<dd>
+    
+    
+    <div class="description">
+        <p>
+        ListItem widget, it is used for ListView, SwipeList.
+        </p>
+    </div>
+    
+
+    
+    
+    
+    
+    
+    
+    
+<dl class="details">
+    
+        
+    
+    
+    
+
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+
+    
+    
+    
+    
+    
+    
+    
+</dl>
+
+    
+    
+
+    
+
+    
+    
+    
+    
+    
+    
+    
+</dd>
+
+    
+    </div>
+    
+    
+    
+    
+    
+    
+    
+    
+        <h3 class="subsection-title">Members</h3>
+        
+        <dl class="bs-docs-example bs-members">
+            
+<dt>
+    <h4 class="name" id="layout">layout<span class="type-signature"> :<a href="Layout.html">Layout</a></span></h4>
+    
+    
+</dt>
+<dd>
+    
+    <div class="description">
+        layout for children of the view.
+    </div>
+    
+    
+    
+<dl class="details">
+    
+        
+    
+    
+    
+
+    
+    <dd class="inherited-from"><ul class="dummy breadcrumb"><li>Inherited From:</li><li>
+        <a href="CompositeView.html#layout">CompositeView#layout</a>
+    </li></dd>
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+
+    
+    
+    
+    
+    
+    
+    
+</dl>
+
+    
+    
+</dd>
+
+        
+            
+<dt>
+    <h4 class="name" id="children"><span class="label label-info">readonly</span> children<span class="type-signature"> :Array.&lt;<a href="View.html">View</a>></span></h4>
+    
+    
+</dt>
+<dd>
+    
+    <div class="description">
+        children array of the view.
+    </div>
+    
+    
+    
+<dl class="details">
+    
+        
+    
+    
+    
+
+    
+    <dd class="inherited-from"><ul class="dummy breadcrumb"><li>Inherited From:</li><li>
+        <a href="CompositeView.html#children">CompositeView#children</a>
+    </li></dd>
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+
+    
+    
+    
+    
+    
+    
+    
+</dl>
+
+    
+    
+</dd>
+
+        
+            
+<dt>
+    <h4 class="name" id="id">id<span class="type-signature"> :String</span></h4>
+    
+    
+</dt>
+<dd>
+    
+    <div class="description">
+        unique identifier of this view.
+    </div>
+    
+    
+    
+<dl class="details">
+    
+        
+    
+    
+    
+
+    
+    <dd class="inherited-from"><ul class="dummy breadcrumb"><li>Inherited From:</li><li>
+        <a href="View.html#id">View#id</a>
+    </li></dd>
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+
+    
+    
+    
+    
+    
+    
+    
+</dl>
+
+    
+    
+</dd>
+
+        
+            
+<dt>
+    <h4 class="name" id="left">left<span class="type-signature"> :Number</span></h4>
+    
+    
+</dt>
+<dd>
+    
+    <div class="description">
+        left position of this view relative to its parent.
+    </div>
+    
+    
+    
+<dl class="details">
+    
+        
+    
+    
+    
+
+    
+    <dd class="inherited-from"><ul class="dummy breadcrumb"><li>Inherited From:</li><li>
+        <a href="View.html#left">View#left</a>
+    </li></dd>
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+
+    
+    
+    
+    
+    
+    
+    
+</dl>
+
+    
+    
+</dd>
+
+        
+            
+<dt>
+    <h4 class="name" id="top">top<span class="type-signature"> :Number</span></h4>
+    
+    
+</dt>
+<dd>
+    
+    <div class="description">
+        top position of this view relative to its parent.
+    </div>
+    
+    
+    
+<dl class="details">
+    
+        
+    
+    
+    
+
+    
+    <dd class="inherited-from"><ul class="dummy breadcrumb"><li>Inherited From:</li><li>
+        <a href="View.html#top">View#top</a>
+    </li></dd>
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+
+    
+    
+    
+    
+    
+    
+    
+</dl>
+
+    
+    
+</dd>
+
+        
+            
+<dt>
+    <h4 class="name" id="bottom">bottom<span class="type-signature"> :Number</span></h4>
+    
+    
+</dt>
+<dd>
+    
+    <div class="description">
+        bottom position of this view relative to its parent.
+    </div>
+    
+    
+    
+<dl class="details">
+    
+        
+    
+    
+    
+
+    
+    <dd class="inherited-from"><ul class="dummy breadcrumb"><li>Inherited From:</li><li>
+        <a href="View.html#bottom">View#bottom</a>
+    </li></dd>
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+
+    
+    
+    
+    
+    
+    
+    
+</dl>
+
+    
+    
+</dd>
+
+        
+            
+<dt>
+    <h4 class="name" id="right">right<span class="type-signature"> :Number</span></h4>
+    
+    
+</dt>
+<dd>
+    
+    <div class="description">
+        right position of this view relative to its parent.
+    </div>
+    
+    
+    
+<dl class="details">
+    
+        
+    
+    
+    
+
+    
+    <dd class="inherited-from"><ul class="dummy breadcrumb"><li>Inherited From:</li><li>
+        <a href="View.html#right">View#right</a>
+    </li></dd>
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+
+    
+    
+    
+    
+    
+    
+    
+</dl>
+
+    
+    
+</dd>
+
+        
+            
+<dt>
+    <h4 class="name" id="width">width<span class="type-signature"> :Number</span></h4>
+    
+    
+</dt>
+<dd>
+    
+    <div class="description">
+        width of this view, in pixels.
+    </div>
+    
+    
+    
+<dl class="details">
+    
+        
+    
+    
+    
+
+    
+    <dd class="inherited-from"><ul class="dummy breadcrumb"><li>Inherited From:</li><li>
+        <a href="View.html#width">View#width</a>
+    </li></dd>
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+
+    
+    
+    
+    
+    
+    
+    
+</dl>
+
+    
+    
+</dd>
+
+        
+            
+<dt>
+    <h4 class="name" id="height">height<span class="type-signature"> :Number</span></h4>
+    
+    
+</dt>
+<dd>
+    
+    <div class="description">
+        height of this view, in pixels.
+    </div>
+    
+    
+    
+<dl class="details">
+    
+        
+    
+    
+    
+
+    
+    <dd class="inherited-from"><ul class="dummy breadcrumb"><li>Inherited From:</li><li>
+        <a href="View.html#height">View#height</a>
+    </li></dd>
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+
+    
+    
+    
+    
+    
+    
+    
+</dl>
+
+    
+    
+</dd>
+
+        
+            
+<dt>
+    <h4 class="name" id="background">background<span class="type-signature"> :string</span></h4>
+    
+    
+</dt>
+<dd>
+    
+    <div class="description">
+        the background color, gradient or image for this view.
+    </div>
+    
+    
+    
+<dl class="details">
+    
+        
+    
+    
+    
+
+    
+    <dd class="inherited-from"><ul class="dummy breadcrumb"><li>Inherited From:</li><li>
+        <a href="View.html#background">View#background</a>
+    </li></dd>
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+
+    
+    
+    
+    
+    
+    
+    
+</dl>
+
+    
+    
+</dd>
+
+        
+            
+<dt>
+    <h4 class="name" id="opacity">opacity<span class="type-signature"> :Number</span></h4>
+    
+    
+</dt>
+<dd>
+    
+    <div class="description">
+        opacity of the view, from 0 to 1, where 0 means the view is completely transparent and 1 means the view is completely opaque.
+    </div>
+    
+    
+    
+<dl class="details">
+    
+        
+    
+    
+    
+
+    
+    <dd class="inherited-from"><ul class="dummy breadcrumb"><li>Inherited From:</li><li>
+        <a href="View.html#opacity">View#opacity</a>
+    </li></dd>
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+
+    
+    
+    
+    
+    
+    
+    
+</dl>
+
+    
+    
+</dd>
+
+        
+            
+<dt>
+    <h4 class="name" id="enabled">enabled<span class="type-signature"> :Boolean</span></h4>
+    
+    
+</dt>
+<dd>
+    
+    <div class="description">
+        enabled state of this view, true if this view is enabled, false otherwise.
+    </div>
+    
+    
+    
+<dl class="details">
+    
+        
+    
+    
+    
+
+    
+    <dd class="inherited-from"><ul class="dummy breadcrumb"><li>Inherited From:</li><li>
+        <a href="View.html#enabled">View#enabled</a>
+    </li></dd>
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+
+    
+    
+    
+    
+    
+    
+    
+</dl>
+
+    
+    
+</dd>
+
+        
+            
+<dt>
+    <h4 class="name" id="visibility">visibility<span class="type-signature"> :String</span></h4>
+    
+    
+</dt>
+<dd>
+    
+    <div class="description">
+        visibility state of this view, such as "visible", "hidden" or "none".
+"visible" means view is visible on screen and this is the default value;
+"hidden" means view is not displayed, but taken into account during layout (space is left for it);
+"none" means view is completely hidden, as if the view had not been added.
+    </div>
+    
+    
+    
+<dl class="details">
+    
+        
+    
+    
+    
+
+    
+    <dd class="inherited-from"><ul class="dummy breadcrumb"><li>Inherited From:</li><li>
+        <a href="View.html#visibility">View#visibility</a>
+    </li></dd>
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+
+    
+    
+    
+    
+    
+    
+    
+</dl>
+
+    
+    
+</dd>
+
+        
+            
+<dt>
+    <h4 class="name" id="parent"><span class="label label-info">readonly</span> parent<span class="type-signature"> :<a href="View.html">View</a></span></h4>
+    
+    
+</dt>
+<dd>
+    
+    <div class="description">
+        parent of this view.
+    </div>
+    
+    
+    
+<dl class="details">
+    
+        
+    
+    
+    
+
+    
+    <dd class="inherited-from"><ul class="dummy breadcrumb"><li>Inherited From:</li><li>
+        <a href="View.html#parent">View#parent</a>
+    </li></dd>
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+
+    
+    
+    
+    
+    
+    
+    
+</dl>
+
+    
+    
+</dd>
+
+        
+            
+<dt>
+    <h4 class="name" id="translationX">translationX<span class="type-signature"> :Number</span></h4>
+    
+    
+</dt>
+<dd>
+    
+    <div class="description">
+        the x-axis translation of this view relative to its left position.
+    </div>
+    
+    
+    
+<dl class="details">
+    
+        
+    
+    
+    
+
+    
+    <dd class="inherited-from"><ul class="dummy breadcrumb"><li>Inherited From:</li><li>
+        <a href="View.html#translationX">View#translationX</a>
+    </li></dd>
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+
+    
+    
+    
+    
+    
+    
+    
+</dl>
+
+    
+    
+</dd>
+
+        
+            
+<dt>
+    <h4 class="name" id="translationY">translationY<span class="type-signature"> :Number</span></h4>
+    
+    
+</dt>
+<dd>
+    
+    <div class="description">
+        the y-axis translation of this view relative to its left position.
+    </div>
+    
+    
+    
+<dl class="details">
+    
+        
+    
+    
+    
+
+    
+    <dd class="inherited-from"><ul class="dummy breadcrumb"><li>Inherited From:</li><li>
+        <a href="View.html#translationY">View#translationY</a>
+    </li></dd>
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+
+    
+    
+    
+    
+    
+    
+    
+</dl>
+
+    
+    
+</dd>
+
+        
+            
+<dt>
+    <h4 class="name" id="rotationZ">rotationZ<span class="type-signature"> :Number</span></h4>
+    
+    
+</dt>
+<dd>
+    
+    <div class="description">
+        the degrees that the view is rotated around the z-axis through the origin point.
+    </div>
+    
+    
+    
+<dl class="details">
+    
+        
+    
+    
+    
+
+    
+    <dd class="inherited-from"><ul class="dummy breadcrumb"><li>Inherited From:</li><li>
+        <a href="View.html#rotationZ">View#rotationZ</a>
+    </li></dd>
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+
+    
+    
+    
+    
+    
+    
+    
+</dl>
+
+    
+    
+</dd>
+
+        
+            
+<dt>
+    <h4 class="name" id="scaleX">scaleX<span class="type-signature"> :Number</span></h4>
+    
+    
+</dt>
+<dd>
+    
+    <div class="description">
+        the amount that the view is scaled in x-axis around the origin point, as a proportion of the view's unscaled width.
+    </div>
+    
+    
+    
+<dl class="details">
+    
+        
+    
+    
+    
+
+    
+    <dd class="inherited-from"><ul class="dummy breadcrumb"><li>Inherited From:</li><li>
+        <a href="View.html#scaleX">View#scaleX</a>
+    </li></dd>
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    <dt class="tag-default">Default Value:</dt>
+    <dd class="tag-default"><ul class="dummy"><li>1.0</li></ul></dd>
+    
+
+    
+    
+    
+    
+    
+    
+    
+</dl>
+
+    
+    
+</dd>
+
+        
+            
+<dt>
+    <h4 class="name" id="scaleY">scaleY<span class="type-signature"> :Number</span></h4>
+    
+    
+</dt>
+<dd>
+    
+    <div class="description">
+        the amount that the view is scaled in y-axis around the origin point, as a proportion of the view's unscaled height.
+    </div>
+    
+    
+    
+<dl class="details">
+    
+        
+    
+    
+    
+
+    
+    <dd class="inherited-from"><ul class="dummy breadcrumb"><li>Inherited From:</li><li>
+        <a href="View.html#scaleY">View#scaleY</a>
+    </li></dd>
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    <dt class="tag-default">Default Value:</dt>
+    <dd class="tag-default"><ul class="dummy"><li>1.0</li></ul></dd>
+    
+
+    
+    
+    
+    
+    
+    
+    
+</dl>
+
+    
+    
+</dd>
+
+        
+            
+<dt>
+    <h4 class="name" id="scale">scale<span class="type-signature"> :Object</span></h4>
+    
+    
+</dt>
+<dd>
+    
+    <div class="description">
+        the amount that the view is scaled in x-axis and y-axis around the origin point, as a proportion of the view's unscaled width and height.
+    </div>
+    
+    
+    
+<dl class="details">
+    
+        
+    
+    
+    
+
+    
+    <dd class="inherited-from"><ul class="dummy breadcrumb"><li>Inherited From:</li><li>
+        <a href="View.html#scale">View#scale</a>
+    </li></dd>
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    <dt class="tag-default">Default Value:</dt>
+    <dd class="tag-default"><ul class="dummy"><li>{1.0, 1.0}</li></ul></dd>
+    
+
+    
+    
+    
+    
+    
+    
+    
+</dl>
+
+    
+    
+</dd>
+
+        
+            
+<dt>
+    <h4 class="name" id="originX">originX<span class="type-signature"> :Number</span></h4>
+    
+    
+</dt>
+<dd>
+    
+    <div class="description">
+        the x location of the point around which the view is rotated and scaled. By default, the origin point is centered on the object.
+    </div>
+    
+    
+    
+<dl class="details">
+    
+        
+    
+    
+    
+
+    
+    <dd class="inherited-from"><ul class="dummy breadcrumb"><li>Inherited From:</li><li>
+        <a href="View.html#originX">View#originX</a>
+    </li></dd>
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+
+    
+    
+    
+    
+    
+    
+    
+</dl>
+
+    
+    
+</dd>
+
+        
+            
+<dt>
+    <h4 class="name" id="originY">originY<span class="type-signature"> :Number</span></h4>
+    
+    
+</dt>
+<dd>
+    
+    <div class="description">
+        the y location of the point around which the view is rotated and scaled. By default, the origin point is centered on the object.
+    </div>
+    
+    
+    
+<dl class="details">
+    
+        
+    
+    
+    
+
+    
+    <dd class="inherited-from"><ul class="dummy breadcrumb"><li>Inherited From:</li><li>
+        <a href="View.html#originY">View#originY</a>
+    </li></dd>
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+
+    
+    
+    
+    
+    
+    
+    
+</dl>
+
+    
+    
+</dd>
+
+        
+            
+<dt>
+    <h4 class="name" id="origin">origin<span class="type-signature"> :Object</span></h4>
+    
+    
+</dt>
+<dd>
+    
+    <div class="description">
+        the x and y location of the point around which the view is rotated and scaled. By default, the origin point is centered on the object.
+    </div>
+    
+    
+    
+<dl class="details">
+    
+        
+    
+    
+    
+
+    
+    <dd class="inherited-from"><ul class="dummy breadcrumb"><li>Inherited From:</li><li>
+        <a href="View.html#origin">View#origin</a>
+    </li></dd>
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+
+    
+    
+    
+    
+    
+    
+    
+</dl>
+
+    
+    
+</dd>
+
+        
+            
+<dt>
+    <h4 class="name" id="scrollX">scrollX<span class="type-signature"> :Number</span></h4>
+    
+    
+</dt>
+<dd>
+    
+    <div class="description">
+        the scrolled left position of this view.
+This is the left edge of the displayed part of your view.
+You do not need to draw any pixels farther left, since those are outside of the frame of your view on screen.
+    </div>
+    
+    
+    
+<dl class="details">
+    
+        
+    
+    
+    
+
+    
+    <dd class="inherited-from"><ul class="dummy breadcrumb"><li>Inherited From:</li><li>
+        <a href="View.html#scrollX">View#scrollX</a>
+    </li></dd>
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+
+    
+    
+    
+    
+    
+    
+    
+</dl>
+
+    
+    
+</dd>
+
+        
+            
+<dt>
+    <h4 class="name" id="scrollY">scrollY<span class="type-signature"> :Number</span></h4>
+    
+    
+</dt>
+<dd>
+    
+    <div class="description">
+        the scrolled top position of this view.
+This is the top edge of the displayed part of your view.
+You do not need to draw any pixels above it, since those are outside of the frame of your view on screen.
+    </div>
+    
+    
+    
+<dl class="details">
+    
+        
+    
+    
+    
+
+    
+    <dd class="inherited-from"><ul class="dummy breadcrumb"><li>Inherited From:</li><li>
+        <a href="View.html#scrollY">View#scrollY</a>
+    </li></dd>
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+
+    
+    
+    
+    
+    
+    
+    
+</dl>
+
+    
+    
+</dd>
+
+        
+            
+<dt>
+    <h4 class="name" id="touchRegion">touchRegion<span class="type-signature"></span></h4>
+    
+    
+</dt>
+<dd>
+    
+    <div class="description">
+        one or more rectangles which represent several areas that can be used to extend the touch area.
+If omitted and left as null, it means the default touch area which is the bound of this view.
+    </div>
+    
+    
+    
+<dl class="details">
+    
+        
+    
+    
+    
+
+    
+    <dd class="inherited-from"><ul class="dummy breadcrumb"><li>Inherited From:</li><li>
+        <a href="View.html#touchRegion">View#touchRegion</a>
+    </li></dd>
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+
+    
+    
+    
+    
+    
+    
+    
+</dl>
+
+    
+    
+</dd>
+
+        
+            
+<dt>
+    <h4 class="name" id="hardwareAccelerated">hardwareAccelerated<span class="type-signature"> :Boolean</span></h4>
+    
+    
+</dt>
+<dd>
+    
+    <div class="description">
+        indicating whether the view's rendering should be hardware accelerated if possible.
+    </div>
+    
+    
+    
+<dl class="details">
+    
+        
+    
+    
+    
+
+    
+    <dd class="inherited-from"><ul class="dummy breadcrumb"><li>Inherited From:</li><li>
+        <a href="View.html#hardwareAccelerated">View#hardwareAccelerated</a>
+    </li></dd>
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+
+    
+    
+    
+    
+    
+    
+    
+</dl>
+
+    
+    
+</dd>
+
+        
+            
+<dt>
+    <h4 class="name" id="focused">focused<span class="type-signature"> :Boolean</span></h4>
+    
+    
+</dt>
+<dd>
+    
+    <div class="description">
+        indicating whether this view has focus itself, or is the ancestor of the view that has focus.
+    </div>
+    
+    
+    
+<dl class="details">
+    
+        
+    
+    
+    
+
+    
+    <dd class="inherited-from"><ul class="dummy breadcrumb"><li>Inherited From:</li><li>
+        <a href="View.html#focused">View#focused</a>
+    </li></dd>
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+
+    
+    
+    
+    
+    
+    
+    
+</dl>
+
+    
+    
+</dd>
+
+        </dl>
+    
+    
+    
+        <h3 class="subsection-title">Methods</h3>
+        
+        <dl class="bs-docs-example bs-methods">
+            
+<dt>
+    <h4 class="name" id="initialize">initialize()</h4>
+    
+    
+</dt>
+<dd>
+    
+    
+    <div class="description">
+        <p>
+        Constructor that create a composite view
+        </p>
+    </div>
+    
+
+    
+    
+    
+    
+    
+    
+    
+<dl class="details">
+    
+        
+    
+    
+    
+
+    
+    <dd class="inherited-from"><ul class="dummy breadcrumb"><li>Inherited From:</li><li>
+        <a href="CompositeView.html#initialize">CompositeView#initialize</a>
+    </li></dd>
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+
+    
+    
+    
+    
+    
+    
+    
+</dl>
+
+    
+    
+
+    
+
+    
+    
+    
+    
+    
+    
+    
+</dd>
+
+        
+            
+<dt>
+    <h4 class="name" id="destroy">destroy()</h4>
+    
+    
+</dt>
+<dd>
+    
+    
+    <div class="description">
+        <p>
+        Destructor that destroy a composite view
+        </p>
+    </div>
+    
+
+    
+    
+    
+    
+    
+    
+    
+<dl class="details">
+    
+        
+    
+    
+    
+
+    
+    <dd class="inherited-from"><ul class="dummy breadcrumb"><li>Inherited From:</li><li>
+        <a href="CompositeView.html#destroy">CompositeView#destroy</a>
+    </li></dd>
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+
+    
+    
+    
+    
+    
+    
+    
+</dl>
+
+    
+    
+
+    
+
+    
+    
+    
+    
+    
+    
+    
+</dd>
+
+        
+            
+<dt>
+    <h4 class="name" id="paint"><span class="label label-info">protected</span> paint(context)</h4>
+    
+    
+</dt>
+<dd>
+    
+    
+    <div class="description">
+        <p>
+        Paint the composite view itself.
+        </p>
+    </div>
+    
+
+    
+    
+    
+    
+    
+        <h5>Parameters:</h5>
+        
+
+<table class="params table table-bordered table-condensed">
+    <thead>
+	<tr>
+		
+		<th>Name</th>
+		
+
+		<th>Type</th>
+
+		
+
+		
+
+		<th class="last">Description</th>
+	</tr>
+	</thead>
+
+	<tbody>
+	
+
+        <tr>
+            
+                <td class="name">context</td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">{Context}</span>
+
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last">the canvas context to which it is rendered</td>
+        </tr>
+
+	
+	</tbody>
+</table>
+
+    
+    
+    
+<dl class="details">
+    
+        
+    
+    
+    
+
+    
+    <dd class="inherited-from"><ul class="dummy breadcrumb"><li>Inherited From:</li><li>
+        <a href="CompositeView.html#paint">CompositeView#paint</a>
+    </li></dd>
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+
+    
+    
+    
+    
+    
+    
+    
+</dl>
+
+    
+    
+
+    
+
+    
+    
+    
+    
+    
+    
+    
+</dd>
+
+        
+            
+<dt>
+    <h4 class="name" id="addChild">addChild(view)</h4>
+    
+    
+</dt>
+<dd>
+    
+    
+    <div class="description">
+        <p>
+        The appendChild method adds a view to specified parent view.
+        </p>
+    </div>
+    
+
+    
+    
+    
+    
+    
+        <h5>Parameters:</h5>
+        
+
+<table class="params table table-bordered table-condensed">
+    <thead>
+	<tr>
+		
+		<th>Name</th>
+		
+
+		<th>Type</th>
+
+		
+
+		
+
+		<th class="last">Description</th>
+	</tr>
+	</thead>
+
+	<tbody>
+	
+
+        <tr>
+            
+                <td class="name">view</td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">{<a href="View.html">View</a>}</span>
+
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last">sub child view to be insert to the last, and show at top</td>
+        </tr>
+
+	
+	</tbody>
+</table>
+
+    
+    
+    
+<dl class="details">
+    
+        
+    
+    
+    
+
+    
+    <dd class="inherited-from"><ul class="dummy breadcrumb"><li>Inherited From:</li><li>
+        <a href="CompositeView.html#addChild">CompositeView#addChild</a>
+    </li></dd>
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+
+    
+    
+    
+    
+    
+    
+    
+</dl>
+
+    
+    
+
+    
+
+    
+    
+    
+    
+    
+    
+    
+</dd>
+
+        
+            
+<dt>
+    <h4 class="name" id="insertChild">insertChild(view, index)</h4>
+    
+    
+</dt>
+<dd>
+    
+    
+    <div class="description">
+        <p>
+        Insert a child view in this composite view by the specified position.
+        </p>
+    </div>
+    
+
+    
+    
+    
+    
+    
+        <h5>Parameters:</h5>
+        
+
+<table class="params table table-bordered table-condensed">
+    <thead>
+	<tr>
+		
+		<th>Name</th>
+		
+
+		<th>Type</th>
+
+		
+
+		
+
+		<th class="last">Description</th>
+	</tr>
+	</thead>
+
+	<tbody>
+	
+
+        <tr>
+            
+                <td class="name">view</td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">{<a href="View.html">View</a>}</span>
+
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last">the child view to add</td>
+        </tr>
+
+	
+
+        <tr>
+            
+                <td class="name">index</td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">{Number}</span>
+
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last">the position at which to add the child</td>
+        </tr>
+
+	
+	</tbody>
+</table>
+
+    
+    
+    
+<dl class="details">
+    
+        
+    
+    
+    
+
+    
+    <dd class="inherited-from"><ul class="dummy breadcrumb"><li>Inherited From:</li><li>
+        <a href="CompositeView.html#insertChild">CompositeView#insertChild</a>
+    </li></dd>
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+
+    
+    
+    
+    
+    
+    
+    
+</dl>
+
+    
+    
+
+    
+
+    
+    
+    
+    
+    
+    
+    
+</dd>
+
+        
+            
+<dt>
+    <h4 class="name" id="removeChild">removeChild(child)</h4>
+    
+    
+</dt>
+<dd>
+    
+    
+    <div class="description">
+        <p>
+        Remove the specified view from this composite view.
+        </p>
+    </div>
+    
+
+    
+    
+    
+    
+    
+        <h5>Parameters:</h5>
+        
+
+<table class="params table table-bordered table-condensed">
+    <thead>
+	<tr>
+		
+		<th>Name</th>
+		
+
+		<th>Type</th>
+
+		
+
+		
+
+		<th class="last">Description</th>
+	</tr>
+	</thead>
+
+	<tbody>
+	
+
+        <tr>
+            
+                <td class="name">child</td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">{<a href="View.html">View</a>}</span>
+
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last">the child view to remove, or the position in this composite view to remove</td>
+        </tr>
+
+	
+	</tbody>
+</table>
+
+    
+    
+    
+<dl class="details">
+    
+        
+    
+    
+    
+
+    
+    <dd class="inherited-from"><ul class="dummy breadcrumb"><li>Inherited From:</li><li>
+        <a href="CompositeView.html#removeChild">CompositeView#removeChild</a>
+    </li></dd>
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+
+    
+    
+    
+    
+    
+    
+    
+</dl>
+
+    
+    
+
+    
+
+    
+    
+    
+    
+    
+    
+    
+</dd>
+
+        
+            
+<dt>
+    <h4 class="name" id="removeAllChildren">removeAllChildren()</h4>
+    
+    
+</dt>
+<dd>
+    
+    
+    <div class="description">
+        <p>
+        Remove all child views from this composite view.
+        </p>
+    </div>
+    
+
+    
+    
+    
+    
+    
+    
+    
+<dl class="details">
+    
+        
+    
+    
+    
+
+    
+    <dd class="inherited-from"><ul class="dummy breadcrumb"><li>Inherited From:</li><li>
+        <a href="CompositeView.html#removeAllChildren">CompositeView#removeAllChildren</a>
+    </li></dd>
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+
+    
+    
+    
+    
+    
+    
+    
+</dl>
+
+    
+    
+
+    
+
+    
+    
+    
+    
+    
+    
+    
+</dd>
+
+        
+            
+<dt>
+    <h4 class="name" id="bringChildToFront">bringChildToFront(view)</h4>
+    
+    
+</dt>
+<dd>
+    
+    
+    <div class="description">
+        <p>
+        Change the z order of the child so it's on top of all other children.
+        </p>
+    </div>
+    
+
+    
+    
+    
+    
+    
+        <h5>Parameters:</h5>
+        
+
+<table class="params table table-bordered table-condensed">
+    <thead>
+	<tr>
+		
+		<th>Name</th>
+		
+
+		<th>Type</th>
+
+		
+
+		
+
+		<th class="last">Description</th>
+	</tr>
+	</thead>
+
+	<tbody>
+	
+
+        <tr>
+            
+                <td class="name">view</td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">{<a href="View.html">View</a>}</span>
+
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last">the child to bring to the top of the z order</td>
+        </tr>
+
+	
+	</tbody>
+</table>
+
+    
+    
+    
+<dl class="details">
+    
+        
+    
+    
+    
+
+    
+    <dd class="inherited-from"><ul class="dummy breadcrumb"><li>Inherited From:</li><li>
+        <a href="CompositeView.html#bringChildToFront">CompositeView#bringChildToFront</a>
+    </li></dd>
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+
+    
+    
+    
+    
+    
+    
+    
+</dl>
+
+    
+    
+
+    
+
+    
+    
+    
+    
+    
+    
+    
+</dd>
+
+        
+            
+<dt>
+    <h4 class="name" id="sendChildToBack">sendChildToBack(view)</h4>
+    
+    
+</dt>
+<dd>
+    
+    
+    <div class="description">
+        <p>
+        Change the z order of the child so it's on bottom of all other children.
+        </p>
+    </div>
+    
+
+    
+    
+    
+    
+    
+        <h5>Parameters:</h5>
+        
+
+<table class="params table table-bordered table-condensed">
+    <thead>
+	<tr>
+		
+		<th>Name</th>
+		
+
+		<th>Type</th>
+
+		
+
+		
+
+		<th class="last">Description</th>
+	</tr>
+	</thead>
+
+	<tbody>
+	
+
+        <tr>
+            
+                <td class="name">view</td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">{<a href="View.html">View</a>}</span>
+
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last">the child to bring to the bottom of the z order</td>
+        </tr>
+
+	
+	</tbody>
+</table>
+
+    
+    
+    
+<dl class="details">
+    
+        
+    
+    
+    
+
+    
+    <dd class="inherited-from"><ul class="dummy breadcrumb"><li>Inherited From:</li><li>
+        <a href="CompositeView.html#sendChildToBack">CompositeView#sendChildToBack</a>
+    </li></dd>
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+
+    
+    
+    
+    
+    
+    
+    
+</dl>
+
+    
+    
+
+    
+
+    
+    
+    
+    
+    
+    
+    
+</dd>
+
+        
+            
+<dt>
+    <h4 class="name" id="findViewAtPoint">findViewAtPoint(point)</h4>
+    
+    
+</dt>
+<dd>
+    
+    
+    <div class="description">
+        <p>
+        Find the view at the point
+        </p>
+    </div>
+    
+
+    
+    
+    
+    
+    
+        <h5>Parameters:</h5>
+        
+
+<table class="params table table-bordered table-condensed">
+    <thead>
+	<tr>
+		
+		<th>Name</th>
+		
+
+		<th>Type</th>
+
+		
+
+		
+
+		<th class="last">Description</th>
+	</tr>
+	</thead>
+
+	<tbody>
+	
+
+        <tr>
+            
+                <td class="name">point</td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">{<a href="Point.html">Point</a>}</span>
+
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last">the point in put</td>
+        </tr>
+
+	
+	</tbody>
+</table>
+
+    
+    
+    
+<dl class="details">
+    
+        
+    
+    
+    
+
+    
+    <dd class="inherited-from"><ul class="dummy breadcrumb"><li>Inherited From:</li><li>
+        <a href="CompositeView.html#findViewAtPoint">CompositeView#findViewAtPoint</a>
+    </li></dd>
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+
+    
+    
+    
+    
+    
+    
+    
+</dl>
+
+    
+    
+
+    
+
+    
+    
+    
+    
+    
+    <h5>Returns:</h5>
+    
+            <div class="returns">
+
+
+    
+<span class="param-type">{<a href="View.html">View</a>}</span>
+
+
+
+
+
+<span class="param-desc">
+    return the view which point in the view and it has the max zOrder;
+</span>
+
+</div>
+
+        
+    
+    
+</dd>
+
+        
+            
+<dt>
+    <h4 class="name" id="invalidate"><span class="label label-info">protected</span> invalidate(<span class="optional">rect</span>)</h4>
+    
+    
+</dt>
+<dd>
+    
+    
+    <div class="description">
+        <p>
+        Mark the area defined by dirty as needing to be drawn.
+        </p>
+    </div>
+    
+
+    
+    
+    
+    
+    
+        <h5>Parameters:</h5>
+        
+
+<table class="params table table-bordered table-condensed">
+    <thead>
+	<tr>
+		
+		<th>Name</th>
+		
+
+		<th>Type</th>
+
+		
+		<th>Argument</th>
+		
+
+		
+
+		<th class="last">Description</th>
+	</tr>
+	</thead>
+
+	<tbody>
+	
+
+        <tr>
+            
+                <td class="name">rect</td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">{<a href="Rectangle.html">Rectangle</a>}</span>
+
+
+
+            
+            </td>
+
+            
+                <td class="attributes">
+                
+                    <span class="label">optional</span>&nbsp;
+                
+
+                
+
+                
+                </td>
+            
+
+            
+
+            <td class="description last">the rectangle representing the bounds of the dirty region</td>
+        </tr>
+
+	
+	</tbody>
+</table>
+
+    
+    
+    
+<dl class="details">
+    
+        
+    
+    
+    
+
+    
+    <dd class="inherited-from"><ul class="dummy breadcrumb"><li>Inherited From:</li><li>
+        <a href="CompositeView.html#invalidate">CompositeView#invalidate</a>
+    </li></dd>
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+
+    
+    
+    
+    
+    
+    
+    
+</dl>
+
+    
+    
+
+    
+
+    
+    
+    
+    
+    
+    
+    
+</dd>
+
+        
+            
+<dt>
+    <h4 class="name" id="setDirty"><span class="label label-info">protected</span> setDirty(<span class="optional">rect</span>)</h4>
+    
+    
+</dt>
+<dd>
+    
+    
+    <div class="description">
+        <p>
+        Set this composite view and all children dirty.
+        </p>
+    </div>
+    
+
+    
+    
+    
+    
+    
+        <h5>Parameters:</h5>
+        
+
+<table class="params table table-bordered table-condensed">
+    <thead>
+	<tr>
+		
+		<th>Name</th>
+		
+
+		<th>Type</th>
+
+		
+		<th>Argument</th>
+		
+
+		
+
+		<th class="last">Description</th>
+	</tr>
+	</thead>
+
+	<tbody>
+	
+
+        <tr>
+            
+                <td class="name">rect</td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">{<a href="Rectangle.html">Rectangle</a>}</span>
+
+
+
+            
+            </td>
+
+            
+                <td class="attributes">
+                
+                    <span class="label">optional</span>&nbsp;
+                
+
+                
+
+                
+                </td>
+            
+
+            
+
+            <td class="description last">the rectangle representing the bounds of the dirty region</td>
+        </tr>
+
+	
+	</tbody>
+</table>
+
+    
+    
+    
+<dl class="details">
+    
+        
+    
+    
+    
+
+    
+    <dd class="inherited-from"><ul class="dummy breadcrumb"><li>Inherited From:</li><li>
+        <a href="CompositeView.html#setDirty">CompositeView#setDirty</a>
+    </li></dd>
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+
+    
+    
+    
+    
+    
+    
+    
+</dl>
+
+    
+    
+
+    
+
+    
+    
+    
+    
+    
+    
+    
+</dd>
+
+        
+            
+<dt>
+    <h4 class="name" id="removeFromParent">removeFromParent()</h4>
+    
+    
+</dt>
+<dd>
+    
+    
+    <div class="description">
+        <p>
+        Remove this view from its parent.
+        </p>
+    </div>
+    
+
+    
+    
+    
+    
+    
+    
+    
+<dl class="details">
+    
+        
+    
+    
+    
+
+    
+    <dd class="inherited-from"><ul class="dummy breadcrumb"><li>Inherited From:</li><li>
+        <a href="View.html#removeFromParent">View#removeFromParent</a>
+    </li></dd>
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+
+    
+    
+    
+    
+    
+    
+    
+</dl>
+
+    
+    
+
+    
+
+    
+    
+    
+    
+    
+    
+    
+</dd>
+
+        
+            
+<dt>
+    <h4 class="name" id="bringToFront">bringToFront()</h4>
+    
+    
+</dt>
+<dd>
+    
+    
+    <div class="description">
+        <p>
+        Change this view's z order in the tree, and make it on top of other sibling views.
+        </p>
+    </div>
+    
+
+    
+    
+    
+    
+    
+    
+    
+<dl class="details">
+    
+        
+    
+    
+    
+
+    
+    <dd class="inherited-from"><ul class="dummy breadcrumb"><li>Inherited From:</li><li>
+        <a href="View.html#bringToFront">View#bringToFront</a>
+    </li></dd>
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+
+    
+    
+    
+    
+    
+    
+    
+</dl>
+
+    
+    
+
+    
+
+    
+    
+    
+    
+    
+    
+    
+</dd>
+
+        
+            
+<dt>
+    <h4 class="name" id="sendToBack">sendToBack()</h4>
+    
+    
+</dt>
+<dd>
+    
+    
+    <div class="description">
+        <p>
+        Change this view's z order in the tree, and make it on bottom of other sibling views.
+        </p>
+    </div>
+    
+
+    
+    
+    
+    
+    
+    
+    
+<dl class="details">
+    
+        
+    
+    
+    
+
+    
+    <dd class="inherited-from"><ul class="dummy breadcrumb"><li>Inherited From:</li><li>
+        <a href="View.html#sendToBack">View#sendToBack</a>
+    </li></dd>
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+
+    
+    
+    
+    
+    
+    
+    
+</dl>
+
+    
+    
+
+    
+
+    
+    
+    
+    
+    
+    
+    
+</dd>
+
+        
+            
+<dt>
+    <h4 class="name" id="setPosition">setPosition(left, top)</h4>
+    
+    
+</dt>
+<dd>
+    
+    
+    <div class="description">
+        <p>
+        Set left and top in one function
+        </p>
+    </div>
+    
+
+    
+    
+    
+    
+    
+        <h5>Parameters:</h5>
+        
+
+<table class="params table table-bordered table-condensed">
+    <thead>
+	<tr>
+		
+		<th>Name</th>
+		
+
+		<th>Type</th>
+
+		
+
+		
+
+		<th class="last">Description</th>
+	</tr>
+	</thead>
+
+	<tbody>
+	
+
+        <tr>
+            
+                <td class="name">left</td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">{Number}</span>
+
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last">view's left value</td>
+        </tr>
+
+	
+
+        <tr>
+            
+                <td class="name">top</td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">{Number}</span>
+
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last">view's top value</td>
+        </tr>
+
+	
+	</tbody>
+</table>
+
+    
+    
+    
+<dl class="details">
+    
+        
+    
+    
+    
+
+    
+    <dd class="inherited-from"><ul class="dummy breadcrumb"><li>Inherited From:</li><li>
+        <a href="View.html#setPosition">View#setPosition</a>
+    </li></dd>
+    
+    
+    
+        <span class="yes-def tag-deprecated"><ul class="dummy inline"><li><span class="important tag-deprecated label label-warning">Deprecated</span> Yes</li></ul></span>
+    
+    
+    
+    
+    
+    
+    
+    
+    
+
+    
+    
+    
+    
+    
+    
+    
+</dl>
+
+    
+    
+
+    
+
+    
+    
+    
+    
+    
+    
+    
+</dd>
+
+        
+            
+<dt>
+    <h4 class="name" id="setSize">setSize(width, height)</h4>
+    
+    
+</dt>
+<dd>
+    
+    
+    <div class="description">
+        <p>
+        Set width and height in one function
+        </p>
+    </div>
+    
+
+    
+    
+    
+    
+    
+        <h5>Parameters:</h5>
+        
+
+<table class="params table table-bordered table-condensed">
+    <thead>
+	<tr>
+		
+		<th>Name</th>
+		
+
+		<th>Type</th>
+
+		
+
+		
+
+		<th class="last">Description</th>
+	</tr>
+	</thead>
+
+	<tbody>
+	
+
+        <tr>
+            
+                <td class="name">width</td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">{Number}</span>
+
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last">view's width value</td>
+        </tr>
+
+	
+
+        <tr>
+            
+                <td class="name">height</td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">{Number}</span>
+
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last">view's height value</td>
+        </tr>
+
+	
+	</tbody>
+</table>
+
+    
+    
+    
+<dl class="details">
+    
+        
+    
+    
+    
+
+    
+    <dd class="inherited-from"><ul class="dummy breadcrumb"><li>Inherited From:</li><li>
+        <a href="View.html#setSize">View#setSize</a>
+    </li></dd>
+    
+    
+    
+        <span class="yes-def tag-deprecated"><ul class="dummy inline"><li><span class="important tag-deprecated label label-warning">Deprecated</span> Yes</li></ul></span>
+    
+    
+    
+    
+    
+    
+    
+    
+    
+
+    
+    
+    
+    
+    
+    
+    
+</dl>
+
+    
+    
+
+    
+
+    
+    
+    
+    
+    
+    
+    
+</dd>
+
+        
+            
+<dt>
+    <h4 class="name" id="draw"><span class="label label-info">abstract</span> draw(context)</h4>
+    
+    
+</dt>
+<dd>
+    
+    
+    <div class="description">
+        <p>
+        Implement this to do your drawing.
+        </p>
+    </div>
+    
+
+    
+    
+    
+    
+    
+        <h5>Parameters:</h5>
+        
+
+<table class="params table table-bordered table-condensed">
+    <thead>
+	<tr>
+		
+		<th>Name</th>
+		
+
+		<th>Type</th>
+
+		
+
+		
+
+		<th class="last">Description</th>
+	</tr>
+	</thead>
+
+	<tbody>
+	
+
+        <tr>
+            
+                <td class="name">context</td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">{Context}</span>
+
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last">the canvas context to which the view is rendered</td>
+        </tr>
+
+	
+	</tbody>
+</table>
+
+    
+    
+    
+<dl class="details">
+    
+        
+    
+    
+    
+
+    
+    <dd class="inherited-from"><ul class="dummy breadcrumb"><li>Inherited From:</li><li>
+        <a href="View.html#draw">View#draw</a>
+    </li></dd>
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+
+    
+    
+    
+    
+    
+    
+    
+</dl>
+
+    
+    
+
+    
+
+    
+    
+    
+    
+    
+    
+    
+</dd>
+
+        
+            
+<dt>
+    <h4 class="name" id="drawBackground">drawBackground(context)</h4>
+    
+    
+</dt>
+<dd>
+    
+    
+    <div class="description">
+        <p>
+        Override and implement this to do your background drawing.
+        </p>
+    </div>
+    
+
+    
+    
+    
+    
+    
+        <h5>Parameters:</h5>
+        
+
+<table class="params table table-bordered table-condensed">
+    <thead>
+	<tr>
+		
+		<th>Name</th>
+		
+
+		<th>Type</th>
+
+		
+
+		
+
+		<th class="last">Description</th>
+	</tr>
+	</thead>
+
+	<tbody>
+	
+
+        <tr>
+            
+                <td class="name">context</td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">{Context}</span>
+
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last">the canvas context to which the view is rendered</td>
+        </tr>
+
+	
+	</tbody>
+</table>
+
+    
+    
+    
+<dl class="details">
+    
+        
+    
+    
+    
+
+    
+    <dd class="inherited-from"><ul class="dummy breadcrumb"><li>Inherited From:</li><li>
+        <a href="View.html#drawBackground">View#drawBackground</a>
+    </li></dd>
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+
+    
+    
+    
+    
+    
+    
+    
+</dl>
+
+    
+    
+
+    
+
+    
+    
+    
+    
+    
+    
+    
+</dd>
+
+        
+            
+<dt>
+    <h4 class="name" id="paintSelf"><span class="label label-info">protected</span> paintSelf(context)</h4>
+    
+    
+</dt>
+<dd>
+    
+    
+    <div class="description">
+        <p>
+        Paint the view self, including background and foreground.
+        </p>
+    </div>
+    
+
+    
+    
+    
+    
+    
+        <h5>Parameters:</h5>
+        
+
+<table class="params table table-bordered table-condensed">
+    <thead>
+	<tr>
+		
+		<th>Name</th>
+		
+
+		<th>Type</th>
+
+		
+
+		
+
+		<th class="last">Description</th>
+	</tr>
+	</thead>
+
+	<tbody>
+	
+
+        <tr>
+            
+                <td class="name">context</td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">{Context}</span>
+
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last">the canvas context to which it is rendered</td>
+        </tr>
+
+	
+	</tbody>
+</table>
+
+    
+    
+    
+<dl class="details">
+    
+        
+    
+    
+    
+
+    
+    <dd class="inherited-from"><ul class="dummy breadcrumb"><li>Inherited From:</li><li>
+        <a href="View.html#paintSelf">View#paintSelf</a>
+    </li></dd>
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+
+    
+    
+    
+    
+    
+    
+    
+</dl>
+
+    
+    
+
+    
+
+    
+    
+    
+    
+    
+    
+    
+</dd>
+
+        
+            
+<dt>
+    <h4 class="name" id="containsPoint"><span class="label label-info">protected</span> containsPoint(point)</h4>
+    
+    
+</dt>
+<dd>
+    
+    
+    <div class="description">
+        <p>
+        Calculate the point whether in the view.
+        </p>
+    </div>
+    
+
+    
+    
+    
+    
+    
+        <h5>Parameters:</h5>
+        
+
+<table class="params table table-bordered table-condensed">
+    <thead>
+	<tr>
+		
+		<th>Name</th>
+		
+
+		<th>Type</th>
+
+		
+
+		
+
+		<th class="last">Description</th>
+	</tr>
+	</thead>
+
+	<tbody>
+	
+
+        <tr>
+            
+                <td class="name">point</td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">{<a href="Point.html">Point</a>}</span>
+
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last">the point in put</td>
+        </tr>
+
+	
+	</tbody>
+</table>
+
+    
+    
+    
+<dl class="details">
+    
+        
+    
+    
+    
+
+    
+    <dd class="inherited-from"><ul class="dummy breadcrumb"><li>Inherited From:</li><li>
+        <a href="View.html#containsPoint">View#containsPoint</a>
+    </li></dd>
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+
+    
+    
+    
+    
+    
+    
+    
+</dl>
+
+    
+    
+
+    
+
+    
+    
+    
+    
+    
+    <h5>Returns:</h5>
+    
+            <div class="returns">
+
+
+    
+<span class="param-type">{Boolen}</span>
+
+
+
+
+
+<span class="param-desc">
+    whether point in the view region
+</span>
+
+</div>
+
+        
+    
+    
+</dd>
+
+        
+            
+<dt>
+    <h4 class="name" id="dispatchEvent">dispatchEvent(event, argN)</h4>
+    
+    
+</dt>
+<dd>
+    
+    
+    <div class="description">
+        <p>
+        Invoke each of the listeners in order with the supplied arguments.
+        </p>
+    </div>
+    
+
+    
+    
+    
+    
+    
+        <h5>Parameters:</h5>
+        
+
+<table class="params table table-bordered table-condensed">
+    <thead>
+	<tr>
+		
+		<th>Name</th>
+		
+
+		<th>Type</th>
+
+		
+		<th>Argument</th>
+		
+
+		
+
+		<th class="last">Description</th>
+	</tr>
+	</thead>
+
+	<tbody>
+	
+
+        <tr>
+            
+                <td class="name">event</td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">{String}</span>
+
+
+
+            
+            </td>
+
+            
+                <td class="attributes">
+                
+
+                
+
+                
+                </td>
+            
+
+            
+
+            <td class="description last">event name</td>
+        </tr>
+
+	
+
+        <tr>
+            
+                <td class="name">argN</td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">{*}</span>
+
+
+
+            
+            </td>
+
+            
+                <td class="attributes">
+                
+
+                
+
+                
+                    <span class="label">repeatable</span>&nbsp;
+                
+                </td>
+            
+
+            
+
+            <td class="description last">the supplied arguments</td>
+        </tr>
+
+	
+	</tbody>
+</table>
+
+    
+    
+    
+<dl class="details">
+    
+        
+    
+    
+    
+
+    
+    <dd class="inherited-from"><ul class="dummy breadcrumb"><li>Inherited From:</li><li>
+        <a href="EventEmitter.html#dispatchEvent">EventEmitter#dispatchEvent</a>
+    </li></dd>
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+
+    
+    
+    
+    
+    
+    
+    
+</dl>
+
+    
+    
+
+    
+
+    
+    
+    
+    
+    
+    
+    
+</dd>
+
+        
+            
+<dt>
+    <h4 class="name" id="addEventListener">addEventListener(event, listener)</h4>
+    
+    
+</dt>
+<dd>
+    
+    
+    <div class="description">
+        <p>
+        Adds a listener to the end of the listeners array for the specified event.
+        </p>
+    </div>
+    
+
+    
+    
+    
+    
+    
+        <h5>Parameters:</h5>
+        
+
+<table class="params table table-bordered table-condensed">
+    <thead>
+	<tr>
+		
+		<th>Name</th>
+		
+
+		<th>Type</th>
+
+		
+
+		
+
+		<th class="last">Description</th>
+	</tr>
+	</thead>
+
+	<tbody>
+	
+
+        <tr>
+            
+                <td class="name">event</td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">{String}</span>
+
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last">event name</td>
+        </tr>
+
+	
+
+        <tr>
+            
+                <td class="name">listener</td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">{function}</span>
+
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last">a listener for the specified event</td>
+        </tr>
+
+	
+	</tbody>
+</table>
+
+    
+    
+    
+<dl class="details">
+    
+        
+    
+    
+    
+
+    
+    <dd class="inherited-from"><ul class="dummy breadcrumb"><li>Inherited From:</li><li>
+        <a href="EventEmitter.html#addEventListener">EventEmitter#addEventListener</a>
+    </li></dd>
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+
+    
+    
+    
+    
+    
+    
+    
+</dl>
+
+    
+    
+
+    
+
+    
+    
+    
+    
+    
+    
+    
+</dd>
+
+        
+            
+<dt>
+    <h4 class="name" id="removeEventListener">removeEventListener(event, listener)</h4>
+    
+    
+</dt>
+<dd>
+    
+    
+    <div class="description">
+        <p>
+        Remove a listener from the listener array for the specified event.
+        </p>
+    </div>
+    
+
+    
+    
+    
+    
+    
+        <h5>Parameters:</h5>
+        
+
+<table class="params table table-bordered table-condensed">
+    <thead>
+	<tr>
+		
+		<th>Name</th>
+		
+
+		<th>Type</th>
+
+		
+
+		
+
+		<th class="last">Description</th>
+	</tr>
+	</thead>
+
+	<tbody>
+	
+
+        <tr>
+            
+                <td class="name">event</td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">{String}</span>
+
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last">event name</td>
+        </tr>
+
+	
+
+        <tr>
+            
+                <td class="name">listener</td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">{function}</span>
+
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last">a listener for the specified event</td>
+        </tr>
+
+	
+	</tbody>
+</table>
+
+    
+    
+    
+<dl class="details">
+    
+        
+    
+    
+    
+
+    
+    <dd class="inherited-from"><ul class="dummy breadcrumb"><li>Inherited From:</li><li>
+        <a href="EventEmitter.html#removeEventListener">EventEmitter#removeEventListener</a>
+    </li></dd>
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+
+    
+    
+    
+    
+    
+    
+    
+</dl>
+
+    
+    
+
+    
+
+    
+    
+    
+    
+    
+    
+    
+</dd>
+
+        
+            
+<dt>
+    <h4 class="name" id="removeAllEventListeners">removeAllEventListeners(<span class="optional">event</span>)</h4>
+    
+    
+</dt>
+<dd>
+    
+    
+    <div class="description">
+        <p>
+        Removes all listeners, or those of the specified event.
+        </p>
+    </div>
+    
+
+    
+    
+    
+    
+    
+        <h5>Parameters:</h5>
+        
+
+<table class="params table table-bordered table-condensed">
+    <thead>
+	<tr>
+		
+		<th>Name</th>
+		
+
+		<th>Type</th>
+
+		
+		<th>Argument</th>
+		
+
+		
+
+		<th class="last">Description</th>
+	</tr>
+	</thead>
+
+	<tbody>
+	
+
+        <tr>
+            
+                <td class="name">event</td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">{String}</span>
+
+
+
+            
+            </td>
+
+            
+                <td class="attributes">
+                
+                    <span class="label">optional</span>&nbsp;
+                
+
+                
+
+                
+                </td>
+            
+
+            
+
+            <td class="description last">event name</td>
+        </tr>
+
+	
+	</tbody>
+</table>
+
+    
+    
+    
+<dl class="details">
+    
+        
+    
+    
+    
+
+    
+    <dd class="inherited-from"><ul class="dummy breadcrumb"><li>Inherited From:</li><li>
+        <a href="EventEmitter.html#removeAllEventListeners">EventEmitter#removeAllEventListeners</a>
+    </li></dd>
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+
+    
+    
+    
+    
+    
+    
+    
+</dl>
+
+    
+    
+
+    
+
+    
+    
+    
+    
+    
+    
+    
+</dd>
+
+        
+            
+<dt>
+    <h4 class="name" id="emit">emit()</h4>
+    
+    
+</dt>
+<dd>
+    
+    
+    <div class="description">
+        <p>
+        Alias of addEventListener.
+        </p>
+    </div>
+    
+
+    
+    
+    
+    
+    
+    
+    
+<dl class="details">
+    
+        
+    
+    
+    
+
+    
+    <dd class="inherited-from"><ul class="dummy breadcrumb"><li>Inherited From:</li><li>
+        <a href="EventEmitter.html#emit">EventEmitter#emit</a>
+    </li></dd>
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+
+    
+    
+    
+    
+    
+    
+    
+</dl>
+
+    
+    
+
+    
+
+    
+    
+    
+    
+    
+    
+    
+</dd>
+
+        
+            
+<dt>
+    <h4 class="name" id="addListener">addListener()</h4>
+    
+    
+</dt>
+<dd>
+    
+    
+    <div class="description">
+        <p>
+        Alias of addEventListener.
+        </p>
+    </div>
+    
+
+    
+    
+    
+    
+    
+    
+    
+<dl class="details">
+    
+        
+    
+    
+    
+
+    
+    <dd class="inherited-from"><ul class="dummy breadcrumb"><li>Inherited From:</li><li>
+        <a href="EventEmitter.html#addListener">EventEmitter#addListener</a>
+    </li></dd>
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+
+    
+    
+    
+    
+    
+    
+    
+</dl>
+
+    
+    
+
+    
+
+    
+    
+    
+    
+    
+    
+    
+</dd>
+
+        
+            
+<dt>
+    <h4 class="name" id="removeListener">removeListener()</h4>
+    
+    
+</dt>
+<dd>
+    
+    
+    <div class="description">
+        <p>
+        Alias of removeEventListener.
+        </p>
+    </div>
+    
+
+    
+    
+    
+    
+    
+    
+    
+<dl class="details">
+    
+        
+    
+    
+    
+
+    
+    <dd class="inherited-from"><ul class="dummy breadcrumb"><li>Inherited From:</li><li>
+        <a href="EventEmitter.html#removeListener">EventEmitter#removeListener</a>
+    </li></dd>
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+
+    
+    
+    
+    
+    
+    
+    
+</dl>
+
+    
+    
+
+    
+
+    
+    
+    
+    
+    
+    
+    
+</dd>
+
+        
+            
+<dt>
+    <h4 class="name" id="on">on()</h4>
+    
+    
+</dt>
+<dd>
+    
+    
+    <div class="description">
+        <p>
+        Alias of addEventListener.
+        </p>
+    </div>
+    
+
+    
+    
+    
+    
+    
+    
+    
+<dl class="details">
+    
+        
+    
+    
+    
+
+    
+    <dd class="inherited-from"><ul class="dummy breadcrumb"><li>Inherited From:</li><li>
+        <a href="EventEmitter.html#on">EventEmitter#on</a>
+    </li></dd>
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+
+    
+    
+    
+    
+    
+    
+    
+</dl>
+
+    
+    
+
+    
+
+    
+    
+    
+    
+    
+    
+    
+</dd>
+
+        
+            
+<dt>
+    <h4 class="name" id="off">off()</h4>
+    
+    
+</dt>
+<dd>
+    
+    
+    <div class="description">
+        <p>
+        Alias of removeEventListener.
+        </p>
+    </div>
+    
+
+    
+    
+    
+    
+    
+    
+    
+<dl class="details">
+    
+        
+    
+    
+    
+
+    
+    <dd class="inherited-from"><ul class="dummy breadcrumb"><li>Inherited From:</li><li>
+        <a href="EventEmitter.html#off">EventEmitter#off</a>
+    </li></dd>
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+
+    
+    
+    
+    
+    
+    
+    
+</dl>
+
+    
+    
+
+    
+
+    
+    
+    
+    
+    
+    
+    
+</dd>
+
+        
+            
+<dt>
+    <h4 class="name" id="equals">equals(value)</h4>
+    
+    
+</dt>
+<dd>
+    
+    
+    <div class="description">
+        <p>
+        Compares this instance with the specified object and indicates if they are equal.
+In order to be equal, o must represent the same object as this instance using a class-specific comparison.
+The general contract is that this comparison should be reflexive, symmetric, and transitive. Also,
+no object reference other than null is equal to null.
+        </p>
+    </div>
+    
+
+    
+    
+    
+    
+    
+        <h5>Parameters:</h5>
+        
+
+<table class="params table table-bordered table-condensed">
+    <thead>
+	<tr>
+		
+		<th>Name</th>
+		
+
+		<th>Type</th>
+
+		
+
+		
+
+		<th class="last">Description</th>
+	</tr>
+	</thead>
+
+	<tbody>
+	
+
+        <tr>
+            
+                <td class="name">value</td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">{Object}</span>
+
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last">the object to compare this instance with.</td>
+        </tr>
+
+	
+	</tbody>
+</table>
+
+    
+    
+    
+<dl class="details">
+    
+        
+    
+    
+    
+
+    
+    <dd class="inherited-from"><ul class="dummy breadcrumb"><li>Inherited From:</li><li>
+        <a href="YObject.html#equals">YObject#equals</a>
+    </li></dd>
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+
+    
+    
+    
+    
+    
+    
+    
+</dl>
+
+    
+    
+
+    
+
+    
+    
+    
+    
+    
+    <h5>Returns:</h5>
+    
+            <div class="returns">
+
+
+    
+<span class="param-type">{Boolean}</span>
+
+
+
+
+
+<span class="param-desc">
+    true if the specified object is equal to this object; false otherwise.
+</span>
+
+</div>
+
+        
+    
+    
+</dd>
+
+        
+            
+<dt>
+    <h4 class="name" id="clone">clone()</h4>
+    
+    
+</dt>
+<dd>
+    
+    
+    <div class="description">
+        <p>
+        Creates and returns a copy of this Object.
+The default implementation returns a so-called "shallow" copy:
+It creates a new instance of the same class and then copies the field values
+(including object references) from this instance to the new instance.
+A "deep" copy, in contrast, would also recursively clone nested objects.
+A subclass that needs to implement this kind of cloning should call super's clone()
+to create the new instance and then create deep copies of the nested, mutable objects.
+        </p>
+    </div>
+    
+
+    
+    
+    
+    
+    
+    
+    
+<dl class="details">
+    
+        
+    
+    
+    
+
+    
+    <dd class="inherited-from"><ul class="dummy breadcrumb"><li>Inherited From:</li><li>
+        <a href="YObject.html#clone">YObject#clone</a>
+    </li></dd>
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+
+    
+    
+    
+    
+    
+    
+    
+</dl>
+
+    
+    
+
+    
+
+    
+    
+    
+    
+    
+    <h5>Returns:</h5>
+    
+            <div class="returns">
+
+
+    
+<span class="param-type">{Object}</span>
+
+
+
+
+
+<span class="param-desc">
+    a copy of this object.
+</span>
+
+</div>
+
+        
+    
+    
+</dd>
+
+        </dl>
+    
+    
+    
+    
+    
+</article>
+
+</section>  
+
+
+
+
+          </div>
+      </div>
+
+        <br clear="both">
+
+      <footer>
+        Documentation generated by <a href="https://github.com/jsdoc3/jsdoc">JSDoc 3.3.2</a> on Thu Nov 26 2015 15:54:22 GMT+0800 (CST)
+        <br>
+      </footer>
+      <script> prettyPrint(); </script>
+    </div>
+  </body>
+</html>

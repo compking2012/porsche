@@ -1,0 +1,502 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <title>Porsche.js API documentation: Source: ui/layout/relativelayout.js</title>
+
+    <script src="scripts/prettify/prettify.js"> </script>
+    <script src="scripts/prettify/lang-css.js"> </script>
+    <!--[if lt IE 9]>
+      <script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+    <![endif]-->
+    <link type="text/css" rel="stylesheet" href="styles/prettify-tomorrow.css">
+    <link href="styles/bootstrap.css" rel="stylesheet">
+    <link href="styles/docs.css" rel="stylesheet">
+    <link href="styles/bootstrap-custom.css" rel="stylesheet">
+    <link href="http://netdna.bootstrapcdn.com/font-awesome/3.2.1/css/font-awesome.css" rel="stylesheet">
+    <script src="http://netdna.bootstrapcdn.com/twitter-bootstrap/2.3.2/js/bootstrap.min.js"></script>
+  </head>
+  <body>
+    <header class="header navbar navbar-inverse">
+      <div class="navbar-inner">
+        <div class="container-fluid">
+          <a class="brand" href="#"><strong>Porsche.js</strong> API documentation</a>
+        </div>
+      </div>
+    </header>
+
+    <div class="container-fluid">
+      <div class="row-fluid">
+          <div class="span3">
+              <h2><a href="index.html">Index</a></h2><div class="well well-small"><ul class="nav nav-list"><li class="nav-header">Modules</li><li><a href="module-AutoLayout.html">AutoLayout</a></li></ul></div><div class="well well-small"><ul class="nav nav-list"><li class="nav-header">Classes</li><li><a href="App.html"><i class="icon-shield" style="color: #0186d1"></i> App</a></li><li><a href="EventEmitter.html"><i class="icon-shield" style="color: #0186d1"></i> EventEmitter</a></li><li><a href="CubicBezier.html"><i class="icon-shield" style="color: #0186d1"></i> CubicBezier</a></li><li><a href="Event.html"><i class="icon-shield" style="color: #0186d1"></i> Event</a></li><li><a href="GestureEvent.html"><i class="icon-shield" style="color: #0186d1"></i> GestureEvent</a></li><li><a href="InputEvent.html"><i class="icon-shield" style="color: #0186d1"></i> InputEvent</a></li><li><a href="KeyboardEvent.html"><i class="icon-shield" style="color: #0186d1"></i> KeyboardEvent</a></li><li><a href="TouchEvent.html"><i class="icon-shield" style="color: #0186d1"></i> TouchEvent</a></li><li><a href="UIEvent.html"><i class="icon-shield" style="color: #0186d1"></i> UIEvent</a></li><li><a href="initialize.html"><i class="icon-shield" style="color: #0186d1"></i> initialize</a></li><li><a href="LongPressRecognizer.html"><i class="icon-shield" style="color: #0186d1"></i> LongPressRecognizer</a></li><li><a href="PanRecognizer.html"><i class="icon-shield" style="color: #0186d1"></i> PanRecognizer</a></li><li><a href="PinchRecognizer.html"><i class="icon-shield" style="color: #0186d1"></i> PinchRecognizer</a></li><li><a href="RotationRecognizer.html"><i class="icon-shield" style="color: #0186d1"></i> RotationRecognizer</a></li><li><a href="SwipeRecognizer.html"><i class="icon-shield" style="color: #0186d1"></i> SwipeRecognizer</a></li><li><a href="TapRecognizer.html"><i class="icon-shield" style="color: #0186d1"></i> TapRecognizer</a></li><li><a href="module-AutoLayout-View.html"><i class="icon-shield" style="color: #0186d1"></i> View</a></li><li><a href="ColumnLayout.html"><i class="icon-shield" style="color: #0186d1"></i> ColumnLayout</a></li><li><a href="ColumnLayoutParam.html"><i class="icon-shield" style="color: #0186d1"></i> ColumnLayoutParam</a></li><li><a href="FlowLayout.html"><i class="icon-shield" style="color: #0186d1"></i> FlowLayout</a></li><li><a href="FlowLayoutParam.html"><i class="icon-shield" style="color: #0186d1"></i> FlowLayoutParam</a></li><li><a href="GridLayout.html"><i class="icon-shield" style="color: #0186d1"></i> GridLayout</a></li><li><a href="GridLayoutParam.html"><i class="icon-shield" style="color: #0186d1"></i> GridLayoutParam</a></li><li><a href="Layout.html"><i class="icon-shield" style="color: #0186d1"></i> Layout</a></li><li><a href="RelativeLayout.html"><i class="icon-shield" style="color: #0186d1"></i> RelativeLayout</a></li><li><a href="RowLayout.html"><i class="icon-shield" style="color: #0186d1"></i> RowLayout</a></li><li><a href="RowLayoutParam.html"><i class="icon-shield" style="color: #0186d1"></i> RowLayoutParam</a></li><li><a href="Matrix.html"><i class="icon-shield" style="color: #0186d1"></i> Matrix</a></li><li><a href="Point.html"><i class="icon-shield" style="color: #0186d1"></i> Point</a></li><li><a href="Rectangle.html"><i class="icon-shield" style="color: #0186d1"></i> Rectangle</a></li><li><a href="BarCode.html"><i class="icon-shield" style="color: #0186d1"></i> BarCode</a></li><li><a href="Button.html"><i class="icon-shield" style="color: #0186d1"></i> Button</a></li><li><a href="Chart.html"><i class="icon-shield" style="color: #0186d1"></i> Chart</a></li><li><a href="CheckBox.html"><i class="icon-shield" style="color: #0186d1"></i> CheckBox</a></li><li><a href="CircleProgressView.html"><i class="icon-shield" style="color: #0186d1"></i> CircleProgressView</a></li><li><a href="CompositeView.html"><i class="icon-shield" style="color: #0186d1"></i> CompositeView</a></li><li><a href="Dialog.html"><i class="icon-shield" style="color: #0186d1"></i> Dialog</a></li><li><a href="ImageButton.html"><i class="icon-shield" style="color: #0186d1"></i> ImageButton</a></li><li><a href="ImageView.html"><i class="icon-shield" style="color: #0186d1"></i> ImageView</a></li><li><a href="Indicator.html"><i class="icon-shield" style="color: #0186d1"></i> Indicator</a></li><li><a href="ListItem.html"><i class="icon-shield" style="color: #0186d1"></i> ListItem</a></li><li><a href="ListView.html"><i class="icon-shield" style="color: #0186d1"></i> ListView</a></li><li><a href="ProgressView.html"><i class="icon-shield" style="color: #0186d1"></i> ProgressView</a></li><li><a href="QRCode.html"><i class="icon-shield" style="color: #0186d1"></i> QRCode</a></li><li><a href="RichTextView.html"><i class="icon-shield" style="color: #0186d1"></i> RichTextView</a></li><li><a href="ScrollableView.html"><i class="icon-shield" style="color: #0186d1"></i> ScrollableView</a></li><li><a href="ScrollBar.html"><i class="icon-shield" style="color: #0186d1"></i> ScrollBar</a></li><li><a href="Slider.html"><i class="icon-shield" style="color: #0186d1"></i> Slider</a></li><li><a href="StackView.html"><i class="icon-shield" style="color: #0186d1"></i> StackView</a></li><li><a href="SwipeView.html"><i class="icon-shield" style="color: #0186d1"></i> SwipeView</a></li><li><a href="Switch.html"><i class="icon-shield" style="color: #0186d1"></i> Switch</a></li><li><a href="TextField.html"><i class="icon-shield" style="color: #0186d1"></i> TextField</a></li><li><a href="TextView.html"><i class="icon-shield" style="color: #0186d1"></i> TextView</a></li><li><a href="View.html"><i class="icon-shield" style="color: #0186d1"></i> View</a></li><li><a href="Window.html"><i class="icon-shield" style="color: #0186d1"></i> Window</a></li><li><a href="YObject.html"><i class="icon-shield" style="color: #0186d1"></i> YObject</a></li></ul></div><div class="well well-small"><ul class="nav nav-list"><li class="nav-header">Namespaces</li><li><a href="VisualFormat.html"><i class="icon-code"></i> VisualFormat</a></li></ul></div><div class="well well-small"><ul class="nav nav-list"><li class="nav-header">Global</li><li><a href="global.html#createInput"><i class="icon-globe" style="color: black;"></i> createInput</a></li><li><a href="global.html#add"><i class="icon-globe" style="color: black;"></i> add</a></li><li><a href="global.html#remove"><i class="icon-globe" style="color: black;"></i> remove</a></li><li><a href="global.html#emit"><i class="icon-globe" style="color: black;"></i> emit</a></li><li><a href="global.html#stop"><i class="icon-globe" style="color: black;"></i> stop</a></li><li><a href="global.html#recognize"><i class="icon-globe" style="color: black;"></i> recognize</a></li><li><a href="global.html#set"><i class="icon-globe" style="color: black;"></i> set</a></li><li><a href="global.html#recognizeWith"><i class="icon-globe" style="color: black;"></i> recognizeWith</a></li><li><a href="global.html#dropRecognizeWith"><i class="icon-globe" style="color: black;"></i> dropRecognizeWith</a></li><li><a href="global.html#requireFailure"><i class="icon-globe" style="color: black;"></i> requireFailure</a></li><li><a href="global.html#dropRequireFailure"><i class="icon-globe" style="color: black;"></i> dropRequireFailure</a></li><li><a href="global.html#hasRequireFailures"><i class="icon-globe" style="color: black;"></i> hasRequireFailures</a></li><li><a href="global.html#canRecognizeWith"><i class="icon-globe" style="color: black;"></i> canRecognizeWith</a></li><li><a href="global.html#tryEmit"><i class="icon-globe" style="color: black;"></i> tryEmit</a></li><li><a href="global.html#canEmit"><i class="icon-globe" style="color: black;"></i> canEmit</a></li><li><a href="global.html#stateStr"><i class="icon-globe" style="color: black;"></i> stateStr</a></li><li><a href="global.html#directionStr"><i class="icon-globe" style="color: black;"></i> directionStr</a></li><li><a href="global.html#process"><i class="icon-globe" style="color: black;"></i> process</a></li><li><a href="global.html#reset"><i class="icon-globe" style="color: black;"></i> reset</a></li><li><a href="global.html#handleInputEvent"><i class="icon-globe" style="color: black;"></i> handleInputEvent</a></li><li><a href="global.html#computeInputData"><i class="icon-globe" style="color: black;"></i> computeInputData</a></li><li><a href="global.html#simpleCloneInputData"><i class="icon-globe" style="color: black;"></i> simpleCloneInputData</a></li><li><a href="global.html#computeIntervalInputData"><i class="icon-globe" style="color: black;"></i> computeIntervalInputData</a></li><li><a href="global.html#getCenter"><i class="icon-globe" style="color: black;"></i> getCenter</a></li><li><a href="global.html#getVelocity"><i class="icon-globe" style="color: black;"></i> getVelocity</a></li><li><a href="global.html#getDirection"><i class="icon-globe" style="color: black;"></i> getDirection</a></li><li><a href="global.html#getDistance"><i class="icon-globe" style="color: black;"></i> getDistance</a></li><li><a href="global.html#getAngle"><i class="icon-globe" style="color: black;"></i> getAngle</a></li><li><a href="global.html#getRotation"><i class="icon-globe" style="color: black;"></i> getRotation</a></li><li><a href="global.html#getScale"><i class="icon-globe" style="color: black;"></i> getScale</a></li><li><a href="global.html#hasParent"><i class="icon-globe" style="color: black;"></i> hasParent</a></li><li><a href="global.html#normalizeSingleTouches"><i class="icon-globe" style="color: black;"></i> normalizeSingleTouches</a></li><li><a href="global.html#attrTest"><i class="icon-globe" style="color: black;"></i> attrTest</a></li><li><a href="global.html#getTouches"><i class="icon-globe" style="color: black;"></i> getTouches</a></li><li><a href="global.html#Attribute"><i class="icon-globe" style="color: black;"></i> Attribute</a></li><li><a href="global.html#Relation"><i class="icon-globe" style="color: black;"></i> Relation</a></li><li><a href="global.html#Priority"><i class="icon-globe" style="color: black;"></i> Priority</a></li><li><a href="global.html#value"><i class="icon-globe" style="color: black;"></i> value</a></li><li><a href="global.html#defineClass"><i class="icon-globe" style="color: black;"></i> defineClass</a></li><li><a href="global.html#getClass"><i class="icon-globe" style="color: black;"></i> getClass</a></li><li><a href="global.html#checkLineBreak"><i class="icon-globe" style="color: black;"></i> checkLineBreak</a></li><li><a href="global.html#isHex"><i class="icon-globe" style="color: black;"></i> isHex</a></li><li><a href="global.html#isNumber"><i class="icon-globe" style="color: black;"></i> isNumber</a></li><li><a href="global.html#isEmpty"><i class="icon-globe" style="color: black;"></i> isEmpty</a></li><li><a href="global.html#trim"><i class="icon-globe" style="color: black;"></i> trim</a></li><li><a href="global.html#focus"><i class="icon-globe" style="color: black;"></i> focus</a></li><li><a href="global.html#blur"><i class="icon-globe" style="color: black;"></i> blur</a></li><li><a href="global.html#addGestureRecognizer"><i class="icon-globe" style="color: black;"></i> addGestureRecognizer</a></li><li><a href="global.html#removeGestureRecognizer"><i class="icon-globe" style="color: black;"></i> removeGestureRecognizer</a></li><li><a href="global.html#toString"><i class="icon-globe" style="color: black;"></i> toString</a></li></ul></div>
+          </div>
+
+          <div class="span9">
+              <h1 class="page-header">Source: ui/layout/relativelayout.js</h1>
+              
+
+
+    
+    <section>
+        <article>
+            <pre class="prettyprint source"><code>/**
+* Porsche.js is licensed under the MIT license. If a copy of the
+* MIT-license was not distributed with this file, You can obtain one at:
+* http://opensource.org/licenses/mit-license.html.
+*
+* @author: Yang Yang (compking@gmail.com)
+* @license MIT
+* @copyright Yang Yang, 2015
+*/
+
+"use strict";
+var Class = require("../../class");
+var Layout = require("./layout");
+var RelativeLayoutParam = require("./relativelayoutparam");
+
+/**
+ * Relative Layout which can automatically caculate views' position based on constraints
+ * @class RelativeLayout
+ * @extends Layout
+ */
+Class.define("framework.ui.layout.RelativeLayout", Layout, {
+    initialize: function() {
+        Layout.prototype.initialize.apply(this, arguments);
+        
+        this._units = 0;
+    },
+
+    destroy: function() {
+        Layout.prototype.destroy.apply(this, arguments);
+    },
+
+    /**
+     * @method RelativeLayout#getLayoutParam
+     * @param {Number} index of the child RelativeLayout
+     * @description return the child RelativeLayout of index
+     * @override
+     */
+    getLayoutParam: function(index, attribute) {
+        if (this._childparam[index] === undefined) {
+            throw "The RelativeLayoutParam required is not defind";
+        }
+        var child = this._childparam[index];
+        if (attribute === "align") {
+            return child.getAlignAttribute();
+        } else if (attribute === "margin") {
+            return child.getMarginAttribute();
+        } else {
+            throw "The attribute param incorrect in getLayoutParam";
+        }
+    },
+
+    /**
+     * @method RelativeLayout#setLayoutParam
+     * @param {Number} index - index for the ChildParam
+     * @param {String} attribute - attribute string of "align", "margin" to set alignment/margins
+     * @param {Object} constraint - the constraint of the relativelayout
+     * @description Add new constranit of the relativelayout
+     */
+    setLayoutParam: function(index, attribute, constraint) {
+        if (this._childparam[index] === undefined) {
+            this._childparam[index] = new RelativeLayoutParam(this);
+            if (this._units &lt; index) {
+                this._units = index;
+            }
+        }
+        if (attribute === "align") {
+            for (var property in constraint) {
+                var referenceView = "parent";
+                var side = "";
+                if (typeof constraint[property] === "number") {
+                    referenceView = constraint[property];
+                } else if (typeof constraint[property] === "object") {
+                    for (var insideProperty in constraint[property]) {
+                        if (insideProperty === "target") {
+                            referenceView = constraint[property][insideProperty];
+                        } else if (insideProperty === "side") {
+                            side = constraint[property][insideProperty];
+                        }
+                    }
+                }
+                if (referenceView === "parent") {
+                    referenceView = -1;
+                }
+                if (this._units &lt; referenceView) {
+                    this._units = referenceView;
+                }
+                switch (property) {
+                    case "left":
+                        this._childparam[index].alignLeft = true;
+                        this._childparam[index].alignTargetLeft = referenceView;
+                        this._childparam[index].alignSideLeft = side === "" ? "left" : side;
+                        break;
+                    case "right":
+                        this._childparam[index].alignRight = true;
+                        this._childparam[index].alignTargetRight = referenceView;
+                        this._childparam[index].alignSideRight = side === "" ? "right" : side;
+                        break;
+                    case "center":
+                        this._childparam[index].alignCenter = true;
+                        this._childparam[index].alignTargetCenter = referenceView;
+                        this._childparam[index].alignSideCenter = side === "" ? "center" : side;
+                        break;
+                    case "top":
+                        this._childparam[index].alignTop = true;
+                        this._childparam[index].alignTargetTop = referenceView;
+                        this._childparam[index].alignSideTop = side === "" ? "top" : side;
+                        break;
+                    case "bottom":
+                        this._childparam[index].alignBottom = true;
+                        this._childparam[index].alignTargetBottom = referenceView;
+                        this._childparam[index].alignSideBottom = side === "" ? "bottom" : side;
+                        break;
+                    case "middle":
+                        this._childparam[index].alignMiddle = true;
+                        this._childparam[index].alignTargetMiddle = referenceView;
+                        this._childparam[index].alignSideMiddle = side === "" ? "middle" : side;
+                        break;
+                }
+            }
+        } else if (attribute === "margin") {
+            for (var property in constraint) {
+                if (typeof constraint[property] === "number") {
+                    switch (property) {
+                        case "left":
+                            this._childparam[index].marginLeft = constraint[property];
+                            break;
+                        case "right":
+                            this._childparam[index].marginRight = constraint[property];
+                            break;
+                        case "top":
+                            this._childparam[index].marginTop = constraint[property];
+                            break;
+                        case "bottom":
+                            this._childparam[index].marginBottom = constraint[property];
+                            break;
+                        case "center":
+                            this._childparam[index].marginCenter = constraint[property];
+                            break;
+                        case "middle":
+                            this._childparam[index].marginMiddle = constraint[property];
+                            break;
+                    }
+                } else {
+                    throw "The type of margins in setLayoutParam should be Number";
+                }
+            }
+        } else {
+            throw "The parameter error in function setLayoutParam";
+        }
+    },
+
+    /**
+     * @method RelativeLayout#removeLayoutParam
+     * @param {Number} index - index for the ChildParam
+     * @param {String} attribute - attribute string of "align", "margin" to set alignment/margins
+     * @description remove "align" or "margin" attribute of childParam at index
+     */
+    removeLayoutParam: function(index, attribute) {
+        if (this._childparam[index] !== undefined) {
+            var param = this._childparam[index];
+            if (attribute === "align") {
+                param.removeAlignAttribute();
+            } else if (attribute === "margin") {
+                param.removeMarginAttribute();
+            }
+        }
+    },
+
+    /**
+     * @method RelativeLayout#perform
+     * @description calculate position for all children views
+     * @override
+     */
+    perform: function() {
+        var hasCircle = this.checkCircle();
+        if (hasCircle) {
+            throw "There is a circle reference in constraints";
+        }
+
+        var horizontalList = [];
+        var verticalList = [];
+        var list = [];
+        var waitNum = this._associatedView.children.length;
+        for (var i = 0; i &lt;= this._units; i++) {
+            horizontalList[i] = false;
+            verticalList[i] = false;
+            list[i] = false;
+            if (this._childparam[i] === undefined) {
+                horizontalList[i] = true;
+                verticalList[i] = true;
+                list[i] = true;
+                waitNum--;
+            } else if (this._childparam[i] !== undefined) {
+                var param = this._childparam[i];
+                if (param.alignLeft &amp;&amp; param.alignTargetLeft === -1 || param.alignRight &amp;&amp; param.alignTargetRight === -1 || param.alignCenter &amp;&amp; param.alignTargetCenter === -1) {
+                    horizontalList[i] = true;
+                }
+                if (param.alignTop &amp;&amp; param.alignTargetTop === -1 || param.alignBottom &amp;&amp; param.alignTargetBottom === -1 || param.alignMiddle &amp;&amp; param.alignTargetMiddle === -1) {
+                    verticalList[i] = true;
+                }
+                if (horizontalList[i] &amp;&amp; verticalList[i]) {
+                    list[i] = true;
+                    waitNum--;
+                    this.calculatePositionAtIndex(i);
+                }
+            }
+        }
+        this.iterationCalculate(waitNum, horizontalList, verticalList, list);
+    },
+
+    /**
+     * @method RelativeLayout#getReferencePositonInfo
+     * @description get reference position info
+     * @private
+     */
+    getReferencePositonInfo: function(referenceSide, referenID) {
+        var l, t, width, height;
+        if (referenID === -1) {
+            l = 0;
+            t = 0;
+            width = this._associatedView.width;
+            height = this._associatedView.height;
+        } else if (this._associatedView.children[referenID] === undefined) {
+            l = 0;
+            t = 0;
+            width = 0;
+            height = 0;
+        } else {
+            l = this._associatedView.children[referenID].left;
+            t = this._associatedView.children[referenID].top;
+            width = this._associatedView.children[referenID].width;
+            height = this._associatedView.children[referenID].height;
+        }
+        switch (referenceSide) {
+            case "left":
+                return l;
+            case "right":
+                return l + width;
+            case "center":
+                return l + width / 2;
+            case "top":
+                return t;
+            case "bottom":
+                return t + height;
+            case "middle":
+                return t + height / 2;
+        }
+    },
+
+    /**
+     * @method RelativeLayout#calculatePositionAtIndex
+     * @description calculate the specified position by index
+     * @private
+     */
+    calculatePositionAtIndex: function(index) {
+        if (this._childparam[index] !== undefined &amp;&amp; this._associatedView.children[index] !== undefined) {
+            var child = this._associatedView.children[index];
+            var startPosition;
+            var param = this._childparam[index];
+            if (param.alignLeft) {
+                startPosition = this.getReferencePositonInfo(param.alignSideLeft, param.alignTargetLeft);
+                child.left = startPosition + param.marginLeft;
+                if (param.alignRight) {
+                    startPosition = this.getReferencePositonInfo(param.alignSideRight, param.alignTargetRight);
+                    child.width = startPosition - param.marginRight - child.left;
+                } else if (param.alignCenter) {
+                    startPosition = this.getReferencePositonInfo(param.alignSideCenter, param.alignTargetCenter);
+                    child.width = (startPosition + param.marginCenter - child.left) * 2;
+                }
+            } else if (param.alignRight) {
+                var rightPosition, centerPosition;
+                startPosition = this.getReferencePositonInfo(param.alignSideRight, param.alignTargetRight);
+                rightPosition = startPosition - param.marginRight;
+                if (param._alignCenter) {
+                    startPosition = this.getReferencePositonInfo(param.alignSideCenter, param.alignTargetCenter);
+                    centerPosition = startPosition + param.marginCenter;
+                    child.width = (child.right - centerPosition) * 2;
+                }
+                child.left = rightPosition - child.width;
+            } else if (param.alignCenter) {
+                startPosition = this.getReferencePositonInfo(param.alignSideCenter, param.alignTargetCenter);
+                child.left = startPosition + param.marginCenter - child.width / 2;
+            }
+
+            if (param.alignTop) {
+                startPosition = this.getReferencePositonInfo(param.alignSideTop, param.alignTargetTop);
+                child.top = startPosition + param.marginTop;
+                if (param.alignBottom) {
+                    startPosition = this.getReferencePositonInfo(param.alignSideBottom, param.alignTargetBottom);
+                    child.height = startPosition - param.marginBottom - child.top;
+                } else if (param.alignMiddle) {
+                    startPosition = this.getReferencePositonparamInfo(param.alignSideMiddle, param.alignTargetMiddle);
+                    child.height = (startPosition + param.marginMiddle - child.top) * 2;
+                }
+            } else if (param.alignBottom) {
+                var bottomPosition, middlePosition;
+                startPosition = this.getReferencePositonInfo(param.alignSideBottom, param.alignTargetBottom);
+                bottomPosition = startPosition - param.marginBottom;
+                if (param._alignMiddle) {
+                    startPosition = this.getReferencePositonInfo(param.alignSideMiddle, param.alignTargetMiddle);
+                    middlePosition = startPosition + param.marginMiddle;
+                    child.height = (child.bottom - middlePosition) * 2;
+                }
+                child.top = bottomPosition - child.height;
+            } else if (param.alignMiddle) {
+                startPosition = this.getReferencePositonInfo(param.alignSideMiddle, param.alignTargetMiddle);
+                child.top = startPosition + param.marginMiddle - child.height / 2;
+            }
+        }
+    },
+
+    /**
+     * @method RelativeLayout#iterationCalculate
+     * @description iterated to calculate
+     * @private
+     */
+    iterationCalculate: function(waitNum, horizontalList, verticalList, list) {
+        var flag = true;
+        while (flag &amp;&amp; waitNum > 0) {
+            flag = false;
+            for (var i = 0; i &lt; this._associatedView.children.length; i++) {
+                if (list[i]) {
+                    continue;
+                }
+                if (this._childparam[i] === undefined) {
+                    // if there is no constraint for current view deal as the views' absolute position
+                    horizontalList[i] = true;
+                    verticalList[i] = true;
+                    list[i] = true;
+                    waitNum--;
+                    flag = true;
+                } else {
+                    // code here to calculate the other view's position
+                    var param = this._childparam[i];
+                    var left = param.alignLeft &amp;&amp; (param.alignTargetLeft === -1 || horizontalList[param.alignTargetLeft]);
+                    var center = param.alignCenter &amp;&amp; (param.alignTargetCenter === -1 || horizontalList[param.alignTargetCenter]);
+                    var right = param.alignRight &amp;&amp; (param.alignTargetRight === -1 || horizontalList[param.alignTargetRight]);
+                    var top = param.alignTop &amp;&amp; (param.alignTargetTop === -1 || verticalList[param.alignTargetTop]);
+                    var bottom = param.alignBottom &amp;&amp; (param.alignTargetBottom === -1 || verticalList[param.alignTargetBottom]);
+                    var middle = param.alignMiddle &amp;&amp; (param.alignTargetMiddle === -1 || verticalList[param.alignTargetMiddle]);
+                    if (left || center || right) {
+                        if (param.alignLeft === left &amp;&amp; param.alignRight === right || param.alignCenter === center) {
+                            if (!horizontalList[i]) {
+                                horizontalList[i] = true;
+                                flag = true;
+                            }
+                        }
+                    }
+                    if (top || bottom || middle) {
+                        if (param.alignTop === top &amp;&amp; param.alignBottom === bottom || param.alignMiddle === middle) {
+                            if (!verticalList[i]) {
+                                verticalList[i] = true;
+                                flag = true;
+                            }
+                        }
+                    }
+                    if (horizontalList[i] &amp;&amp; verticalList[i]) {
+                        list[i] = true;
+                        this.calculatePositionAtIndex(i);
+                        waitNum--;
+                    }
+                }
+            }
+        }
+    },
+
+    /**
+     * @method RelativeLayout#checkCircle
+     * @description check whether circle reference exists
+     * @private
+     */
+    checkCircle: function() {
+        var horizontalList = [];
+        var verticalList = [];
+        var list = [];
+        var waitNum = this._units;
+        for (var i = 0; i &lt;= this._units; i++) {
+            horizontalList[i] = false;
+            verticalList[i] = false;
+            list[i] = false;
+            if (this._childparam[i] === undefined) {
+                horizontalList[i] = true;
+                verticalList[i] = true;
+                list[i] = true;
+                waitNum--;
+            } else if (this._childparam[i] !== undefined) {
+                if (this._childparam[i].alignLeft &amp;&amp; this._childparam[i].alignTargetLeft === -1 || this._childparam[i].alignRight &amp;&amp; this._childparam[i].alignTargetRight === -1 || this._childparam[i].alignCenter &amp;&amp; this._childparam[i].alignTargetCenter === -1) {
+                    horizontalList[i] = true;
+                }
+                if (this._childparam[i].alignTop &amp;&amp; this._childparam[i].alignTargetTop === -1 || this._childparam[i].alignBottom &amp;&amp; this._childparam[i].alignTargetBottom === -1 || this._childparam[i].alignMiddle &amp;&amp; this._childparam[i].alignTargetMiddle === -1) {
+                    verticalList[i] = true;
+                }
+                if (horizontalList[i] &amp;&amp; verticalList[i]) {
+                    list[i] = true;
+                    waitNum--;
+                }
+            }
+        }
+        var flag = true;
+        while (flag &amp;&amp; waitNum >= 0) {
+            flag = false;
+            for (var i = 0; i &lt; this._associatedView.children.length; i++) {
+                if (list[i]) {
+                    continue;
+                }
+                if (this._childparam[i] !== undefined) {
+                    var left = this._childparam[i].alignLeft &amp;&amp; (this._childparam[i].alignTargetLeft === -1 || horizontalList[this._childparam[i].alignTargetLeft]);
+                    var center = this._childparam[i].alignCenter &amp;&amp; (this._childparam[i].alignTargetCenter === -1 || horizontalList[this._childparam[i].alignTargetCenter]);
+                    var right = this._childparam[i].alignRight &amp;&amp; (this._childparam[i].alignTargetRight === -1 || horizontalList[this._childparam[i].alignTargetRight]);
+                    var top = this._childparam[i].alignTop &amp;&amp; (this._childparam[i].alignTargetTop === -1 || verticalList[this._childparam[i].alignTargetTop]);
+                    var bottom = this._childparam[i].alignBottom &amp;&amp; (this._childparam[i].alignTargetBottom === -1 || verticalList[this._childparam[i].alignTargetBottom]);
+                    var middle = this._childparam[i].alignMiddle &amp;&amp; (this._childparam[i].alignTargetMiddle === -1 || verticalList[this._childparam[i].alignTargetMiddle]);
+                    if (left || center || right) {
+                        if (this._childparam[i].alignLeft === left &amp;&amp; this._childparam[i].alignRight === right || this._childparam.alignCenter === center) {
+                            if (!horizontalList[i]) {
+                                horizontalList[i] = true;
+                                flag = true;
+                            }
+                        }
+                    }
+                    if (top || bottom || middle) {
+                        if (this._childparam[i].alignTop === top &amp;&amp; this._childparam[i].alignBottom === bottom || this._childparam.alignMiddle === middle) {
+                            if (!verticalList[i]) {
+                                verticalList[i] = true;
+                                flag = true;
+                            }
+                        }
+                    }
+                    if (horizontalList[i] &amp;&amp; verticalList[i]) {
+                        list[i] = true;
+                        waitNum--;
+                    }
+                }
+            }
+        }
+        if (waitNum > 0) {
+            return true;
+        }
+        return false;
+    }
+}, module);
+</code></pre>
+        </article>
+    </section>
+
+
+
+
+          </div>
+      </div>
+
+        <br clear="both">
+
+      <footer>
+        Documentation generated by <a href="https://github.com/jsdoc3/jsdoc">JSDoc 3.3.2</a> on Thu Nov 26 2015 15:54:21 GMT+0800 (CST)
+        <br>
+      </footer>
+      <script> prettyPrint(); </script>
+    </div>
+  </body>
+</html>
