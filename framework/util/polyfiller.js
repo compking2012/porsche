@@ -72,7 +72,7 @@ Class.define("framework.ui.util.Polyfiller", YObject, {
                     this._colorStops = [];
                 }
 
-                context.constructor.prototype.createConicalGradient = function(x0, y0) {
+                context.constructor.prototype.createConicalGradient = function(x0, y0, r) {
                     ConicalGradient.prototype.addColorStop = function(offset, color) {
                         color = this.colorToRGBA(color);
 

@@ -104,7 +104,12 @@ Class.define("framework.util.ColorManager", YObject, {
     },
 
     processRadialGradientColorObject: function(color) {
-        var radial = GradientParser.parse(color);
+        var radial = GradientParser.parse(color)[0];
+        if (radial.orientation === undefined) {
+            radial.orientation = {type: "position", value: "center"};
+        }
+
+        var colorStops = radial.colorStops;
         return radial;
     },
 
@@ -335,7 +340,7 @@ Class.define("framework.util.ColorManager", YObject, {
                 x = width / 2;
                 y = height / 2;
         }
-        var gradient = context.createConicalGradient(x, y);
+        var gradient = context.createConicalGradient(x, y, Math.max(width, height) * Math.sqrt(2) / 2);
         var colorStops = conic.colorStops;
         var length = colorStops.length;
         for (var i = 0; i < length; i++) {

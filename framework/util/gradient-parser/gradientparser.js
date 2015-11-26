@@ -1,3 +1,12 @@
+/**
+* Porsche.js is licensed under the MIT license. If a copy of the
+* MIT-license was not distributed with this file, You can obtain one at:
+* http://opensource.org/licenses/mit-license.html.
+*
+* @author: Yang Yang (compking@gmail.com)
+* @license MIT
+* @copyright Yang Yang, 2015
+*/
 // Copyright (c) 2014 Rafael Caricio. All rights reserved.
 // Use of this source code is governed by a BSD-style license that can be
 // found in the LICENSE file.

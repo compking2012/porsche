@@ -12,6 +12,12 @@ Class.define("MyApp", App, {
         this.swipeView.width = this.window.width;
         this.swipeView.height = this.window.height;
 
+        this.radialGradientView = new TextView();
+        this.radialGradientView.text = "Radial Gradient";
+        this.radialGradientView.addGestureRecognizer(new TapRecognizer({event: "doubletap", taps: 2}));
+        this.radialGradientView.addEventListener("doubletap", this.onChangeRadialGradient.bind(this));
+        this.swipeView.addChild(this.radialGradientView);
+
         this.conicGradientView = new TextView();
         this.conicGradientView.text = "Conic Gradient";
         this.conicGradientView.addGestureRecognizer(new TapRecognizer({event: "doubletap", taps: 2}));
@@ -24,12 +30,6 @@ Class.define("MyApp", App, {
         this.linearGradientView.addEventListener("doubletap", this.onChangeLinearGradient.bind(this));
         this.swipeView.addChild(this.linearGradientView);
 
-        this.radialGradientView = new TextView();
-        this.radialGradientView.text = "Radial Gradient";
-        this.radialGradientView.addGestureRecognizer(new TapRecognizer({event: "doubletap", taps: 2}));
-        this.radialGradientView.addEventListener("doubletap", this.onChangeRadialGradient.bind(this));
-        this.swipeView.addChild(this.radialGradientView);
-
         this.window.addChild(this.swipeView);
 
         this.linearGradients = [
@@ -40,18 +40,22 @@ Class.define("MyApp", App, {
         this.linearIndex = 0;
         this.linearGradientView.background = this.linearGradients[this.linearIndex];
 
-
         this.conicGradients = [
             "conic-gradient(at center, #FF0000, #FFFF00 50%, #FF0000)",
-            "conic-gradient(at center, red, orange, yellow, green, blue, indigo, violet)"
+            "conic-gradient(at center, red, orange, yellow, green, blue, indigo, violet)",
+            "conic-gradient(at left top, red, yellow 50%, red)"
         ];
         this.conicIndex = 0;
         this.conicGradientView.background = this.conicGradients[this.conicIndex];
 
         this.radialGradients = [
-            "radial-gradient(#FF0000, #FFFFFF)"
+            "radial-gradient(circle at 150px 150px, red, white)",
+            "radial-gradient(circle at top right, red, white)",
+            "radial-gradient(circle closest-side, red, white)",
+            "radial-gradient(red, white 75%)"
         ];
         this.radialIndex = 0;
+        this.radialGradientView.background = this.radialGradients[this.radialIndex];
     },
 
     onChangeLinearGradient: function() {
