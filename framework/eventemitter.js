@@ -13,28 +13,31 @@ var Class = require("./class");
 var YObject = require("./yobject");
 
 /**
- * Event emitter
+ * The base class for event-based object which can listen some events as well as emit some ones.
+ * Note that this class is never used to instantiate directly.
+ * Instead, instantiate a subclass of this class.
  * @class EventEmitter
  * @extends YObject
+ * @abstract
  */
 Class.define("framework.EventEmitter", YObject, {
     /**
-     * Constructor
+     * Constructor to use when creating an event-emitter based object.
      * @method EventEmitter#initialize
      */
     initialize: function() {
         YObject.prototype.initialize.apply(this, arguments);
 
-        this.events = {};
+        this._events = {};
     },
 
     /**
-     * Destructor
+     * Destructor to use when need to destroy this object manually.
      * @method EventEmitter#destroy
      */
     destroy: function() {
         this.removeAllEventListeners();
-        this.events = null;
+        this._events = null;
 
         YObject.prototype.destroy.apply(this, arguments);
     },
@@ -46,7 +49,7 @@ Class.define("framework.EventEmitter", YObject, {
      * @method EventEmitter#dispatchEvent
      */
     dispatchEvent: function(event) {
-        if (!this.events[event]) {
+        if (!this._events[event]) {
             return;
         }
 
@@ -55,7 +58,7 @@ Class.define("framework.EventEmitter", YObject, {
             args.push(arguments[i]);
         }
 
-        var handlers = this.events[event] instanceof Array ? this.events[event] : [this.events[event]];
+        var handlers = this._events[event] instanceof Array ? this._events[event] : [this._events[event]];
         for (var k = 0; k < handlers.length; k++) {
             handlers[k].apply(this, args);
         }
@@ -72,12 +75,12 @@ Class.define("framework.EventEmitter", YObject, {
             return;
         }
 
-        if (!this.events[event]) {
-            this.events[event] = handler;
-        } else if (this.events[event] instanceof Array) {
-            this.events[event].push(handler);
+        if (!this._events[event]) {
+            this._events[event] = handler;
+        } else if (this._events[event] instanceof Array) {
+            this._events[event].push(handler);
         } else {
-            this.events[event] = [this.events[event], handler];
+            this._events[event] = [this._events[event], handler];
         }
     },
 
@@ -88,14 +91,14 @@ Class.define("framework.EventEmitter", YObject, {
      * @method EventEmitter#removeEventListener
      */
     removeEventListener: function(event, handler) {
-        if (!this.events[event]) {
+        if (!this._events[event]) {
             return;
         }
 
-        if (this.events[event] === handler) {
-            delete this.events[event];
-        } else if (this.events[event] instanceof Array) {
-            var handlers = this.events[event];
+        if (this._events[event] === handler) {
+            delete this._events[event];
+        } else if (this._events[event] instanceof Array) {
+            var handlers = this._events[event];
             for (var i = 0; i < handlers.length; i++) {
                 if (handlers[i] === handler) {
                     handlers.splice(i, 1);
@@ -103,7 +106,7 @@ Class.define("framework.EventEmitter", YObject, {
                 }
             }
             if (handlers.length === 1) {
-                this.events[event] = handlers[0];
+                this._events[event] = handlers[0];
             }
         }
     },
@@ -115,14 +118,14 @@ Class.define("framework.EventEmitter", YObject, {
      */
     removeAllEventListeners: function(event) {
         if (event) {
-            delete this.events[event];
+            delete this._events[event];
         } else {
-            this.events = {};
+            this._events = {};
         }
     },
 
     /**
-     * Alias of addEventListener
+     * Alias of addEventListener.
      * @method EventEmitter#emit
      */
     emit: function(/*event*/) {
@@ -130,7 +133,7 @@ Class.define("framework.EventEmitter", YObject, {
     },
 
     /**
-     * Alias of addEventListener
+     * Alias of addEventListener.
      * @method EventEmitter#addListener
      */
     addListener: function(/*event, handler*/) {
@@ -138,7 +141,7 @@ Class.define("framework.EventEmitter", YObject, {
     },
 
     /**
-     * Alias of removeEventListener
+     * Alias of removeEventListener.
      * @method EventEmitter#removeListener
      */
     removeListener: function(/*event, handler*/) {
@@ -146,7 +149,7 @@ Class.define("framework.EventEmitter", YObject, {
     },
 
     /**
-     * Alias of addEventListener
+     * Alias of addEventListener.
      * @method EventEmitter#on
      */
     on: function(/*event, handler*/) {
@@ -154,7 +157,7 @@ Class.define("framework.EventEmitter", YObject, {
     },
 
     /**
-     * Alias of removeEventListener
+     * Alias of removeEventListener.
      * @method EventEmitter#off
      */
     off: function(/*event, handler*/) {

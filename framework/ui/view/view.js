@@ -17,7 +17,9 @@ var ColorManager = require("../../util/colormanager");
 var GestureManager = require("../gesture/gesturemanager");
 
 /**
- * Base view for all UI elements
+ * This class represents the basic building block for user interface components.
+ * A view occupies a rectangular area on the screen and is responsible for drawing and event handling.
+ * View is the base class for all UI elements, which are used to create interactive UI components (buttons, text views, etc.).
  * @class View
  * @extends EventEmitter
  */
@@ -118,7 +120,7 @@ Class.define("framework.ui.view.View", EventEmitter, {
     /**
      * @name View#id
      * @type {String}
-     * @description identifier
+     * @description unique identifier of this view.
      */
     get id() {
         return this._id;
@@ -309,7 +311,7 @@ Class.define("framework.ui.view.View", EventEmitter, {
     /**
      * @name View#enabled
      * @type {Boolean}
-     * @description enabled state of this view, True if this view is enabled, false otherwise.
+     * @description enabled state of this view, true if this view is enabled, false otherwise.
      */
     get enabled() {
         return this._enabled;
@@ -328,7 +330,10 @@ Class.define("framework.ui.view.View", EventEmitter, {
     /**
      * @name View#visibility
      * @type {String}
-     * @description visibility state of this view, such as "visible", "hiden" or "none".
+     * @description visibility state of this view, such as "visible", "hidden" or "none".
+     * "visible" means view is visible on screen and this is the default value;
+     * "hidden" means view is not displayed, but taken into account during layout (space is left for it);
+     * "none" means view is completely hidden, as if the view had not been added.
      */
     get visibility() {
         return this._visibility;
@@ -347,7 +352,7 @@ Class.define("framework.ui.view.View", EventEmitter, {
     /**
      * @name View#parent
      * @type {View}
-     * @readOnly
+     * @readonly
      * @description parent of this view.
      */
     get parent() {
@@ -575,7 +580,7 @@ Class.define("framework.ui.view.View", EventEmitter, {
     /**
      * @name View#originX
      * @type {Number}
-     * @description Get the x location of the point around which the view is rotated and scaled. By default, the origin point is centered on the object.
+     * @description the x location of the point around which the view is rotated and scaled. By default, the origin point is centered on the object.
      */
     get originX() {
         return this._originX;
@@ -595,7 +600,7 @@ Class.define("framework.ui.view.View", EventEmitter, {
     /**
      * @name View#originY
      * @type {Number}
-     * @description Get the y location of the point around which the view is rotated and scaled. By default, the origin point is centered on the object.
+     * @description the y location of the point around which the view is rotated and scaled. By default, the origin point is centered on the object.
      */
     get originY() {
         return this._originY;
@@ -615,7 +620,7 @@ Class.define("framework.ui.view.View", EventEmitter, {
     /**
      * @name View#origin
      * @type {Object}
-     * @description Get the x and y location of the point around which the view is rotated and scaled. By default, the origin point is centered on the object.
+     * @description the x and y location of the point around which the view is rotated and scaled. By default, the origin point is centered on the object.
      */
     get origin() {
         return {
@@ -636,6 +641,14 @@ Class.define("framework.ui.view.View", EventEmitter, {
         this.invalidate();
     },
 
+    /**
+     * @name View#scrollX
+     * @type {Number}
+     * @description the scrolled left position of this view.
+     * This is the left edge of the displayed part of your view.
+     * You do not need to draw any pixels farther left, since those are outside of the frame of your view on screen.
+     */
+
     get scrollX() {
         return this._scrollX;
     },
@@ -650,6 +663,13 @@ Class.define("framework.ui.view.View", EventEmitter, {
         this.invalidate();
     },
 
+    /**
+     * @name View#scrollY
+     * @type {Number}
+     * @description the scrolled top position of this view.
+     * This is the top edge of the displayed part of your view.
+     * You do not need to draw any pixels above it, since those are outside of the frame of your view on screen.
+     */
     get scrollY() {
         return this._scrollY;
     },
@@ -664,6 +684,12 @@ Class.define("framework.ui.view.View", EventEmitter, {
         this.invalidate();
     },
 
+    /**
+     * @name View#touchRegion
+     * @type {Rectangle[] || null}
+     * @description one or more rectangles which represent several areas that can be used to extend the touch area.
+     * If omitted and left as null, it means the default touch area which is the bound of this view.
+     */
     get touchRegion() {
         return this._touchRegion;
     },
@@ -675,7 +701,7 @@ Class.define("framework.ui.view.View", EventEmitter, {
     /**
      * @name View#hardwareAccelerated
      * @type {Boolean}
-     * @description Flag indicating whether the view's rendering should be hardware accelerated if possible.
+     * @description indicating whether the view's rendering should be hardware accelerated if possible.
      */
     get hardwareAccelerated() {
         return this._hardwareAccelerated;
@@ -686,6 +712,11 @@ Class.define("framework.ui.view.View", EventEmitter, {
         this.processHardwareAcceleration();
     },
 
+    /**
+     * @name View#focused
+     * @type {Boolean}
+     * @description indicating whether this view has focus itself, or is the ancestor of the view that has focus.
+     */
     get focused() {
         return this._focused;
     },
@@ -730,38 +761,21 @@ Class.define("framework.ui.view.View", EventEmitter, {
         }
     },
 
+    /**
+     * Add a gesture recognizer to this view in order to recognize the specified gesture,
+     * such as tap, longpress, pan and rotation etc.
+     * @param {GestureRecognizer} gestureRecognizer - the gesture recognizer
+     */
     addGestureRecognizer: function(gestureRecognizer) {
         this._gestureManager.add(gestureRecognizer);
     },
 
+    /**
+     * Remove a gesture recognizer from this view
+     * @param {GestureRecognizer} gestureRecognizer - the gesture recognizer
+     */
     removeGestureRecognizer: function(gestureRecognizer) {
         this._gestureManager.remove(gestureRecognizer);
-    },
-
-    saveAbsoluteInfo: function() {
-        if (!this._hasLayout) {
-            this._absoluteLeft = this._left;
-            this._absoluteTop = this._top;
-            this._absoluteWidth = this._width;
-            this._absoluteHeight = this._height;
-            this._hasLayout = true;
-        }
-    },
-
-    resetToNoLayout: function() {
-        if (this._hasLayout) {
-            this._left = this._absoluteLeft;
-            this._top = this._absoluteTop;
-            this._width = this._absoluteWidth;
-            this._height = this._absoluteHeight;
-            this._hasLayout = false;
-        }
-    },
-
-    relayout: function(self) {
-        if (this._parent !== null) {
-            this._parent.needRelayout = true;
-        }
     },
 
     /**
@@ -780,8 +794,8 @@ Class.define("framework.ui.view.View", EventEmitter, {
     /**
      * Set width and height in one function
      * @method View#setSize
-     * @param {Number} width view's width value
-     * @param {Number} height view's height value
+     * @param {Number} width - view's width value
+     * @param {Number} height - view's height value
      * @deprecated
      */
     setSize: function(width, height) {
@@ -793,17 +807,17 @@ Class.define("framework.ui.view.View", EventEmitter, {
     /**
      * Implement this to do your drawing.
      * @method View#draw
-     * @param {Context} context - the canvas context to which the View is rendered
+     * @param {Context} context - the canvas context to which the view is rendered
      * @abstract
      */
     draw: function(/*context*/) {
-        // Implemented by sub view
+        // TO BE IMPLEMENTED
     },
 
     /**
      * Override and implement this to do your background drawing.
      * @method View#drawBackground
-     * @param {Context} context - the canvas context to which the View is rendered
+     * @param {Context} context - the canvas context to which the view is rendered
      * @override
      */
     drawBackground: function(context) {
@@ -869,15 +883,6 @@ Class.define("framework.ui.view.View", EventEmitter, {
 
         this.viewDebug(context);
         return true;
-    },
-
-    viewDebug: function(context) {
-        if (global.AppFXDebugDirtyRect) {
-            context.strokeStyle = "#FFFFFF";
-            context.lineWidth = 3;
-            context.strokeRect(this._dirtyRect.left, this._dirtyRect.top, this._dirtyRect.width, this._dirtyRect.height);
-            console.log("[AppFX]dirtyRect: ", this.toString(), this._dirtyRect.toString());
-        }
     },
 
     /**
@@ -1054,6 +1059,11 @@ Class.define("framework.ui.view.View", EventEmitter, {
         this._selected = false;
     },
 
+    /**
+     * Process hardware acceleration
+     * @method View#processHardwareAcceleration
+     * @private
+     */
     processHardwareAcceleration: function() {
         if (!this._hardwareAccelerated) {
             this.getWindow().windowManager.destroyCanvas(this._bitmapBuffer);
@@ -1064,6 +1074,63 @@ Class.define("framework.ui.view.View", EventEmitter, {
                 this._bitmapBuffer = this.getWindow().windowManager.createCanvas(this._width, this._height);
                 this._bitmapBufferContext = this.getWindow().windowManager.getContext(this._bitmapBuffer);
             }
+        }
+    },
+
+    /**
+     * Save the absolute position and size info
+     * @method View#saveAbsoluteInfo
+     * @private
+     */
+    saveAbsoluteInfo: function() {
+        if (!this._hasLayout) {
+            this._absoluteLeft = this._left;
+            this._absoluteTop = this._top;
+            this._absoluteWidth = this._width;
+            this._absoluteHeight = this._height;
+            this._hasLayout = true;
+        }
+    },
+
+    /**
+     * Restore the absolute position and size info
+     * @method View#resetToNoLayout
+     * @private
+     */
+    resetToNoLayout: function() {
+        if (this._hasLayout) {
+            this._left = this._absoluteLeft;
+            this._top = this._absoluteTop;
+            this._width = this._absoluteWidth;
+            this._height = this._absoluteHeight;
+            this._hasLayout = false;
+        }
+    },
+
+    /**
+     * Relayout
+     * @method View#relayout
+     * @param {View} self - this view
+     * @private
+     */
+    relayout: function(/*self*/) {
+        if (this._parent !== null) {
+            this._parent.needRelayout = true;
+        }
+    },
+
+    /**
+     * View debug
+     * @method View#viewDebug
+     * @param {Context} context - the canvas context to which the view is rendered
+     * @private
+     */
+    viewDebug: function(context) {
+        if (global.AppFXDebugDirtyRect) {
+            context.strokeStyle = "#FFFFFF";
+            context.lineWidth = 3;
+            context.strokeRect(this._dirtyRect.left, this._dirtyRect.top, this._dirtyRect.width, this._dirtyRect.height);
+            console.log("[AppFX]dirtyRect: ", this.toString(), this._dirtyRect.toString());
         }
     }
 }, module);

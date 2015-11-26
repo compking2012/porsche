@@ -19,16 +19,14 @@ var InputService = require("../platform/inputservice");
 var RenderService = require("../platform/renderservice");
 
 /**
- * Base App class
+ * Base class for those who need to maintain global application state.
+ * You can provide your own implementation by specifying its name in your manifest.json,
+ * which will cause that class to be instantiated for you when the process for your application/package is created.
  * @class App
  * @extends EventEmitter
  * @abstract
  */
 Class.define("framework.app.App", EventEmitter, {
-    /**
-     * Constructor
-     * @method App#initialize
-     */
     initialize: function() {
         EventEmitter.prototype.initialize.apply(this, arguments);
 
@@ -104,12 +102,18 @@ Class.define("framework.app.App", EventEmitter, {
     /**
      * @name App#window
      * @type {Window}
-     * @description the Window associated with the current app
+     * @description the window associated with this current app
      */
     get window() {
         return this._window;
     },
 
+    /**
+     * @name App#windowManager
+     * @type {WindowManager}
+     * @description access the window manager associated with this current app
+     * @private
+     */
     get windowManager() {
         return this._windowManager;
     },
