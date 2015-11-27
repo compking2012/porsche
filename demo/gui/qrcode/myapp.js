@@ -1,9 +1,9 @@
 define(function(require, exports, module) {
 "use strict";
 
-var Class = require("/framework/class");
-var App = require("/framework/app/app");
-var QRCode = require("/framework/ui/view/qrcode");
+var Class = require("../../../framework/class");
+var App = require("../../../framework/app/app");
+var QRCode = require("../../../framework/ui/view/qrcode");
 
 Class.define("MyApp", App, {
     onStart: function() {

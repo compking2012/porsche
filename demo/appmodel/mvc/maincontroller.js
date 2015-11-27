@@ -1,9 +1,9 @@
 define(function(require, exports, module) {
 "use strict";
 
-var Class = require("/framework/class");
-var Controller = require("/framework/controller/controller");
-var View = require("/framework/ui/view/view");
+var Class = require("../../../framework/class");
+var Controller = require("../../../framework/controller/controller");
+var View = require("../../../framework/ui/view/view");
 var OtherController = require("./othercontroller");
 
 Class.define("MyApp.MainController", Controller, {

@@ -1,14 +1,14 @@
 define(function(require, exports, module) {
 "use strict";
 
-var Class = require("/framework/class");
-var App = require("/framework/app/app");
-var View = require("/framework/ui/view/view");
-var CompositeView = require("/framework/ui/view/compositeview");
-var GridLayout = require("/framework/ui/layout/gridlayout");
-var GridLayoutParam = require("/framework/ui/layout/gridlayoutparam");
-var LayoutParam = require("/framework/ui/layout/layoutparam");
-var ScrollableView = require("/framework/ui/view/scrollableview");
+var Class = require("../../../framework/class");
+var App = require("../../../framework/app/app");
+var View = require("../../../framework/ui/view/view");
+var CompositeView = require("../../../framework/ui/view/compositeview");
+var GridLayout = require("../../../framework/ui/layout/gridlayout");
+var GridLayoutParam = require("../../../framework/ui/layout/gridlayoutparam");
+var LayoutParam = require("../../../framework/ui/layout/layoutparam");
+var ScrollableView = require("../../../framework/ui/view/scrollableview");
 
 Class.define("MyApp", App, {
     onStart: function() {

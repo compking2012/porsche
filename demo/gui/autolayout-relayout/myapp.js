@@ -1,12 +1,12 @@
 define(function(require, exports, module) {
 "use strict";
 
-var Class = require("/framework/class");
-var App = require("/framework/app/app");
-var CompositeView = require("/framework/ui/view/compositeview");
-var TextView = require("/framework/ui/view/textview");
-var AutoLayout = require("/framework/ui/layout/autolayout");
-var TapRecognizer = require("/framework/ui/gesture/taprecognizer");
+var Class = require("../../../framework/class");
+var App = require("../../../framework/app/app");
+var CompositeView = require("../../../framework/ui/view/compositeview");
+var TextView = require("../../../framework/ui/view/textview");
+var AutoLayout = require("../../../framework/ui/layout/autolayout");
+var TapRecognizer = require("../../../framework/ui/gesture/taprecognizer");
 
 Class.define("MyApp", App, {
     onStart: function() {

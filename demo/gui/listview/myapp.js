@@ -1,12 +1,12 @@
 define(function(require, exports, module) {
 "use strict";
 
-var Class = require("/framework/class");
-var App = require("/framework/app/app");
-var ListView = require("/framework/ui/view/listview");
-var TextView = require("/framework/ui/view/textview");
-var ListItem = require("/framework/ui/view/listitem");
-var ScrollBar = require("/framework/ui/view/scrollbar");
+var Class = require("../../../framework/class");
+var App = require("../../../framework/app/app");
+var ListView = require("../../../framework/ui/view/listview");
+var TextView = require("../../../framework/ui/view/textview");
+var ListItem = require("../../../framework/ui/view/listitem");
+var ScrollBar = require("../../../framework/ui/view/scrollbar");
 
 Class.define("MyApp", App, {
     onStart: function() {

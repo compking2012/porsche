@@ -1,9 +1,9 @@
 define(function(require, exports, module) {
 "use strict";
 
-var Class = require("/framework/class");
-var App = require("/framework/app/app");
-var CircleProgressView = require("/framework/ui/view/circleprogressview");
+var Class = require("../../../framework/class");
+var App = require("../../../framework/app/app");
+var CircleProgressView = require("../../../framework/ui/view/circleprogressview");
 
 Class.define("MyApp", App, {
     onStart: function() {

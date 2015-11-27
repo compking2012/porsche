@@ -1,7 +1,7 @@
 define(function(require, exports, module) {
 "use strict";
 
-var Class = require("/framework/class");
+var Class = require("../../../framework/class");
 
 Class.define("Animal", {
     initialize: function(age) {

@@ -1,7 +1,7 @@
 #!/bin/sh
 rm -rf ../apidocs/*
 cd ../../porsche/build
-./build.sh h5
+./build.sh h5 ../../..
 cd ../../porsche-doc/tools
 rm -rf ../demo/* ../framework/*
 cp -r ../../porsche/out/framework/* ../framework

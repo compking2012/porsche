@@ -1,11 +1,11 @@
 define(function(require, exports, module) {
 "use strict";
 
-var Class = require("/framework/class");
-var App = require("/framework/app/app");
-var ImageView = require("/framework/ui/view/imageview");
-var CompositeView = require("/framework/ui/view/compositeview");
-var FrameAnimation = require("/framework/ui/animation/frameanimation");
+var Class = require("../../../framework/class");
+var App = require("../../../framework/app/app");
+var ImageView = require("../../../framework/ui/view/imageview");
+var CompositeView = require("../../../framework/ui/view/compositeview");
+var FrameAnimation = require("../../../framework/ui/animation/frameanimation");
 
 Class.define("MyApp", App, {
     onStart: function() {

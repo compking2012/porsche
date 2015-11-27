@@ -1,8 +1,8 @@
 define(function(require, exports, module) {
 "use strict";
 
-var Class = require("/framework/class");
-var App = require("/framework/app/app");
+var Class = require("../../../framework/class");
+var App = require("../../../framework/app/app");
 var Library = require("./library");
 var Book = require("./book");
 
