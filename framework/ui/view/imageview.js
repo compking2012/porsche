@@ -52,58 +52,82 @@ Class.define("framework.ui.view.ImageView", View, {
     },
 
     set src(value) {
-        if (value === null) {
-            this._src = null;
-            this._image = null;
-            this.invalidate();
-        } else {
-            this._src = value;
-            // FIXME: should support addEventListener insteadof onload event.
-            this._image.onload = function() {
-                this._image.onload = null;
-                this.invalidate();
-            }.bind(this);
-            this._image.src = this._src;
-        }
+        this.setProperty("src", value, function() {
+            if (value === null) {
+                this._src = null;
+                this._image = null;
+            } else {
+                this._src = value;
+                // FIXME: should support addEventListener insteadof onload event.
+                this._image.onload = function() {
+                    this._image.onload = null;
+                    this.invalidate();
+                }.bind(this);
+                this._image.src = this._src;
+            }
+        }.bind(this));
     },
 
     /**
      * @name ImageView#scaleType
      * @type {String}
      * @description the desired scaling mode, such as "matrix", "fitxy", "fitstart", "fitend",
-     *              fitcenter", "center", "centercrop" and "centerinside"
+     * fitcenter", "center", "centercrop" and "centerinside"
      */
     get scaleType() {
         return this._scaleType;
     },
 
     set scaleType(value) {
-        this._scaleType = value;
-        this.invalidate();
+        this.setProperty("scaleType", value);
     },
 
+    /**
+     * @name ImageView#offsetX
+     * @type {Number}
+     * @description offsetX
+     * @private
+     */
     get offsetX() {
         return this._offsetX;
     },
 
     set offsetX(value) {
         this._offsetX = value;
-        this.invalidate();
     },
 
+    /**
+     * @name ImageView#offsetY
+     * @type {Number}
+     * @description offsetY
+     * @private
+     */
     get offsetY() {
         return this._offsetY;
     },
 
     set offsetY(value) {
         this._offsetY = value;
-        this.invalidate();
     },
 
+    /**
+     * Draw the image view.
+     * @method ImageView#draw
+     * @param {Context} context - the canvas context to which the view is rendered
+     * @protected
+     * @override
+     */
     draw: function(context) {
         this.drawImage(context, this._image);
     },
 
+    /**
+     * Draw the image.
+     * @method TextView#drawImage
+     * @param {Context} context - the canvas context to which the view is rendered
+     * @protected
+     * @override
+     */
     drawImage: function(context, image) {
         if (this._scaleType === "matrix") {
             context.drawImage(image, 0, 0);

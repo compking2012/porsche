@@ -14,13 +14,14 @@ var TextView = require("./textview");
 var TapRecognizer = require("../gesture/taprecognizer");
 
 /**
- * Button widget
+ * Button that represents a pushable widget.
+ * Pushable buttons can be pressed, or clicked, by the user to perform an action.
  * @class Button
  * @extends TextView
  */
 Class.define("framework.ui.view.Button", TextView, {
     /**
-     * Constructor
+     * Constructor that create a button
      * @method Button#initialize
      */
     initialize: function(/*value*/) {
@@ -32,7 +33,7 @@ Class.define("framework.ui.view.Button", TextView, {
     },
 
     /**
-     * Destructor
+     * Destructor that destroy this button
      * @method Button#destroy
      */
     destroy: function() {
@@ -42,15 +43,26 @@ Class.define("framework.ui.view.Button", TextView, {
         TextView.prototype.destroy.apply(this, arguments);
     },
 
+    /**
+     * @name Button#radius
+     * @type {Number}
+     * @description A number that defines the radius of the four corners.
+     */
     get radius() {
         return this._radius;
     },
 
     set radius(value) {
-        this._radius = value;
-        this.invalidate();
+        this.setProperty("radius", value);
     },
 
+    /**
+     * Draw the background of the text view.
+     * @method TextView#drawBackground
+     * @param {Context} context - the canvas context to which the view is rendered
+     * @protected
+     * @override
+     */
     drawBackground: function(context) {
         context.save();
         context.roundRect(0, 0, this._width , this._height, this._radius);
@@ -59,6 +71,13 @@ Class.define("framework.ui.view.Button", TextView, {
         context.restore();
     },
 
+    /**
+     * Draw the text view.
+     * @method TextView#draw
+     * @param {Context} context - the canvas context to which the view is rendered
+     * @protected
+     * @override
+     */
     draw: function(context) {
         context.save();
         context.roundRect(0, 0, this._width , this._height, this._radius);

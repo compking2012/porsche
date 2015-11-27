@@ -7,7 +7,7 @@ var TextView = fx.import("framework.ui.view.TextView");
 Class.define("MyApp", App, {
     onStart: function() {
         var textview = new TextView();
-        textview.text = "1234567890!";
+        textview.text = "Hello world!";
         textview.fontSize = "24px";
         textview.textAlign = "center";
         textview.fontStyle = "normal";

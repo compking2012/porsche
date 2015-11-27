@@ -13,7 +13,8 @@ var Class = require("../../class");
 var View = require("./view");
 
 /**
- * Composite view may add child view in it
+ * Composite view is a special view that can contain other views (called children.)
+ * The composite view is the base class for view containers.
  * @class CompositeView
  * @extends View
  */
@@ -24,13 +25,14 @@ Class.define("framework.ui.view.CompositeView", View, {
      */
     initialize: function() {
         View.prototype.initialize.apply(this, arguments);
+
         this._children = [];
         this._layout = null;
         this._needRelayout = false;
     },
 
     /**
-     * Destructor that destroy a composite view
+     * Destructor that destroy this composite view
      * @method CompositeView#destroy
      */
     destroy: function() {
@@ -39,45 +41,42 @@ Class.define("framework.ui.view.CompositeView", View, {
             this._layout.destroy();
         }
         this._layout = null;
-        View.prototype.destroy.apply(this, arguments);
-    },
 
-    set needRelayout(value) {
-        this._needRelayout = value;
-        this.invalidate();
+        View.prototype.destroy.apply(this, arguments);
     },
 
     /**
      * @name CompositeView#layout
      * @type {Layout}
-     * @description layout for children of the view.
+     * @description the layout applied for all children of the composite view.
      */
     get layout() {
         return this._layout;
     },
 
     set layout(value) {
-        if (value === null && this._layout !== null) {
-            var length = this._children.length;
-            for (var i = 0; i < length; i++) {
-                var view = this._children[i];
-                view.resetToNoLayout();
+        this.setProperty("layout", value, function() {
+            if (value === null && this._layout !== null) {
+                var length = this._children.length;
+                for (var i = 0; i < length; i++) {
+                    var view = this._children[i];
+                    view.resetToNoLayout();
+                }
+                this._needRelayout = false;
+                this._layout.setView(null);
+                this._layout = null;
+            } else if (value !== null) {
+                this._needRelayout = true;
+                this._layout = value;
+                this._layout.setView(this);
             }
-            this._needRelayout = false;
-            this._layout.setView(null);
-            this._layout = null;
-        } else if (value !== null) {
-            this._needRelayout = true;
-            this._layout = value;
-            this._layout.setView(this);
-        }
-        this.invalidate();
+        }.bind(this));
     },
 
     /**
      * @name CompositeView#children
-     * @type {Array<View>}
-     * @description children array of the view.
+     * @type {View[]}
+     * @description the array of all children in this composite view.
      * @readonly
      */
     get children() {
@@ -85,10 +84,159 @@ Class.define("framework.ui.view.CompositeView", View, {
     },
 
     /**
+     * Add a view to this composite view and it is on top of all other children.
+     * @method CompositeView#addChild
+     * @param {View} view - child view that added to the end of parent children.
+     */
+    addChild: function(view) {
+        var length = this._children.length;
+        for (var i = 0; i < length; i++) {
+            if (this._children[i] === view) {
+                return;
+            }
+        }
+
+        this.dispatchEvent("childwilladd", view);
+        view.dispatchEvent("willadd");
+
+        if (view.parent !== null) {
+            view.parent.removeChild(view);
+        }
+        this._children.push(view);
+        view.parent = this;
+        this._needRelayout = true;
+        this.invalidate();
+
+        this.dispatchEvent("childadded", view);
+        view.dispatchEvent("added");
+    },
+
+    /**
+     * Insert a child view in this composite view by the specified position.
+     * @method CompositeView#insertChild
+     * @param {View} view - the child view that inserted to the specified position.
+     * @param {Number} index - the position at which to insert the child to.
+     */
+    insertChild: function(view, index) {
+        var length = this._children.length;
+        for (var i = 0; i < length; i++) {
+            if (this._children[i] === view) {
+                return;
+            }
+        }
+
+        this.dispatchEvent("childwilladd", view, index);
+        view.dispatchEvent("willadd", index);
+
+        if (view.parent !== null) {
+            view.parent.removeChild(view);
+        }
+        this._children.splice(index, 0, view);
+        view.parent = this;
+        this._needRelayout = true;
+        this.invalidate();
+
+        this.dispatchEvent("childadded", view, index);
+        view.dispatchEvent("added", index);
+    },
+
+    /**
+     * Remove the specified view from this composite view.
+     * @method CompositeView#removeChild
+     * @param {View} view - the child view to remove from its parent children.
+     */
+    removeChild: function(view) {
+        var index = this._children.indexOf(view);
+        if (index === -1) {
+            return;
+        }
+
+        this.dispatchEvent("childwillremove", view);
+        view.dispatchEvent("willremove");
+
+        this._children.splice(index, 1);
+        view.parent = null;
+        this._needRelayout = true;
+        this.invalidate();
+
+        this.dispatchEvent("childremoved", view);
+        view.dispatchEvent("removed");
+    },
+
+    /**
+     * Remove all children views from this composite view.
+     * @method CompositeView#removeAllChildren
+     */
+    removeAllChildren: function() {
+        this._children.splice(0, this._children.length);
+        this._needRelayout = true;
+        this.invalidate();
+    },
+
+    /**
+     * Change the z order of the child so it's on top of all other children.
+     * @method CompositeView#bringChildToFront
+     * @param {View} view - the child to bring to the top of the z order.
+     */
+    bringChildToFront: function(view) {
+        var index = this._children.indexOf(view);
+        if (index < 0) {
+            return;
+        }
+        this._children.splice(index, 1);
+        this._children.push(view);
+        this.invalidate();
+    },
+
+    /**
+     * Change the z order of the child so it's on bottom of all other children.
+     * @method CompositeView#sendChildToBack
+     * @param {View} view - the child to bring to the bottom of the z order.
+     */
+    sendChildToBack: function(view) {
+        var index = this._children.indexOf(view);
+        if (index < 0) {
+            return;
+        }
+        this._children.splice(index, 1);
+        this._children.unshift(view);
+        this.invalidate();
+    },
+
+    /**
+     * Find the view at the point.
+     * @method CompositeView#findViewAtPoint
+     * @param {Point} point - the point
+     * @return {View} return a child view which contains the specified point and is on the top of all children,
+     * otherwise return this composite view if it contains the specified point.
+     * @protected
+     * @override
+     */
+    findViewAtPoint: function(point) {
+        if (View.prototype.findViewAtPoint.call(this, point) === null) {
+            return null;
+        }
+
+        point.offset(-this._left + this._scrollX, -this._top + this._scrollY);
+        var findChild = null;
+        var length = this._children.length;
+        for (var i = length - 1; i >= 0; i--) {
+            var child = this._children[i].findViewAtPoint(point);
+            if (child !== null) {
+                findChild = child;
+                break;
+            }
+        }
+        point.offset(this._left - this._scrollX, this._top - this._scrollY);
+        return findChild || this;
+    },
+
+    /**
      * Paint the composite view itself.
      * @method CompositeView#paint
      * @param {Context} context - the canvas context to which it is rendered
      * @protected
+     * @override
      */
     paint: function(context) {
         if (!this.paintSelf(context)) {
@@ -122,155 +270,6 @@ Class.define("framework.ui.view.CompositeView", View, {
                 context.translate(-view.left, -view.top);
             }
         }
-    },
-
-    /**
-     * The appendChild method adds a view to specified parent view.
-     * @method CompositeView#addChild
-     * @param {View} view sub child view to be insert to the last, and show at top
-     */
-    addChild: function(view) {
-        var length = this._children.length;
-        for (var i = 0; i < length; i++) {
-            if (this._children[i] === view) {
-                return;
-            }
-        }
-
-        this.dispatchEvent("childwilladd", view);
-        view.dispatchEvent("willadd");
-
-        if (view.parent !== null) {
-            view.parent.removeChild(view);
-        }
-        this._children.push(view);
-        view.parent = this;
-        this._needRelayout = true;
-        this.invalidate();
-
-        this.dispatchEvent("childadded", view);
-        view.dispatchEvent("added");
-    },
-
-    /**
-     * Insert a child view in this composite view by the specified position.
-     * @method CompositeView#insertChild
-     * @param {View} view - the child view to add
-     * @param {Number} index - the position at which to add the child
-     */
-    insertChild: function(view, index) {
-        var length = this._children.length;
-        for (var i = 0; i < length; i++) {
-            if (this._children[i] === view) {
-                return;
-            }
-        }
-
-        this.dispatchEvent("childwilladd", view, index);
-        view.dispatchEvent("willadd", index);
-
-        if (view.parent !== null) {
-            view.parent.removeChild(view);
-        }
-        this._children.splice(index, 0, view);
-        view.parent = this;
-        this._needRelayout = true;
-        this.invalidate();
-
-        this.dispatchEvent("childadded", view, index);
-        view.dispatchEvent("added", index);
-    },
-
-    /**
-     * Remove the specified view from this composite view.
-     * @method CompositeView#removeChild
-     * @param {View} child - the child view to remove, or the position in this composite view to remove
-     */
-    removeChild: function(view) {
-        var index = this._children.indexOf(view);
-        if (index === -1) {
-            return;
-        }
-
-        this.dispatchEvent("childwillremove", view);
-        view.dispatchEvent("willremove");
-
-        this._children.splice(index, 1);
-        view.parent = null;
-        this._needRelayout = true;
-        this.invalidate();
-
-        this.dispatchEvent("childremoved", view);
-        view.dispatchEvent("removed");
-    },
-
-    /**
-     * Remove all child views from this composite view.
-     * @method CompositeView#removeAllChildren
-     */
-    removeAllChildren: function() {
-        this._children.splice(0, this._children.length);
-        this._needRelayout = true;
-        this.invalidate();
-    },
-
-    /**
-     * Change the z order of the child so it's on top of all other children.
-     * @method CompositeView#bringChildToFront
-     * @param {View} view - the child to bring to the top of the z order
-     */
-    bringChildToFront: function(view) {
-        var index = this._children.indexOf(view);
-        if (index < 0) {
-            return;
-        }
-        this._children.splice(index, 1);
-        this._children.push(view);
-        this.invalidate();
-    },
-
-    /**
-     * Change the z order of the child so it's on bottom of all other children.
-     * @method CompositeView#sendChildToBack
-     * @param {View} view - the child to bring to the bottom of the z order
-     */
-    sendChildToBack: function(view) {
-        var index = this._children.indexOf(view);
-        if (index < 0) {
-            return;
-        }
-        this._children.splice(index, 1);
-        this._children.unshift(view);
-        this.invalidate();
-    },
-
-    /**
-     * Find the view at the point
-     * @method CompositeView#findViewAtPoint
-     * @param {Point} point the point in put
-     * @return {View} return the view which point in the view and it has the max zOrder;
-     */
-    findViewAtPoint: function(point) {
-        if (this._visibility !== "visible") {
-            return null;
-        }
-
-        if (!this.containsPoint(point)) {
-            return null;
-        }
-
-        point.offset(-this._left + this._scrollX, -this._top + this._scrollY);
-        var findChild = this;
-        var length = this._children.length;
-        for (var i = length - 1; i >= 0; i--) {
-            var child = this._children[i].findViewAtPoint(point);
-            if (child !== null) {
-                findChild = child;
-                break;
-            }
-        }
-        point.offset(this._left - this._scrollX, this._top - this._scrollY);
-        return findChild;
     },
 
     /**
@@ -332,10 +331,31 @@ Class.define("framework.ui.view.CompositeView", View, {
         }
     },
 
+    /**
+     * Relayout
+     * @method CompositeView#relayout
+     * @param {View} self - this view
+     * @protected
+     */
     relayout: function(self) {
         if (self) {
             this.needRelayout = true;
         }
         View.prototype.relayout.call(this, self);
+    },
+
+    /**
+     * @name CompositeView#needRelayout
+     * @type {Boolean}
+     * @description whether need to relayout
+     * @private
+     */
+    get needRelayout() {
+        return this._needRelayout;
+    },
+
+    set needRelayout(value) {
+        this._needRelayout = value;
+        this.invalidate();
     }
 }, module);
