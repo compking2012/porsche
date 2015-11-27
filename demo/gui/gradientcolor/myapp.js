@@ -13,12 +13,6 @@ Class.define("MyApp", App, {
         this.swipeView.width = this.window.width;
         this.swipeView.height = this.window.height;
 
-        this.radialGradientView = new TextView();
-        this.radialGradientView.text = "Radial Gradient";
-        this.radialGradientView.addGestureRecognizer(new TapRecognizer({event: "doubletap", taps: 2}));
-        this.radialGradientView.addEventListener("doubletap", this.onChangeRadialGradient.bind(this));
-        this.swipeView.addChild(this.radialGradientView);
-
         this.conicGradientView = new TextView();
         this.conicGradientView.text = "Conic Gradient";
         this.conicGradientView.addGestureRecognizer(new TapRecognizer({event: "doubletap", taps: 2}));
@@ -30,6 +24,12 @@ Class.define("MyApp", App, {
         this.linearGradientView.addGestureRecognizer(new TapRecognizer({event: "doubletap", taps: 2}));
         this.linearGradientView.addEventListener("doubletap", this.onChangeLinearGradient.bind(this));
         this.swipeView.addChild(this.linearGradientView);
+
+        this.radialGradientView = new TextView();
+        this.radialGradientView.text = "Radial Gradient";
+        this.radialGradientView.addGestureRecognizer(new TapRecognizer({event: "doubletap", taps: 2}));
+        this.radialGradientView.addEventListener("doubletap", this.onChangeRadialGradient.bind(this));
+        this.swipeView.addChild(this.radialGradientView);
 
         this.window.addChild(this.swipeView);
 
