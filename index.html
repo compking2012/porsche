@@ -12,7 +12,24 @@
     <script src="//code.jquery.com/jquery-migrate-1.2.1.min.js"></script>
     <link rel="stylesheet" href="http://cdn.jsdelivr.net/highlight.js/8.9.1/styles/default.min.css">
     <script src="http://cdn.jsdelivr.net/highlight.js/8.9.1/highlight.min.js"></script>
-    <script>hljs.initHighlightingOnLoad();</script>
+    <script>
+      hljs.initHighlightingOnLoad();
+      //numbering for pre>code blocks
+      $(function(){
+          $('pre code').each(function(){
+              var lines = $(this).text().split('\n').length - 1;
+              var $numbering = $('<ul/>').addClass('pre-numbering');
+              $(this)
+                  .addClass('has-numbering')
+                  .parent()
+                  .append($numbering);
+              for(i=1;i<=lines;i++){
+                  $numbering.append($('<li/>').text(i));
+              }
+          });
+      });
+
+    </script>
   </head>
   <body>
     <section class="page-header">
