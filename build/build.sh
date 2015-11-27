@@ -8,4 +8,4 @@ else
 fi
 cp -R ../demo ../out/demo
 cp -R ../framework ../out/framework
-node build.js $1 ../out
+node build.js $1 ../out $2

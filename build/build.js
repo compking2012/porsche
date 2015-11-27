@@ -4,6 +4,7 @@ var path = require("path");
 
 var mode = process.argv[2];     // "h5", "node", "h5-es6" or "node-es6"
 var dstDir = process.argv[3];
+var prefix = process.argv[4] || "";
 
 var contentPrefix = "define(function(require, exports, module) {\r\n";
 var contentPostfix = "\r\n});";
@@ -11,9 +12,9 @@ var html = "<!DOCTYPE html>" +
             "<html>" +
             "<head>" +
             "<title></title>" +
-            "<script src=\"/framework/vendor/seajs/2.1.1/sea.js\"></script>" +
-            "<script src=\"/framework/vendor/seajs-style/1.0.0/seajs-style.js\"></script>" +
-            "<script src=\"/framework/vendor/seajs-text/1.0.2/seajs-text.js\"></script>" +
+            "<script src=\"" + prefix + "/framework/vendor/seajs/2.1.1/sea.js\"></script>" +
+            "<script src=\"" + prefix + "/framework/vendor/seajs-style/1.0.0/seajs-style.js\"></script>" +
+            "<script src=\"" + prefix + "/framework/vendor/seajs-text/1.0.2/seajs-text.js\"></script>" +
             "<script>" +
                 "seajs.config({" +
                     "base: \"./\"" +
@@ -38,7 +39,7 @@ files.forEach(function(file) {
         var fxRequire = "var fx = require(\"framework\");";
         var fxImport = /fx.import\(\"(\w+[\.|\w+]*)\"\)/g;
         content = content.replace(fxRequire, "").replace(fxImport, function(line, match) {
-            var newLine = "require(\"/" + match.toLowerCase().replace(/\./g, "/") + "\")";
+            var newLine = "require(\"" + prefix + "/" + match.toLowerCase().replace(/\./g, "/") + "\")";
             return newLine;
         });
     }
