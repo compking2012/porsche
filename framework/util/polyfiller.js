@@ -66,11 +66,11 @@ Class.define("framework.ui.util.Polyfiller", YObject, {
 
         polyfillContextConicalGradient: function(context) {
             if (context.constructor.prototype.createConicalGradient === undefined) {
-                function ConicalGradient(x0, y0) {
+                var ConicalGradient = function(x0, y0) {
                     this._x0 = x0;
                     this._y0 = y0;
                     this._colorStops = [];
-                }
+                };
 
                 context.constructor.prototype.createConicalGradient = function(x0, y0, r) {
                     ConicalGradient.prototype.addColorStop = function(offset, color) {
@@ -274,7 +274,7 @@ Class.define("framework.ui.util.Polyfiller", YObject, {
                     return new ConicalGradient(x0, y0);
                 };
 
-                function conicDraw(context, x, y, width, height) {
+                var conicDraw = function(context, x, y, width, height) {
                     var conic = context._fillStyle;
                     var radius = Math.max(width, height) * Math.sqrt(2) / 2;
                     var centerX = x + width / 2;
@@ -347,7 +347,7 @@ Class.define("framework.ui.util.Polyfiller", YObject, {
                         context.closePath();
                         context.fill();
                     }
-                }
+                };
                 // fillStyle property
                 var fillStylePd = Object.getOwnPropertyDescriptor(context.constructor.prototype, "fillStyle");
                 var fillStyleSetFunc = fillStylePd.set;
