@@ -15,14 +15,17 @@ var YObject = require("../yobject");
 Class.define("framework.ui.util.Polyfiller", YObject, {
     static: {
         polyfillContext: function(context) {
+            if (global.CanvasRenderingContext2D === undefined) {
+                global.CanvasRenderingContext2D = context.constructor;
+            }
             this.polyfillContextRoundRect(context);
             this.polyfillContextDrawLine(context);
             this.polyfillContextConicalGradient(context);
         },
 
-        polyfillContextRoundRect: function(context) {
-            if (context.constructor.prototype.roundRect === undefined) {
-                context.constructor.prototype.roundRect = function(x, y, width, height, radius) {
+        polyfillContextRoundRect: function(/*context*/) {
+            if (global.CanvasRenderingContext2D.prototype.roundRect === undefined) {
+                global.CanvasRenderingContext2D.prototype.roundRect = function(x, y, width, height, radius) {
                     if (radius === undefined) {
                         return;
                     }
@@ -43,9 +46,9 @@ Class.define("framework.ui.util.Polyfiller", YObject, {
             }
         },
 
-        polyfillContextDrawLine: function(context) {
-            if (context.constructor.prototype.drawLine === undefined) {
-                context.constructor.prototype.drawLine = function(coord) {
+        polyfillContextDrawLine: function(/*context*/) {
+            if (global.CanvasRenderingContext2D.prototype.drawLine === undefined) {
+                global.CanvasRenderingContext2D.prototype.drawLine = function(coord) {
                     this.save();
                     this.beginPath();
 
@@ -65,14 +68,14 @@ Class.define("framework.ui.util.Polyfiller", YObject, {
         },
 
         polyfillContextConicalGradient: function(context) {
-            if (context.constructor.prototype.createConicalGradient === undefined) {
+            if (global.CanvasRenderingContext2D.prototype.createConicalGradient === undefined) {
                 var ConicalGradient = function(x0, y0) {
                     this._x0 = x0;
                     this._y0 = y0;
                     this._colorStops = [];
                 };
 
-                context.constructor.prototype.createConicalGradient = function(x0, y0, r) {
+                global.CanvasRenderingContext2D.prototype.createConicalGradient = function(x0, y0, r) {
                     ConicalGradient.prototype.addColorStop = function(offset, color) {
                         color = this.colorToRGBA(color);
 
@@ -349,28 +352,30 @@ Class.define("framework.ui.util.Polyfiller", YObject, {
                     }
                 };
                 // fillStyle property
-                var fillStylePd = Object.getOwnPropertyDescriptor(context.constructor.prototype, "fillStyle");
-                var fillStyleSetFunc = fillStylePd.set;
-                var fillStyleGetFunc = fillStylePd.get;
-                fillStylePd.set = function(value) {
-                    if (value instanceof ConicalGradient) {
-                        this._fillStyle = value;
-                    } else {
-                        this._fillStyle = undefined;
-                        fillStyleSetFunc.apply(this, arguments);
-                    }
-                };
-                fillStylePd.get = function() {
-                    if (this._fillStyle && this._fillStyle instanceof ConicalGradient) {
-                        return this._fillStyle;
-                    } else {
-                        fillStyleGetFunc.apply(this, arguments);
-                    }
-                };
-                Object.defineProperty(context.constructor.prototype, "fillStyle", fillStylePd);
+                var fillStylePd = Object.getOwnPropertyDescriptor(global.CanvasRenderingContext2D.prototype, "fillStyle");
+                if (fillStylePd !== undefined) {
+                    var fillStyleGetFunc = fillStylePd.get;
+                    var fillStyleSetFunc = fillStylePd.set;
+                    fillStylePd.get = function() {
+                        if (this._fillStyle && this._fillStyle instanceof ConicalGradient) {
+                            return this._fillStyle;
+                        } else {
+                            fillStyleGetFunc.apply(this, arguments);
+                        }
+                    };
+                    fillStylePd.set = function(value) {
+                        if (value instanceof ConicalGradient) {
+                            this._fillStyle = value;
+                        } else {
+                            this._fillStyle = undefined;
+                            fillStyleSetFunc.apply(this, arguments);
+                        }
+                    };
+                    Object.defineProperty(global.CanvasRenderingContext2D.prototype, "fillStyle", fillStylePd);
+                }
 
                 // fillRect method
-                var fillRectPd = Object.getOwnPropertyDescriptor(context.constructor.prototype, "fillRect");
+                var fillRectPd = Object.getOwnPropertyDescriptor(global.CanvasRenderingContext2D.prototype, "fillRect");
                 var fillRectFunc = fillRectPd.value;
                 fillRectPd.value = function(x, y, width, height) {
                     if (this._fillStyle && this._fillStyle instanceof ConicalGradient) {
@@ -379,7 +384,7 @@ Class.define("framework.ui.util.Polyfiller", YObject, {
                         fillRectFunc.apply(this, arguments);
                     }
                 };
-                Object.defineProperty(context.constructor.prototype, "fillRect", fillRectPd);
+                Object.defineProperty(global.CanvasRenderingContext2D.prototype, "fillRect", fillRectPd);
             }
         }
     }
