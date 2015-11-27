@@ -78,7 +78,7 @@ Class.define("framework.ui.view.CompositeView", View, {
      * @name CompositeView#children
      * @type {Array<View>}
      * @description children array of the view.
-     * @readOnly
+     * @readonly
      */
     get children() {
         return this._children;

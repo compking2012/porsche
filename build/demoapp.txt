@@ -31,6 +31,10 @@ Node:   passed
 H5:     passed
 Node:   passed
 
+*) button-mouseevent
+H5:     passed
+Node:   passed
+
 *) chart
 H5:     passed
 Node:   passed
