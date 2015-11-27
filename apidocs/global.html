@@ -2,7 +2,7 @@
 <html lang="en">
   <head>
     <meta charset="utf-8">
-    <title>Porsche.js API documentation: <i class="icon-shield" style="color:#0186d1"></i> Event</title>
+    <title>Porsche.js API documentation: Global</title>
 
     <script src="scripts/prettify/prettify.js"> </script>
     <script src="scripts/prettify/lang-css.js"> </script>
@@ -32,7 +32,7 @@
           </div>
 
           <div class="span9">
-              <h1 class="page-header"><i class="icon-shield" style="color:#0186d1"></i> Event</h1>
+              <h1 class="page-header">Global</h1>
               
 
 
@@ -41,7 +41,7 @@
     
 <header>
     <!--h2>
-    Event
+    
     </h2-->
     
 </header>  
@@ -50,39 +50,14 @@
     <div class="container-overview hero-unit">
     
 
-            
-        <ul class="breadcrumb">
-            <li>Extends</li>
-            <li><a href="YObject.html" class="btn btn-primary">YObject</a></li>
-        </ul>
     
 
     
     
     
         
-<dt>
-    <h4 class="name" id="Event">new Event()</h4>
-    
-    
-</dt>
-<dd>
-    
-    
-    <div class="description">
-        <p>
-        Base class for event
-        </p>
-    </div>
-    
-
-    
-    
-    
-    
-    
-    
-    
+        
+        
 <dl class="details">
     
         
@@ -111,20 +86,8 @@
     
 </dl>
 
-    
-    
-
-    
-
-    
-    
-    
-    
-    
-    
-    
-</dd>
-
+        
+        
     
     </div>
     
@@ -134,151 +97,6 @@
     
     
     
-    
-        <h3 class="subsection-title">Members</h3>
-        
-        <dl class="bs-docs-example bs-members">
-            
-<dt>
-    <h4 class="name" id="target"><span class="label label-info">readonly</span> target<span class="type-signature"> :<a href="View.html">View</a></span></h4>
-    
-    
-</dt>
-<dd>
-    
-    <div class="description">
-        event send target.
-    </div>
-    
-    
-    
-<dl class="details">
-    
-        
-    
-    
-    
-
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-
-    
-    
-    
-    
-    
-    
-    
-</dl>
-
-    
-    
-</dd>
-
-        
-            
-<dt>
-    <h4 class="name" id="type"><span class="label label-info">readonly</span> type<span class="type-signature"> :String</span></h4>
-    
-    
-</dt>
-<dd>
-    
-    <div class="description">
-        the type of this event.
-    </div>
-    
-    
-    
-<dl class="details">
-    
-        
-    
-    
-    
-
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-
-    
-    
-    
-    
-    
-    
-    
-</dl>
-
-    
-    
-</dd>
-
-        
-            
-<dt>
-    <h4 class="name" id="timestamp"><span class="label label-info">readonly</span> timestamp<span class="type-signature"> :Number</span></h4>
-    
-    
-</dt>
-<dd>
-    
-    <div class="description">
-        the timestamp of this event.
-    </div>
-    
-    
-    
-<dl class="details">
-    
-        
-    
-    
-    
-
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-
-    
-    
-    
-    
-    
-    
-    
-</dl>
-
-    
-    
-</dd>
-
-        </dl>
     
     
     
@@ -287,7 +105,7 @@
         <dl class="bs-docs-example bs-methods">
             
 <dt>
-    <h4 class="name" id="initialize">initialize()</h4>
+    <h4 class="name" id="setProperty"><span class="label label-info">protected</span> setProperty(property, value, callback)</h4>
     
     
 </dt>
@@ -296,208 +114,7 @@
     
     <div class="description">
         <p>
-        Constructor
-        </p>
-    </div>
-    
-
-    
-    
-    
-    
-    
-    
-    
-<dl class="details">
-    
-        
-    
-    
-    
-
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-
-    
-    
-    
-    
-    
-    
-    
-</dl>
-
-    
-    
-
-    
-
-    
-    
-    
-    
-    
-    
-    
-</dd>
-
-        
-            
-<dt>
-    <h4 class="name" id="destroy">destroy()</h4>
-    
-    
-</dt>
-<dd>
-    
-    
-    <div class="description">
-        <p>
-        Destructor
-        </p>
-    </div>
-    
-
-    
-    
-    
-    
-    
-    
-    
-<dl class="details">
-    
-        
-    
-    
-    
-
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-
-    
-    
-    
-    
-    
-    
-    
-</dl>
-
-    
-    
-
-    
-
-    
-    
-    
-    
-    
-    
-    
-</dd>
-
-        
-            
-<dt>
-    <h4 class="name" id="stopImmediatePropagation">stopImmediatePropagation()</h4>
-    
-    
-</dt>
-<dd>
-    
-    
-    <div class="description">
-        <p>
-        Stop the propagation of this event to its parent.
-        </p>
-    </div>
-    
-
-    
-    
-    
-    
-    
-    
-    
-<dl class="details">
-    
-        
-    
-    
-    
-
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-
-    
-    
-    
-    
-    
-    
-    
-</dl>
-
-    
-    
-
-    
-
-    
-    
-    
-    
-    
-    
-    
-</dd>
-
-        
-            
-<dt>
-    <h4 class="name" id="equals">equals(value)</h4>
-    
-    
-</dt>
-<dd>
-    
-    
-    <div class="description">
-        <p>
-        Compares this instance with the specified object and indicates if they are equal.
-In order to be equal, o must represent the same object as this instance using a class-specific comparison.
-The general contract is that this comparison should be reflexive, symmetric, and transitive. Also,
-no object reference other than null is equal to null.
+        Set property
         </p>
     </div>
     
@@ -532,13 +149,13 @@ no object reference other than null is equal to null.
 
         <tr>
             
-                <td class="name">value</td>
+                <td class="name">property</td>
             
 
             <td class="type">
             
                 
-<span class="param-type">{Object}</span>
+<span class="param-type">{String}</span>
 
 
 
@@ -549,7 +166,55 @@ no object reference other than null is equal to null.
 
             
 
-            <td class="description last">the object to compare this instance with.</td>
+            <td class="description last">the property name</td>
+        </tr>
+
+	
+
+        <tr>
+            
+                <td class="name">value</td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">{*}</span>
+
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last">the new value</td>
+        </tr>
+
+	
+
+        <tr>
+            
+                <td class="name">callback</td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">{function}</span>
+
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last">the immediate action callback</td>
         </tr>
 
 	
@@ -566,198 +231,6 @@ no object reference other than null is equal to null.
     
     
 
-    
-    <dd class="inherited-from"><ul class="dummy breadcrumb"><li>Inherited From:</li><li>
-        <a href="YObject.html#equals">YObject#equals</a>
-    </li></dd>
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-
-    
-    
-    
-    
-    
-    
-    
-</dl>
-
-    
-    
-
-    
-
-    
-    
-    
-    
-    
-    <h5>Returns:</h5>
-    
-            <div class="returns">
-
-
-    
-<span class="param-type">{Boolean}</span>
-
-
-
-
-
-<span class="param-desc">
-    true if the specified object is equal to this object; false otherwise.
-</span>
-
-</div>
-
-        
-    
-    
-</dd>
-
-        
-            
-<dt>
-    <h4 class="name" id="clone">clone()</h4>
-    
-    
-</dt>
-<dd>
-    
-    
-    <div class="description">
-        <p>
-        Creates and returns a copy of this Object.
-The default implementation returns a so-called "shallow" copy:
-It creates a new instance of the same class and then copies the field values
-(including object references) from this instance to the new instance.
-A "deep" copy, in contrast, would also recursively clone nested objects.
-A subclass that needs to implement this kind of cloning should call super's clone()
-to create the new instance and then create deep copies of the nested, mutable objects.
-        </p>
-    </div>
-    
-
-    
-    
-    
-    
-    
-    
-    
-<dl class="details">
-    
-        
-    
-    
-    
-
-    
-    <dd class="inherited-from"><ul class="dummy breadcrumb"><li>Inherited From:</li><li>
-        <a href="YObject.html#clone">YObject#clone</a>
-    </li></dd>
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-
-    
-    
-    
-    
-    
-    
-    
-</dl>
-
-    
-    
-
-    
-
-    
-    
-    
-    
-    
-    <h5>Returns:</h5>
-    
-            <div class="returns">
-
-
-    
-<span class="param-type">{Object}</span>
-
-
-
-
-
-<span class="param-desc">
-    a copy of this object.
-</span>
-
-</div>
-
-        
-    
-    
-</dd>
-
-        
-            
-<dt>
-    <h4 class="name" id="toString">toString()</h4>
-    
-    
-</dt>
-<dd>
-    
-    
-    <div class="description">
-        <p>
-        Returns a string containing a concise, human-readable description of this object.
-Subclasses are encouraged to override this method and provide an implementation that
-takes into account the object's type and data.
-The default implementation is equivalent to the following expression:
-this.className
-        </p>
-    </div>
-    
-
-    
-    
-    
-    
-    
-    
-    
-<dl class="details">
-    
-        
-    
-    
-    
-
-    
-    <dd class="inherited-from"><ul class="dummy breadcrumb"><li>Inherited From:</li><li>
-        <a href="YObject.html#toString">YObject#toString</a>
-    </li></dd>
     
     
     

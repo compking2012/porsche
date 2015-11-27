@@ -190,7 +190,7 @@ a {
 .main-content div.demo pre code {
   display: block;
   margin-top: -2rem;
-  padding: 12px 24px;
+  padding: 12px 0;
   overflow-y: auto;
   font-weight: 300;
   font-family: Menlo, monospace;

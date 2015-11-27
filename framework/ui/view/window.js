@@ -20,11 +20,12 @@ var CompositeView = require("./compositeview");
  */
 Class.define("framework.ui.view.Window", CompositeView, {
     /**
-     * Constructor that create a view
+     * Constructor that create a window
      * @method Window#initialize
      */
     initialize: function(title) {
         CompositeView.prototype.initialize.apply(this, arguments);
+
         this._title = title;
         this._windowManager = null;
     },
@@ -36,6 +37,7 @@ Class.define("framework.ui.view.Window", CompositeView, {
     destroy: function() {
         this._windowManager.destroy();
         this._windowManager = null;
+
         CompositeView.prototype.destroy.apply(this, arguments);
     },
 
@@ -49,26 +51,18 @@ Class.define("framework.ui.view.Window", CompositeView, {
     },
 
     set title(value) {
-        this._title = value;
-        this.invalidate();
-    },
-
-    get windowManager() {
-        return this._windowManager;
-    },
-
-    set windowManager(value) {
-        this._windowManager = value;
+        this.setProperty("title", value);
     },
 
     /**
-     * Paint the composite view itself.
+     * Paint the window itself.
      * @method Window#paint
      * @param {Context} context - the canvas context to which it is rendered
      * @protected
      */
     paint: function(context) {
         context.clearRect(this._dirtyRect.left, this._dirtyRect.top, this._dirtyRect.width, this._dirtyRect.height);
+
         CompositeView.prototype.paint.call(this, context);
     },
 
@@ -96,9 +90,24 @@ Class.define("framework.ui.view.Window", CompositeView, {
      */
     invalidateChild: function(view, rect) {
         CompositeView.prototype.invalidateChild.call(this, view, rect);
+
         if (this._windowManager !== null) {
             this._windowManager.draw();
         }
+    },
+
+    /**
+     * @name Window#windowManager
+     * @type {WindowManager}
+     * @description the window manager which assoicated with this window
+     * @private
+     */
+    get windowManager() {
+        return this._windowManager;
+    },
+
+    set windowManager(value) {
+        this._windowManager = value;
     }
 }, module);
 

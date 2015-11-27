@@ -9,8 +9,6 @@ var View = require("../../../framework/ui/view/view");
 
 Class.define("MyApp", App, {
     onStart: function() {
-        this.window.id = "window";
-
         var compositeView = new CompositeView();
         compositeView.id = "compositeView";
         compositeView.background = "#CCCCCC";

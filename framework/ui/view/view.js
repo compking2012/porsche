@@ -96,7 +96,7 @@ Class.define("framework.ui.view.View", EventEmitter, {
     },
 
     /**
-     * Destructor that destroy a view
+     * Destructor that destroy this view
      * @method View#destroy
      */
     destroy: function() {
@@ -128,12 +128,7 @@ Class.define("framework.ui.view.View", EventEmitter, {
     },
 
     set id(value) {
-        var oldValue = this._id;
-        if (oldValue === value) {
-            return;
-        }
-        this._id = value;
-        this.dispatchEvent("propertychange", "id", oldValue, value);
+        this.setProperty("id", value);
     },
 
     /**
@@ -146,14 +141,9 @@ Class.define("framework.ui.view.View", EventEmitter, {
     },
 
     set left(value) {
-        var oldValue = this._left;
-        if (oldValue === value) {
-            return;
-        }
-        this._left = value;
-        this.relayout(false);
-        this.dispatchEvent("propertychange", "left", oldValue, value);
-        this.invalidate();
+        this.setProperty("left", value, function() {
+            this.relayout(false);
+        }.bind(this));
     },
 
     /**
@@ -166,14 +156,9 @@ Class.define("framework.ui.view.View", EventEmitter, {
     },
 
     set top(value) {
-        var oldValue = this._top;
-        if (oldValue === value) {
-            return;
-        }
-        this._top = value;
-        this.relayout(false);
-        this.dispatchEvent("propertychange", "top", oldValue, value);
-        this.invalidate();
+        this.setProperty("top", value, function() {
+            this.relayout(false);
+        }.bind(this));
     },
 
     /**
@@ -186,14 +171,10 @@ Class.define("framework.ui.view.View", EventEmitter, {
     },
 
     set bottom(value) {
-        var oldValue = this._top + this._height;
-        if (oldValue === value) {
-            return;
-        }
-        this._top = value - this._height;
-        this.relayout(false);
-        this.dispatchEvent("propertychange", "bottom", oldValue, value);
-        this.invalidate();
+        // FIXME
+        this.setProperty("bottom", value, function() {
+            this.relayout(false);
+        }.bind(this));
     },
 
     /**
@@ -206,14 +187,10 @@ Class.define("framework.ui.view.View", EventEmitter, {
     },
 
     set right(value) {
-        var oldValue = this._left + this._width;
-        if (oldValue === value) {
-            return;
-        }
-        this._left = value - this._width;
-        this.relayout(false);
-        this.dispatchEvent("propertychange", "right", oldValue, value);
-        this.invalidate();
+        // FIXME
+        this.setProperty("right", value, function() {
+            this.relayout(false);
+        }.bind(this));
     },
 
     /**
@@ -240,14 +217,9 @@ Class.define("framework.ui.view.View", EventEmitter, {
     },
 
     set width(value) {
-        var oldValue = this._width;
-        if (oldValue === value) {
-            return;
-        }
-        this._width = value;
-        this.relayout(true);
-        this.dispatchEvent("propertychange", "width", oldValue, value);
-        this.invalidate();
+        this.setProperty("width", value, function() {
+            this.relayout(true);
+        }.bind(this));
     },
 
     /**
@@ -260,19 +232,14 @@ Class.define("framework.ui.view.View", EventEmitter, {
     },
 
     set height(value) {
-        var oldValue = this._height;
-        if (oldValue === value) {
-            return;
-        }
-        this._height = value;
-        this.relayout(true);
-        this.dispatchEvent("propertychange", "height", oldValue, value);
-        this.invalidate();
+        this.setProperty("height", value, function() {
+            this.relayout(true);
+        }.bind(this));
     },
 
     /**
      * @name View#background
-     * @type {string}
+     * @type {String}
      * @description the background color, gradient or image for this view.
      */
     get background() {
@@ -280,14 +247,9 @@ Class.define("framework.ui.view.View", EventEmitter, {
     },
 
     set background(value) {
-        var oldValue = this._background;
-        if (oldValue === value) {
-            return;
-        }
-        this._background = value;
-        this._backgroundObject = this._colorManager.getColorObject(this._background);
-        this.dispatchEvent("propertychange", "background", oldValue, value);
-        this.invalidate();
+        this.setProperty("background", value, function() {
+            this._backgroundObject = this._colorManager.getColorObject(this._background);
+        }.bind(this));
     },
 
     /**
@@ -300,13 +262,7 @@ Class.define("framework.ui.view.View", EventEmitter, {
     },
 
     set opacity(value) {
-        var oldValue = this._opacity;
-        if (oldValue === value) {
-            return;
-        }
-        this._opacity = value;
-        this.dispatchEvent("propertychange", "opacity", oldValue, value);
-        this.invalidate();
+        this.setProperty("opacity", value);
     },
 
     /**
@@ -319,13 +275,7 @@ Class.define("framework.ui.view.View", EventEmitter, {
     },
 
     set enabled(value) {
-        var oldValue = this._enabled;
-        if (oldValue === value) {
-            return;
-        }
-        this._enabled = value;
-        this.dispatchEvent("propertychange", "enabled", oldValue, value);
-        this.invalidate();
+        this.setProperty("enabled", value);
     },
 
     /**
@@ -341,13 +291,7 @@ Class.define("framework.ui.view.View", EventEmitter, {
     },
 
     set visibility(value) {
-        var oldValue = this._visibility;
-        if (oldValue === value) {
-            return;
-        }
-        this._visibility = value;
-        this.dispatchEvent("propertychange", "visibility", oldValue, value);
-        this.invalidate();
+        this.setProperty("visibility", value);
     },
 
     /**
@@ -375,14 +319,9 @@ Class.define("framework.ui.view.View", EventEmitter, {
     },
 
     set translationX(value) {
-        var oldValue = this._translationX;
-        if (oldValue === value) {
-            return;
-        }
-        this._translationX = value;
-        this._matrix.translate(this._translationX, this._translationY);
-        this.dispatchEvent("propertychange", "translationX", oldValue, value);
-        this.invalidate();
+        this.setProperty("translationX", value, function() {
+            this._matrix.translate(this._translationX, this._translationY);
+        }.bind(this));
     },
 
     /**
@@ -395,14 +334,9 @@ Class.define("framework.ui.view.View", EventEmitter, {
     },
 
     set translationY(value) {
-        var oldValue = this._translationY;
-        if (oldValue === value) {
-            return;
-        }
-        this._translationY = value;
-        this._matrix.translate(this._translationX, this._translationY);
-        this.dispatchEvent("propertychange", "translationY", oldValue, value);
-        this.invalidate();
+        this.setProperty("translationY", value, function() {
+            this._matrix.translate(this._translationX, this._translationY);
+        }.bind(this));
     },
 
     /**
@@ -479,14 +413,9 @@ Class.define("framework.ui.view.View", EventEmitter, {
     },
 
     set rotationZ(value) {
-        var oldValue = this._rotationZ;
-        if (oldValue === value) {
-            return;
-        }
-        this._rotationZ = value;
-        this._matrix.rotate(this._rotationZ);
-        this.dispatchEvent("propertychange", "rotationZ", oldValue, value);
-        this.invalidate();
+        this.setProperty("rotationZ", value, function() {
+            this._matrix.rotate(this._rotationZ);
+        }.bind(this));
     },
 
     /**
@@ -522,14 +451,9 @@ Class.define("framework.ui.view.View", EventEmitter, {
     },
 
     set scaleX(value) {
-        var oldValue = this._scaleX;
-        if (oldValue === value) {
-            return;
-        }
-        this._scaleX = value;
-        this._matrix.scale(this._scaleX, this._scaleY);
-        this.dispatchEvent("propertychange", "scaleX", oldValue, value);
-        this.invalidate();
+        this.setProperty("scaleX", value, function() {
+            this._matrix.scale(this._scaleX, this._scaleY);
+        }.bind(this));
     },
 
     /**
@@ -543,14 +467,9 @@ Class.define("framework.ui.view.View", EventEmitter, {
     },
 
     set scaleY(value) {
-        var oldValue = this._scaleY;
-        if (oldValue === value) {
-            return;
-        }
-        this._scaleY = value;
-        this._matrix.scale(this._scaleX, this._scaleY);
-        this.dispatchEvent("propertychange", "scaleY", oldValue, value);
-        this.invalidate();
+        this.setProperty("scaleY", value, function() {
+            this._matrix.scale(this._scaleX, this._scaleY);
+        }.bind(this));
     },
 
     /**
@@ -588,14 +507,9 @@ Class.define("framework.ui.view.View", EventEmitter, {
     },
 
     set originX(value) {
-        var oldValue = this._originX;
-        if (oldValue === value) {
-            return;
-        }
-        this._originX = value;
-        this._matrix.at(this._originX, this._originY);
-        this.dispatchEvent("propertychange", "originX", oldValue, value);
-        this.invalidate();
+        this.setProperty("originX", value, function() {
+            this._matrix.at(this._originX, this._originY);
+        }.bind(this));
     },
 
     /**
@@ -608,14 +522,9 @@ Class.define("framework.ui.view.View", EventEmitter, {
     },
 
     set originY(value) {
-        var oldValue = this._originY;
-        if (oldValue === value) {
-            return;
-        }
-        this._originY = value;
-        this._matrix.at(this._originX, this._originY);
-        this.dispatchEvent("propertychange", "originY", oldValue, value);
-        this.invalidate();
+        this.setProperty("originY", value, function() {
+            this._matrix.at(this._originX, this._originY);
+        }.bind(this));
     },
 
     /**
@@ -655,13 +564,7 @@ Class.define("framework.ui.view.View", EventEmitter, {
     },
 
     set scrollX(value) {
-        var oldValue = this._scrollX;
-        if (oldValue === value) {
-            return;
-        }
-        this._scrollX = value;
-        this.dispatchEvent("propertychange", "scrollX", oldValue, value);
-        this.invalidate();
+        this.setProperty("scrollX", value);
     },
 
     /**
@@ -676,13 +579,7 @@ Class.define("framework.ui.view.View", EventEmitter, {
     },
 
     set scrollY(value) {
-        var oldValue = this._scrollY;
-        if (oldValue === value) {
-            return;
-        }
-        this._scrollY = value;
-        this.dispatchEvent("propertychange", "scrollY", oldValue, value);
-        this.invalidate();
+        this.setProperty("scrollY", value);
     },
 
     /**
@@ -690,6 +587,7 @@ Class.define("framework.ui.view.View", EventEmitter, {
      * @type {Rectangle[] || null}
      * @description one or more rectangles which represent several areas that can be used to extend the touch area.
      * If omitted and left as null, it means the default touch area which is the bound of this view.
+     * @private
      */
     get touchRegion() {
         return this._touchRegion;
@@ -703,6 +601,7 @@ Class.define("framework.ui.view.View", EventEmitter, {
      * @name View#hardwareAccelerated
      * @type {Boolean}
      * @description indicating whether the view's rendering should be hardware accelerated if possible.
+     * @private
      */
     get hardwareAccelerated() {
         return this._hardwareAccelerated;
@@ -723,7 +622,7 @@ Class.define("framework.ui.view.View", EventEmitter, {
     },
 
     set focused(value) {
-        this._focused = value;
+        this.setProperty("focused", value);
     },
 
     /**
@@ -904,8 +803,9 @@ Class.define("framework.ui.view.View", EventEmitter, {
     /**
      * Find the view at the point.
      * @method View#findViewAtPoint
-     * @param {Point} point the point in put
-     * @return {View} return the view which point in the view and it has the max zOrder
+     * @param {Point} point - the point
+     * @return {View} return this view if it contains the specified point,
+     * otherwise null.
      * @protected
      */
     findViewAtPoint: function(point) {
@@ -971,6 +871,11 @@ Class.define("framework.ui.view.View", EventEmitter, {
         this._dirtyRect.assign(this._boundRect.left, this._boundRect.top, this._boundRect.width, this._boundRect.height);
     },
 
+    /**
+     * [getBounds description]
+     * @return {[type]} [description]
+     * @private
+     */
     getBounds: function() {
         var left = 0;
         var top = 0;
@@ -1114,12 +1019,32 @@ Class.define("framework.ui.view.View", EventEmitter, {
      * Relayout
      * @method View#relayout
      * @param {View} self - this view
-     * @private
+     * @protected
      */
     relayout: function(/*self*/) {
         if (this._parent !== null) {
             this._parent.needRelayout = true;
         }
+    },
+
+    /**
+     * Set property
+     * @param {String} property - the property name
+     * @param {*} value - the new value
+     * @param {Function} callback - the immediate action callback
+     * @protected
+     */
+    setProperty: function(property, value, callback) {
+        var oldValue = this["_" + property];
+        if (oldValue === value) {
+            return;
+        }
+        this["_" + property] = value;
+        if (callback) {
+            callback();
+        }
+        this.dispatchEvent("propertychange", property, oldValue, value);
+        this.invalidate();
     },
 
     /**

@@ -14,13 +14,14 @@ var View = require("./view");
 var Class = require("../../class");
 
 /**
- * TextView widget
+ * TextView implements a read-only text label which can use this class to draw one or multiple lines of static text,
+ * such as those you might use to identify other parts of your user interface.
  * @class TextView
  * @extends View
  */
 Class.define("framework.ui.view.TextView", View, {
     /**
-     * Constructor
+     * Constructor that create a text view
      * @method TextView#initialize
      */
     initialize: function() {
@@ -39,46 +40,44 @@ Class.define("framework.ui.view.TextView", View, {
         this._highQuality = false;
         this._antialias = false;
 
-        this._lineMargin = 10;
-
         this._width = 100;
         this._height = 20;
     },
 
     /**
-     * Destructor
+     * Destructor that destroy this text view
      * @method TextView#destroy
      */
     destroy: function() {
+        this._text = null;
 
+        View.prototype.destroy.apply(this, arguments);
     },
 
     /**
      * @name TextView#text
      * @type {String}
-     * @description Text content.
+     * @description the plain-text content that this text view is to display.
      */
     get text() {
         return this._text;
     },
 
     set text(value) {
-        this._text = value;
-        this.invalidate();
+        this.setProperty("text", value);
     },
 
     /**
      * @name TextView#fontFamily
      * @type {String}
-     * @description The text Font-family, such as sans-serif.
+     * @description The text font-family, such as "sans-serif".
      */
     get fontFamily() {
         return this._fontFamily;
     },
 
     set fontFamily(value) {
-        this._fontFamily = value;
-        this.invalidate();
+        this.setProperty("fontFamily", value);
     },
 
     /**
@@ -91,8 +90,7 @@ Class.define("framework.ui.view.TextView", View, {
     },
 
     set fontSize(value) {
-        this._fontSize = value;
-        this.invalidate();
+        this.setProperty("fontSize", value);
     },
 
     /**
@@ -105,8 +103,7 @@ Class.define("framework.ui.view.TextView", View, {
     },
 
     set fontWeight(value) {
-        this._fontWeight = value;
-        this.invalidate();
+        this.setProperty("fontWeight", value);
     },
 
     /**
@@ -119,8 +116,7 @@ Class.define("framework.ui.view.TextView", View, {
     },
 
     set fontStyle(value) {
-        this._fontStyle = value;
-        this.invalidate();
+        this.setProperty("fontStyle", value);
     },
 
     /**
@@ -133,8 +129,7 @@ Class.define("framework.ui.view.TextView", View, {
     },
 
     set align(value) {
-        this._align = value;
-        this.invalidate();
+        this.setProperty("align", value);
     },
 
     /**
@@ -147,8 +142,7 @@ Class.define("framework.ui.view.TextView", View, {
     },
 
     set verticalAlign(value) {
-        this._verticalAlign = value;
-        this.invalidate();
+        this.setProperty("verticalAlign", value);
     },
 
     /**
@@ -161,22 +155,7 @@ Class.define("framework.ui.view.TextView", View, {
     },
 
     set baseline(value) {
-        this._baseline = value;
-        this.invalidate();
-    },
-
-    /**
-     * @name TextView#lineMargin
-     * @type {Number}
-     * @description The line margin
-     */
-    get lineMargin() {
-        return this._lineMargin;
-    },
-
-    set lineMargin(value) {
-        this._lineMargin = value;
-        this.invalidate();
+        this.setProperty("baseline", value);
     },
 
     /**
@@ -189,8 +168,7 @@ Class.define("framework.ui.view.TextView", View, {
     },
 
     set color(value) {
-        this._color = value;
-        this.invalidate();
+        this.setProperty("color", value);
     },
 
     /**
@@ -203,10 +181,16 @@ Class.define("framework.ui.view.TextView", View, {
     },
 
     set multiLine(value) {
-        this._multiLine = value;
-        this.invalidate();
+        this.setProperty("multiLine", value);
     },
 
+    /**
+     * Draw the text view.
+     * @method TextView#draw
+     * @param {Context} context - the canvas context to which the view is rendered
+     * @protected
+     * @override
+     */
     draw: function(context) {
         context.save();
         context.beginPath();
