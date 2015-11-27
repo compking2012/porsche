@@ -8,10 +8,21 @@
 <!--     <link href='http://fonts.googleapis.com/css?family=Open+Sans:400,700' rel='stylesheet' type='text/css'>
  -->    <link rel="stylesheet" type="text/css" href="stylesheets/stylesheet.css" media="screen">
     <link rel="stylesheet" type="text/css" href="stylesheets/github-light.css" media="screen">
-<!--     <link rel="stylesheet" href="http://cdn.jsdelivr.net/highlight.js/8.9.1/styles/default.min.css">
+    <script src="//code.jquery.com/jquery-1.11.3.min.js"></script>
+    <script src="//code.jquery.com/jquery-migrate-1.2.1.min.js"></script>
+    <link rel="stylesheet" href="http://cdn.jsdelivr.net/highlight.js/8.9.1/styles/default.min.css">
     <script src="http://cdn.jsdelivr.net/highlight.js/8.9.1/highlight.min.js"></script>
-    <script>hljs.initHighlightingOnLoad();</script>
- -->  </head>
+    <script>
+      hljs.initHighlightingOnLoad();
+      // $(function() {
+      //   // hljs.configure({useBR: true});
+
+      //   $("div.demo code").each(function(i, block) {
+      //     hljs.highlightBlock(block);
+      //   });
+      // });
+    </script>
+  </head>
   <body>
     <section class="page-header">
       <h1 class="project-name">Porsche</h1>
@@ -35,17 +46,17 @@
         <iframe src="./demo/gui/helloworld/index.html"></iframe>
         <pre>
           <code>
-            Class.define("MyApp", App, {
-                onStart: function() {
-                  var view = new View();
-                  view.background = "#FF0000";
-                  view.left = 110;
-                  view.top = 110;
-                  view.width = 100;
-                  view.height = 100;
+Class.define("MyApp", App, {
+    onStart: function() {
+      var view = new View();
+      view.background = "#FF0000";
+      view.left = 110;
+      view.top = 110;
+      view.width = 100;
+      view.height = 100;
 
-                  this.window.addChild(view);
-            }, module);
+      this.window.addChild(view);
+}, module);
           </code>
         </pre>
       </div>
@@ -55,53 +66,53 @@
         <iframe src="./demo/gui/button/index.html"></iframe>
         <pre>
           <code>
-            Class.define("MyApp", App, {
-                onStart: function() {
-                    this.button = new Button();
-                    this.button.text = "Hello";
-                    this.button.fontSize = "32px";
-                    this.button.radius = 50;
-                    this.button.textAlign = "center";
-                    this.button.background = "#FF0000";
-                    this.button.top = 60;
-                    this.button.left = 60;
-                    this.button.width = 200;
-                    this.button.height = 200;
+Class.define("MyApp", App, {
+    onStart: function() {
+        this.button = new Button();
+        this.button.text = "Hello";
+        this.button.fontSize = "32px";
+        this.button.radius = 50;
+        this.button.textAlign = "center";
+        this.button.background = "#FF0000";
+        this.button.top = 60;
+        this.button.left = 60;
+        this.button.width = 200;
+        this.button.height = 200;
 
-                    this.button.addEventListener("touchstart", this.onTouchStart.bind(this));
-                    this.button.addEventListener("touchmove", this.onTouchMove.bind(this));
-                    this.button.addEventListener("touchend", this.onTouchEnd.bind(this));
-                    this.button.addEventListener("touchcancel", this.onTouchCancel.bind(this));
-                    this.button.addEventListener("tap", this.onTap.bind(this));
+        this.button.addEventListener("touchstart", this.onTouchStart.bind(this));
+        this.button.addEventListener("touchmove", this.onTouchMove.bind(this));
+        this.button.addEventListener("touchend", this.onTouchEnd.bind(this));
+        this.button.addEventListener("touchcancel", this.onTouchCancel.bind(this));
+        this.button.addEventListener("tap", this.onTap.bind(this));
 
-                    this.window.addChild(this.button);
-                },
+        this.window.addChild(this.button);
+    },
 
-                onTouchStart: function(e) {
-                    this.button.background = "#00FF00";
-                    e.stopPropagation();
-                },
+    onTouchStart: function(e) {
+        this.button.background = "#00FF00";
+        e.stopPropagation();
+    },
 
-                onTouchMove: function(e) {
-                    this.button.background = "#FFFF00";
-                    e.stopPropagation();
-                },
+    onTouchMove: function(e) {
+        this.button.background = "#FFFF00";
+        e.stopPropagation();
+    },
 
-                onTouchEnd: function(e) {
-                    this.button.background = "#FF0000";
-                    e.stopPropagation();
-                },
+    onTouchEnd: function(e) {
+        this.button.background = "#FF0000";
+        e.stopPropagation();
+    },
 
-                onTouchCancel: function(e) {
-                    this.button.background = "#0000FF";
-                    e.stopPropagation();
-                },
+    onTouchCancel: function(e) {
+        this.button.background = "#0000FF";
+        e.stopPropagation();
+    },
 
-                onTap: function(e) {
-                    this.button.text = "Well done!";
-                    e.stopPropagation();
-                }
-            }, module);
+    onTap: function(e) {
+        this.button.text = "Well done!";
+        e.stopPropagation();
+    }
+}, module);
           </code>
         </pre>
       </div>
@@ -111,35 +122,35 @@
         <iframe src="./demo/gui/viewhierarchy/index.html"></iframe>
         <pre>
           <code>
-            Class.define("MyApp", App, {
-                onStart: function() {
-                  var compositeView = new CompositeView();
-                  compositeView.left = 50;
-                  compositeView.top = 50;
-                  compositeView.width = 200;
-                  compositeView.height = 200;
-                  this.window.addChild(compositeView);
+Class.define("MyApp", App, {
+    onStart: function() {
+      var compositeView = new CompositeView();
+      compositeView.left = 50;
+      compositeView.top = 50;
+      compositeView.width = 200;
+      compositeView.height = 200;
+      this.window.addChild(compositeView);
 
-                  var textView = new TextView();
-                  textView.width = 200;
-                  textView.height = 100;
-                  textView.color = "#FF0000";
-                  textView.fontSize = "24px";
-                  textView.background = "#CCCCCC";
-                  textView.text = "Hello, world!";
-                  compositeView.addChild(textView);
+      var textView = new TextView();
+      textView.width = 200;
+      textView.height = 100;
+      textView.color = "#FF0000";
+      textView.fontSize = "24px";
+      textView.background = "#CCCCCC";
+      textView.text = "Hello, world!";
+      compositeView.addChild(textView);
 
-                  var button = new Button();
-                  button.text = "OK";
-                  button.fontSize = "32px";
-                  button.radius = 50;
-                  button.textAlign = "center";
-                  button.background = "#FF0000";
-                  button.top = 100;
-                  button.width = 200;
-                  button.height = 100;
-                  compositeView.addChild(button);
-            }, module);
+      var button = new Button();
+      button.text = "OK";
+      button.fontSize = "32px";
+      button.radius = 50;
+      button.textAlign = "center";
+      button.background = "#FF0000";
+      button.top = 100;
+      button.width = 200;
+      button.height = 100;
+      compositeView.addChild(button);
+}, module);
           </code>
         </pre>
       </div>
