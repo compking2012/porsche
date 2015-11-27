@@ -15,7 +15,7 @@ var EventEmitter = require("../eventemitter");
 var TouchEvent = require("./event/touchevent");
 var KeyboardEvent = require("./event/keyboardevent");
 var Point = require("./point");
-var Ployfiller = require("../util/polyfiller");
+var Polyfiller = require("../util/polyfiller");
 
 Class.define("framework.ui.WindowManager", EventEmitter, {
     initialize: function(inputService, renderService) {
@@ -96,7 +96,7 @@ Class.define("framework.ui.WindowManager", EventEmitter, {
 
     getContext: function(canvas) {
         var context = canvas.getContext("2d");
-        Ployfiller.polyfillContext(context);
+        Polyfiller.polyfillContext(context);
         context.clearRect(0, 0, canvas.width, canvas.height);
 
         return context;
