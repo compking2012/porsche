@@ -22,7 +22,7 @@ var html = "<!DOCTYPE html>" +
                 "seajs.use(\"./index\");" +
             "</script>" +
             "</head>" +
-            "<body style=\"overflow:hidden;\"></body>" +
+            "<body style=\"margin: 0; padding: 0; overflow:hidden;\"></body>" +
             "</html>";
 
 prepare();
