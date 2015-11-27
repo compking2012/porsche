@@ -9,7 +9,6 @@ Class.define("MyApp", App, {
         var textview = new TextView();
         textview.text = "Hello world!";
         textview.fontSize = "24px";
-        textview.textAlign = "center";
         textview.fontStyle = "normal";
         textview.background = "#FF0000";
         textview.color = "#00FF00";
@@ -17,6 +16,7 @@ Class.define("MyApp", App, {
         textview.height = 100;
         textview.left = 10;
         textview.top = 10;
+        textview.align = "center";
         textview.multiLine = false;
 
         this.window.addChild(textview);
