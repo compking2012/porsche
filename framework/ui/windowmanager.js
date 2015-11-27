@@ -13,6 +13,7 @@ define(function(require, exports, module) {
 var Class = require("../class");
 var EventEmitter = require("../eventemitter");
 var TouchEvent = require("./event/touchevent");
+var MouseEvent = require("./event/mouseevent");
 var KeyboardEvent = require("./event/keyboardevent");
 var Point = require("./point");
 var Polyfiller = require("../util/polyfiller");
@@ -35,6 +36,8 @@ Class.define("framework.ui.WindowManager", EventEmitter, {
         this._activeView = null;
         this._touchstartPoint = new Point(0, 0);
         this._lastTouchPoint = new Point(0, 0);
+        this._mousedownPoint = new Point(0, 0);
+        this._lastMousePoint = new Point(0, 0);
         this._identifier = 0;
 
         this._screenCanvas = this._renderService.createCanvas(this._renderService.getWidth(), this._renderService.getHeight());
@@ -49,6 +52,12 @@ Class.define("framework.ui.WindowManager", EventEmitter, {
 
         this._lastTouchPoint.destroy();
         this._lastTouchPoint = null;
+
+        this._mousedownPoint.destroy();
+        this._mousedownPoint = null;
+
+        this._lastMousePoint.destroy();
+        this._lastMousePoint = null;
 
         this._activeView = null;
 
@@ -142,6 +151,8 @@ Class.define("framework.ui.WindowManager", EventEmitter, {
     processInputEvent: function(type, e) {
         if (type === "touchstart" || type === "touchmove" || type === "touchend" || type === "touchcancel") {
             this.processTouchEvent(type, e);
+        } else if (type === "mousedown" || type === "mousemove" || type === "mouseup") {
+            this.processMouseEvent(type, e);
         } else if (type === "keydown" || type === "keyup") {
             this.processKeyboardEvent(type, e);
         }
@@ -241,6 +252,59 @@ Class.define("framework.ui.WindowManager", EventEmitter, {
         });
 
         this.chainedDispatchEvent(this._activeView, touchEvent);
+    },
+
+    processMouseEvent: function(type, e) {
+        var mousePoint = e;
+
+        var activeWindow = this._dialog !== null ? this._dialog : this._mainWindow;
+        var view = null;
+        if (type === "mousedown") {
+            this._mousedownPoint.assign(mousePoint.x, mousePoint.y);
+            this._lastMousePoint.assign(mousePoint.x, mousePoint.y);
+            this._mouseTimestamp = new Date().getTime();
+            view = activeWindow.findViewAtPoint(this._mousedownPoint);
+        } else if (type === "mousemove") {
+            if (mousePoint.x === this._lastMousePoint.x && mousePoint.y === this._lastMousePoint.y) {
+                return;
+            }
+            this._lastMousePoint.assign(mousePoint.x, mousePoint.y);
+            view = activeWindow.findViewAtPoint(this._lastMousePoint);
+        } else if (type === "mouseup") {
+            view = activeWindow.findViewAtPoint(this._lastMousePoint);
+        }
+
+        if (view === null) {
+            return;
+        }
+        this._activeView = view;
+
+        var x = mousePoint.x;
+        var y = mousePoint.y;
+        var button = mousePoint.button;
+        var dx = x;
+        var dy = y;
+        var v = this._activeView;
+        while (v !== null) {
+            dx -= v.left;
+            dy -= v.top;
+            v = v.parent;
+        }
+        x = dx;
+        y = dy;
+
+        var mouseEvent = new MouseEvent({
+            type: type,
+            timestamp: new Date().getTime(),
+            target: this._activeView,
+            button: button,
+            screenX: mousePoint.x,
+            screenY: mousePoint.y,
+            clientX: x,
+            clientY: y
+        });
+
+        this.chainedDispatchEvent(this._activeView, mouseEvent);
     },
 
     processKeyboardEvent: function(type, e) {

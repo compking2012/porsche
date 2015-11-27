@@ -14,6 +14,7 @@ var Class = require("../../class");
 var EventEmitter = require("../../eventemitter");
 var Input = require("./input");
 var SingleTouchInput = require("./singletouchinput");
+var MouseInput = require("./mouseinput");
 var GestureRecognizer = require("./gesturerecognizer");
 var GestureEvent = require("../event/gestureevent");
 
@@ -26,14 +27,16 @@ Class.define("framework.ui.gesture.GestureManager", EventEmitter, {
         this._recognizers = [];
 
         this._view = view;
-        this._input = this.createInput();
+        this._inputs = this.createInputs();
     },
 
     destroy: function() {
         this._handlers = null;
         this._session = null;
-        this._input.destroy();
-        this._input = null;
+        for (var i = 0; i < this._inputs.length; i++) {
+            this._inputs[i].destroy();
+        }
+        this._inputs = null;
         this._view = null;
 
         EventEmitter.prototype.destroy.apply(this, arguments);
@@ -59,11 +62,14 @@ Class.define("framework.ui.gesture.GestureManager", EventEmitter, {
     /**
      * Create new input type manager
      * called by the Manager constructor
-     * @method GestureManager#createInput
+     * @method GestureManager#createInputs
      * @returns {Input}
      */
-    createInput: function() {
-        return new SingleTouchInput(this);
+    createInputs: function() {
+        return [
+            new SingleTouchInput(this),
+            new MouseInput(this)
+        ];
         // if (SUPPORT_POINTER_EVENTS) {
         //     Type = PointerEventInput;
         // } else if (SUPPORT_ONLY_TOUCH) {

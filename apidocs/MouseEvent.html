@@ -2,7 +2,7 @@
 <html lang="en">
   <head>
     <meta charset="utf-8">
-    <title>Porsche.js API documentation: <i class="icon-shield" style="color:#0186d1"></i> Layout</title>
+    <title>Porsche.js API documentation: <i class="icon-shield" style="color:#0186d1"></i> MouseEvent</title>
 
     <script src="scripts/prettify/prettify.js"> </script>
     <script src="scripts/prettify/lang-css.js"> </script>
@@ -32,7 +32,7 @@
           </div>
 
           <div class="span9">
-              <h1 class="page-header"><i class="icon-shield" style="color:#0186d1"></i> Layout</h1>
+              <h1 class="page-header"><i class="icon-shield" style="color:#0186d1"></i> MouseEvent</h1>
               
 
 
@@ -41,7 +41,7 @@
     
 <header>
     <!--h2>
-    Layout
+    MouseEvent
     </h2-->
     
 </header>  
@@ -53,7 +53,7 @@
             
         <ul class="breadcrumb">
             <li>Extends</li>
-            <li><a href="YObject.html" class="btn btn-primary">YObject</a></li>
+            <li><a href="InputEvent.html" class="btn btn-primary">InputEvent</a></li>
         </ul>
     
 
@@ -62,7 +62,7 @@
     
         
 <dt>
-    <h4 class="name" id="Layout">new Layout()</h4>
+    <h4 class="name" id="MouseEvent">new MouseEvent()</h4>
     
     
 </dt>
@@ -71,7 +71,7 @@
     
     <div class="description">
         <p>
-        Base Layout for all the layouts
+        Mouse event from mouse input
         </p>
     </div>
     
@@ -135,31 +135,20 @@
     
     
     
-    
-    
-        <h3 class="subsection-title">Methods</h3>
+        <h3 class="subsection-title">Members</h3>
         
-        <dl class="bs-docs-example bs-methods">
+        <dl class="bs-docs-example bs-members">
             
 <dt>
-    <h4 class="name" id="getLayoutParam"><span class="label label-info">abstract</span> getLayoutParam()</h4>
+    <h4 class="name" id="screenX"><span class="label label-info">readonly</span> screenX<span class="type-signature"> :Number</span></h4>
     
     
 </dt>
 <dd>
     
-    
     <div class="description">
-        <p>
-        get childparam of child view at index
-        </p>
+        The horizontal coordinate at which the event occurred relative to the origin of the screen coordinate system.
     </div>
-    
-
-    
-    
-    
-    
     
     
     
@@ -193,39 +182,20 @@
 
     
     
-
-    
-
-    
-    
-    
-    
-    
-    
-    
 </dd>
 
         
             
 <dt>
-    <h4 class="name" id="setLayoutParam"><span class="label label-info">abstract</span> setLayoutParam()</h4>
+    <h4 class="name" id="screenY"><span class="label label-info">readonly</span> screenY<span class="type-signature"> :Number</span></h4>
     
     
 </dt>
 <dd>
     
-    
     <div class="description">
-        <p>
-        set childparam of child view at index
-        </p>
+        The vertical coordinate at which the event occurred relative to the origin of the screen coordinate system.
     </div>
-    
-
-    
-    
-    
-    
     
     
     
@@ -259,39 +229,20 @@
 
     
     
-
-    
-
-    
-    
-    
-    
-    
-    
-    
 </dd>
 
         
             
 <dt>
-    <h4 class="name" id="removeLayoutParam"><span class="label label-info">abstract</span> removeLayoutParam()</h4>
+    <h4 class="name" id="clientX"><span class="label label-info">readonly</span> clientX<span class="type-signature"> :Number</span></h4>
     
     
 </dt>
 <dd>
     
-    
     <div class="description">
-        <p>
-        remove childparam of child view at index
-        </p>
+        The horizontal coordinate at which the event occurred relative to the viewport associated with the event.
     </div>
-    
-
-    
-    
-    
-    
     
     
     
@@ -325,33 +276,20 @@
 
     
     
-
-    
-
-    
-    
-    
-    
-    
-    
-    
 </dd>
 
         
             
 <dt>
-    <h4 class="name" id="calculateFrame"><span class="label label-info">abstract</span> calculateFrame()</h4>
+    <h4 class="name" id="clientY"><span class="label label-info">readonly</span> clientY<span class="type-signature"> :Number</span></h4>
     
     
 </dt>
 <dd>
     
-    
-
-    
-    
-    
-    
+    <div class="description">
+        The vertical coordinate at which the event occurred relative to the viewport associated with the event.
+    </div>
     
     
     
@@ -385,14 +323,56 @@
 
     
     
+</dd>
+
+        
+            
+<dt>
+    <h4 class="name" id="button"><span class="label label-info">readonly</span> button<span class="type-signature"> :Number</span></h4>
+    
+    
+</dt>
+<dd>
+    
+    <div class="description">
+        During mouse events caused by the depression or release of a mouse button, button must be used to indicate which pointer device button changed state.
+The value of the MouseEvent.button attribute must be as follows:
+0 must indicate the primary button of the device (in general, the left button or the only button on single-button devices, used to activate a user interface control or select text) or the un-initialized value.
+1 must indicate the auxiliary button (in general, the middle button, often combined with a mouse wheel).
+2 must indicate the secondary button (in general, the right button, often used to display a context menu).
+Some pointing devices provide or simulate more button states, and values higher than 2 or lower than 0 may be used to represent such buttons.
+    </div>
+    
+    
+    
+<dl class="details">
+    
+        
+    
+    
+    
 
     
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
 
     
     
     
     
     
+    
+    
+</dl>
+
     
     
 </dd>
@@ -400,25 +380,68 @@
         
             
 <dt>
-    <h4 class="name" id="initialize">initialize()</h4>
+    <h4 class="name" id="buttons"><span class="label label-info">readonly</span> buttons<span class="type-signature"> :Number</span></h4>
     
     
 </dt>
 <dd>
     
-    
     <div class="description">
-        <p>
-        Constructor which will be invoked automatically at this object is constructed right now.
-Note that DO NOT invoke this directly.
-        </p>
+        During any mouse events, buttons must be used to indicate which combination of mouse buttons are currently being pressed, expressed as a bitmask.
+The value of the MouseEvent.buttons attribute must be as follows:
+0 must indicate no button is currently active.
+1 must indicate the primary button of the device (in general, the left button or the only button on single-button devices, used to activate a user interface control or select text).
+2 must indicate the secondary button (in general, the right button, often used to display a context menu), if present.
+4 must indicate the auxiliary button (in general, the middle button, often combined with a mouse wheel).
+Some pointing devices provide or simulate more buttons. To represent such buttons, the value must be doubled for each successive button (in the binary series 8, 16, 32, ... ).
     </div>
+    
+    
+    
+<dl class="details">
+    
+        
+    
+    
     
 
     
     
     
     
+    
+    
+    
+    
+    
+    
+    
+
+    
+    
+    
+    
+    
+    
+    
+</dl>
+
+    
+    
+</dd>
+
+        
+            
+<dt>
+    <h4 class="name" id="ctrlKey">ctrlKey<span class="type-signature"> :Boolean</span></h4>
+    
+    
+</dt>
+<dd>
+    
+    <div class="description">
+        true if the Ctrl key modifier is activated; otherwise false.
+    </div>
     
     
     
@@ -431,8 +454,376 @@ Note that DO NOT invoke this directly.
 
     
     <dd class="inherited-from"><ul class="dummy breadcrumb"><li>Inherited From:</li><li>
-        <a href="YObject.html#initialize">YObject#initialize</a>
+        <a href="InputEvent.html#ctrlKey">InputEvent#ctrlKey</a>
     </li></dd>
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+
+    
+    
+    
+    
+    
+    
+    
+</dl>
+
+    
+    
+</dd>
+
+        
+            
+<dt>
+    <h4 class="name" id="altKey">altKey<span class="type-signature"> :Boolean</span></h4>
+    
+    
+</dt>
+<dd>
+    
+    <div class="description">
+        Get the state of the Alt key.
+    </div>
+    
+    
+    
+<dl class="details">
+    
+        
+    
+    
+    
+
+    
+    <dd class="inherited-from"><ul class="dummy breadcrumb"><li>Inherited From:</li><li>
+        <a href="InputEvent.html#altKey">InputEvent#altKey</a>
+    </li></dd>
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+
+    
+    
+    
+    
+    
+    
+    
+</dl>
+
+    
+    
+</dd>
+
+        
+            
+<dt>
+    <h4 class="name" id="shiftKey">shiftKey<span class="type-signature"> :Boolean</span></h4>
+    
+    
+</dt>
+<dd>
+    
+    <div class="description">
+        true if the Shift key modifier is activated; otherwise false.
+    </div>
+    
+    
+    
+<dl class="details">
+    
+        
+    
+    
+    
+
+    
+    <dd class="inherited-from"><ul class="dummy breadcrumb"><li>Inherited From:</li><li>
+        <a href="InputEvent.html#shiftKey">InputEvent#shiftKey</a>
+    </li></dd>
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+
+    
+    
+    
+    
+    
+    
+    
+</dl>
+
+    
+    
+</dd>
+
+        
+            
+<dt>
+    <h4 class="name" id="metaKey">metaKey<span class="type-signature"> :Boolean</span></h4>
+    
+    
+</dt>
+<dd>
+    
+    <div class="description">
+        true if the meta (Meta) key modifier is activated; otherwise false. On some platforms this attribute may map to a differently-named key modifier.
+    </div>
+    
+    
+    
+<dl class="details">
+    
+        
+    
+    
+    
+
+    
+    <dd class="inherited-from"><ul class="dummy breadcrumb"><li>Inherited From:</li><li>
+        <a href="InputEvent.html#metaKey">InputEvent#metaKey</a>
+    </li></dd>
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+
+    
+    
+    
+    
+    
+    
+    
+</dl>
+
+    
+    
+</dd>
+
+        
+            
+<dt>
+    <h4 class="name" id="target"><span class="label label-info">readonly</span> target<span class="type-signature"> :<a href="View.html">View</a></span></h4>
+    
+    
+</dt>
+<dd>
+    
+    <div class="description">
+        event send target.
+    </div>
+    
+    
+    
+<dl class="details">
+    
+        
+    
+    
+    
+
+    
+    <dd class="inherited-from"><ul class="dummy breadcrumb"><li>Inherited From:</li><li>
+        <a href="Event.html#target">Event#target</a>
+    </li></dd>
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+
+    
+    
+    
+    
+    
+    
+    
+</dl>
+
+    
+    
+</dd>
+
+        
+            
+<dt>
+    <h4 class="name" id="type"><span class="label label-info">readonly</span> type<span class="type-signature"> :String</span></h4>
+    
+    
+</dt>
+<dd>
+    
+    <div class="description">
+        the type of this event.
+    </div>
+    
+    
+    
+<dl class="details">
+    
+        
+    
+    
+    
+
+    
+    <dd class="inherited-from"><ul class="dummy breadcrumb"><li>Inherited From:</li><li>
+        <a href="Event.html#type">Event#type</a>
+    </li></dd>
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+
+    
+    
+    
+    
+    
+    
+    
+</dl>
+
+    
+    
+</dd>
+
+        
+            
+<dt>
+    <h4 class="name" id="timestamp"><span class="label label-info">readonly</span> timestamp<span class="type-signature"> :Number</span></h4>
+    
+    
+</dt>
+<dd>
+    
+    <div class="description">
+        the timestamp of this event.
+    </div>
+    
+    
+    
+<dl class="details">
+    
+        
+    
+    
+    
+
+    
+    <dd class="inherited-from"><ul class="dummy breadcrumb"><li>Inherited From:</li><li>
+        <a href="Event.html#timestamp">Event#timestamp</a>
+    </li></dd>
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+
+    
+    
+    
+    
+    
+    
+    
+</dl>
+
+    
+    
+</dd>
+
+        </dl>
+    
+    
+    
+        <h3 class="subsection-title">Methods</h3>
+        
+        <dl class="bs-docs-example bs-methods">
+            
+<dt>
+    <h4 class="name" id="initialize">initialize()</h4>
+    
+    
+</dt>
+<dd>
+    
+    
+    <div class="description">
+        <p>
+        Constructor
+        </p>
+    </div>
+    
+
+    
+    
+    
+    
+    
+    
+    
+<dl class="details">
+    
+        
+    
+    
+    
+
     
     
     
@@ -480,8 +871,73 @@ Note that DO NOT invoke this directly.
     
     <div class="description">
         <p>
-        Destructor which need to be invoked when this object is not used anymore.
-Note that this method MUST BE invoked manually, otherwise it might caused something like memory leak.
+        Destructor
+        </p>
+    </div>
+    
+
+    
+    
+    
+    
+    
+    
+    
+<dl class="details">
+    
+        
+    
+    
+    
+
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+
+    
+    
+    
+    
+    
+    
+    
+</dl>
+
+    
+    
+
+    
+
+    
+    
+    
+    
+    
+    
+    
+</dd>
+
+        
+            
+<dt>
+    <h4 class="name" id="stopPropagation">stopPropagation()</h4>
+    
+    
+</dt>
+<dd>
+    
+    
+    <div class="description">
+        <p>
+        Stop the propagation of this event to its parent.
         </p>
     </div>
     
@@ -502,7 +958,147 @@ Note that this method MUST BE invoked manually, otherwise it might caused someth
 
     
     <dd class="inherited-from"><ul class="dummy breadcrumb"><li>Inherited From:</li><li>
-        <a href="YObject.html#destroy">YObject#destroy</a>
+        <a href="UIEvent.html#stopPropagation">UIEvent#stopPropagation</a>
+    </li></dd>
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+
+    
+    
+    
+    
+    
+    
+    
+</dl>
+
+    
+    
+
+    
+
+    
+    
+    
+    
+    
+    
+    
+</dd>
+
+        
+            
+<dt>
+    <h4 class="name" id="preventDefault">preventDefault()</h4>
+    
+    
+</dt>
+<dd>
+    
+    
+    <div class="description">
+        <p>
+        Prevent this event back to system.
+        </p>
+    </div>
+    
+
+    
+    
+    
+    
+    
+    
+    
+<dl class="details">
+    
+        
+    
+    
+    
+
+    
+    <dd class="inherited-from"><ul class="dummy breadcrumb"><li>Inherited From:</li><li>
+        <a href="UIEvent.html#preventDefault">UIEvent#preventDefault</a>
+    </li></dd>
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+
+    
+    
+    
+    
+    
+    
+    
+</dl>
+
+    
+    
+
+    
+
+    
+    
+    
+    
+    
+    
+    
+</dd>
+
+        
+            
+<dt>
+    <h4 class="name" id="stopImmediatePropagation">stopImmediatePropagation()</h4>
+    
+    
+</dt>
+<dd>
+    
+    
+    <div class="description">
+        <p>
+        Stop the propagation of this event to its parent.
+        </p>
+    </div>
+    
+
+    
+    
+    
+    
+    
+    
+    
+<dl class="details">
+    
+        
+    
+    
+    
+
+    
+    <dd class="inherited-from"><ul class="dummy breadcrumb"><li>Inherited From:</li><li>
+        <a href="Event.html#stopImmediatePropagation">Event#stopImmediatePropagation</a>
     </li></dd>
     
     
