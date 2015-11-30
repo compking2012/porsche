@@ -1079,7 +1079,9 @@ Class.define("framework.ui.view.View", EventEmitter, {
     },
 
     /**
-     * Set property
+     * Set the view property which will assign value to the private attribute,
+     * invoke the callback, dispatch corresponding event and make the view invalidated
+     * @method View#setProperty
      * @param {String} property - the property name
      * @param {*} value - the new value
      * @param {Function} callback - the immediate action callback
