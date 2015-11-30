@@ -8,16 +8,16 @@ var Slider = require("../../../framework/ui/view/slider");
 
 Class.define("MyApp", App, {
     onStart: function() {
-        this.textview = new TextView();
-        this.textview.fontSize = "40px";
-        this.textview.fontStyle = "normal";
-        this.textview.align = "center";
-        this.textview.color = "#00FF00";
-        this.textview.width = 300;
-        this.textview.height = 100;
-        this.textview.left = 10;
-        this.textview.top = 10;
-        this.window.addChild(this.textview);
+        this.textView = new TextView();
+        this.textView.fontSize = "40px";
+        this.textView.fontStyle = "normal";
+        this.textView.align = "center";
+        this.textView.color = "#00FF00";
+        this.textView.width = 300;
+        this.textView.height = 100;
+        this.textView.left = 10;
+        this.textView.top = 10;
+        this.window.addChild(this.textView);
 
         this.slider = new Slider();
         this.slider.background = "#FF0000";
@@ -25,16 +25,16 @@ Class.define("MyApp", App, {
         this.slider.top = 200;
         this.slider.width = 280;
         this.slider.height = 80;
-        // this.slider.thumb = global.app.rootPath + "/res/sliderthumb.png";
+        this.slider.thumb = global.app.rootPath + "/res/sliderthumb.png";
         this.slider.addEventListener("change", this.onChange.bind(this));
         this.window.addChild(this.slider);
 
         this.slider.value = 0.5;
-        this.textview.text = 0.5;
+        this.textView.text = 0.5;
     },
 
     onChange: function(e) {
-        this.textview.text = this.slider.value;
+        this.textView.text = this.slider.value;
     }
 }, module);
 
