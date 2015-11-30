@@ -216,7 +216,6 @@ Class.define("framework.ui.view.ImageButton", ImageView, {
      * @override
      */
     draw: function(context) {
-        console.log("draw: ", this._selected);
         var image = null;
         if (!this._enabled) {
             image = this._disabledSrc !== null ? this._disabledImage : this._image;
