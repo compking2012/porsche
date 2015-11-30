@@ -14,7 +14,7 @@ Class.define("MyApp", App, {
         this.progressView.height = 30;
         this.progressView.background = "#FEFEFE";
         this.progressView.color = "#FF0000";
-        this.progressView.value = 0.01;
+        this.progressView.value = 0.4;
         this.window.addChild(this.progressView);
     }
 }, module);
