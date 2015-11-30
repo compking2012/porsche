@@ -23,16 +23,11 @@ Class.define("MyApp", App, {
         this.switch.top = 50;
         this.switch.width = 100;
         this.switch.height = 100;
-        this.switch.addEventListener("click", this.onClick.bind(this));
+        this.switch.addEventListener("tap", this.onTap.bind(this));
         this.window.addChild(this.switch);
     },
 
-    destroy: function() {
-        this.switch.destroy();
-        this.switch = null;
-    },
-
-    onClick: function() {
+    onTap: function() {
         if (this.switch.value) {
             this.textView.text = "Switch is on";
         } else {

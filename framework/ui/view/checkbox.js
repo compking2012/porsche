@@ -13,24 +13,25 @@ var Class = require("../../class");
 var Switch = require("./switch");
 
 /**
- * CheckBox widget
+ * CheckBox is a specific type of two-states button that can be either checked or unchecked.
  * @class CheckBox
  * @extends Switch
  */
 Class.define("framework.ui.view.CheckBox", Switch, {
     /**
-     * Constructor
+     * Constructor that create a checkbox
      * @method CheckBox#initialize
      */
     initialize: function () {
         Switch.prototype.initialize.apply(this, arguments);
-        this._disabledSrc = global.AppFXRootPath + "/resources/checkboxdisabled.png";
-        this._offSrc = global.AppFXRootPath + "/resources/checkboxoff.png";
-        this._onSrc = global.AppFXRootPath + "/resources/checkboxon.png";
+
+        this._disabledImageSrc = global.AppFXRootPath + "/resources/checkboxdisabled.png";
+        this._offImageSrc = global.AppFXRootPath + "/resources/checkboxoff.png";
+        this._onImageSrc = global.AppFXRootPath + "/resources/checkboxon.png";
     },
 
     /**
-     * Destructor
+     * Destructor that destroy this checkbox
      * @method CheckBox#destroy
      */
     destroy: function() {
