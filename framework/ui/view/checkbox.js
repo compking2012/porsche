@@ -24,10 +24,6 @@ Class.define("framework.ui.view.CheckBox", Switch, {
      */
     initialize: function () {
         Switch.prototype.initialize.apply(this, arguments);
-
-        this._disabledImageSrc = global.AppFXRootPath + "/resources/checkboxdisabled.png";
-        this._offImageSrc = global.AppFXRootPath + "/resources/checkboxoff.png";
-        this._onImageSrc = global.AppFXRootPath + "/resources/checkboxon.png";
     },
 
     /**
@@ -36,5 +32,16 @@ Class.define("framework.ui.view.CheckBox", Switch, {
      */
     destroy: function() {
         Switch.prototype.destroy.apply(this, arguments);
+    },
+
+    /**
+     * Specifiy the urls of the image state, including on, off and disabled
+     * @method Switch#setImageSrcs
+     * @protected
+     */
+    setImageSrcs: function() {
+        this._disabledImageSrc = global.AppFXRootPath + "/resources/checkboxdisabled.png";
+        this._offImageSrc = global.AppFXRootPath + "/resources/checkboxoff.png";
+        this._onImageSrc = global.AppFXRootPath + "/resources/checkboxon.png";
     }
 }, module);

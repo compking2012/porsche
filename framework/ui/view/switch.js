@@ -27,11 +27,9 @@ Class.define("CompositeView.ui.view.Switch", View, {
     initialize: function () {
         View.prototype.initialize.apply(this, arguments);
 
-        this._disabledImageSrc = global.AppFXRootPath + "/resources/switchdisabled.png";
+        this.setImageSrcs();
         this._disabledImage = new Image();
-        this._offImageSrc = global.AppFXRootPath + "/resources/switchoff.png";
         this._offImage = new Image();
-        this._onImageSrc = global.AppFXRootPath + "/resources/switchon.png";
         this._onImage = new Image();
         this._image = this._onImage;
 
@@ -49,10 +47,11 @@ Class.define("CompositeView.ui.view.Switch", View, {
             }.bind(this);
             this._offImage.src = this._offImageSrc;
         }.bind(this);
-        this._onImage.src = this._onImageSrc;
 
         this.addGestureRecognizer(this._tapRecognizer = new TapRecognizer());
         this.addEventListener("tap", this._onTapFunc = this.onTap.bind(this));
+
+        this._onImage.src = this._onImageSrc;
     },
 
     /**
@@ -130,6 +129,17 @@ Class.define("CompositeView.ui.view.Switch", View, {
      */
     draw: function(context) {
         context.drawImage(this._image, (this._width - this._image.width) / 2, (this._height - this._image.height) / 2, this._image.width, this._image.height);
+    },
+
+    /**
+     * Specifiy the urls of the image state, including on, off and disabled
+     * @method Switch#setImageSrcs
+     * @protected
+     */
+    setImageSrcs: function() {
+        this._disabledImageSrc = global.AppFXRootPath + "/resources/switchdisabled.png";
+        this._offImageSrc = global.AppFXRootPath + "/resources/switchoff.png";
+        this._onImageSrc = global.AppFXRootPath + "/resources/switchon.png";
     },
 
     /**
