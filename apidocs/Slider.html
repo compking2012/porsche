@@ -140,14 +140,14 @@
         <dl class="bs-docs-example bs-members">
             
 <dt>
-    <h4 class="name" id="lineWidth">lineWidth<span class="type-signature"> :Number</span></h4>
+    <h4 class="name" id="value">value<span class="type-signature"> :Number</span></h4>
     
     
 </dt>
 <dd>
     
     <div class="description">
-        the line width of the circle.
+        the value of the progress, between 0 and 1.
     </div>
     
     
@@ -161,7 +161,7 @@
 
     
     <dd class="inherited-from"><ul class="dummy breadcrumb"><li>Inherited From:</li><li>
-        <a href="ProgressView.html#lineWidth">ProgressView#lineWidth</a>
+        <a href="ProgressView.html#value">ProgressView#value</a>
     </li></dd>
     
     
@@ -191,14 +191,14 @@
         
             
 <dt>
-    <h4 class="name" id="value">value<span class="type-signature"> :Number</span></h4>
+    <h4 class="name" id="color">color<span class="type-signature"> :String</span></h4>
     
     
 </dt>
 <dd>
     
     <div class="description">
-        The counter value.
+        The foreground bar color of this progress view.
     </div>
     
     
@@ -212,7 +212,7 @@
 
     
     <dd class="inherited-from"><ul class="dummy breadcrumb"><li>Inherited From:</li><li>
-        <a href="ProgressView.html#value">ProgressView#value</a>
+        <a href="ProgressView.html#color">ProgressView#color</a>
     </li></dd>
     
     
@@ -1497,7 +1497,7 @@ You do not need to draw any pixels above it, since those are outside of the fram
     
     <div class="description">
         <p>
-        Constructor
+        Constructor that create a progress view
         </p>
     </div>
     
@@ -1567,7 +1567,7 @@ You do not need to draw any pixels above it, since those are outside of the fram
     
     <div class="description">
         <p>
-        Destructor
+        Destructor that destroy this progress view
         </p>
     </div>
     
@@ -1589,6 +1589,246 @@ You do not need to draw any pixels above it, since those are outside of the fram
     
     <dd class="inherited-from"><ul class="dummy breadcrumb"><li>Inherited From:</li><li>
         <a href="ProgressView.html#destroy">ProgressView#destroy</a>
+    </li></dd>
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+
+    
+    
+    
+    
+    
+    
+    
+</dl>
+
+    
+    
+
+    
+
+    
+    
+    
+    
+    
+    
+    
+</dd>
+
+        
+            
+<dt>
+    <h4 class="name" id="drawBackground">drawBackground(context)</h4>
+    
+    
+</dt>
+<dd>
+    
+    
+    <div class="description">
+        <p>
+        Override and implement this to do your background drawing.
+        </p>
+    </div>
+    
+
+    
+    
+    
+    
+    
+        <h5>Parameters:</h5>
+        
+
+<table class="params table table-bordered table-condensed">
+    <thead>
+	<tr>
+		
+		<th>Name</th>
+		
+
+		<th>Type</th>
+
+		
+
+		
+
+		<th class="last">Description</th>
+	</tr>
+	</thead>
+
+	<tbody>
+	
+
+        <tr>
+            
+                <td class="name">context</td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">{Context}</span>
+
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last">the canvas context to which the view is rendered</td>
+        </tr>
+
+	
+	</tbody>
+</table>
+
+    
+    
+    
+<dl class="details">
+    
+        
+    
+    
+    
+
+    
+    <dd class="inherited-from"><ul class="dummy breadcrumb"><li>Inherited From:</li><li>
+        <a href="View.html#drawBackground">View#drawBackground</a>
+    </li></dd>
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+
+    
+    
+    
+    
+    
+    
+    
+</dl>
+
+    
+    
+
+    
+
+    
+    
+    
+    
+    
+    
+    
+</dd>
+
+        
+            
+<dt>
+    <h4 class="name" id="draw">draw(context)</h4>
+    
+    
+</dt>
+<dd>
+    
+    
+    <div class="description">
+        <p>
+        Implement this to do your drawing.
+        </p>
+    </div>
+    
+
+    
+    
+    
+    
+    
+        <h5>Parameters:</h5>
+        
+
+<table class="params table table-bordered table-condensed">
+    <thead>
+	<tr>
+		
+		<th>Name</th>
+		
+
+		<th>Type</th>
+
+		
+
+		
+
+		<th class="last">Description</th>
+	</tr>
+	</thead>
+
+	<tbody>
+	
+
+        <tr>
+            
+                <td class="name">context</td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">{Context}</span>
+
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last">the canvas context to which the view is rendered</td>
+        </tr>
+
+	
+	</tbody>
+</table>
+
+    
+    
+    
+<dl class="details">
+    
+        
+    
+    
+    
+
+    
+    <dd class="inherited-from"><ul class="dummy breadcrumb"><li>Inherited From:</li><li>
+        <a href="View.html#draw">View#draw</a>
     </li></dd>
     
     
@@ -3172,246 +3412,6 @@ such as tap, longpress, pan and rotation etc.
     
     <dd class="inherited-from"><ul class="dummy breadcrumb"><li>Inherited From:</li><li>
         <a href="View.html#onTouchCancel">View#onTouchCancel</a>
-    </li></dd>
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-
-    
-    
-    
-    
-    
-    
-    
-</dl>
-
-    
-    
-
-    
-
-    
-    
-    
-    
-    
-    
-    
-</dd>
-
-        
-            
-<dt>
-    <h4 class="name" id="draw"><span class="label label-info">abstract</span> draw(context)</h4>
-    
-    
-</dt>
-<dd>
-    
-    
-    <div class="description">
-        <p>
-        Implement this to do your drawing.
-        </p>
-    </div>
-    
-
-    
-    
-    
-    
-    
-        <h5>Parameters:</h5>
-        
-
-<table class="params table table-bordered table-condensed">
-    <thead>
-	<tr>
-		
-		<th>Name</th>
-		
-
-		<th>Type</th>
-
-		
-
-		
-
-		<th class="last">Description</th>
-	</tr>
-	</thead>
-
-	<tbody>
-	
-
-        <tr>
-            
-                <td class="name">context</td>
-            
-
-            <td class="type">
-            
-                
-<span class="param-type">{Context}</span>
-
-
-
-            
-            </td>
-
-            
-
-            
-
-            <td class="description last">the canvas context to which the view is rendered</td>
-        </tr>
-
-	
-	</tbody>
-</table>
-
-    
-    
-    
-<dl class="details">
-    
-        
-    
-    
-    
-
-    
-    <dd class="inherited-from"><ul class="dummy breadcrumb"><li>Inherited From:</li><li>
-        <a href="View.html#draw">View#draw</a>
-    </li></dd>
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-
-    
-    
-    
-    
-    
-    
-    
-</dl>
-
-    
-    
-
-    
-
-    
-    
-    
-    
-    
-    
-    
-</dd>
-
-        
-            
-<dt>
-    <h4 class="name" id="drawBackground">drawBackground(context)</h4>
-    
-    
-</dt>
-<dd>
-    
-    
-    <div class="description">
-        <p>
-        Override and implement this to do your background drawing.
-        </p>
-    </div>
-    
-
-    
-    
-    
-    
-    
-        <h5>Parameters:</h5>
-        
-
-<table class="params table table-bordered table-condensed">
-    <thead>
-	<tr>
-		
-		<th>Name</th>
-		
-
-		<th>Type</th>
-
-		
-
-		
-
-		<th class="last">Description</th>
-	</tr>
-	</thead>
-
-	<tbody>
-	
-
-        <tr>
-            
-                <td class="name">context</td>
-            
-
-            <td class="type">
-            
-                
-<span class="param-type">{Context}</span>
-
-
-
-            
-            </td>
-
-            
-
-            
-
-            <td class="description last">the canvas context to which the view is rendered</td>
-        </tr>
-
-	
-	</tbody>
-</table>
-
-    
-    
-    
-<dl class="details">
-    
-        
-    
-    
-    
-
-    
-    <dd class="inherited-from"><ul class="dummy breadcrumb"><li>Inherited From:</li><li>
-        <a href="View.html#drawBackground">View#drawBackground</a>
     </li></dd>
     
     
@@ -5615,7 +5615,7 @@ this.className
         <br clear="both">
 
       <footer>
-        Documentation generated by <a href="https://github.com/jsdoc3/jsdoc">JSDoc 3.3.2</a> on Mon Nov 30 2015 12:47:28 GMT+0800 (CST)
+        Documentation generated by <a href="https://github.com/jsdoc3/jsdoc">JSDoc 3.3.2</a> on Mon Nov 30 2015 15:21:50 GMT+0800 (CST)
         <br>
       </footer>
       <script> prettyPrint(); </script>

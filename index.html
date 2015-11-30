@@ -258,7 +258,7 @@ Class.define("MyApp", App, {
       </div>
 
       <div class="demo">
-        <span>ImageButton</span>      
+        <span>Switch</span>      
         <iframe src="./demo/gui/switch/index.html"></iframe>
         <pre>
           <code>
@@ -297,7 +297,7 @@ Class.define("MyApp", App, {
       </div>
 
       <div class="demo">
-        <span>ImageButton</span>      
+        <span>Checkbox</span>      
         <iframe src="./demo/gui/checkbox/index.html"></iframe>
         <pre>
           <code>
@@ -335,6 +335,27 @@ Class.define("MyApp", App, {
         </pre>
       </div>
 
+      <div class="demo">
+        <span>ProgressView</span>      
+        <iframe src="./demo/gui/progressview/index.html"></iframe>
+        <pre>
+          <code>
+Class.define("MyApp", App, {
+    onStart: function() {
+        this.progressView = new ProgressView();
+        this.progressView.left = 20;
+        this.progressView.top = 50;
+        this.progressView.width = 280;
+        this.progressView.height = 50;
+        this.progressView.background = "#FEFEFE";
+        this.progressView.foreground = "#FF0000";
+        this.progressView.value = 0.4;
+        this.window.addChild(this.progressView);
+    }
+}, module);
+          </code>
+        </pre>
+      </div>
 
       <footer class="site-footer">
         <span class="site-footer-owner"><a href="https://github.com/compking2012/porsche">Porsche</a> is maintained by <a href="https://github.com/compking2012">compking2012</a>.</span>

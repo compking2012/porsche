@@ -168,7 +168,9 @@ Class.define("framework.ui.view.TextView", View, {
     },
 
     set color(value) {
-        this.setProperty("color", value);
+        this.setProperty("color", value, function() {
+            this._colorObject = this._colorManager.getColorObject(this._color);
+        }.bind(this));
     },
 
     /**
