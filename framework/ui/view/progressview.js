@@ -13,7 +13,7 @@ var Class = require("../../class");
 var View = require("./view");
 
 /**
- * Progress view is used to depict the progress of a task over time.
+ * Progress view that is used to depict the progress of a task over time.
  * An example of a progress bar is the one shown at the bottom of the application when it’s downloading something.
  * The class provides properties for managing the style of the progress bar and
  * for getting and setting values that are pinned to the progress of a task.

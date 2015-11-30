@@ -15,7 +15,7 @@ Class.define("MyApp", App, {
         this.circleProgressView1.height = 140;
         this.circleProgressView1.lineWidth = 30;
         this.circleProgressView1.background = "#0D171C";
-        this.circleProgressView1.foreground = "linear-gradient(#3ECCD3, #FFFFFF)";
+        this.circleProgressView1.color = "linear-gradient(#3ECCD3, #FFFFFF)";
         this.window.addChild(this.circleProgressView1);
 
         this.circleProgressView2 = new CircleProgressView();
@@ -25,7 +25,7 @@ Class.define("MyApp", App, {
         this.circleProgressView2.height = 200;
         this.circleProgressView2.lineWidth = 30;
         this.circleProgressView2.background = "#223403";
-        this.circleProgressView2.foreground = "linear-gradient(#97FF01, #FFFFFF)";
+        this.circleProgressView2.color = "linear-gradient(#97FF01, #FFFFFF)";
         this.window.addChild(this.circleProgressView2);
 
         this.circleProgressView3 = new CircleProgressView();
@@ -35,7 +35,7 @@ Class.define("MyApp", App, {
         this.circleProgressView3.height = 260;
         this.circleProgressView3.lineWidth = 30;
         this.circleProgressView3.background = "#0E171C";
-        this.circleProgressView3.foreground = "linear-gradient(#F20026, #FFFFFF)";
+        this.circleProgressView3.color = "linear-gradient(#F20026, #FFFFFF)";
         this.window.addChild(this.circleProgressView3);
 
         var animation1 = new Animation(this.circleProgressView1);

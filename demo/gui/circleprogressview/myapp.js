@@ -11,7 +11,7 @@ Class.define("MyApp", App, {
         this.circleProgressView.height = 320;
         this.circleProgressView.lineWidth = 30;
         this.circleProgressView.background = "#FEFEFE";
-        this.circleProgressView.foreground = "#FF0000";
+        this.circleProgressView.color = "#FF0000";
         this.circleProgressView.value = 0.4;
         this.window.addChild(this.circleProgressView);
     }

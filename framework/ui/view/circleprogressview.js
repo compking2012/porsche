@@ -13,13 +13,13 @@ var Class = require("../../class");
 var ProgressView = require("./progressview");
 
 /**
- * Circle Progress widget
+ * Circle Progress view that is used to show a rounded progress bar.
  * @class CircleProgressView
  * @extends ProgressView
  */
 Class.define("framework.ui.view.CircleProgressView", ProgressView, {
     /**
-     * Constructor
+     * Constructor that create a circle progress view
      * @method CircleProgressView#initialize
      */
     initialize: function() {
@@ -29,51 +29,68 @@ Class.define("framework.ui.view.CircleProgressView", ProgressView, {
     },
 
     /**
-     * Destructor
+     * Destructor that destroy a circle progress view
      * @method CircleProgressView#destroy
      */
     destroy: function() {
         ProgressView.prototype.destroy.apply(this, arguments);
     },
 
+    /**
+     * @name CircleProgressView#lineWidth
+     * @type {Number}
+     * @description the line width of circle progress bar
+     */
+    get lineWidth() {
+        return this._lineWidth;
+    },
+
+    set lineWidth(value) {
+        this.setProperty("lineWidth", value);
+    },
+
+    /**
+     * Draw the background of the circle progress view.
+     * @method CircleProgressView#drawBackground
+     * @param {Context} context - the canvas context to which the view is rendered
+     * @protected
+     * @override
+     */
     drawBackground: function(context) {
+        if (this._background === "") {
+            return;
+        }
         var halfWidth = this._width / 2;
         var halfHeight = this._height / 2;
-        var halfLineWidth = this._lineWidth / 2;
-
+        context.save();
         context.lineCap = "round";
         context.lineWidth = this._lineWidth;
         context.beginPath();
-        context.arc(halfWidth, halfHeight, Math.min(halfWidth, halfHeight) - halfLineWidth, 0, Math.PI * 2, false);
-        context.strokeStyle = this.getBackground(context);
+        context.arc(halfWidth, halfHeight, Math.min(halfWidth, halfHeight) - this._lineWidth / 2, 0, Math.PI * 2, false);
+        context.strokeStyle = this._colorManager.getColor(context, this._width, this._height, this._background, this._backgroundObject);
         context.stroke();
+        context.restore();
     },
 
+    /**
+     * Draw the circle progress view.
+     * @method CircleProgressView#draw
+     * @param {Context} context - the canvas context to which the view is rendered
+     * @protected
+     * @override
+     */
     draw: function(context) {
         var rad = Math.PI / 2;
         var radian = Math.min(1, Math.max(0, this._value));
         var halfWidth = this._width / 2;
         var halfHeight = this._height / 2;
-        var halfLineWidth = this._lineWidth / 2;
-
+        context.save();
         context.lineCap = "round";
         context.lineWidth = this._lineWidth;
         context.beginPath();
-        context.arc(halfWidth, halfHeight, Math.min(halfWidth, halfHeight) - halfLineWidth, -rad, Math.PI * 2 * radian - rad, false);
-        if (/^linear\-gradient/.test(this._foreground)) {
-            var linear = this._foregroundObject;
-            var colorStopStart = linear[0].colorStops[0];
-            var colorStopEnd = linear[0].colorStops[1];
-            var gradient = context.createLinearGradient(0, 0, this._width, this._height);
-            gradient.addColorStop(0, colorStopStart.type === "hex" ? "#" + colorStopStart.value : colorStopStart.value);
-            gradient.addColorStop(1, colorStopEnd.type === "hex" ? "#" + colorStopEnd.value : colorStopEnd.value);
-            context.strokeStyle = gradient;
-        } else if (/^radial\-gradient/.test(this._foreground)) {
-            var radial = this._foregroundObject;
-            // context.strokeStyle = null;
-        } else {
-            context.strokeStyle = this._foreground;
-        }
+        context.arc(halfWidth, halfHeight, Math.min(halfWidth, halfHeight) - this._lineWidth / 2, -rad, Math.PI * 2 * radian - rad, false);
+        context.strokeStyle = this._colorManager.getColor(context, this._width, this._height, this._color, this._colorObject);
         context.stroke();
+        context.restore();
     }
 }, module);
