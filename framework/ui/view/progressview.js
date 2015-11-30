@@ -69,7 +69,7 @@ Class.define("framework.ui.view.ProgressView", View, {
 
     set color(value) {
         this.setProperty("color", value, function() {
-            this._colorObject = this._colorManager.getColorObject(this._color);
+            this._colorObject = this._colorManager.getColorObject(value);
         }.bind(this));
     },
 

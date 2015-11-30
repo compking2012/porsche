@@ -265,6 +265,7 @@ Class.define("framework.ui.view.Slider", ProgressView, {
      * @method Slider#processInputStart
      * @param {Number} x - the x-axis value
      * @param {Number} y - the y-axis value
+     * @private
      */
     processInputStart: function(x, y) {
         var w = this._thumbImage.width;
@@ -284,6 +285,7 @@ Class.define("framework.ui.view.Slider", ProgressView, {
      * @method Slider#processInputMove
      * @param {Number} x - the x-axis value
      * @param {Number} y - the y-axis value
+     * @private
      */
     processInputMove: function(x/*, y*/) {
         if (this._dragging) {
@@ -307,6 +309,7 @@ Class.define("framework.ui.view.Slider", ProgressView, {
      * @method Slider#processInputEnd
      * @param {Number} x - the x-axis value
      * @param {Number} y - the y-axis value
+     * @private
      */
     processInputEnd: function(x, y) {
         this._lastX = x;

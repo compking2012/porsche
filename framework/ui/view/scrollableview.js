@@ -16,13 +16,14 @@ var CubicBezier = require("../animation/cubicbezier");
 var PanRecognizer = require("../gesture/panrecognizer");
 
 /**
- * ScrollableView
+ * Scrollable view that can place one or more views in and can be scrolled by the user,
+ * allowing it to be larger than the physical display.
  * @class ScrollableView
  * @extends CompositeView
  */
 Class.define("framework.ui.view.ScrollableView", CompositeView, {
     /**
-     * Constructor
+     * Constructor that create a scrollable view
      * @method ScrollableView#initialize
      */
     initialize: function() {
@@ -31,8 +32,8 @@ Class.define("framework.ui.view.ScrollableView", CompositeView, {
         this.addGestureRecognizer(this._panRecognizer = new PanRecognizer({threshold: 1}));
         this.addEventListener("panstart", this._onPanStartFunc = this.onPanStart.bind(this));
         this.addEventListener("panmove", this._onPanMoveFunc = this.onPanMove.bind(this));
-        this.addEventListener("panend", this._onPanEndCancelFunc = this.onPanEndCancel.bind(this));
-        this.addEventListener("pancancel", this._onPanEndCancelFunc);
+        this.addEventListener("panend", this._onPanEndFunc = this.onPanEnd.bind(this));
+        this.addEventListener("pancancel", this._onPanCancelFunc = this.onPanCancel.bind(this));
 
         this._overScroll = false;
         this._orientation = "all";
@@ -50,7 +51,7 @@ Class.define("framework.ui.view.ScrollableView", CompositeView, {
     },
 
     /**
-     * Destructor
+     * Destructor that destroy this scrollable view
      * @method ScrollableView#destroy
      */
     destroy: function() {
@@ -65,9 +66,10 @@ Class.define("framework.ui.view.ScrollableView", CompositeView, {
         this._onPanStartFunc = null;
         this.removeEventListener("panmove", this._onPanMoveFunc);
         this._onPanMoveFunc = null;
-        this.removeEventListener("panend", this._onPanEndCancelFunc);
-        this.removeEventListener("pancancel", this._onPanEndCancelFunc);
-        this._onPanEndCancelFunc = null;
+        this.removeEventListener("panend", this._onPanEndFunc);
+        this._onPanEndFunc = null;
+        this.removeEventListener("pancancel", this._onPanCancelFunc);
+        this._onPanCancelFunc = null;
 
         CompositeView.prototype.destroy.apply(this, arguments);
     },
@@ -82,15 +84,10 @@ Class.define("framework.ui.view.ScrollableView", CompositeView, {
     },
 
     set horizontalScrollBar(value) {
-        var oldValue = this._horizontalScrollBar;
-        if (oldValue === value) {
-            return;
-        }
-        this.removeHorizontalScrollBar();
-        this._horizontalScrollBar = value;
-        this._horizontalScrollBar.associatedView = this;
-        this.dispatchEvent("propertychange", "horizontalScrollBar", oldValue, value);
-        this.invalidate();
+        this.setProperty("horizontalScrollBar", value, function() {
+            this.removeHorizontalScrollBar();
+            value.associatedView = this;
+        }.bind(this));
     },
 
     /**
@@ -103,21 +100,28 @@ Class.define("framework.ui.view.ScrollableView", CompositeView, {
     },
 
     set verticalScrollBar(value) {
-        var oldValue = this._verticalScrollBar;
-        if (oldValue === value) {
-            return;
-        }
-        this.removeVerticalScrollBar();
-        this._verticalScrollBar = value;
-        this._verticalScrollBar.associatedView = this;
-        this.dispatchEvent("propertychange", "verticalScrollBar", oldValue, value);
-        this.invalidate();
+        this.setProperty("verticalScrollBar", value, function() {
+            this.removeVerticalScrollBar();
+            value.associatedView = this;
+        }.bind(this));
     },
 
+    /**
+     * @name ScrollableView#contentWidth
+     * @type {Number}
+     * @description the content width.
+     * @readonly
+     */
     get contentWidth() {
         return this._contentWidth;
     },
 
+    /**
+     * @name ScrollableView#contentHeight
+     * @type {Number}
+     * @description the content height.
+     * @readonly
+     */
     get contentHeight() {
         return this._contentHeight;
     },
@@ -125,7 +129,7 @@ Class.define("framework.ui.view.ScrollableView", CompositeView, {
     /**
      * @name ScrollableView#orientation
      * @type {String}
-     * @description The orientation for scroll, such as "horizontal", "vertical".
+     * @description the orientation for scroll, such as "horizontal", "vertical".
      */
     get orientation() {
         return this._orientation;
@@ -144,7 +148,8 @@ Class.define("framework.ui.view.ScrollableView", CompositeView, {
     /**
      * @name ScrollableView#overScroll
      * @type {Boolean}
-     * @description Whether allows over scroll.
+     * @description indicating whether allows over scroll.
+     * @private
      */
     get overScroll() {
         return this._overScroll;
@@ -161,7 +166,7 @@ Class.define("framework.ui.view.ScrollableView", CompositeView, {
     },
 
     /**
-     * Add a view to specified parent view.
+     * Add a view to this scrollable view.
      * @method ScrollableView#addChild
      * @param {View} view - sub child view to be insert to the last, and show at top
      */
@@ -177,7 +182,7 @@ Class.define("framework.ui.view.ScrollableView", CompositeView, {
     },
 
     /**
-     * Insert a child view in this composite view by the specified position.
+     * Insert a child view to this scrollable view by the specified position.
      * @method ScrollableView#insertChild
      * @param {View} view - the child view to add
      * @param {Number} index - the position at which to add the child
@@ -194,7 +199,7 @@ Class.define("framework.ui.view.ScrollableView", CompositeView, {
     },
 
     /**
-     * Remove the specified view from this composite view.
+     * Remove the specified view from this scrollable view.
      * @method ScrollableView#removeChild
      * @param {View} view - the child view to remove, or the position in this composite view to remove
      */
@@ -226,6 +231,11 @@ Class.define("framework.ui.view.ScrollableView", CompositeView, {
         CompositeView.prototype.removeChild.call(this, view);
     },
 
+    /**
+     * Paint the scrollable view's children.
+     * @method ScrollableView#paintChildren
+     * @protected
+     */
     paintChildren: function(context) {
         if (this._layout !== null && this._needRelayout) {
             this._layout.perform();
@@ -243,6 +253,12 @@ Class.define("framework.ui.view.ScrollableView", CompositeView, {
         }
     },
 
+    /**
+     * Handle the pan gesture start event processing.
+     * @method ScrollableView#onPanStart
+     * @param {GestureEvent} e - the pan gesture event info
+     * @protected
+     */
     onPanStart: function(/*e*/) {
         this.stopAutoScroll();
 
@@ -250,6 +266,12 @@ Class.define("framework.ui.view.ScrollableView", CompositeView, {
         this._startScrollY = this._scrollY;
     },
 
+    /**
+     * Handle the pan gesture move event processing.
+     * @method ScrollableView#onPanMove
+     * @param {GestureEvent} e - the pan gesture event info
+     * @protected
+     */
     onPanMove: function(e) {
         if (this._orientation === "horizontal" || this._orientation === "all") {
             var scrollX = this._startScrollX - e.deltaX;
@@ -294,6 +316,12 @@ Class.define("framework.ui.view.ScrollableView", CompositeView, {
         }
     },
 
+    /**
+     * Handle the pan gesture end event processing.
+     * @method ScrollableView#onPanEnd
+     * @param {GestureEvent} e - the pan gesture event info
+     * @protected
+     */
     onPanEndCancel: function(e) {
         this._velocityX = e.velocityX * 1000;
         this._velocityY = e.velocityY * 1000;
@@ -330,6 +358,59 @@ Class.define("framework.ui.view.ScrollableView", CompositeView, {
         }
     },
 
+    /**
+     * Handle the pan gesture cancel event processing.
+     * @method ScrollableView#onPanCancel
+     * @param {GestureEvent} e - the pan gesture event info
+     * @protected
+     */
+    onPanCancel: function(e) {
+        this.onPanEnd(e);
+    },
+
+    /**
+     * Handle the property change event processing.
+     * @method ScrollableView#onPropertyChange
+     * @param {View} view - the view whose property is changed.
+     * @param {View} property - the property name.
+     * @param {View} oldValue - the old value.
+     * @param {View} newValue - the new value.
+     * @protected
+     */
+    onPropertyChange: function(view, property/*, oldValue, newValue*/) {
+        if (property === "left" || property === "top" || property === "bottom" || property === "right" || property === "width" || property === "height") {
+            var length = this._children.length;
+            this._contentWidth = 0;
+            for (var i = 0; i < length; i++) {
+                var child = this._children[i];
+                if (child === view) {
+                    continue;
+                }
+                var right = child.right;
+                if (right > this._contentWidth) {
+                    this._contentWidth = right;
+                }
+            }
+
+            this._contentHeight = 0;
+            for (var j = 0; j < length; j++) {
+                if (this._children[j] === view) {
+                    continue;
+                }
+                if (this._children[j].bottom > this._contentHeight) {
+                    this._contentHeight = this._children[j].bottom;
+                }
+            }
+        }
+    },
+
+    /**
+     * Start to auto scroll the content based a specified velocity.
+     * @method ScrollableView#startAutoScroll
+     * @param {Number} amplitudeX - the velocity of x-axis
+     * @param {Number} amplitudeY - the velocity of y-axis
+     * @private
+     */
     startAutoScroll: function(amplitudeX, amplitudeY) {
         var startTime = new Date().getTime();
         var totalTime = 0;
@@ -398,6 +479,11 @@ Class.define("framework.ui.view.ScrollableView", CompositeView, {
         }
     },
 
+    /**
+     * Stop the auto scrolling.
+     * @method ScrollableView#stopAutoScroll
+     * @private
+     */
     stopAutoScroll: function() {
         if (this._autoTimer !== null) {
             clearTimeout(this._autoTimer);
@@ -408,6 +494,11 @@ Class.define("framework.ui.view.ScrollableView", CompositeView, {
         }
     },
 
+    /**
+     * Remove the horizontal scroll bar and its binding event.
+     * @method ScrollableView#removeHorizontalScrollBar
+     * @private
+     */
     removeHorizontalScrollBar: function() {
         if (this._horizontalScrollBar !== null) {
             this._horizontalScrollBar.removeEventListener("propertychange", this._onHorizontalScrollBarChangeFunc);
@@ -416,6 +507,11 @@ Class.define("framework.ui.view.ScrollableView", CompositeView, {
         }
     },
 
+    /**
+     * Remove the vertical scroll bar and its binding event.
+     * @method ScrollableView#removeVerticalScrollBar
+     * @private
+     */
     removeVerticalScrollBar: function() {
         if (this._verticalScrollBar !== null) {
             this._verticalScrollBar.removeEventListener("propertychange", this._onVerticalScrollBarChangeFunc);
@@ -424,6 +520,14 @@ Class.define("framework.ui.view.ScrollableView", CompositeView, {
         }
     },
 
+    /**
+     * Calculate delta.
+     * @method ScrollableView#calculdateDelta
+     * @param  {Number} v - velocity
+     * @param  {Number} a - amplitude
+     * @param  {Number} t - time
+     * @private
+     */
     calculateDelta: function(v, a, t) {
         if (a < 10 && a > -10) {
             return 0;
@@ -440,6 +544,11 @@ Class.define("framework.ui.view.ScrollableView", CompositeView, {
         return delta;
     },
 
+    /**
+     * Do a scroll back.
+     * @method ScrollableView#reback
+     * @private
+     */
     reback: function() {
         var targetX = 0;
         var targetY = 0;
@@ -475,33 +584,6 @@ Class.define("framework.ui.view.ScrollableView", CompositeView, {
             this.scrollY = startY + delta * (targetY - startY);
             this._autoTimer = setTimeout(animationFunc, 10);
         }.bind(this), 10);
-    },
-
-    onPropertyChange: function(view, property/*, oldValue, newValue*/) {
-        if (property === "left" || property === "top" || property === "bottom" || property === "right" || property === "width" || property === "height") {
-            var length = this._children.length;
-            this._contentWidth = 0;
-            for (var i = 0; i < length; i++) {
-                var child = this._children[i];
-                if (child === view) {
-                    continue;
-                }
-                var right = child.right;
-                if (right > this._contentWidth) {
-                    this._contentWidth = right;
-                }
-            }
-
-            this._contentHeight = 0;
-            for (var j = 0; j < length; j++) {
-                if (this._children[j] === view) {
-                    continue;
-                }
-                if (this._children[j].bottom > this._contentHeight) {
-                    this._contentHeight = this._children[j].bottom;
-                }
-            }
-        }
     }
 }, module);
 

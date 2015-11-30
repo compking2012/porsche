@@ -92,7 +92,7 @@ Class.define("CompositeView.ui.view.Switch", View, {
 
     set value(value) {
         this.setProperty("value", value, function() {
-            this.updateImage();
+            this.updateImage(value, this._enabled);
         }.bind(this));
     },
 
@@ -107,7 +107,7 @@ Class.define("CompositeView.ui.view.Switch", View, {
 
     set enabled(value) {
         this.setProperty("enabled", value, function() {
-            this.updateImage();
+            this.updateImage(this._value, value);
         }.bind(this));
     },
 
@@ -124,7 +124,7 @@ Class.define("CompositeView.ui.view.Switch", View, {
     /**
      * Draw the switch.
      * @method Switch#draw
-     * @param {Context} context - the canvas context to which the view is rendered
+     * @param {Context} context - the canvas context to which the view is rendered.
      * @protected
      * @override
      */
@@ -133,7 +133,7 @@ Class.define("CompositeView.ui.view.Switch", View, {
     },
 
     /**
-     * Specifiy the urls of the image state, including on, off and disabled
+     * Specifiy the urls of the image state, including on, off and disabled.
      * @method Switch#setImageSrcs
      * @protected
      */
@@ -144,15 +144,17 @@ Class.define("CompositeView.ui.view.Switch", View, {
     },
 
     /**
-     * Update the thumb image
+     * Update the thumb image.
      * @method Switch#updateImage
+     * @param {Boolean} value - the state.
+     * @param {Boolean} enabled - indicating whether it is enabled.
      * @private
      */
-    updateImage: function() {
-        if (!this._enabled) {
+    updateImage: function(value, enabled) {
+        if (!enabled) {
             this._image = this._disabledImage;
         } else {
-            if (this._value) {
+            if (value) {
                 this._image = this._onImage;
             } else {
                 this._image = this._offImage;
