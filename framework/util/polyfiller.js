@@ -26,22 +26,20 @@ Class.define("framework.ui.util.Polyfiller", YObject, {
         polyfillContextRoundRect: function(/*context*/) {
             if (global.CanvasRenderingContext2D.prototype.roundRect === undefined) {
                 global.CanvasRenderingContext2D.prototype.roundRect = function(x, y, width, height, radius) {
-                    if (radius === undefined) {
-                        return;
+                    if (width < 2 * radius) {
+                        width = 2 * radius;
                     }
                     this.beginPath();
                     this.moveTo(x + radius, y);
                     this.lineTo(x + width - radius, y);
-                    this.quadraticCurveTo(x + width, y, x + width, y + radius);
+                    this.arc(x + width - radius, y + radius, radius, Math.PI * 1.5, Math.PI * 2);
                     this.lineTo(x + width, y + height - radius);
-                    this.quadraticCurveTo(x + width, y + height, x + width - radius, y + height);
+                    this.arc(x + width - radius, y + height - radius, radius, 0, Math.PI * 0.5);
                     this.lineTo(x + radius, y + height);
-                    this.quadraticCurveTo(x, y + height, x, y + height - radius);
+                    this.arc(x + radius, y + height - radius, radius, Math.PI * 0.5, Math.PI);
                     this.lineTo(x, y + radius);
-                    this.quadraticCurveTo(x, y, x + radius, y);
+                    this.arc(x + radius, y + radius, radius, Math.PI, Math.PI * 1.5);
                     this.closePath();
-
-                    return this;
                 };
             }
         },
@@ -49,7 +47,6 @@ Class.define("framework.ui.util.Polyfiller", YObject, {
         polyfillContextDrawLine: function(/*context*/) {
             if (global.CanvasRenderingContext2D.prototype.drawLine === undefined) {
                 global.CanvasRenderingContext2D.prototype.drawLine = function(coord) {
-                    this.save();
                     this.beginPath();
 
                     if (coord.attr.type === "dashed") {
@@ -60,9 +57,6 @@ Class.define("framework.ui.util.Polyfiller", YObject, {
                     this.lineWidth = coord.thick;
                     this.strokeStyle = coord.color;
                     this.stroke();
-                    this.restore();
-
-                    return this;
                 };
             }
         },

@@ -12,30 +12,27 @@ Class.define("MyApp", App, {
         this.progressView1.left = 20;
         this.progressView1.top = 50;
         this.progressView1.width = 280;
-        this.progressView1.height = 50;
-        this.progressView1.lineWidth = 30;
+        this.progressView1.height = 30;
         this.progressView1.background = "#0D171C";
-        this.progressView1.foreground = "linear-gradient(#3ECCD3, #FFFFFF)";
+        this.progressView1.color = "linear-gradient(#3ECCD3, #FFFFFF)";
         this.window.addChild(this.progressView1);
 
         this.progressView2 = new ProgressView();
         this.progressView2.left = 20;
         this.progressView2.top = 150;
         this.progressView2.width = 280;
-        this.progressView2.height = 50;
-        this.progressView2.lineWidth = 30;
+        this.progressView2.height = 30;
         this.progressView2.background = "#223403";
-        this.progressView2.foreground = "linear-gradient(#97FF01, #FFFFFF)";
+        this.progressView2.color = "linear-gradient(#97FF01, #FFFFFF)";
         this.window.addChild(this.progressView2);
 
         this.progressView3 = new ProgressView();
         this.progressView3.left = 20;
         this.progressView3.top = 250;
         this.progressView3.width = 280;
-        this.progressView3.height = 50;
-        this.progressView3.lineWidth = 30;
+        this.progressView3.height = 30;
         this.progressView3.background = "#0E171C";
-        this.progressView3.foreground = "linear-gradient(#F20026, #FFFFFF)";
+        this.progressView3.color = "linear-gradient(#F20026, #FFFFFF)";
         this.window.addChild(this.progressView3);
 
         var animation1 = new Animation(this.progressView1);

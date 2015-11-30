@@ -10,11 +10,10 @@ Class.define("MyApp", App, {
         this.progressView.left = 20;
         this.progressView.top = 50;
         this.progressView.width = 280;
-        this.progressView.height = 50;
-        this.progressView.lineWidth = 30;
+        this.progressView.height = 30;
         this.progressView.background = "#FEFEFE";
-        this.progressView.foreground = "#FF0000";
-        this.progressView.value = 0.4;
+        this.progressView.color = "#FF0000";
+        this.progressView.value = 0.01;
         this.window.addChild(this.progressView);
     }
 }, module);
