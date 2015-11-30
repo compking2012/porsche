@@ -257,6 +257,85 @@ Class.define("MyApp", App, {
         </pre>
       </div>
 
+      <div class="demo">
+        <span>ImageButton</span>      
+        <iframe src="./demo/gui/switch/index.html"></iframe>
+        <pre>
+          <code>
+Class.define("MyApp", App, {
+    onStart: function() {
+        this.textView = new TextView();
+        this.textView.width = 320;
+        this.textView.height = 50;
+        this.textView.fontSize = "30px";
+        this.textView.fontStyle = "normal";
+        this.textView.align = "center";
+        this.textView.background = "#FF0000";
+        this.textView.color = "#00FF00";
+        this.textView.text = "Click the Switch";
+        this.window.addChild(this.textView);
+
+        this.switch = new Switch();
+        this.switch.left = 50;
+        this.switch.top = 50;
+        this.switch.width = 100;
+        this.switch.height = 100;
+        this.switch.addEventListener("tap", this.onTap.bind(this));
+        this.window.addChild(this.switch);
+    },
+
+    onTap: function() {
+        if (this.switch.value) {
+            this.textView.text = "Switch is on";
+        } else {
+            this.textView.text = "Switch is off";
+        }
+    }
+}, module);
+          </code>
+        </pre>
+      </div>
+
+      <div class="demo">
+        <span>ImageButton</span>      
+        <iframe src="./demo/gui/checkbox/index.html"></iframe>
+        <pre>
+          <code>
+Class.define("MyApp", App, {
+    onStart: function() {
+        this.textView = new TextView();
+        this.textView.width = 320;
+        this.textView.height = 50;
+        this.textView.fontSize = "30px";
+        this.textView.align = "center";
+        this.textView.fontStyle = "normal";
+        this.textView.background = "#FF0000";
+        this.textView.color = "#00FF00";
+        this.textView.text = "Tap the Checkbox";
+        this.window.addChild(this.textView);
+
+        this.checkbox = new CheckBox();
+        this.checkbox.left = 50;
+        this.checkbox.top = 50;
+        this.checkbox.width = 100;
+        this.checkbox.height = 100;
+        this.checkbox.addEventListener("tap", this.onTap.bind(this));
+        this.window.addChild(this.checkbox);
+    },
+
+    onTap: function() {
+        if (this.checkbox.value) {
+            this.textView.text = "Checkbox is on";
+        } else {
+            this.textView.text = "Checkbox is off";
+        }
+    }
+}, module);
+          </code>
+        </pre>
+      </div>
+
+
       <footer class="site-footer">
         <span class="site-footer-owner"><a href="https://github.com/compking2012/porsche">Porsche</a> is maintained by <a href="https://github.com/compking2012">compking2012</a>.</span>
 
