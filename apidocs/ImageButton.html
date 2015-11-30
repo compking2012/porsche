@@ -71,7 +71,9 @@
     
     <div class="description">
         <p>
-        ImageButton widget
+        Image button that displays a button with an image (instead of text) that can be pressed or clicked by the user.
+By default, an ImageButton looks like a regular Button, with the standard button background
+that changes color during different button states.
         </p>
     </div>
     
@@ -140,6 +142,150 @@
         <dl class="bs-docs-example bs-members">
             
 <dt>
+    <h4 class="name" id="pressedImageSrc">pressedImageSrc<span class="type-signature"> :String</span></h4>
+    
+    
+</dt>
+<dd>
+    
+    <div class="description">
+        the pressed state's image url, which indicates a local path currently.
+Note that once you set this value, the image loading process will start asynchronously.
+    </div>
+    
+    
+    
+<dl class="details">
+    
+        
+    
+    
+    
+
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+
+    
+    
+    
+    
+    
+    
+    
+</dl>
+
+    
+    
+</dd>
+
+        
+            
+<dt>
+    <h4 class="name" id="focusedImageSrc">focusedImageSrc<span class="type-signature"> :String</span></h4>
+    
+    
+</dt>
+<dd>
+    
+    <div class="description">
+        the focused state's image url, which indicates a local path currently.
+Note that once you set this value, the image loading process will start asynchronously.
+    </div>
+    
+    
+    
+<dl class="details">
+    
+        
+    
+    
+    
+
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+
+    
+    
+    
+    
+    
+    
+    
+</dl>
+
+    
+    
+</dd>
+
+        
+            
+<dt>
+    <h4 class="name" id="disabledImageSrc">disabledImageSrc<span class="type-signature"> :String</span></h4>
+    
+    
+</dt>
+<dd>
+    
+    <div class="description">
+        the disabled state's image url, which indicates a local path currently.
+Note that once you set this value, the image loading process will start asynchronously.
+    </div>
+    
+    
+    
+<dl class="details">
+    
+        
+    
+    
+    
+
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+
+    
+    
+    
+    
+    
+    
+    
+</dl>
+
+    
+    
+</dd>
+
+        
+            
+<dt>
     <h4 class="name" id="src">src<span class="type-signature"> :String</span></h4>
     
     
@@ -147,7 +293,8 @@
 <dd>
     
     <div class="description">
-        the image src value. set src then begin to load image.
+        the image url, which indicates a local path currently.
+Note that once you set this value, the image loading process will start asynchronously.
     </div>
     
     
@@ -1498,7 +1645,7 @@ You do not need to draw any pixels above it, since those are outside of the fram
     
     <div class="description">
         <p>
-        Constructor
+        Constructor that create a image button
         </p>
     </div>
     
@@ -1564,7 +1711,7 @@ You do not need to draw any pixels above it, since those are outside of the fram
     
     <div class="description">
         <p>
-        Destructor
+        Destructor that destroy this image button
         </p>
     </div>
     
@@ -1573,6 +1720,122 @@ You do not need to draw any pixels above it, since those are outside of the fram
     
     
     
+    
+    
+    
+<dl class="details">
+    
+        
+    
+    
+    
+
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+
+    
+    
+    
+    
+    
+    
+    
+</dl>
+
+    
+    
+
+    
+
+    
+    
+    
+    
+    
+    
+    
+</dd>
+
+        
+            
+<dt>
+    <h4 class="name" id="onMouseDown"><span class="label label-info">protected</span> onMouseDown(e)</h4>
+    
+    
+</dt>
+<dd>
+    
+    
+    <div class="description">
+        <p>
+        Handle the mouse down event processing
+        </p>
+    </div>
+    
+
+    
+    
+    
+    
+    
+        <h5>Parameters:</h5>
+        
+
+<table class="params table table-bordered table-condensed">
+    <thead>
+	<tr>
+		
+		<th>Name</th>
+		
+
+		<th>Type</th>
+
+		
+
+		
+
+		<th class="last">Description</th>
+	</tr>
+	</thead>
+
+	<tbody>
+	
+
+        <tr>
+            
+                <td class="name">e</td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">{<a href="MouseEvent.html">MouseEvent</a>}</span>
+
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last">the mouse event info</td>
+        </tr>
+
+	
+	</tbody>
+</table>
+
     
     
     
@@ -2448,6 +2711,246 @@ such as tap, longpress, pan and rotation etc.
     
     
         <span class="yes-def tag-deprecated"><ul class="dummy inline"><li><span class="important tag-deprecated label label-warning">Deprecated</span> Yes</li></ul></span>
+    
+    
+    
+    
+    
+    
+    
+    
+    
+
+    
+    
+    
+    
+    
+    
+    
+</dl>
+
+    
+    
+
+    
+
+    
+    
+    
+    
+    
+    
+    
+</dd>
+
+        
+            
+<dt>
+    <h4 class="name" id="onMouseMove"><span class="label label-info">protected</span> onMouseMove(e)</h4>
+    
+    
+</dt>
+<dd>
+    
+    
+    <div class="description">
+        <p>
+        Handle the mouse move event processing
+        </p>
+    </div>
+    
+
+    
+    
+    
+    
+    
+        <h5>Parameters:</h5>
+        
+
+<table class="params table table-bordered table-condensed">
+    <thead>
+	<tr>
+		
+		<th>Name</th>
+		
+
+		<th>Type</th>
+
+		
+
+		
+
+		<th class="last">Description</th>
+	</tr>
+	</thead>
+
+	<tbody>
+	
+
+        <tr>
+            
+                <td class="name">e</td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">{<a href="MouseEvent.html">MouseEvent</a>}</span>
+
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last">the mouse event info</td>
+        </tr>
+
+	
+	</tbody>
+</table>
+
+    
+    
+    
+<dl class="details">
+    
+        
+    
+    
+    
+
+    
+    <dd class="inherited-from"><ul class="dummy breadcrumb"><li>Inherited From:</li><li>
+        <a href="View.html#onMouseMove">View#onMouseMove</a>
+    </li></dd>
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+
+    
+    
+    
+    
+    
+    
+    
+</dl>
+
+    
+    
+
+    
+
+    
+    
+    
+    
+    
+    
+    
+</dd>
+
+        
+            
+<dt>
+    <h4 class="name" id="onTouchMove"><span class="label label-info">protected</span> onTouchMove(e)</h4>
+    
+    
+</dt>
+<dd>
+    
+    
+    <div class="description">
+        <p>
+        Handle the touch move event processing
+        </p>
+    </div>
+    
+
+    
+    
+    
+    
+    
+        <h5>Parameters:</h5>
+        
+
+<table class="params table table-bordered table-condensed">
+    <thead>
+	<tr>
+		
+		<th>Name</th>
+		
+
+		<th>Type</th>
+
+		
+
+		
+
+		<th class="last">Description</th>
+	</tr>
+	</thead>
+
+	<tbody>
+	
+
+        <tr>
+            
+                <td class="name">e</td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">{<a href="TouchEvent.html">TouchEvent</a>}</span>
+
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last">the touch event info</td>
+        </tr>
+
+	
+	</tbody>
+</table>
+
+    
+    
+    
+<dl class="details">
+    
+        
+    
+    
+    
+
+    
+    <dd class="inherited-from"><ul class="dummy breadcrumb"><li>Inherited From:</li><li>
+        <a href="View.html#onTouchMove">View#onTouchMove</a>
+    </li></dd>
+    
+    
     
     
     
@@ -4768,7 +5271,7 @@ this.className
         <br clear="both">
 
       <footer>
-        Documentation generated by <a href="https://github.com/jsdoc3/jsdoc">JSDoc 3.3.2</a> on Fri Nov 27 2015 17:52:01 GMT+0800 (CST)
+        Documentation generated by <a href="https://github.com/jsdoc3/jsdoc">JSDoc 3.3.2</a> on Mon Nov 30 2015 12:14:34 GMT+0800 (CST)
         <br>
       </footer>
       <script> prettyPrint(); </script>

@@ -15,13 +15,15 @@ var ImageView = require("./imageview");
 var TapRecognizer = require("../gesture/taprecognizer");
 
 /**
- * ImageButton widget
+ * Image button that displays a button with an image (instead of text) that can be pressed or clicked by the user.
+ * By default, an ImageButton looks like a regular Button, with the standard button background
+ * that changes color during different button states.
  * @class ImageButton
  * @extends ImageView
  */
 Class.define("framework.ui.view.ImageButton", ImageView, {
     /**
-     * Constructor
+     * Constructor that create a image button
      * @method ImageButton#initialize
      */
     initialize: function() {
@@ -34,13 +36,11 @@ Class.define("framework.ui.view.ImageButton", ImageView, {
         this._disabledImageSrc = null;
         this._disabledImage = null;
 
-        this.addEventListener("touchstart", this.onTouchStartFunc = this.onTouchStart.bind(this));
-        this.addEventListener("touchend", this.onTouchEndFunc = this.onTouchEnd.bind(this));
         this.addGestureRecognizer(this._tapRecognizer = new TapRecognizer());
     },
 
     /**
-     * Destructor
+     * Destructor that destroy this image button
      * @method ImageButton#destroy
      */
     destroy: function() {
@@ -65,14 +65,15 @@ Class.define("framework.ui.view.ImageButton", ImageView, {
             this._disabledImage = null;
         }
 
-        this.removeEventListener("touchstart", this.onTouchStartFunc);
-        this.onTouchStartFunc = null;
-        this.removeEventListener("touchend", this.onTouchEndFunc);
-        this.onTouchEndFunc = null;
-
         ImageView.prototype.destroy.apply(this, arguments);
     },
 
+    /**
+     * @name ImageButton#pressedImageSrc
+     * @type {String}
+     * @description the pressed state's image url, which indicates a local path currently.
+     * Note that once you set this value, the image loading process will start asynchronously.
+     */
     get pressedImageSrc() {
         return this._pressedImageSrc;
     },
@@ -93,6 +94,12 @@ Class.define("framework.ui.view.ImageButton", ImageView, {
         }
     },
 
+    /**
+     * @name ImageButton#focusedImageSrc
+     * @type {String}
+     * @description the focused state's image url, which indicates a local path currently.
+     * Note that once you set this value, the image loading process will start asynchronously.
+     */
     get focusedImageSrc() {
         return this._focusedSrc;
     },
@@ -114,6 +121,12 @@ Class.define("framework.ui.view.ImageButton", ImageView, {
         }
     },
 
+    /**
+     * @name ImageButton#disabledImageSrc
+     * @type {String}
+     * @description the disabled state's image url, which indicates a local path currently.
+     * Note that once you set this value, the image loading process will start asynchronously.
+     */
     get disabledImageSrc() {
         return this._disabledSrc;
     },
@@ -135,15 +148,75 @@ Class.define("framework.ui.view.ImageButton", ImageView, {
         }
     },
 
-    onTouchStart: function() {
+    /**
+     * Handle the mouse down event processing
+     * @method ImageButton#onMouseDown
+     * @param {MouseEvent} e - the mouse event info
+     * @protected
+     */
+    onMouseDown: function(e) {
+        ImageView.prototype.onMouseDown.call(this, e);
+
         this.invalidate();
     },
 
-    onTouchEnd: function() {
+    /**
+     * Handle the mouse up event processing
+     * @method ImageButton#onMouseUp
+     * @param {MouseEvent} e - the mouse event info
+     * @private
+     */
+    onMouseUp: function(e) {
+        ImageView.prototype.onMouseUp.call(this, e);
+
         this.invalidate();
     },
 
+    /**
+     * Handle the touch start event processing
+     * @method ImageButton#onTouchStart
+     * @param {TouchEvent} e - the touch event info
+     * @private
+     */
+    onTouchStart: function(e) {
+        ImageView.prototype.onTouchStart.call(this, e);
+
+        this.invalidate();
+    },
+
+    /**
+     * Handle the touch end event processing
+     * @method ImageButton#onTouchEnd
+     * @param {TouchEvent} e - the touch event info
+     * @private
+     */
+    onTouchEnd: function(e) {
+        ImageView.prototype.onTouchEnd.call(this, e);
+
+        this.invalidate();
+    },
+
+    /**
+     * Handle the touch cancel event processing
+     * @method ImageButton#onTouchCancel
+     * @param {TouchEvent} e - the touch event info
+     * @private
+     */
+    onTouchCancel: function(e) {
+        ImageView.prototype.onTouchCancel.call(this, e);
+
+        this.invalidate();
+    },
+
+    /**
+     * Draw the image button.
+     * @method ImageButton#draw
+     * @param {Context} context - the canvas context to which the view is rendered
+     * @protected
+     * @override
+     */
     draw: function(context) {
+        console.log("draw: ", this._selected);
         var image = null;
         if (!this._enabled) {
             image = this._disabledSrc !== null ? this._disabledImage : this._image;

@@ -14,14 +14,17 @@ var Class = require("../../class");
 var View = require("./view");
 
 /**
- * imageview widget
+ * Image view that displays an arbitrary image, such as an icon.
+ * The ImageView class can load images from various sources (such as local or online resources),
+ * takes care of computing its measurement from the image so that it can be used in any layout,
+ * and provides various display options such as scaling and tinting.
  * @class ImageView
  * @param {string} src image path
  * @extends View
  **/
 Class.define("framework.ui.view.ImageView", View, {
     /**
-     * Constructor
+     * Constructor that create a image view
      * @method ImageView#initialize
      */
     initialize: function() {
@@ -34,7 +37,7 @@ Class.define("framework.ui.view.ImageView", View, {
     },
 
     /**
-     * Destructor
+     * Destructor that destroy this image view
      * @method ImageView#destroy
      */
     destroy: function() {
@@ -46,7 +49,8 @@ Class.define("framework.ui.view.ImageView", View, {
     /**
      * @name ImageView#src
      * @type {String}
-     * @description the image src value. set src then begin to load image.
+     * @description the image url, which indicates a local path currently.
+     * Note that once you set this value, the image loading process will start asynchronously.
      */
     get src() {
         return this._src;

@@ -12,7 +12,7 @@ Class.define("MyApp", App, {
         this.textView.width = 320;
         this.textView.height = 50;
         this.textView.fontSize = "30px";
-        this.textView.textAlign = "center";
+        this.textView.align = "center";
         this.textView.fontStyle = "normal";
         this.textView.background = "#FF0000";
         this.textView.color = "#00FF00";
