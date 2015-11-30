@@ -322,7 +322,7 @@ Class.define("framework.ui.view.ScrollableView", CompositeView, {
      * @param {GestureEvent} e - the pan gesture event info
      * @protected
      */
-    onPanEndCancel: function(e) {
+    onPanEnd: function(e) {
         this._velocityX = e.velocityX * 1000;
         this._velocityY = e.velocityY * 1000;
         if (this._orientation === "horizontal") {
