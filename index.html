@@ -357,6 +357,27 @@ Class.define("MyApp", App, {
         </pre>
       </div>
 
+      <div class="demo">
+        <span>CircleProgressView</span>      
+        <iframe src="./demo/gui/circleprogressview/index.html"></iframe>
+        <pre>
+          <code>
+Class.define("MyApp", App, {
+    onStart: function() {
+        this.circleProgressView = new CircleProgressView();
+        this.circleProgressView.width = 320;
+        this.circleProgressView.height = 320;
+        this.circleProgressView.lineWidth = 30;
+        this.circleProgressView.background = "#FEFEFE";
+        this.circleProgressView.color = "#FF0000";
+        this.circleProgressView.value = 0.4;
+        this.window.addChild(this.circleProgressView);
+    }
+}, module);
+          </code>
+        </pre>
+      </div>
+
       <footer class="site-footer">
         <span class="site-footer-owner"><a href="https://github.com/compking2012/porsche">Porsche</a> is maintained by <a href="https://github.com/compking2012">compking2012</a>.</span>
 
