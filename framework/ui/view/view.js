@@ -261,7 +261,7 @@ Class.define("framework.ui.view.View", EventEmitter, {
 
     set background(value) {
         this.setProperty("background", value, function() {
-            this._backgroundObject = this._colorManager.getColorObject(this._background);
+            this._backgroundObject = this._colorManager.getColorObject(value);
         }.bind(this));
     },
 
@@ -333,7 +333,7 @@ Class.define("framework.ui.view.View", EventEmitter, {
 
     set translationX(value) {
         this.setProperty("translationX", value, function() {
-            this._matrix.translate(this._translationX, this._translationY);
+            this._matrix.translate(value, this._translationY);
         }.bind(this));
     },
 
@@ -348,7 +348,7 @@ Class.define("framework.ui.view.View", EventEmitter, {
 
     set translationY(value) {
         this.setProperty("translationY", value, function() {
-            this._matrix.translate(this._translationX, this._translationY);
+            this._matrix.translate(this._translationX, value);
         }.bind(this));
     },
 
@@ -427,7 +427,7 @@ Class.define("framework.ui.view.View", EventEmitter, {
 
     set rotationZ(value) {
         this.setProperty("rotationZ", value, function() {
-            this._matrix.rotate(this._rotationZ);
+            this._matrix.rotate(value);
         }.bind(this));
     },
 
@@ -465,7 +465,7 @@ Class.define("framework.ui.view.View", EventEmitter, {
 
     set scaleX(value) {
         this.setProperty("scaleX", value, function() {
-            this._matrix.scale(this._scaleX, this._scaleY);
+            this._matrix.scale(value, this._scaleY);
         }.bind(this));
     },
 
@@ -481,7 +481,7 @@ Class.define("framework.ui.view.View", EventEmitter, {
 
     set scaleY(value) {
         this.setProperty("scaleY", value, function() {
-            this._matrix.scale(this._scaleX, this._scaleY);
+            this._matrix.scale(this._scaleX, value);
         }.bind(this));
     },
 
@@ -521,7 +521,7 @@ Class.define("framework.ui.view.View", EventEmitter, {
 
     set originX(value) {
         this.setProperty("originX", value, function() {
-            this._matrix.at(this._originX, this._originY);
+            this._matrix.at(value, this._originY);
         }.bind(this));
     },
 
@@ -536,7 +536,7 @@ Class.define("framework.ui.view.View", EventEmitter, {
 
     set originY(value) {
         this.setProperty("originY", value, function() {
-            this._matrix.at(this._originX, this._originY);
+            this._matrix.at(this._originX, value);
         }.bind(this));
     },
 
@@ -1092,10 +1092,10 @@ Class.define("framework.ui.view.View", EventEmitter, {
         if (oldValue === value) {
             return;
         }
-        this["_" + property] = value;
         if (callback) {
             callback();
         }
+        this["_" + property] = value;
         this.dispatchEvent("propertychange", property, oldValue, value);
         this.invalidate();
     },
