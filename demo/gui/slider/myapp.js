@@ -9,8 +9,8 @@ Class.define("MyApp", App, {
     onStart: function() {
         this.textview = new TextView();
         this.textview.fontSize = "40px";
-        this.textview.textAlign = "center";
         this.textview.fontStyle = "normal";
+        this.textview.align = "center";
         this.textview.color = "#00FF00";
         this.textview.width = 300;
         this.textview.height = 100;

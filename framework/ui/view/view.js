@@ -88,10 +88,14 @@ Class.define("framework.ui.view.View", EventEmitter, {
         this._colorManager = new ColorManager();
         this._gestureManager = new GestureManager(this);
 
-        this.addEventListener("touchstart", this.handleTouchStartFunc = this.handleTouchStart.bind(this));
-        this.addEventListener("touchmove", this.handleTouchMoveFunc = this.handleTouchMove.bind(this));
-        this.addEventListener("touchend", this.handleTouchEndCancelFunc = this.handleTouchEndCancel.bind(this));
-        this.addEventListener("touchcancel", this.handleTouchEndCancelFunc);
+        this.addEventListener("mousedown", this._onMouseDownFunc = this.onMouseDown.bind(this));
+        this.addEventListener("mousemove", this._onMouseMoveFunc = this.onMouseMove.bind(this));
+        this.addEventListener("mouseup", this._onMouseUpFunc = this.onMouseUp.bind(this));
+
+        this.addEventListener("touchstart", this._onTouchStartFunc = this.onTouchStart.bind(this));
+        this.addEventListener("touchmove", this._onTouchMoveFunc = this.onTouchMove.bind(this));
+        this.addEventListener("touchend", this._onTouchEndFunc = this.onTouchEnd.bind(this));
+        this.addEventListener("touchcancel", this._onTouchCancelFunc = this.onTouchCancel.bind(this));
     },
 
     /**
@@ -107,13 +111,23 @@ Class.define("framework.ui.view.View", EventEmitter, {
         this._dirtyRect = null;
         this._boundRect.destroy();
         this._boundRect = null;
-        this.removeEventListener("touchstart", this.handleTouchStartFunc);
-        this.handleTouchStartFunc = null;
-        this.removeEventListener("touchmove", this.handleTouchMoveFunc);
-        this.handleTouchMoveFunc = null;
-        this.removeEventListener("touchend", this.handleTouchEndCancelFunc);
-        this.removeEventListener("touchcancel", this.handleTouchEndCancelFunc);
-        this.handleTouchEndCancelFunc = null;
+
+        this.removeEventListener("mousedown", this._onMouseDownFunc);
+        this._onMouseDownFunc = null;
+        this.removeEventListener("mousemove", this._onMouseMoveFunc);
+        this._onMouseMoveFunc = null;
+        this.removeEventListener("mouseup", this._onMouseUpFunc);
+        this._onMouseUpFunc = null;
+
+        this.removeEventListener("touchstart", this._onTouchStartFunc);
+        this._onTouchStartFunc = null;
+        this.removeEventListener("touchmove", this._onTouchMoveFunc);
+        this._onTouchMoveFunc = null;
+        this.removeEventListener("touchend", this._onTouchEndFunc);
+        this._onTouchEndFunc = null;
+        this.removeEventListener("touchcancel", this._onTouchCancelFunc);
+        this._onTouchCancelFunc = null;
+
         EventEmitter.prototype.destroy.apply(this, arguments);
     },
 
@@ -706,6 +720,73 @@ Class.define("framework.ui.view.View", EventEmitter, {
     },
 
     /**
+     * Handle the mouse down event processing
+     * @method View#onMouseDown
+     * @param {MouseEvent} e - the mouse event info
+     * @protected
+     */
+    onMouseDown: function(/*e*/) {
+        this._selected = true;
+    },
+
+    /**
+     * Handle the mouse move event processing
+     * @method View#onMouseMove
+     * @param {MouseEvent} e - the mouse event info
+     * @protected
+     */
+    onMouseMove: function(/*e*/) {
+    },
+
+    /**
+     * Handle the mouse up event processing
+     * @method View#onMouseUp
+     * @param {MouseEvent} e - the mouse event info
+     * @protected
+     */
+    onMouseUp: function(/*e*/) {
+        this._selected = false;
+    },
+
+    /**
+     * Handle the touch start event processing
+     * @method View#onTouchStart
+     * @param {TouchEvent} e - the touch event info
+     * @protected
+     */
+    onTouchStart: function(/*e*/) {
+        this._selected = true;
+    },
+
+    /**
+     * Handle the touch move event processing
+     * @method View#onTouchMove
+     * @param {TouchEvent} e - the touch event info
+     * @protected
+     */
+    onTouchMove: function(/*e*/) {
+    },
+
+    /**
+     * Handle the touch end event processing
+     * @method View#onTouchEnd
+     * @param {TouchEvent} e - the touch event info
+     * @protected
+     */
+    onTouchEnd: function(/*e*/) {
+        this._selected = false;
+    },
+
+    /**
+     * Handle the touch cancel event processing
+     * @method View#onTouchCancel
+     * @param {TouchEvent} e - the touch event info
+     * @protected
+     */
+    onTouchCancel: function(/*e*/) {
+    },
+
+    /**
      * Implement this to do your drawing.
      * @method View#draw
      * @param {Context} context - the canvas context to which the view is rendered
@@ -935,35 +1016,6 @@ Class.define("framework.ui.view.View", EventEmitter, {
 
         this._boundRect.assign(boundLeft, boundTop, boundWidth, boundHeight);
         return this._boundRect;
-    },
-
-    /**
-     * Handle the touch start event processing
-     * @method View#onTouchStart
-     * @param {TouchEvent} e the touch event info
-     * @private
-     */
-    handleTouchStart: function(/*e*/) {
-        this._selected = true;
-    },
-
-    /**
-     * Handle the touch move event processing
-     * @method View#onTouchMove
-     * @param {TouchEvent} e the touch event info
-     * @private
-     */
-    handleTouchMove: function(/*e*/) {
-    },
-
-    /**
-     * Handle the touch end or touch cancel event processing
-     * @method View#onTouchEndCancel
-     * @param {TouchEvent} e the touch event info
-     * @private
-     */
-    handleTouchEndCancel: function(/*e*/) {
-        this._selected = false;
     },
 
     /**

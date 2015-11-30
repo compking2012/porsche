@@ -14,7 +14,7 @@ Class.define("MyApp", App, {
         this.button.text = "Hello";
         this.button.fontSize = "32px";
         this.button.radius = 50;
-        this.button.textAlign = "center";
+        this.button.align = "center";
         this.button.background = "#FF0000";
         this.button.width = 300;
         this.button.height = 300;

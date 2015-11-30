@@ -56,10 +56,6 @@ Class.define("framework.ui.view.TextField", TextView, {
         this._wasOver = false;
 
         this.addGestureRecognizer(this._tapRecognizer = new TapRecognizer());
-        this.addEventListener("touchstart", this._onTouchStartFunc = this.onTouchStart.bind(this));
-        this.addEventListener("touchmove", this._onTouchMoveFunc = this.onTouchMove.bind(this));
-        this.addEventListener("touchend", this._onTouchEndCancelFunc = this.onTouchEndCancel.bind(this));
-        this.addEventListener("touchcancel", this._onTouchEndCancelFunc);
         this.addEventListener("keydown", this._onKeyDownFunc = this.onKeyDown.bind(this));
         this.addEventListener("keyup", this._onKeyUpFunc = this.onKeyUp.bind(this));
     },
@@ -68,16 +64,6 @@ Class.define("framework.ui.view.TextField", TextView, {
         this.removeGestureRecognizer(this._tapRecognizer);
         this._tapRecognizer.destroy();
         this._tapRecognizer = null;
-
-        this.removeEventListener("touchstart", this._onTouchStartFunc);
-        this._onTouchStartFunc = null;
-
-        this.removeEventListener("touchmove", this._onTouchMoveFunc);
-        this._onTouchMoveFunc = null;
-
-        this.removeEventListener("touchend", this._onTouchEndCancelFunc);
-        this.removeEventListener("touchcancel", this._onTouchEndCancelFunc);
-        this._onTouchEndCancelFunc = null;
 
         this.removeEventListener("keydown", this._onKeyDownFunc);
         this._onKeyDownFunc = null;
@@ -118,6 +104,12 @@ Class.define("framework.ui.view.TextField", TextView, {
         this.invalidate();
     },
 
+    /**
+     * Handle the touch start event processing
+     * @method TextView#onTouchStart
+     * @param {TouchEvent} e - the touch event info
+     * @protected
+     */
     onTouchStart: function(e) {
         var x = e.targetTouches[0].pageX;
         var y = e.targetTouches[0].pageY;
@@ -130,6 +122,12 @@ Class.define("framework.ui.view.TextField", TextView, {
         }
     },
 
+    /**
+     * Handle the touch move event processing
+     * @method TextView#onTouchMove
+     * @param {TouchEvent} e - the touch event info
+     * @protected
+     */
     onTouchMove: function(e) {
         var x = e.targetTouches[0].pageX;
         var y = e.targetTouches[0].pageY;
@@ -140,12 +138,28 @@ Class.define("framework.ui.view.TextField", TextView, {
         }
     },
 
-    onTouchEndCancel: function(/*e*/) {
+    /**
+     * Handle the touch end event processing
+     * @method TextView#onTouchEnd
+     * @param {TouchEvent} e - the touch event info
+     * @protected
+     */
+    onTouchEnd: function(/*e*/) {
         if (this._focused) {
             this._selectionStartPoint.assign(-1, -1);
             this._selectionLastPoint.assign(-1, -1);
             this.invalidate();
         }
+    },
+
+    /**
+     * Handle the touch cancel event processing
+     * @method TextView#onTouchCancel
+     * @param {TouchEvent} e - the touch event info
+     * @protected
+     */
+    onTouchCancel: function(e) {
+        this.onTouchEnd(e);
     },
 
     onKeyDown: function(e) {
