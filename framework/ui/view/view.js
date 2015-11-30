@@ -720,7 +720,7 @@ Class.define("framework.ui.view.View", EventEmitter, {
     },
 
     /**
-     * Handle the mouse down event processing
+     * Handle the mouse down event processing.
      * @method View#onMouseDown
      * @param {MouseEvent} e - the mouse event info
      * @protected
@@ -730,18 +730,18 @@ Class.define("framework.ui.view.View", EventEmitter, {
     },
 
     /**
-     * Handle the mouse move event processing
+     * Handle the mouse move event processing.
      * @method View#onMouseMove
-     * @param {MouseEvent} e - the mouse event info
+     * @param {MouseEvent} e - the mouse event info.
      * @protected
      */
     onMouseMove: function(/*e*/) {
     },
 
     /**
-     * Handle the mouse up event processing
+     * Handle the mouse up event processing.
      * @method View#onMouseUp
-     * @param {MouseEvent} e - the mouse event info
+     * @param {MouseEvent} e - the mouse event info.
      * @protected
      */
     onMouseUp: function(/*e*/) {
@@ -749,9 +749,9 @@ Class.define("framework.ui.view.View", EventEmitter, {
     },
 
     /**
-     * Handle the touch start event processing
+     * Handle the touch start event processing.
      * @method View#onTouchStart
-     * @param {TouchEvent} e - the touch event info
+     * @param {TouchEvent} e - the touch event info.
      * @protected
      */
     onTouchStart: function(/*e*/) {
@@ -759,18 +759,18 @@ Class.define("framework.ui.view.View", EventEmitter, {
     },
 
     /**
-     * Handle the touch move event processing
+     * Handle the touch move event processing.
      * @method View#onTouchMove
-     * @param {TouchEvent} e - the touch event info
+     * @param {TouchEvent} e - the touch event info.
      * @protected
      */
     onTouchMove: function(/*e*/) {
     },
 
     /**
-     * Handle the touch end event processing
+     * Handle the touch end event processing.
      * @method View#onTouchEnd
-     * @param {TouchEvent} e - the touch event info
+     * @param {TouchEvent} e - the touch event info.
      * @protected
      */
     onTouchEnd: function(/*e*/) {
@@ -778,9 +778,9 @@ Class.define("framework.ui.view.View", EventEmitter, {
     },
 
     /**
-     * Handle the touch cancel event processing
+     * Handle the touch cancel event processing.
      * @method View#onTouchCancel
-     * @param {TouchEvent} e - the touch event info
+     * @param {TouchEvent} e - the touch event info.
      * @protected
      */
     onTouchCancel: function(/*e*/) {

@@ -14,11 +14,16 @@ var View = require("./view");
 var TapRecognizer = require("../gesture/taprecognizer");
 
 /**
- * Switch widget
+ * Switch is a two-state toggle switch widget that can select between two options.
+ * The user may drag the "thumb" back and forth to choose the selected option, or simply tap to toggle as if it were a checkbox.
  * @class Switch
  * @extends View
  */
 Class.define("CompositeView.ui.view.Switch", View, {
+    /**
+     * Constructor that create a switch
+     * @method Switch#initialize
+     */
     initialize: function () {
         View.prototype.initialize.apply(this, arguments);
 
@@ -50,6 +55,10 @@ Class.define("CompositeView.ui.view.Switch", View, {
         this.addEventListener("tap", this._onTapFunc = this.onTap.bind(this));
     },
 
+    /**
+     * Destructor that destroy a switch
+     * @method Switch#destroy
+     */
     destroy: function() {
         this._disabledImageSrc = null;
         this._disabledImage.onload = null;
@@ -72,35 +81,62 @@ Class.define("CompositeView.ui.view.Switch", View, {
         View.prototype.destroy.apply(this, arguments);
     },
 
+    /**
+     * @name Switch#value
+     * @type {Boolean}
+     * @description this value indicates the state of this switch.
+     */
     get value() {
         return this._value;
     },
 
     set value(value) {
-        var oldValue = this._value;
-        if (oldValue === value) {
-            return;
-        }
-        this._value = value;
-        this.dispatchEvent("propertychange", "value", oldValue, value);
-        this.updateImage();
+        this.setProperty("value", value, function() {
+            this.updateImage();
+        }.bind(this));
+    },
+
+    /**
+     * @name Switch#enabled
+     * @type {Boolean}
+     * @description enabled state of this switch, true if this switch is enabled, false otherwise.
+     */
+    get enabled() {
+        return this._enabled;
     },
 
     set enabled(value) {
-        var oldValue = this._enabled;
-        if (oldValue === value) {
-            return;
-        }
-        this._enabled = value;
-        this.dispatchEvent("propertychange", "enabled", oldValue, value);
-        this.updateImage();
+        this.setProperty("enabled", value, function() {
+            this.updateImage();
+        }.bind(this));
     },
 
+    /**
+     * Handle the tap event processing.
+     * @method Switch#onTap
+     * @param {GestureEvent} e - the gesture event info.
+     * @protected
+     */
     onTap: function(/*e*/) {
         this.value = !this._value;
-        this.invalidate();
     },
 
+    /**
+     * Draw the switch.
+     * @method Switch#draw
+     * @param {Context} context - the canvas context to which the view is rendered
+     * @protected
+     * @override
+     */
+    draw: function(context) {
+        context.drawImage(this._image, (this._width - this._image.width) / 2, (this._height - this._image.height) / 2, this._image.width, this._image.height);
+    },
+
+    /**
+     * Update the thumb image
+     * @method Switch#updateImage
+     * @private
+     */
     updateImage: function() {
         if (!this._enabled) {
             this._image = this._disabledImage;
@@ -111,10 +147,5 @@ Class.define("CompositeView.ui.view.Switch", View, {
                 this._image = this._offImage;
             }
         }
-        this.invalidate();
-    },
-
-    draw: function(context) {
-        context.drawImage(this._image, (this._width - this._image.width) / 2, (this._height - this._image.height) / 2, this._image.width, this._image.height);
     }
 }, module);
