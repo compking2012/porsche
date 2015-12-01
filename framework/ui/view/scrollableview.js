@@ -502,6 +502,7 @@ Class.define("framework.ui.view.ScrollableView", CompositeView, {
         if (this._horizontalScrollBar !== null) {
             this._horizontalScrollBar.removeEventListener("propertychange", this._onHorizontalScrollBarChangeFunc);
             this._onHorizontalScrollBarChangeFunc = null;
+            this._horizontalScrollBar.destroy();
             this._horizontalScrollBar = null;
         }
     },
@@ -515,6 +516,7 @@ Class.define("framework.ui.view.ScrollableView", CompositeView, {
         if (this._verticalScrollBar !== null) {
             this._verticalScrollBar.removeEventListener("propertychange", this._onVerticalScrollBarChangeFunc);
             this._onVerticalScrollBarChangeFunc = null;
+            this._verticalScrollBar.destroy();
             this._verticalScrollBar = null;
         }
     },

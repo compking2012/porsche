@@ -20,96 +20,148 @@ var View = require("./view");
 Class.define("framework.ui.view.Indicator", View, {
     initialize: function() {
         View.prototype.initialize.apply(this, arguments);
-        this._count = 1;
-        this._currentpos = 1;
-        this._margin = 10;
-        this._radius = 10;
-        this._color = "#ffffff";
+
+        this._count = 0;
+        this._currentIndex = 0;
+        this._margin = 5;
+        this._radius = 5;
+        this._color = "#FFFFFF";
+        this._associatedView = null;
     },
 
     /**
+     * @name Indicator#count
      * @type {Number}
      * @description number of the points.
-     * @name CounterPoint#totalcount
      */
-    set totalcount(value) {
-        this._count = value;
-    },
-
-    get totalcount() {
+    get count() {
         return this._count;
     },
 
+    set count(value) {
+        this.setProperty("count", value);
+    },
+
     /**
+     * @name Indicator#currentIndex
      * @type {Number}
      * @description current point number.
-     * @name CounterPoint#positon
      */
-    set positon(value) {
-        this._currentpos = value;
+    get currentIndex() {
+        return this._currentIndex;
     },
 
-    get positon() {
-        return this._currentpos;
+    set currentIndex(value) {
+        this.setProperty("currentIndex", value);
     },
 
     /**
+     * @name Indicator#radius
      * @type {Number}
      * @description the radius of the point.
-     * @name CounterPoint#radius
      */
-    set radius(value) {
-        this._radius = value;
-    },
-
     get radius() {
         return this._radius;
     },
 
-    /**
-     * @type {Number}
-     * @description the margin between points.
-     * @name CounterPoint#margin
-     */
-    set margin(value) {
-        this._margin = value;
+    set radius(value) {
+        this.setProperty("radius", value);
     },
 
+    /**
+     * @name Indicator#margin
+     * @type {Number}
+     * @description the margin between points.
+     */
     get margin() {
         return this._margin;
     },
 
-    /**
-     * @type {string}
-     * @description the color for points.
-     * @name CounterPoint#color
-     */
-    set color(value) {
-        this._color = value;
+    set margin(value) {
+        this.setProperty("margin", value);
     },
 
+    /**
+     * @name Indicator#color
+     * @type {String}
+     * @description the color for points.
+     */
     get color() {
         return this._color;
     },
 
+    set color(value) {
+        this.setProperty("color", value);
+    },
+
+    /**
+     * Draw the indicator.
+     * @method Indicator#draw
+     * @param {Context} context - the canvas context to which the view is rendered.
+     * @protected
+     * @override
+     */
     draw: function(context) {
         context.save();
-        context.clearRect(0, 0, this.width, this.height);
-        var pointlength = this.radius * this.totalcount * 2 + this.margin * (this.totalcount - 1);
-        var startpos = (this.width - pointlength) / 2;
-        for (var i = 0; i < this.totalcount; i++) {
-            context.fillStyle = this._color;
-            context.beginPath();
-            context.arc(startpos, this.height / 2, this.radius, 0, Math.PI * 2, true);
-            context.closePath();
-            if (i === this.positon) {
+        context.fillStyle = this._color;
+        var startPosition = (this._width - this._radius * this._count * 2 - this._margin * (this._count - 1)) / 2;
+        for (var i = 0; i < this._count; i++) {
+            context.roundRect(startPosition, this._height / 2 - this._radius, this._radius * 2, this._radius * 2, this._radius);
+            if (i === this._currentIndex) {
                 context.globalAlpha = 1;
             } else {
                 context.globalAlpha = 0.5;
             }
             context.fill();
-            startpos += this.radius * 2 + this.margin;
+            startPosition += this._radius * 2 + this._margin;
         }
         context.restore();
+    },
+
+    /**
+     * @name Indicator#associatedView
+     * @type {SwipeView}
+     * @description the swipe view that associates with this indicator.
+     * @private
+     */
+    get associatedView() {
+        return this._associatedView;
+    },
+
+    set associatedView(value) {
+        this.removeAssociatedView();
+        this._associatedView = value;
+        this._associatedView.addEventListener("swiped", this._onAssociatedViewSwipedFunc = this.onAssociatedViewSwiped.bind(this));
+        this._associatedView.addEventListener("childadded", this._onAssociatedViewChildAddedFunc = this.onAssociatedViewChildAdded.bind(this));
+    },
+
+    /**
+     * Handle the changed event when associated view is changed.
+     * @method Indicator#onAssociatedViewSwiped
+     * @param {Object} originalIndex - the original index.
+     * @param {Object} currentIndex - the current index.
+     * @private
+     */
+    onAssociatedViewSwiped: function(originalIndex, currentIndex) {
+        this.currentIndex = currentIndex;
+    },
+
+    onAssociatedViewChildAdded: function() {
+        this.count = this._associatedView.children.length;
+    },
+
+    /**
+     * Remove the associated view.
+     * @method Indicator#removeAssociatedView
+     * @private
+     */
+    removeAssociatedView: function() {
+        if (this._associatedView !== null) {
+            this._associatedView.removeEventListener("propertychange", this._onAssociatedViewChangeFunc);
+            this._onAssociatedViewChildAddedFunc = null;
+            this._associatedView.removeEventListener("childadded", this._onAssociatedViewChildAddedFunc);
+            this._onAssociatedViewChangeFunc = null;
+            this._associatedView = null;
+        }
     }
 }, module);

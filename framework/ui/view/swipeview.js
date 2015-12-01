@@ -35,6 +35,7 @@ Class.define("framework.ui.view.SwipeView", CompositeView, {
 
         this._orientation = "horizontal";
         this._currentIndex = 0;
+        this._indicator = null;
         this._nextIndex = -1;
         this._duration = 250;
         this._beziers = CubicBezier.easeOut();
@@ -47,6 +48,11 @@ Class.define("framework.ui.view.SwipeView", CompositeView, {
      */
     destroy: function() {
         this.stopAutoSwipe();
+
+        if (this._indicator !== null) {
+            this._indicator.destroy();
+            this._indicator = null;
+        }
 
         this._beziers.destroy();
         this._beziers = null;
@@ -72,7 +78,7 @@ Class.define("framework.ui.view.SwipeView", CompositeView, {
     /**
      * @name SwipeView#currentIndex
      * @type {Number}
-     * @description the position of the current view.
+     * @description the current index of the child views in this swipe view.
      */
     get currentIndex() {
         return this._currentIndex;
@@ -86,17 +92,47 @@ Class.define("framework.ui.view.SwipeView", CompositeView, {
     },
 
     /**
+     * @name SwipeView#orientation
+     * @type {String}
+     * @description the orientation of this swipe view, either "horizontal" or "vertical".
+     */
+    get orientation() {
+        return this._orientation;
+    },
+
+    set orientation(value) {
+        this.setProperty("orientation", value);
+    },
+
+    /**
+     * @name SwipeView#indicator
+     * @type {Indicator}
+     * @description The associated indicator.
+     */
+    get indicator() {
+        return this._indicator;
+    },
+
+    set indicator(value) {
+        this.setProperty("indicator", value, function() {
+            this.removeIndicator();
+            value.associatedView = this;
+        }.bind(this));
+    },
+
+    /**
      * Add a view to this swipe view.
      * @method SwipeView#addChild
      * @param {View} view - sub child view to be added.
      */
-    addChild: function(child) {
-        child.width = this._width;
-        child.height = this._height;
+    addChild: function(view) {
+        view.width = this._width;
+        view.height = this._height;
         if (this._children.length > 0) {
-            child.visibility = "gone";
+            view.visibility = "gone";
         }
-        CompositeView.prototype.addChild.call(this, child);
+
+        CompositeView.prototype.addChild.call(this, view);
     },
 
     /**
@@ -105,13 +141,14 @@ Class.define("framework.ui.view.SwipeView", CompositeView, {
      * @param {View} view - the child view to insert.
      * @param {Number} index - the position to insert the child.
      */
-    insertChild: function(child) {
-        child.width = this._width;
-        child.height = this._height;
+    insertChild: function(view) {
+        view.width = this._width;
+        view.height = this._height;
         if (this._children.length > 0) {
-            child.visibility = "gone";
+            view.visibility = "gone";
         }
-        CompositeView.prototype.insertChild.call(this, child);
+
+        CompositeView.prototype.insertChild.call(this, view);
     },
 
     /**
@@ -259,6 +296,9 @@ Class.define("framework.ui.view.SwipeView", CompositeView, {
                     nextView.top = (direction === "up" ? this._height : -this._height) + endPosition;
                 }
                 this._children[this._currentIndex].visibility = "gone";
+
+                this.dispatchEvent("swiped", this._currentIndex, this._nextIndex);
+
                 this._currentIndex = this._nextIndex;
                 this._nextIndex = -1;
 
@@ -290,5 +330,17 @@ Class.define("framework.ui.view.SwipeView", CompositeView, {
         this._autoTimer = null;
         this._isAnimation = false;
         this.invalidate();
+    },
+
+    /**
+     * Remove the indicator and its binding event.
+     * @method SwipeView#removeIndicator
+     * @private
+     */
+    removeIndicator: function() {
+        if (this._indicator !== null) {
+            this._indicator.destroy();
+            this._indicator = null;
+        }
     }
 }, module);
