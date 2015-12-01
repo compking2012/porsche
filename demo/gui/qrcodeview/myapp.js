@@ -16,6 +16,6 @@ Class.define("MyApp", App, {
         this.qrCodeView.background = "#EEEEEE";
         this.qrCodeView.correctLevel = "H";
         this.qrCodeView.value = "283197578276228209";
-        this.window.addChild(this.qrcode);
+        this.window.addChild(this.qrCodeView);
     }
 }, module);
