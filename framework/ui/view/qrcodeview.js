@@ -13,14 +13,14 @@ var Class = require("../../class");
 var View = require("./view");
 
 /**
- * QRCode widget
- * @class QRCode
+ * QR code view that is a view to show a standard QR code.
+ * @class QRCodeView
  * @extends View
  */
-Class.define("framework.ui.view.QRCode", View, {
+Class.define("framework.ui.view.QRCodeView", View, {
     /**
-     * Constructor
-     * @method QRCode#initialize
+     * Constructor that create a QR code view.
+     * @method QRCodeView#initialize
      */
     initialize: function(/*value*/) {
         View.prototype.initialize.apply(this, arguments);
@@ -37,8 +37,8 @@ Class.define("framework.ui.view.QRCode", View, {
     },
 
     /**
-     * Destructor
-     * @method QRCode#destroy
+     * Destructor that destroy a QR code view.
+     * @method QRCodeView#destroy
      */
     destroy: function() {
         this._qrDraw = null;
@@ -47,9 +47,9 @@ Class.define("framework.ui.view.QRCode", View, {
     },
 
     /**
-     * @name QRCode#value
+     * @name QRCodeView#value
      * @type {String}
-     * @description the value.
+     * @description the value of the QR code.
      */
     get value() {
         return this._value;
@@ -67,9 +67,9 @@ Class.define("framework.ui.view.QRCode", View, {
 
 
     /**
-     * @name QRCode#color
+     * @name QRCodeView#color
      * @type {String}
-     * @description the color.
+     * @description the color of the QR code.
      */
     get color() {
         return this._color;
@@ -86,9 +86,9 @@ Class.define("framework.ui.view.QRCode", View, {
     },
 
     /**
-     * @name QRCode#margin
+     * @name QRCodeView#margin
      * @type {Number}
-     * @description the margin.
+     * @description the margin of the QR code.
      */
     get margin() {
         return this._margin;
@@ -105,9 +105,9 @@ Class.define("framework.ui.view.QRCode", View, {
     },
 
     /**
-     * @name QRCode#scale
+     * @name QRCodeView#scale
      * @type {Number}
-     * @description the scale.
+     * @description the scale of the QR code.
      */
     get scale() {
         return this._scale;
@@ -124,9 +124,9 @@ Class.define("framework.ui.view.QRCode", View, {
     },
 
     /**
-     * @name QRCode#marginScaleFactor
+     * @name QRCodeView#marginScaleFactor
      * @type {Number}
-     * @description the factor of margin and scale.
+     * @description the factor of margin and scale of the QR code.
      */
     get marginScaleFactor() {
         return this._marginScaleFactor;
@@ -143,9 +143,9 @@ Class.define("framework.ui.view.QRCode", View, {
     },
 
     /**
-     * @name QRCode#correctLevel
+     * @name QRCodeView#correctLevel
      * @type {String}
-     * @description the correct level, e.g. "H", "Q", "M" and "L".
+     * @description the correct level of the QR code, e.g. "H", "Q", "M" and "L".
      */
     get correctLevel() {
         return this._correctLevel;
@@ -162,9 +162,9 @@ Class.define("framework.ui.view.QRCode", View, {
     },
 
     /**
-     * @name QRCode#errorBehavior
+     * @name QRCodeView#errorBehavior
      * @type {String}
-     * @description the error behavior, currently only support "trim".
+     * @description the error behavior of the QR code, currently only support "trim".
      */
     get errorBehavior() {
         return this._errorBehavior;
@@ -180,6 +180,13 @@ Class.define("framework.ui.view.QRCode", View, {
         this.invalidate();
     },
 
+    /**
+     * Draw the QR code view.
+     * @method QRCodeView#draw
+     * @param {Context} context - the canvas context to which the view is rendered
+     * @protected
+     * @override
+     */
     draw: function(context) {
         this._qrDraw.draw(context, this._value, {
             margin: this._margin,
@@ -192,6 +199,12 @@ Class.define("framework.ui.view.QRCode", View, {
         });
     },
 
+    /**
+     * Get a instance of QRCodeDraw which is from an open source porting.
+     * @method QRCodeView#getQRCodeDraw
+     * @return {QRCodeDraw} a QRCodeDraw instance.
+     * @private
+     */
     getQRCodeDraw: function() {
         function from(source, encoding) {
             if (Array.isArray(source)) {

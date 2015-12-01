@@ -1,5 +1,5 @@
 {
-    "appName": "BarCode",
+    "appName": "BarCodeView",
     "debug": {
         "paintFPS": true,
         "dirtyRect": true
