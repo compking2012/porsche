@@ -5,6 +5,7 @@ var Class = require("../../../framework/class");
 var App = require("../../../framework/app/app");
 var SwipeView = require("../../../framework/ui/view/swipeview");
 var ImageView = require("../../../framework/ui/view/imageview");
+var Indicator = require("../../../framework/ui/view/indicator");
 
 Class.define("MyApp", App, {
     onStart: function() {
@@ -12,6 +13,14 @@ Class.define("MyApp", App, {
         swipeView.orientation = "horizontal";
         swipeView.width = 320;
         swipeView.height = 320;
+        this.window.addChild(swipeView);
+
+        swipeView.indicator = new Indicator();
+        swipeView.indicator.left = 130;
+        swipeView.indicator.top = 300;
+        swipeView.indicator.width = 60;
+        swipeView.indicator.height = 10;
+        this.window.addChild(swipeView.indicator);
 
         var imageView1 = new ImageView();
         imageView1.src = global.app.rootPath + "/res/porsche1.png";
@@ -28,8 +37,6 @@ Class.define("MyApp", App, {
         var imageView4 = new ImageView();
         imageView4.src = global.app.rootPath + "/res/porsche4.png";
         swipeView.addChild(imageView4);
-
-        this.window.addChild(swipeView);
     }
 }, module);
 

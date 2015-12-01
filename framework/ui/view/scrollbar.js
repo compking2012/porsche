@@ -155,9 +155,9 @@ Class.define("framework.ui.view.ScrollBar", ProgressView, {
     /**
      * Handle the changed event when associated view is changed.
      * @method ScrollBar#onAssociatedViewChange
-     * @param  {String} property - the changed property name.
-     * @param  {Object} oldValue - the old value.
-     * @param  {Object} newValue - the new value.
+     * @param {String} property - the changed property name.
+     * @param {Object} oldValue - the old value.
+     * @param {Object} newValue - the new value.
      * @private
      */
     onAssociatedViewChange: function(property, oldValue, newValue) {
