@@ -508,6 +508,55 @@ Class.define("MyApp", App, {
         </pre>
       </div>
 
+      <div class="demo">
+        <span>ListView with ScrollBars</span>      
+        <iframe src="./demo/gui/listview/index.html"></iframe>
+        <pre>
+          <code>
+Class.define("MyApp", App, {
+    onStart: function() {
+        this.list = new ListView();
+        this.list.width = this.window.width;
+        this.list.height = this.window.height;
+        this.list.itemHeight = 100;
+        this.list.addEventListener("tap", this.onTap.bind(this));
+        this.window.addChild(this.list);
+
+        this.list.verticalScrollBar = new ScrollBar();
+        this.list.verticalScrollBar.left = 310;
+        this.list.verticalScrollBar.width = 10;
+        this.list.verticalScrollBar.height = 50;
+        this.window.addChild(this.list.verticalScrollBar);
+
+        var colors = ["#FF0000", "#00FF00", "#0000FF", "#FFFF00", "#00FFFF", "#FF00FF"];
+        for (var i = 0; i < 1000; i++) {
+            var listItem = new ListItem();
+            listItem.background = colors[i % colors.length];
+            listItem.width = this.list.width;
+
+            var textView = new TextView();
+            textView.width = listItem.width;
+            textView.height = this.list.itemHeight;
+            textView.fontSize = "36px";
+            textView.color = "#FFFFFF";
+            textView.align = "center";
+            textView.text = "Item" + i;
+            listItem.addChild(textView);
+
+            this.list.addChild(listItem);
+        }
+    },
+
+    onTap: function(e) {
+        var listItem = e.target;
+        listItem.children[0].text = "Clicked";
+    }
+}, module);
+          </code>
+        </pre>
+      </div>
+
+
       <footer class="site-footer">
         <span class="site-footer-owner"><a href="https://github.com/compking2012/porsche">Porsche</a> is maintained by <a href="https://github.com/compking2012">compking2012</a>.</span>
 

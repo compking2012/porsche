@@ -71,7 +71,7 @@
     
     <div class="description">
         <p>
-        ListView widget, it can scroll vertically by touch.
+        List view that shows items in a horizontal or vertical scrolling list.
         </p>
     </div>
     
@@ -147,7 +147,7 @@
 <dd>
     
     <div class="description">
-        The orientation for scroll, such as "horizontal", "vertical".
+        The orientation for scroll, either "horizontal" or "vertical".
     </div>
     
     
@@ -195,6 +195,7 @@
     
     <div class="description">
         the width of each list item.
+Note that this value is only available when orientation is horizontal.
     </div>
     
     
@@ -242,6 +243,7 @@
     
     <div class="description">
         the height of each list item.
+Note that this value is only available when orientation is vertical.
     </div>
     
     
@@ -1842,7 +1844,7 @@ You do not need to draw any pixels above it, since those are outside of the fram
     
     <div class="description">
         <p>
-        Constructor
+        Constructor that create a list view
         </p>
     </div>
     
@@ -1908,7 +1910,7 @@ You do not need to draw any pixels above it, since those are outside of the fram
     
     <div class="description">
         <p>
-        Destructor
+        Destructor that destroy this list view
         </p>
     </div>
     
@@ -1974,7 +1976,7 @@ You do not need to draw any pixels above it, since those are outside of the fram
     
     <div class="description">
         <p>
-        Add a view to specified parent view.
+        Add a view to this list view.
         </p>
     </div>
     
@@ -2026,7 +2028,7 @@ You do not need to draw any pixels above it, since those are outside of the fram
 
             
 
-            <td class="description last">sub child view to be insert to the last, and show at top</td>
+            <td class="description last">sub child view to be insert to the last, and show at top.</td>
         </tr>
 
 	
@@ -2090,7 +2092,7 @@ You do not need to draw any pixels above it, since those are outside of the fram
     
     <div class="description">
         <p>
-        Insert a child view in this composite view by the specified position.
+        Insert a child view to this list view by the specified position.
         </p>
     </div>
     
@@ -2142,7 +2144,7 @@ You do not need to draw any pixels above it, since those are outside of the fram
 
             
 
-            <td class="description last">the child view to add</td>
+            <td class="description last">the child view to add, must be a list item.</td>
         </tr>
 
 	
@@ -2230,7 +2232,7 @@ You do not need to draw any pixels above it, since those are outside of the fram
     
     <div class="description">
         <p>
-        Remove the specified view from this composite view.
+        Remove the specified view from this list view.
         </p>
     </div>
     
@@ -2282,270 +2284,7 @@ You do not need to draw any pixels above it, since those are outside of the fram
 
             
 
-            <td class="description last">the child view to remove, or the position in this composite view to remove</td>
-        </tr>
-
-	
-	</tbody>
-</table>
-
-    
-    
-    
-<dl class="details">
-    
-        
-    
-    
-    
-
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-
-    
-    
-    
-    
-    
-    
-    
-</dl>
-
-    
-    
-
-    
-
-    
-    
-    
-    
-    
-    
-    
-</dd>
-
-        
-            
-<dt>
-    <h4 class="name" id="findViewAtPoint">findViewAtPoint(point)</h4>
-    
-    
-</dt>
-<dd>
-    
-    
-    <div class="description">
-        <p>
-        Find the view at the point
-        </p>
-    </div>
-    
-
-    
-    
-    
-    
-    
-        <h5>Parameters:</h5>
-        
-
-<table class="params table table-bordered table-condensed">
-    <thead>
-	<tr>
-		
-		<th>Name</th>
-		
-
-		<th>Type</th>
-
-		
-
-		
-
-		<th class="last">Description</th>
-	</tr>
-	</thead>
-
-	<tbody>
-	
-
-        <tr>
-            
-                <td class="name">point</td>
-            
-
-            <td class="type">
-            
-                
-<span class="param-type">{<a href="Point.html">Point</a>}</span>
-
-
-
-            
-            </td>
-
-            
-
-            
-
-            <td class="description last">the point in put</td>
-        </tr>
-
-	
-	</tbody>
-</table>
-
-    
-    
-    
-<dl class="details">
-    
-        
-    
-    
-    
-
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-
-    
-    
-    
-    
-    
-    
-    
-</dl>
-
-    
-    
-
-    
-
-    
-    
-    
-    
-    
-    <h5>Returns:</h5>
-    
-            <div class="returns">
-
-
-    
-<span class="param-type">{<a href="View.html">View</a>}</span>
-
-
-
-
-
-<span class="param-desc">
-    return the view which point in the view and it has the max zOrder;
-</span>
-
-</div>
-
-        
-    
-    
-</dd>
-
-        
-            
-<dt>
-    <h4 class="name" id="setDirty"><span class="label label-info">protected</span> setDirty(<span class="optional">rect</span>)</h4>
-    
-    
-</dt>
-<dd>
-    
-    
-    <div class="description">
-        <p>
-        Set this composite view and all children dirty.
-        </p>
-    </div>
-    
-
-    
-    
-    
-    
-    
-        <h5>Parameters:</h5>
-        
-
-<table class="params table table-bordered table-condensed">
-    <thead>
-	<tr>
-		
-		<th>Name</th>
-		
-
-		<th>Type</th>
-
-		
-		<th>Argument</th>
-		
-
-		
-
-		<th class="last">Description</th>
-	</tr>
-	</thead>
-
-	<tbody>
-	
-
-        <tr>
-            
-                <td class="name">rect</td>
-            
-
-            <td class="type">
-            
-                
-<span class="param-type">{<a href="Rectangle.html">Rectangle</a>}</span>
-
-
-
-            
-            </td>
-
-            
-                <td class="attributes">
-                
-                    <span class="label">optional</span>&nbsp;
-                
-
-                
-
-                
-                </td>
-            
-
-            
-
-            <td class="description last">the rectangle representing the bounds of the dirty region</td>
+            <td class="description last">the child view to remove.</td>
         </tr>
 
 	
@@ -3652,6 +3391,146 @@ You do not need to draw any pixels above it, since those are outside of the fram
         
             
 <dt>
+    <h4 class="name" id="findViewAtPoint"><span class="label label-info">protected</span> findViewAtPoint(point)</h4>
+    
+    
+</dt>
+<dd>
+    
+    
+    <div class="description">
+        <p>
+        Find the view at the point.
+        </p>
+    </div>
+    
+
+    
+    
+    
+    
+    
+        <h5>Parameters:</h5>
+        
+
+<table class="params table table-bordered table-condensed">
+    <thead>
+	<tr>
+		
+		<th>Name</th>
+		
+
+		<th>Type</th>
+
+		
+
+		
+
+		<th class="last">Description</th>
+	</tr>
+	</thead>
+
+	<tbody>
+	
+
+        <tr>
+            
+                <td class="name">point</td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">{<a href="Point.html">Point</a>}</span>
+
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last">the point</td>
+        </tr>
+
+	
+	</tbody>
+</table>
+
+    
+    
+    
+<dl class="details">
+    
+        
+    
+    
+    
+
+    
+    <dd class="inherited-from"><ul class="dummy breadcrumb"><li>Inherited From:</li><li>
+        <a href="View.html#findViewAtPoint">View#findViewAtPoint</a>
+    </li></dd>
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+
+    
+    
+    
+    
+    
+    
+    
+</dl>
+
+    
+    
+
+    
+
+    
+    
+    
+    
+    
+    <h5>Returns:</h5>
+    
+            <div class="returns">
+
+
+    
+<span class="param-type">{<a href="View.html">View</a>}</span>
+
+
+
+
+
+<span class="param-desc">
+    return this view if it contains the specified point,
+otherwise null.
+</span>
+
+</div>
+
+        
+    
+    
+</dd>
+
+        
+            
+<dt>
     <h4 class="name" id="paint"><span class="label label-info">protected</span> paint(context)</h4>
     
     
@@ -3865,6 +3744,138 @@ You do not need to draw any pixels above it, since those are outside of the fram
     
     <dd class="inherited-from"><ul class="dummy breadcrumb"><li>Inherited From:</li><li>
         <a href="CompositeView.html#invalidate">CompositeView#invalidate</a>
+    </li></dd>
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+
+    
+    
+    
+    
+    
+    
+    
+</dl>
+
+    
+    
+
+    
+
+    
+    
+    
+    
+    
+    
+    
+</dd>
+
+        
+            
+<dt>
+    <h4 class="name" id="setDirty"><span class="label label-info">protected</span> setDirty(<span class="optional">rect</span>)</h4>
+    
+    
+</dt>
+<dd>
+    
+    
+    <div class="description">
+        <p>
+        Set this composite view and all children dirty.
+        </p>
+    </div>
+    
+
+    
+    
+    
+    
+    
+        <h5>Parameters:</h5>
+        
+
+<table class="params table table-bordered table-condensed">
+    <thead>
+	<tr>
+		
+		<th>Name</th>
+		
+
+		<th>Type</th>
+
+		
+		<th>Argument</th>
+		
+
+		
+
+		<th class="last">Description</th>
+	</tr>
+	</thead>
+
+	<tbody>
+	
+
+        <tr>
+            
+                <td class="name">rect</td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">{<a href="Rectangle.html">Rectangle</a>}</span>
+
+
+
+            
+            </td>
+
+            
+                <td class="attributes">
+                
+                    <span class="label">optional</span>&nbsp;
+                
+
+                
+
+                
+                </td>
+            
+
+            
+
+            <td class="description last">the rectangle representing the bounds of the dirty region</td>
+        </tr>
+
+	
+	</tbody>
+</table>
+
+    
+    
+    
+<dl class="details">
+    
+        
+    
+    
+    
+
+    
+    <dd class="inherited-from"><ul class="dummy breadcrumb"><li>Inherited From:</li><li>
+        <a href="CompositeView.html#setDirty">CompositeView#setDirty</a>
     </li></dd>
     
     
@@ -7536,7 +7547,7 @@ this.className
         <br clear="both">
 
       <footer>
-        Documentation generated by <a href="https://github.com/jsdoc3/jsdoc">JSDoc 3.3.2</a> on Mon Nov 30 2015 18:00:29 GMT+0800 (CST)
+        Documentation generated by <a href="https://github.com/jsdoc3/jsdoc">JSDoc 3.3.2</a> on Tue Dec 01 2015 11:42:44 GMT+0800 (CST)
         <br>
       </footer>
       <script> prettyPrint(); </script>
