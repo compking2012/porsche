@@ -179,7 +179,6 @@ Class.define("framework.ui.view.TwoLineListItem", ListItem, {
             this._mainText.width = 260;
             this._mainText.height = 24;
             this._mainText.align = "left";
-            this._mainText.verticalAlign = "bottom";
             this.addChild(this._mainText);
         } else {
             if (this._mainText) {
@@ -196,7 +195,6 @@ Class.define("framework.ui.view.TwoLineListItem", ListItem, {
             this._commentText.fontSize = "20px";
             this._commentText.color = "#8D8D8D";
             this._commentText.align = "left";
-            this._commentText.verticalAlign = "top";
             this._commentText.left = this._mode.indexOf("TwoLinesWithImage") === -1 ? 20 : 70;
             this._commentText.top = 52;
             this._commentText.width = 260;
@@ -217,7 +215,6 @@ Class.define("framework.ui.view.TwoLineListItem", ListItem, {
             this._sideText.fontSize = "20px";
             this._sideText.color = "#8D8D8D";
             this._sideText.align = "right";
-            this._sideText.verticalAlign = "top";
             this._sideText.left = 20;
             this._sideText.top = 52;
             this._sideText.width = 260;
