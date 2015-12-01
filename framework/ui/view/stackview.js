@@ -16,13 +16,14 @@ var CubicBezier = require("../animation/cubicbezier");
 var PanRecognizer = require("../gesture/panrecognizer");
 
 /**
- * Stack view
+ * Stack view that can used as a stack which can push a child view or pop.
+ * Also, user can swipe in or out the current view from the stack view.
  * @class StackView
  * @extends CompositeView
  */
 Class.define("framework.ui.view.StackView", CompositeView, {
     /**
-     * Constructor
+     * Constructor that create a stack view.
      * @method StackView#initialize
      */
     initialize: function() {
@@ -35,8 +36,8 @@ Class.define("framework.ui.view.StackView", CompositeView, {
         this.addGestureRecognizer(this._panRecognizer = new PanRecognizer({direction: 2 | 4}));
         this.addEventListener("panstart", this._onPanStartFunc = this.onPanStart.bind(this));
         this.addEventListener("panmove", this._onPanMoveFunc = this.onPanMove.bind(this));
-        this.addEventListener("panend", this._onPanEndCancelFunc = this.onPanEndCancel.bind(this));
-        this.addEventListener("pancancel", this._onPanEndCancelFunc);
+        this.addEventListener("panend", this._onPanEndFunc = this.onPanEnd.bind(this));
+        this.addEventListener("pancancel", this._onPanCancelFunc = this.onPanCancel.bind(this));
 
         this._beziers = new CubicBezier(0.33, 0.66, 0.66, 1);
         this._duration = 300;
@@ -44,7 +45,7 @@ Class.define("framework.ui.view.StackView", CompositeView, {
     },
 
     /**
-     * Destructor
+     * Destructor that destroy this stack view.
      * @method StackView#destroy
      */
     destroy: function() {
@@ -53,9 +54,10 @@ Class.define("framework.ui.view.StackView", CompositeView, {
         this._onPanStartFunc = null;
         this.removeEventListener("panmove", this._onPanMoveFunc);
         this._onPanMoveFunc = null;
-        this.removeEventListener("panend", this._onPanEndCancelFunc);
-        this.removeEventListener("pancancel", this._onPanEndCancelFunc);
-        this._onPanEndCancelFunc = null;
+        this.removeEventListener("panend", this._onPanEndFunc);
+        this._onPanEndFunc = null;
+        this.removeEventListener("pancancel", this._onPanCancelFunc);
+        this._onPanCancelFunc = null;
         this.removeGestureRecognizer(this._panRecognizer);
         this._panRecognizer = null;
 
@@ -63,9 +65,9 @@ Class.define("framework.ui.view.StackView", CompositeView, {
     },
 
     /**
-     * The pushChild method will push a view to specified parent view.
+     * Pushs a view to this stack view.
      * @method StackView#pushChild
-     * @param {View} view sub child view to be pushed on the top of the stack
+     * @param {View} view - sub child view to be pushed on the top of the stack.
      */
     pushChild: function(view) {
         if (this._children.length === 0) {
@@ -96,7 +98,8 @@ Class.define("framework.ui.view.StackView", CompositeView, {
     /**
      * Pops view until the specified view is at the top of the stack.
      * @method StackView#popToChild
-     * @param {View} The view that you want to be at the top of the stack. This view must currently be on the stack.
+     * @param {View} view - the view that you want to be at the top of the stack.
+     * This view must currently be on the stack.
      * @return {View[]|null} An array containing the views that were popped from the stack.
      */
     popToChild: function(view) {
@@ -135,6 +138,12 @@ Class.define("framework.ui.view.StackView", CompositeView, {
         return this.popToChild(this._children[0]);
     },
 
+    /**
+     * Paint the stack view's children.
+     * @method StackView#paintChildren
+     * @protected
+     * @override
+     */
     paintChildren: function(context) {
         if (this._layout !== null && this._needRelayout) {
             this._layout.perform();
@@ -159,6 +168,12 @@ Class.define("framework.ui.view.StackView", CompositeView, {
         context.translate(-topChild.left, -topChild.top);
     },
 
+    /**
+     * Handle the pan gesture start event processing.
+     * @method StackView#onPanStart
+     * @param {GestureEvent} e - the pan gesture event info.
+     * @protected
+     */
     onPanStart: function(/*e*/) {
         if (this._children.length === 0) {
             return;
@@ -170,6 +185,12 @@ Class.define("framework.ui.view.StackView", CompositeView, {
         this._startX = topChild.left;
     },
 
+    /**
+     * Handle the pan gesture move event processing.
+     * @method StackView#onPanMove
+     * @param {GestureEvent} e - the pan gesture event info.
+     * @protected
+     */
     onPanMove: function(e) {
         if (this._children.length === 0) {
             return;
@@ -182,7 +203,13 @@ Class.define("framework.ui.view.StackView", CompositeView, {
         this._panning = true;
     },
 
-    onPanEndCancel: function(/*e*/) {
+    /**
+     * Handle the pan gesture end event processing.
+     * @method StackView#onPanEnd
+     * @param {GestureEvent} e - the pan gesture event info.
+     * @protected
+     */
+    onPanEnd: function(/*e*/) {
         if (this._children.length === 0) {
             return;
         }
@@ -193,6 +220,24 @@ Class.define("framework.ui.view.StackView", CompositeView, {
         this.startAutoPan(topChild, topChild.left, this._width);
     },
 
+    /**
+     * Handle the pan gesture cancel event processing.
+     * @method StackView#onPanCancel
+     * @param {GestureEvent} e - the pan gesture event info
+     * @protected
+     */
+    onPanCancel: function(e) {
+        this.onPanEnd(e);
+    },
+
+    /**
+     * Start to auto pan the current view and the next view.
+     * @method StackView#startAutoPan
+     * @param {View} view - the panning view.
+     * @param {Number} startX - the start position in x-axis
+     * @param {Number} endX - the end position in x-axis
+     * @private
+     */
     startAutoPan: function(view, startX, endX) {
         var startTime = new Date().getTime();
 
@@ -214,6 +259,11 @@ Class.define("framework.ui.view.StackView", CompositeView, {
         }.bind(this), 10);
     },
 
+    /**
+     * Stop the auto panning.
+     * @method ScrollableView#stopAutoPan
+     * @private
+     */
     stopAutoPan: function() {
         clearTimeout(this._autoTimer);
         this._autoTimer = null;
