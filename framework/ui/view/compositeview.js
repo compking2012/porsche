@@ -204,7 +204,7 @@ Class.define("framework.ui.view.CompositeView", View, {
     /**
      * Find the view at the point.
      * @method CompositeView#findViewAtPoint
-     * @param {Point} point - the point
+     * @param {Point} point - the point.
      * @return {View} return a child view which contains the specified point and is on the top of all children,
      * otherwise return this composite view if it contains the specified point.
      * @protected
@@ -251,7 +251,7 @@ Class.define("framework.ui.view.CompositeView", View, {
 
     /**
      * Paint the composite view's children.
-     * @method CompositeView#paint
+     * @method CompositeView#paintChildren
      * @protected
      */
     paintChildren: function(context) {

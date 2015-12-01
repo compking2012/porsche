@@ -29,11 +29,12 @@ Class.define("MyApp", App, {
             listItem.width = this.list.width;
 
             var textView = new TextView();
-            textView.id = "text" + i;
             textView.width = listItem.width;
-            textView.height = listItem.height;
+            textView.height = this.list.itemHeight;
             textView.fontSize = "36px";
             textView.color = "#FFFFFF";
+            textView.align = "center";
+            textView.text = "Item" + i;
             listItem.addChild(textView);
 
             this.list.addChild(listItem);

@@ -16,13 +16,13 @@ var ColumnLayout = require("../layout/columnlayout");
 var ListItem = require("./listitem");
 
 /**
- * ListView widget, it can scroll vertically by touch.
+ * List view that shows items in a horizontal or vertical scrolling list.
  * @class ListView
  * @extends ScrollableView
  */
 Class.define("framework.ui.view.ListView", ScrollableView, {
     /**
-     * Constructor
+     * Constructor that create a list view
      * @method ListView#initialize
      */
     initialize: function() {
@@ -41,7 +41,7 @@ Class.define("framework.ui.view.ListView", ScrollableView, {
     },
 
     /**
-     * Destructor
+     * Destructor that destroy this list view
      * @method ListView#destroy
      */
     destroy: function() {
@@ -57,65 +57,50 @@ Class.define("framework.ui.view.ListView", ScrollableView, {
     /**
      * @name ListView#orientation
      * @type {String}
-     * @description The orientation for scroll, such as "horizontal", "vertical".
+     * @description The orientation for scroll, either "horizontal" or "vertical".
      */
     get orientation() {
         return this._orientation;
     },
 
     set orientation(value) {
-        var oldValue = this._orientation;
-        if (oldValue === value) {
-            return;
-        }
-        this._orientation = value;
-        this.layout = this._orientation === "vertical" ? this._columnLayout : this._rowLayout;
-        this.dispatchEvent("propertychange", "orientation", oldValue, value);
-        this.invalidate();
+        this.setProperty("orientation", value, function() {
+            this.layout = value === "vertical" ? this._columnLayout : this._rowLayout;
+        }.bind(this));
     },
 
     /**
      * @name ListView#itemWidth
      * @type {Number}
      * @description the width of each list item.
+     * Note that this value is only available when orientation is horizontal.
      */
     get itemWidth() {
         return this._itemWidth;
     },
 
     set itemWidth(value) {
-        var oldValue = this._itemWidth;
-        if (oldValue === value) {
-            return;
-        }
-        this._itemWidth = value;
-        this.dispatchEvent("propertychange", "itemWidth", oldValue, value);
-        this.invalidate();
+        this.setProperty("itemWidth", value);
     },
 
     /**
      * @name ListView#itemHeight
      * @type {Number}
      * @description the height of each list item.
+     * Note that this value is only available when orientation is vertical.
      */
     get itemHeight() {
         return this._itemHeight;
     },
 
     set itemHeight(value) {
-        var oldValue = this._itemHeight;
-        if (oldValue === value) {
-            return;
-        }
-        this._itemHeight = value;
-        this.dispatchEvent("propertychange", "itemHeight", oldValue, value);
-        this.invalidate();
+        this.setProperty("itemHeight", value);
     },
 
     /**
-     * Add a view to specified parent view.
+     * Add a view to this list view.
      * @method ListView#addChild
-     * @param {View} view - sub child view to be insert to the last, and show at top
+     * @param {View} view - sub child view to be insert to the last, and show at top.
      */
     addChild: function(view) {
         if (!view instanceof ListItem) {
@@ -129,14 +114,14 @@ Class.define("framework.ui.view.ListView", ScrollableView, {
     },
 
     /**
-     * Insert a child view in this composite view by the specified position.
+     * Insert a child view to this list view by the specified position.
      * @method ListView#insertChild
-     * @param {View} view - the child view to add
+     * @param {View} view - the child view to add, must be a list item.
      * @param {Number} index - the position at which to add the child
      */
     insertChild: function(view, index) {
         if (!view instanceof ListItem) {
-            throw "The view must be a List Item";
+            throw "The view must be a ListItem";
         }
         view.saveAbsoluteInfo();
         view.width = this._orientation === "vertical" ? this._width : this._itemWidth;
@@ -146,9 +131,9 @@ Class.define("framework.ui.view.ListView", ScrollableView, {
     },
 
     /**
-     * Remove the specified view from this composite view.
+     * Remove the specified view from this list view.
      * @method ListView#removeChild
-     * @param {View} view - the child view to remove, or the position in this composite view to remove
+     * @param {View} view - the child view to remove.
      */
     removeChild: function(view) {
         if (!view instanceof ListItem) {
@@ -159,17 +144,32 @@ Class.define("framework.ui.view.ListView", ScrollableView, {
         ScrollableView.prototype.removeChild.call(this, view);
     },
 
+
+    /**
+     * Smoothly scroll to the specified position.
+     * The view will scroll such that the indicated position is displayed.
+     * @param  {Number} index - the position to scroll.
+     * @private
+     */
     scrollToItem: function(index) {
     },
 
+    /**
+     * Smoothly scroll to the position of the nearest item.
+     * The view will scroll such that the indicated position is displayed.
+     * @private
+     */
     scrollToNearestItem: function() {
     },
 
     /**
      * Find the view at the point
      * @method ListView#findViewAtPoint
-     * @param {Point} point the point in put
-     * @return {View} return the view which point in the view and it has the max zOrder;
+     * @param {Point} point - the point.
+     * @return {View} return a child view which contains the specified point and is on the top of all children,
+     * otherwise return this list view if it contains the specified point.
+     * @protected
+     * @override
      */
     findViewAtPoint: function(point) {
         if (this._visibility !== "visible") {
@@ -195,6 +195,12 @@ Class.define("framework.ui.view.ListView", ScrollableView, {
         return findChild;
     },
 
+    /**
+     * Paint the list view's children.
+     * @method ListView#paintChildren
+     * @protected
+     * @override
+     */
     paintChildren: function(context) {
         if (this._layout !== null && this._needRelayout) {
             this._layout.perform();
@@ -213,9 +219,10 @@ Class.define("framework.ui.view.ListView", ScrollableView, {
 
     /**
      * Mark the area defined by dirty as needing to be drawn.
-     * @method CompositeView#invalidate
-     * @param {Rectangle} [rect] - the rectangle representing the bounds of the dirty region
+     * @method ListView#invalidate
+     * @param {Rectangle} [rect] - the rectangle representing the bounds of the dirty region.
      * @protected
+     * @override
      */
     invalidate: function(rect) {
         if (rect === undefined) {
@@ -233,10 +240,11 @@ Class.define("framework.ui.view.ListView", ScrollableView, {
     },
 
     /**
-     * Set this composite view and all children dirty.
+     * Set this list view and all children dirty.
      * @method ListView#setDirty
-     * @param {Rectangle} [rect] - the rectangle representing the bounds of the dirty region
+     * @param {Rectangle} [rect] - the rectangle representing the bounds of the dirty region.
      * @protected
+     * @override
      */
     setDirty: function(rect) {
         ScrollableView.prototype.setDirty.call(this, rect);
