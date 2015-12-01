@@ -71,7 +71,8 @@
     
     <div class="description">
         <p>
-        Stack view
+        Stack view that can used as a stack which can push a child view or pop.
+Also, user can swipe in or out the current view from the stack view.
         </p>
     </div>
     
@@ -1497,7 +1498,7 @@ You do not need to draw any pixels above it, since those are outside of the fram
     
     <div class="description">
         <p>
-        Constructor
+        Constructor that create a stack view.
         </p>
     </div>
     
@@ -1563,7 +1564,7 @@ You do not need to draw any pixels above it, since those are outside of the fram
     
     <div class="description">
         <p>
-        Destructor
+        Destructor that destroy this stack view.
         </p>
     </div>
     
@@ -1629,7 +1630,7 @@ You do not need to draw any pixels above it, since those are outside of the fram
     
     <div class="description">
         <p>
-        The pushChild method will push a view to specified parent view.
+        Pushs a view to this stack view.
         </p>
     </div>
     
@@ -1681,7 +1682,7 @@ You do not need to draw any pixels above it, since those are outside of the fram
 
             
 
-            <td class="description last">sub child view to be pushed on the top of the stack</td>
+            <td class="description last">sub child view to be pushed on the top of the stack.</td>
         </tr>
 
 	
@@ -1824,7 +1825,7 @@ You do not need to draw any pixels above it, since those are outside of the fram
         
             
 <dt>
-    <h4 class="name" id="popToChild">popToChild(The)</h4>
+    <h4 class="name" id="popToChild">popToChild(view)</h4>
     
     
 </dt>
@@ -1868,7 +1869,7 @@ You do not need to draw any pixels above it, since those are outside of the fram
 
         <tr>
             
-                <td class="name">The</td>
+                <td class="name">view</td>
             
 
             <td class="type">
@@ -1885,7 +1886,8 @@ You do not need to draw any pixels above it, since those are outside of the fram
 
             
 
-            <td class="description last">view that you want to be at the top of the stack. This view must currently be on the stack.</td>
+            <td class="description last">the view that you want to be at the top of the stack.
+This view must currently be on the stack.</td>
         </tr>
 
 	
@@ -2043,6 +2045,470 @@ You do not need to draw any pixels above it, since those are outside of the fram
 </div>
 
         
+    
+    
+</dd>
+
+        
+            
+<dt>
+    <h4 class="name" id="onPanStart"><span class="label label-info">protected</span> onPanStart(e)</h4>
+    
+    
+</dt>
+<dd>
+    
+    
+    <div class="description">
+        <p>
+        Handle the pan gesture start event processing.
+        </p>
+    </div>
+    
+
+    
+    
+    
+    
+    
+        <h5>Parameters:</h5>
+        
+
+<table class="params table table-bordered table-condensed">
+    <thead>
+	<tr>
+		
+		<th>Name</th>
+		
+
+		<th>Type</th>
+
+		
+
+		
+
+		<th class="last">Description</th>
+	</tr>
+	</thead>
+
+	<tbody>
+	
+
+        <tr>
+            
+                <td class="name">e</td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">{<a href="GestureEvent.html">GestureEvent</a>}</span>
+
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last">the pan gesture event info.</td>
+        </tr>
+
+	
+	</tbody>
+</table>
+
+    
+    
+    
+<dl class="details">
+    
+        
+    
+    
+    
+
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+
+    
+    
+    
+    
+    
+    
+    
+</dl>
+
+    
+    
+
+    
+
+    
+    
+    
+    
+    
+    
+    
+</dd>
+
+        
+            
+<dt>
+    <h4 class="name" id="onPanMove"><span class="label label-info">protected</span> onPanMove(e)</h4>
+    
+    
+</dt>
+<dd>
+    
+    
+    <div class="description">
+        <p>
+        Handle the pan gesture move event processing.
+        </p>
+    </div>
+    
+
+    
+    
+    
+    
+    
+        <h5>Parameters:</h5>
+        
+
+<table class="params table table-bordered table-condensed">
+    <thead>
+	<tr>
+		
+		<th>Name</th>
+		
+
+		<th>Type</th>
+
+		
+
+		
+
+		<th class="last">Description</th>
+	</tr>
+	</thead>
+
+	<tbody>
+	
+
+        <tr>
+            
+                <td class="name">e</td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">{<a href="GestureEvent.html">GestureEvent</a>}</span>
+
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last">the pan gesture event info.</td>
+        </tr>
+
+	
+	</tbody>
+</table>
+
+    
+    
+    
+<dl class="details">
+    
+        
+    
+    
+    
+
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+
+    
+    
+    
+    
+    
+    
+    
+</dl>
+
+    
+    
+
+    
+
+    
+    
+    
+    
+    
+    
+    
+</dd>
+
+        
+            
+<dt>
+    <h4 class="name" id="onPanEnd"><span class="label label-info">protected</span> onPanEnd(e)</h4>
+    
+    
+</dt>
+<dd>
+    
+    
+    <div class="description">
+        <p>
+        Handle the pan gesture end event processing.
+        </p>
+    </div>
+    
+
+    
+    
+    
+    
+    
+        <h5>Parameters:</h5>
+        
+
+<table class="params table table-bordered table-condensed">
+    <thead>
+	<tr>
+		
+		<th>Name</th>
+		
+
+		<th>Type</th>
+
+		
+
+		
+
+		<th class="last">Description</th>
+	</tr>
+	</thead>
+
+	<tbody>
+	
+
+        <tr>
+            
+                <td class="name">e</td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">{<a href="GestureEvent.html">GestureEvent</a>}</span>
+
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last">the pan gesture event info.</td>
+        </tr>
+
+	
+	</tbody>
+</table>
+
+    
+    
+    
+<dl class="details">
+    
+        
+    
+    
+    
+
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+
+    
+    
+    
+    
+    
+    
+    
+</dl>
+
+    
+    
+
+    
+
+    
+    
+    
+    
+    
+    
+    
+</dd>
+
+        
+            
+<dt>
+    <h4 class="name" id="onPanCancel"><span class="label label-info">protected</span> onPanCancel(e)</h4>
+    
+    
+</dt>
+<dd>
+    
+    
+    <div class="description">
+        <p>
+        Handle the pan gesture cancel event processing.
+        </p>
+    </div>
+    
+
+    
+    
+    
+    
+    
+        <h5>Parameters:</h5>
+        
+
+<table class="params table table-bordered table-condensed">
+    <thead>
+	<tr>
+		
+		<th>Name</th>
+		
+
+		<th>Type</th>
+
+		
+
+		
+
+		<th class="last">Description</th>
+	</tr>
+	</thead>
+
+	<tbody>
+	
+
+        <tr>
+            
+                <td class="name">e</td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">{<a href="GestureEvent.html">GestureEvent</a>}</span>
+
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last">the pan gesture event info</td>
+        </tr>
+
+	
+	</tbody>
+</table>
+
+    
+    
+    
+<dl class="details">
+    
+        
+    
+    
+    
+
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+
+    
+    
+    
+    
+    
+    
+    
+</dl>
+
+    
+    
+
+    
+
+    
+    
+    
+    
+    
     
     
 </dd>
@@ -6970,7 +7436,7 @@ this.className
         <br clear="both">
 
       <footer>
-        Documentation generated by <a href="https://github.com/jsdoc3/jsdoc">JSDoc 3.3.2</a> on Tue Dec 01 2015 11:42:44 GMT+0800 (CST)
+        Documentation generated by <a href="https://github.com/jsdoc3/jsdoc">JSDoc 3.3.2</a> on Tue Dec 01 2015 12:02:04 GMT+0800 (CST)
         <br>
       </footer>
       <script> prettyPrint(); </script>
