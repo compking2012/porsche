@@ -14,14 +14,14 @@ var Class = require("../../class");
 var View = require("./view");
 
 /**
- * BarCode widget
- * @class BarCode
+ * Bar code view that is a view can show a standard bar code.
+ * @class BarCodeView
  * @extends View
  */
-Class.define("framework.ui.view.BarCode", View, {
+Class.define("framework.ui.view.BarCodeView", View, {
     /**
-     * Constructor
-     * @method BarCode#initialize
+     * Constructor that create a bar code view.
+     * @method BarCodeView#initialize
      */
     initialize: function(/*value*/) {
         View.prototype.initialize.apply(this, arguments);
@@ -39,53 +39,41 @@ Class.define("framework.ui.view.BarCode", View, {
     },
 
     /**
-     * Destructor
-     * @method BarCode#destroy
+     * Destructor that destroy this bar code view.
+     * @method BarCodeView#destroy
      */
     destroy: function() {
         View.prototype.destroy.apply(this, arguments);
     },
 
     /**
-     * @name BarCode#value
+     * @name BarCodeView#value
      * @type {String}
-     * @description Barcode value.
+     * @description bar code value.
      */
     get value() {
         return this._value;
     },
 
     set value(value) {
-        var oldValue = this._value;
-        if (oldValue === value) {
-            return;
-        }
-        this._value = value;
-        this.dispatchEvent("propertychange", "value", oldValue, value);
-        this.invalidate();
+        this.setProperty("value", value);
     },
 
     /**
-     * @name BarCode#type
+     * @name BarCodeView#type
      * @type {String}
-     * @description Barcode type, e.g.CODE128B, CODE128C, CODE39, EAN, UPC, ITF, ITF14, Pharmacode
+     * @description bar code type, e.g.CODE128B, CODE128C, CODE39, EAN, UPC, ITF, ITF14, Pharmacode
      */
     get type() {
         return this._type;
     },
 
     set type(value) {
-        var oldValue = this._type;
-        if (oldValue === value) {
-            return;
-        }
-        this._type = value;
-        this.dispatchEvent("propertychange", "type", oldValue, value);
-        this.invalidate();
+        this.setProperty("type", value);
     },
 
     /**
-     * @name BarCode#color
+     * @name BarCodeView#color
      * @type {String}
      * @description the color of barcode.
      */
@@ -94,17 +82,11 @@ Class.define("framework.ui.view.BarCode", View, {
     },
 
     set color(value) {
-        var oldValue = this._color;
-        if (oldValue === value) {
-            return;
-        }
-        this._color = value;
-        this.dispatchEvent("propertychange", "color", oldValue, value);
-        this.invalidate();
+        this.setProperty("color", value);
     },
 
     /**
-     * @name BarCode#font
+     * @name BarCodeView#font
      * @type {String}
      * @description the text font.
      */
@@ -113,17 +95,11 @@ Class.define("framework.ui.view.BarCode", View, {
     },
 
     set font(value) {
-        var oldValue = this._font;
-        if (oldValue === value) {
-            return;
-        }
-        this._font = value;
-        this.dispatchEvent("propertychange", "font", oldValue, value);
-        this.invalidate();
+        this.setProperty("font", value);
     },
 
     /**
-     * @name BarCode#fontSize
+     * @name BarCodeView#fontSize
      * @type {Number}
      * @description the text font size.
      */
@@ -132,17 +108,11 @@ Class.define("framework.ui.view.BarCode", View, {
     },
 
     set fontSize(value) {
-        var oldValue = this._fontSize;
-        if (oldValue === value) {
-            return;
-        }
-        this._fontSize = value;
-        this.dispatchEvent("propertychange", "fontSize", oldValue, value);
-        this.invalidate();
+        this.setProperty("fontSize", value);
     },
 
     /**
-     * @name BarCode#textAlign
+     * @name BarCodeView#textAlign
      * @type {String}
      * @description the text alignment.
      */
@@ -151,17 +121,11 @@ Class.define("framework.ui.view.BarCode", View, {
     },
 
     set textAlign(value) {
-        var oldValue = this._textAlign;
-        if (oldValue === value) {
-            return;
-        }
-        this._textAlign = value;
-        this.dispatchEvent("propertychange", "textAlign", oldValue, value);
-        this.invalidate();
+        this.setProperty("textAlign", value);
     },
 
     /**
-     * @name BarCode#displayValue
+     * @name BarCodeView#displayValue
      * @type {Boolean}
      * @description indicate whether display the value text with barcode.
      */
@@ -170,17 +134,11 @@ Class.define("framework.ui.view.BarCode", View, {
     },
 
     set displayValue(value) {
-        var oldValue = this._displayValue;
-        if (oldValue === value) {
-            return;
-        }
-        this._displayValue = value;
-        this.dispatchEvent("propertychange", "displayValue", oldValue, value);
-        this.invalidate();
+        this.setProperty("displayValue", value);
     },
 
     /**
-     * @name BarCode#barWidth
+     * @name BarCodeView#barWidth
      * @type {Number}
      * @description the bar width.
      */
@@ -189,17 +147,11 @@ Class.define("framework.ui.view.BarCode", View, {
     },
 
     set barWidth(value) {
-        var oldValue = this._barWidth;
-        if (oldValue === value) {
-            return;
-        }
-        this._barWidth = value;
-        this.dispatchEvent("propertychange", "barWidth", oldValue, value);
-        this.invalidate();
+        this.setProperty("barWidth", value);
     },
 
     /**
-     * @name BarCode#barHeight
+     * @name BarCodeView#barHeight
      * @type {Number}
      * @description the bar height.
      */
@@ -208,17 +160,11 @@ Class.define("framework.ui.view.BarCode", View, {
     },
 
     set barHeight(value) {
-        var oldValue = this._barHeight;
-        if (oldValue === value) {
-            return;
-        }
-        this._barHeight = value;
-        this.dispatchEvent("propertychange", "barHeight", oldValue, value);
-        this.invalidate();
+        this.setProperty("barHeight", value);
     },
 
     /**
-     * @name BarCode#margin
+     * @name BarCodeView#margin
      * @type {Number}
      * @description the margin of barcode.
      */
@@ -227,15 +173,16 @@ Class.define("framework.ui.view.BarCode", View, {
     },
 
     set margin(value) {
-        var oldValue = this._margin;
-        if (oldValue === value) {
-            return;
-        }
-        this._margin = value;
-        this.dispatchEvent("propertychange", "margin", oldValue, value);
-        this.invalidate();
+        this.setProperty("margin", value);
     },
 
+    /**
+     * Draw the bar code view.
+     * @method BarCodeView#draw
+     * @param {Context} context - the canvas context to which the view is rendered
+     * @protected
+     * @override
+     */
     draw: function(context) {
         var result = null;
         if (this._type === "CODE128B") {
@@ -292,6 +239,14 @@ Class.define("framework.ui.view.BarCode", View, {
         }
     },
 
+    /**
+     * Encode a string as the CODE128 specification.
+     * @method BarCodeView#encodeAsCODE128
+     * @param  {String} string - the string text.
+     * @param  {String} code - the code type, either "B" or "C".
+     * @return {String} the encoded text.
+     * @private
+     */
     encodeAsCODE128: function(string, code) {
         // Data for each character, the last characters will not be encoded but are used for error correction
         var code128b = [
@@ -525,6 +480,13 @@ Class.define("framework.ui.view.BarCode", View, {
         }
     },
 
+    /**
+     * Encode a string as the CODE39 specification.
+     * @method BarCodeView#encodeAsCODE39
+     * @param  {String} string - the string text.
+     * @return {String} the encoded text.
+     * @private
+     */
     encodeAsCODE39: function(string) {
         var code39 = [
             [0, "0", "101000111011101"],
@@ -613,6 +575,13 @@ Class.define("framework.ui.view.BarCode", View, {
         }
     },
 
+    /**
+     * Encode a string as the EAN specification.
+     * @method BarCodeView#encodeAsEAN
+     * @param  {String} EANnumber - the string text.
+     * @return {String} the encoded text.
+     * @private
+     */
     encodeAsEAN: function(EANnumber) {
         // The L (left) type of encoding
         var Lbinary = {
@@ -761,10 +730,24 @@ Class.define("framework.ui.view.BarCode", View, {
         }
     },
 
+    /**
+     * Encode a string as the UPC specification.
+     * @method BarCodeView#encodeAsUPC
+     * @param  {String} UPCnumber - the string text.
+     * @return {String} the encoded text.
+     * @private
+     */
     encodeAsUPC: function(UPCnumber) {
         return this.encodeAsEAN("0" + UPCnumber);
     },
 
+    /**
+     * Encode a string as the ITF specification.
+     * @method BarCodeView#encodeAsITF
+     * @param  {String} ITFNumber - the string text.
+     * @return {String} the encoded text.
+     * @private
+     */
     encodeAsITF: function(ITFNumber) {
         // The structure for the all digits, 1 is wide and 0 is narrow
         var digitStructure = {
@@ -833,6 +816,13 @@ Class.define("framework.ui.view.BarCode", View, {
         }
     },
 
+    /**
+     * Encode a string as the ITF14 specification.
+     * @method BarCodeView#encodeAsITF14
+     * @param  {String} ITF14number - the string text.
+     * @return {String} the encoded text.
+     * @private
+     */
     encodeAsITF14: function(ITF14number) {
         // The structure for the all digits, 1 is wide and 0 is narrow
         var digitStructure = {
@@ -924,6 +914,13 @@ Class.define("framework.ui.view.BarCode", View, {
         }
     },
 
+    /**
+     * Encode a string as the Pharmacode specification.
+     * @method BarCodeView#encodeAsPharmacode
+     * @param  {String} number - the string text.
+     * @return {String} the encoded text.
+     * @private
+     */
     encodeAsPharmacode: function(number) {
         // Ensure that the input is inturpreted as a number
         number = parseInt(number);

@@ -198,20 +198,35 @@ Class.define("MyApp", App, {
       </div>
 
       <div class="demo">
-        <span>ImageView</span>      
-        <iframe src="./demo/gui/imageview/index.html"></iframe>
+        <span>ImageView (scale types)</span>      
+        <iframe src="./demo/gui/imageview-scale/index.html"></iframe>
         <pre>
           <code>
 Class.define("MyApp", App, {
     onStart: function() {
-        var imageView = new ImageView();
-        imageView.src = global.app.rootPath + "/res/big.png";
-        imageView.left = 40;
-        imageView.top = 40;
-        imageView.width = 240;
-        imageView.height = 240;
+        this.window.addEventListener("touchend", this.onTouchEnd.bind(this));
 
-        this.window.addChild(imageView);
+        this.scaleTypes = ["matrix", "fitxy", "fitstart", "fitcenter", "fitend", "center", "centercrop", "centerinside"];
+        this.index = 0;
+
+        this.imageView = new ImageView();
+        this.imageView.src = global.app.rootPath + "/res/big.png";
+        this.imageView.scaleType = "centercrop";
+        this.imageView.left = 0;
+        this.imageView.top = 0;
+        this.imageView.width = 320;
+        this.imageView.height = 320;
+
+        this.textView = new TextView();
+        this.textView.text = this.imageView.scaleType;
+
+        this.window.addChild(this.imageView);
+        this.window.addChild(this.textView);
+    },
+
+    onTouchEnd: function() {
+        this.imageView.scaleType = this.scaleTypes[this.index++ % this.scaleTypes.length];
+        this.textView.text = this.imageView.scaleType;
     }
 }, module);
           </code>
@@ -412,6 +427,54 @@ Class.define("MyApp", App, {
 
     onChange: function(e) {
         this.textView.text = this.slider.value;
+    }
+}, module);
+          </code>
+        </pre>
+      </div>
+
+      <div class="demo">
+        <span>BarCodeView</span>      
+        <iframe src="./demo/gui/barcodeview/index.html"></iframe>
+        <pre>
+          <code>
+Class.define("MyApp", App, {
+    onStart: function() {
+        this.barCodeView = new BarCodeView();
+        this.barCodeView.width = 300;
+        this.barCodeView.height = 150;
+        this.barCodeView.background = "#FFFFFF";
+        this.barCodeView.color = "#0000FF";
+        this.barCodeView.type = "CODE128C";
+        this.barCodeView.value = "283197578276228209";
+        this.barCodeView.fontSize = 20;
+        this.barCodeView.displayValue = true;
+
+        this.window.addChild(this.barCodeView);
+    }
+}, module);
+          </code>
+        </pre>
+      </div>
+
+      <div class="demo">
+        <span>QRCodeView</span>      
+        <iframe src="./demo/gui/qrcodeview/index.html"></iframe>
+        <pre>
+          <code>
+Class.define("MyApp", App, {
+    onStart: function() {
+        this.qrCodeView = new QRCodeView();
+        this.qrCodeView.background = "#FFFFFF";
+        this.qrCodeView.width = 180;
+        this.qrCodeView.height = 180;
+        this.qrCodeView.margin = 3;
+        this.qrCodeView.scale = 6;
+        this.qrCodeView.color = "#0000FF";
+        this.qrCodeView.background = "#EEEEEE";
+        this.qrCodeView.correctLevel = "H";
+        this.qrCodeView.value = "283197578276228209";
+        this.window.addChild(this.qrCodeView);
     }
 }, module);
           </code>

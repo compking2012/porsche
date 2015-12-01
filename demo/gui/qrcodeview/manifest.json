@@ -1,5 +1,5 @@
 {
-    "appName": "QRCode",
+    "appName": "QRCodeView",
     "debug": {
         "paintFPS": true,
         "dirtyRect": true

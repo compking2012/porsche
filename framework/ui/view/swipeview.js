@@ -83,8 +83,7 @@ Class.define("framework.ui.view.SwipeView", CompositeView, {
         if (value < 0 || value >= this._children.length) {
             return;
         }
-        this._currentIndex = value;
-        this.invalidate();
+        this.setProperty("currentIndex", value);
     },
 
     /**
