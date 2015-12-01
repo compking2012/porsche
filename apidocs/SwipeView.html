@@ -71,7 +71,7 @@
     
     <div class="description">
         <p>
-        Swipeview widget.
+        Swipe view that can swipe between some child views by user.
         </p>
     </div>
     
@@ -147,7 +147,7 @@
 <dd>
     
     <div class="description">
-        current index
+        the position of the current view.
     </div>
     
     
@@ -1544,7 +1544,7 @@ You do not need to draw any pixels above it, since those are outside of the fram
     
     <div class="description">
         <p>
-        Constructor that create a composite view
+        Constructor that create a swipe view.
         </p>
     </div>
     
@@ -1563,10 +1563,6 @@ You do not need to draw any pixels above it, since those are outside of the fram
     
     
 
-    
-    <dd class="inherited-from"><ul class="dummy breadcrumb"><li>Inherited From:</li><li>
-        <a href="CompositeView.html#initialize">CompositeView#initialize</a>
-    </li></dd>
     
     
     
@@ -1614,7 +1610,7 @@ You do not need to draw any pixels above it, since those are outside of the fram
     
     <div class="description">
         <p>
-        Destructor that destroy this composite view
+        Destructor that destroy this swipe view.
         </p>
     </div>
     
@@ -1633,10 +1629,6 @@ You do not need to draw any pixels above it, since those are outside of the fram
     
     
 
-    
-    <dd class="inherited-from"><ul class="dummy breadcrumb"><li>Inherited From:</li><li>
-        <a href="CompositeView.html#destroy">CompositeView#destroy</a>
-    </li></dd>
     
     
     
@@ -1684,7 +1676,7 @@ You do not need to draw any pixels above it, since those are outside of the fram
     
     <div class="description">
         <p>
-        Add a view to this composite view and it is on top of all other children.
+        Add a view to this swipe view.
         </p>
     </div>
     
@@ -1736,7 +1728,7 @@ You do not need to draw any pixels above it, since those are outside of the fram
 
             
 
-            <td class="description last">child view that added to the end of parent children.</td>
+            <td class="description last">sub child view to be added.</td>
         </tr>
 
 	
@@ -1753,10 +1745,6 @@ You do not need to draw any pixels above it, since those are outside of the fram
     
     
 
-    
-    <dd class="inherited-from"><ul class="dummy breadcrumb"><li>Inherited From:</li><li>
-        <a href="CompositeView.html#addChild">CompositeView#addChild</a>
-    </li></dd>
     
     
     
@@ -1804,7 +1792,7 @@ You do not need to draw any pixels above it, since those are outside of the fram
     
     <div class="description">
         <p>
-        Insert a child view in this composite view by the specified position.
+        Insert a child view to this swipe view by the specified position.
         </p>
     </div>
     
@@ -1856,7 +1844,7 @@ You do not need to draw any pixels above it, since those are outside of the fram
 
             
 
-            <td class="description last">the child view that inserted to the specified position.</td>
+            <td class="description last">the child view to insert.</td>
         </tr>
 
 	
@@ -1880,7 +1868,7 @@ You do not need to draw any pixels above it, since those are outside of the fram
 
             
 
-            <td class="description last">the position at which to insert the child to.</td>
+            <td class="description last">the position to insert the child.</td>
         </tr>
 
 	
@@ -1898,9 +1886,469 @@ You do not need to draw any pixels above it, since those are outside of the fram
     
 
     
-    <dd class="inherited-from"><ul class="dummy breadcrumb"><li>Inherited From:</li><li>
-        <a href="CompositeView.html#insertChild">CompositeView#insertChild</a>
-    </li></dd>
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+
+    
+    
+    
+    
+    
+    
+    
+</dl>
+
+    
+    
+
+    
+
+    
+    
+    
+    
+    
+    
+    
+</dd>
+
+        
+            
+<dt>
+    <h4 class="name" id="onPanStart"><span class="label label-info">protected</span> onPanStart(e)</h4>
+    
+    
+</dt>
+<dd>
+    
+    
+    <div class="description">
+        <p>
+        Handle the pan gesture start event processing.
+        </p>
+    </div>
+    
+
+    
+    
+    
+    
+    
+        <h5>Parameters:</h5>
+        
+
+<table class="params table table-bordered table-condensed">
+    <thead>
+	<tr>
+		
+		<th>Name</th>
+		
+
+		<th>Type</th>
+
+		
+
+		
+
+		<th class="last">Description</th>
+	</tr>
+	</thead>
+
+	<tbody>
+	
+
+        <tr>
+            
+                <td class="name">e</td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">{<a href="GestureEvent.html">GestureEvent</a>}</span>
+
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last">the pan gesture event info.</td>
+        </tr>
+
+	
+	</tbody>
+</table>
+
+    
+    
+    
+<dl class="details">
+    
+        
+    
+    
+    
+
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+
+    
+    
+    
+    
+    
+    
+    
+</dl>
+
+    
+    
+
+    
+
+    
+    
+    
+    
+    
+    
+    
+</dd>
+
+        
+            
+<dt>
+    <h4 class="name" id="onPanMove"><span class="label label-info">protected</span> onPanMove(e)</h4>
+    
+    
+</dt>
+<dd>
+    
+    
+    <div class="description">
+        <p>
+        Handle the pan gesture move event processing.
+        </p>
+    </div>
+    
+
+    
+    
+    
+    
+    
+        <h5>Parameters:</h5>
+        
+
+<table class="params table table-bordered table-condensed">
+    <thead>
+	<tr>
+		
+		<th>Name</th>
+		
+
+		<th>Type</th>
+
+		
+
+		
+
+		<th class="last">Description</th>
+	</tr>
+	</thead>
+
+	<tbody>
+	
+
+        <tr>
+            
+                <td class="name">e</td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">{<a href="GestureEvent.html">GestureEvent</a>}</span>
+
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last">the pan gesture event info.</td>
+        </tr>
+
+	
+	</tbody>
+</table>
+
+    
+    
+    
+<dl class="details">
+    
+        
+    
+    
+    
+
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+
+    
+    
+    
+    
+    
+    
+    
+</dl>
+
+    
+    
+
+    
+
+    
+    
+    
+    
+    
+    
+    
+</dd>
+
+        
+            
+<dt>
+    <h4 class="name" id="onPanEnd"><span class="label label-info">protected</span> onPanEnd(e)</h4>
+    
+    
+</dt>
+<dd>
+    
+    
+    <div class="description">
+        <p>
+        Handle the pan gesture end event processing.
+        </p>
+    </div>
+    
+
+    
+    
+    
+    
+    
+        <h5>Parameters:</h5>
+        
+
+<table class="params table table-bordered table-condensed">
+    <thead>
+	<tr>
+		
+		<th>Name</th>
+		
+
+		<th>Type</th>
+
+		
+
+		
+
+		<th class="last">Description</th>
+	</tr>
+	</thead>
+
+	<tbody>
+	
+
+        <tr>
+            
+                <td class="name">e</td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">{<a href="GestureEvent.html">GestureEvent</a>}</span>
+
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last">the pan gesture event info.</td>
+        </tr>
+
+	
+	</tbody>
+</table>
+
+    
+    
+    
+<dl class="details">
+    
+        
+    
+    
+    
+
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+
+    
+    
+    
+    
+    
+    
+    
+</dl>
+
+    
+    
+
+    
+
+    
+    
+    
+    
+    
+    
+    
+</dd>
+
+        
+            
+<dt>
+    <h4 class="name" id="onPanCancel"><span class="label label-info">protected</span> onPanCancel(e)</h4>
+    
+    
+</dt>
+<dd>
+    
+    
+    <div class="description">
+        <p>
+        Handle the pan gesture cancel event processing.
+        </p>
+    </div>
+    
+
+    
+    
+    
+    
+    
+        <h5>Parameters:</h5>
+        
+
+<table class="params table table-bordered table-condensed">
+    <thead>
+	<tr>
+		
+		<th>Name</th>
+		
+
+		<th>Type</th>
+
+		
+
+		
+
+		<th class="last">Description</th>
+	</tr>
+	</thead>
+
+	<tbody>
+	
+
+        <tr>
+            
+                <td class="name">e</td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">{<a href="GestureEvent.html">GestureEvent</a>}</span>
+
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last">the pan gesture event info</td>
+        </tr>
+
+	
+	</tbody>
+</table>
+
+    
+    
+    
+<dl class="details">
+    
+        
+    
+    
+    
+
     
     
     
@@ -6595,7 +7043,7 @@ this.className
         <br clear="both">
 
       <footer>
-        Documentation generated by <a href="https://github.com/jsdoc3/jsdoc">JSDoc 3.3.2</a> on Tue Dec 01 2015 12:02:04 GMT+0800 (CST)
+        Documentation generated by <a href="https://github.com/jsdoc3/jsdoc">JSDoc 3.3.2</a> on Tue Dec 01 2015 12:15:20 GMT+0800 (CST)
         <br>
       </footer>
       <script> prettyPrint(); </script>

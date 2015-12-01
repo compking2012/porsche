@@ -51,14 +51,19 @@ Class.define("framework.ui.view.StackView", CompositeView, {
      */
     destroy: function() {
         this.stopAutoPan();
+
         this.removeEventListener("panstart", this._onPanStartFunc);
         this._onPanStartFunc = null;
+
         this.removeEventListener("panmove", this._onPanMoveFunc);
         this._onPanMoveFunc = null;
+
         this.removeEventListener("panend", this._onPanEndFunc);
         this._onPanEndFunc = null;
+
         this.removeEventListener("pancancel", this._onPanCancelFunc);
         this._onPanCancelFunc = null;
+
         this.removeGestureRecognizer(this._panRecognizer);
         this._panRecognizer = null;
 
@@ -262,7 +267,7 @@ Class.define("framework.ui.view.StackView", CompositeView, {
 
     /**
      * Stop the auto panning.
-     * @method ScrollableView#stopAutoPan
+     * @method StackView#stopAutoPan
      * @private
      */
     stopAutoPan: function() {

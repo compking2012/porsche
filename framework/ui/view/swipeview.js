@@ -16,19 +16,23 @@ var CubicBezier = require("../animation/cubicbezier");
 var PanRecognizer = require("../gesture/panrecognizer");
 
 /**
- * Swipeview widget.
+ * Swipe view that can swipe between some child views by user.
  * @class SwipeView
  * @extends CompositeView
  **/
 Class.define("framework.ui.view.SwipeView", CompositeView, {
+    /**
+     * Constructor that create a swipe view.
+     * @method SwipeView#initialize
+     */
     initialize: function() {
         CompositeView.prototype.initialize.apply(this, arguments);
 
         this.addGestureRecognizer(this._panRecognizer = new PanRecognizer({threshold: 10}));
         this.addEventListener("panstart", this._onPanStartFunc = this.onPanStart.bind(this));
         this.addEventListener("panmove", this._onPanMoveFunc = this.onPanMove.bind(this));
-        this.addEventListener("panend", this._onPanEndCancelFunc = this.onPanEndCancel.bind(this));
-        this.addEventListener("pancancel", this._onPanEndCancelFunc);
+        this.addEventListener("panend", this._onPanEndFunc = this.onPanEnd.bind(this));
+        this.addEventListener("pancancel", this._onPanCancelFunc = this.onPanCancel.bind(this));
 
         this._orientation = "horizontal";
         this._currentIndex = 0;
@@ -38,6 +42,10 @@ Class.define("framework.ui.view.SwipeView", CompositeView, {
         this._autoTimer = null;
     },
 
+    /**
+     * Destructor that destroy this swipe view.
+     * @method SwipeView#destroy
+     */
     destroy: function() {
         this.stopAutoSwipe();
 
@@ -50,9 +58,10 @@ Class.define("framework.ui.view.SwipeView", CompositeView, {
         this.removeEventListener("panmove", this._onPanMoveFunc);
         this._onPanMoveFunc = null;
 
-        this.removeEventListener("panend", this._onPanEndCancelFunc);
-        this.removeEventListener("pancancel", this._onPanEndCancelFunc);
-        this._onPanEndCancelFunc = null;
+        this.removeEventListener("panend", this._onPanEndFunc);
+        this._onPanEndFunc = null;
+        this.removeEventListener("pancancel", this._onPanCancelFunc);
+        this._onPanCancelFunc = null;
 
         this.removeGestureRecognizer(this._panRecognizer);
         this._panRecognizer.destroy();
@@ -64,7 +73,7 @@ Class.define("framework.ui.view.SwipeView", CompositeView, {
     /**
      * @name SwipeView#currentIndex
      * @type {Number}
-     * @description current index
+     * @description the position of the current view.
      */
     get currentIndex() {
         return this._currentIndex;
@@ -78,6 +87,11 @@ Class.define("framework.ui.view.SwipeView", CompositeView, {
         this.invalidate();
     },
 
+    /**
+     * Add a view to this swipe view.
+     * @method SwipeView#addChild
+     * @param {View} view - sub child view to be added.
+     */
     addChild: function(child) {
         child.width = this._width;
         child.height = this._height;
@@ -87,6 +101,12 @@ Class.define("framework.ui.view.SwipeView", CompositeView, {
         CompositeView.prototype.addChild.call(this, child);
     },
 
+    /**
+     * Insert a child view to this swipe view by the specified position.
+     * @method SwipeView#insertChild
+     * @param {View} view - the child view to insert.
+     * @param {Number} index - the position to insert the child.
+     */
     insertChild: function(child) {
         child.width = this._width;
         child.height = this._height;
@@ -96,6 +116,12 @@ Class.define("framework.ui.view.SwipeView", CompositeView, {
         CompositeView.prototype.insertChild.call(this, child);
     },
 
+    /**
+     * Handle the pan gesture start event processing.
+     * @method SwipeView#onPanStart
+     * @param {GestureEvent} e - the pan gesture event info.
+     * @protected
+     */
     onPanStart: function(e) {
         if (this._orientation === "horizontal") {
             if (e.offsetDirection === "left") {
@@ -132,6 +158,12 @@ Class.define("framework.ui.view.SwipeView", CompositeView, {
         this.invalidate();
     },
 
+    /**
+     * Handle the pan gesture move event processing.
+     * @method SwipeView#onPanMove
+     * @param {GestureEvent} e - the pan gesture event info.
+     * @protected
+     */
     onPanMove: function(e) {
         if (this._nextIndex === -1) {
             return;
@@ -150,7 +182,13 @@ Class.define("framework.ui.view.SwipeView", CompositeView, {
         this.invalidate();
     },
 
-    onPanEndCancel: function(e) {
+    /**
+     * Handle the pan gesture end event processing.
+     * @method SwipeView#onPanEnd
+     * @param {GestureEvent} e - the pan gesture event info.
+     * @protected
+     */
+    onPanEnd: function(e) {
         if (this._nextIndex === -1) {
             return;
         }
@@ -162,6 +200,22 @@ Class.define("framework.ui.view.SwipeView", CompositeView, {
         }
     },
 
+    /**
+     * Handle the pan gesture cancel event processing.
+     * @method SwipeView#onPanCancel
+     * @param {GestureEvent} e - the pan gesture event info
+     * @protected
+     */
+    onPanCancel: function(e) {
+        this.onPanEnd(e);
+    },
+
+    /**
+     * Paint the swipe view's children.
+     * @method SwipeView#paintChildren
+     * @protected
+     * @override
+     */
     paintChildren: function(context) {
         if (this._nextIndex !== -1) {
             var nextView = this._children[this._nextIndex];
@@ -176,6 +230,13 @@ Class.define("framework.ui.view.SwipeView", CompositeView, {
         context.translate(-currentView.left, -currentView.top);
     },
 
+    /**
+     * Start to auto swipe the current view and the next view.
+     * @method SwipeView#startAutoSwipe
+     * @param {String} direction - the swiping direction.
+     * @param {Number} startPosition - the start position of swiping.
+     * @private
+     */
     startAutoSwipe: function(direction, startPosition) {
         var startTime = new Date().getTime();
 
@@ -221,6 +282,11 @@ Class.define("framework.ui.view.SwipeView", CompositeView, {
         }.bind(this), 16);
     },
 
+    /**
+     * Stop the auto swiping.
+     * @method SwipeView#stopAutoSwipe
+     * @private
+     */
     stopAutoSwipe: function() {
         clearTimeout(this._autoTimer);
         this._autoTimer = null;
