@@ -16,6 +16,7 @@ var html = "<!DOCTYPE html>" +
             "<script src=\"" + prefix + "/framework/vendor/seajs-style/1.0.0/seajs-style.js\"></script>" +
             "<script src=\"" + prefix + "/framework/vendor/seajs-text/1.0.2/seajs-text.js\"></script>" +
             "<script>" +
+                "window.__prefix__ = \"" + prefix + "\";" +
                 "seajs.config({" +
                     "base: \"./\"" +
                 "});" +

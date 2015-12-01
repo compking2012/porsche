@@ -23,7 +23,7 @@ Class.define("framework.ui.platform.H5AppService", EventEmitter, {
     },
 
     getFXRootPath: function() {
-        return "/framework";
+        return window.__prefix__ + "/framework";
     },
 
     getAppRootPath: function() {
