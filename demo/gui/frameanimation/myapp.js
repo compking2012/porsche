@@ -19,31 +19,11 @@ Class.define("MyApp", App, {
         containerView.width = 100;
         containerView.height = 100;
         containerView.top = 160;
+        containerView.left = 110;
         containerView.addChild(imageView);
 
-        var animation1 = new FrameAnimation(containerView);
-        animation1.frames = {
-            "0%": {left: 10},
-            "10%": {left: 30},
-            "20%": {left: 50},
-            "30%": {left: 70},
-            "40%": {left: 90},
-            "50%": {left: 110},
-            "60%": {left: 130},
-            "70%": {left: 150},
-            "80%": {left: 170},
-            "90%": {left: 190},
-            "100%": {left: 210}
-        };
-        animation1.duration = 3000;
-        animation1.repeat = 0;
-        animation1.easing = "cubic-bezier(0.42, 0, 0.58, 1.0)";
-        animation1.from = "0%";
-        animation1.to = "100%";
-        animation1.start();
-
-        var animation2 = new FrameAnimation(imageView);
-        animation2.frames = {
+        var animation = new FrameAnimation(imageView);
+        animation.frames = {
             "0%": {left: 0},
             "10%": {left: -100},
             "20%": {left: -200},
@@ -56,12 +36,10 @@ Class.define("MyApp", App, {
             "90%": {left: -900},
             "100%": {left: 0}
         };
-        animation2.duration = 1000;
-        animation2.repeat = 0;
-        animation2.easing = "cubic-bezier(0.42, 0, 0.58, 1.0)";
-        animation2.from = "0%";
-        animation2.to = "100%";
-        animation2.start();
+        animation.duration = 1000;
+        animation.repeat = "infinite";
+        animation.easing = "cubic-bezier(0.42, 0, 0.58, 1.0)";
+        animation.start();
 
         this.window.addChild(containerView);
     }

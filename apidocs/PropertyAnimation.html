@@ -2,7 +2,7 @@
 <html lang="en">
   <head>
     <meta charset="utf-8">
-    <title>Porsche.js API documentation: <i class="icon-shield" style="color:#0186d1"></i> ColumnLayout</title>
+    <title>Porsche.js API documentation: <i class="icon-shield" style="color:#0186d1"></i> PropertyAnimation</title>
 
     <script src="scripts/prettify/prettify.js"> </script>
     <script src="scripts/prettify/lang-css.js"> </script>
@@ -32,7 +32,7 @@
           </div>
 
           <div class="span9">
-              <h1 class="page-header"><i class="icon-shield" style="color:#0186d1"></i> ColumnLayout</h1>
+              <h1 class="page-header"><i class="icon-shield" style="color:#0186d1"></i> PropertyAnimation</h1>
               
 
 
@@ -41,7 +41,7 @@
     
 <header>
     <!--h2>
-    ColumnLayout
+    PropertyAnimation
     </h2-->
     
 </header>  
@@ -53,7 +53,7 @@
             
         <ul class="breadcrumb">
             <li>Extends</li>
-            <li><a href="Layout.html" class="btn btn-primary">Layout</a></li>
+            <li><a href="Animation.html" class="btn btn-primary">Animation</a></li>
         </ul>
     
 
@@ -62,7 +62,7 @@
     
         
 <dt>
-    <h4 class="name" id="ColumnLayout">new ColumnLayout()</h4>
+    <h4 class="name" id="PropertyAnimation">new PropertyAnimation()</h4>
     
     
 </dt>
@@ -71,7 +71,9 @@
     
     <div class="description">
         <p>
-        Column Layout
+        Property animation that can be applied on any views to animate its animatable properties.
+Note that animatable properties include the position (left, right, top and bottom),
+size (width and height), transform (translation, rotation, scale and origin) and colors.
         </p>
     </div>
     
@@ -140,11 +142,15 @@
         <dl class="bs-docs-example bs-members">
             
 <dt>
-    <h4 class="name" id="paddingLeft">paddingLeft<span class="type-signature"> :Number</span></h4>
+    <h4 class="name" id="from">from<span class="type-signature"> :Object</span></h4>
     
     
 </dt>
 <dd>
+    
+    <div class="description">
+        the initial values at the animation start.
+    </div>
     
     
     
@@ -183,11 +189,15 @@
         
             
 <dt>
-    <h4 class="name" id="paddingRight">paddingRight<span class="type-signature"> :Number</span></h4>
+    <h4 class="name" id="to">to<span class="type-signature"> :Object</span></h4>
     
     
 </dt>
 <dd>
+    
+    <div class="description">
+        the end values at the animation stop.
+    </div>
     
     
     
@@ -226,11 +236,15 @@
         
             
 <dt>
-    <h4 class="name" id="defaultLayoutParam">defaultLayoutParam<span class="type-signature"> :Number</span></h4>
+    <h4 class="name" id="duration">duration<span class="type-signature"> :Number</span></h4>
     
     
 </dt>
 <dd>
+    
+    <div class="description">
+        the duration of this animation, in milliseconds.
+    </div>
     
     
     
@@ -241,6 +255,219 @@
     
     
 
+    
+    <dd class="inherited-from"><ul class="dummy breadcrumb"><li>Inherited From:</li><li>
+        <a href="Animation.html#duration">Animation#duration</a>
+    </li></dd>
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+
+    
+    
+    
+    
+    
+    
+    
+</dl>
+
+    
+    
+</dd>
+
+        
+            
+<dt>
+    <h4 class="name" id="repeat">repeat<span class="type-signature"> :Number|String</span></h4>
+    
+    
+</dt>
+<dd>
+    
+    <div class="description">
+        the repeat count for this animation.
+Note that 0 means just do this animation one time, 1 means do it twice,
+and "infinite" means do this animation infinitely.
+    </div>
+    
+    
+    
+<dl class="details">
+    
+        
+    
+    
+    
+
+    
+    <dd class="inherited-from"><ul class="dummy breadcrumb"><li>Inherited From:</li><li>
+        <a href="Animation.html#repeat">Animation#repeat</a>
+    </li></dd>
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    <dt class="tag-default">Default Value:</dt>
+    <dd class="tag-default"><ul class="dummy"><li>0</li></ul></dd>
+    
+
+    
+    
+    
+    
+    
+    
+    
+</dl>
+
+    
+    
+</dd>
+
+        
+            
+<dt>
+    <h4 class="name" id="easing">easing<span class="type-signature"> :<a href="CubicBezier.html">CubicBezier</a></span></h4>
+    
+    
+</dt>
+<dd>
+    
+    <div class="description">
+        the cubic bezier that will be used on this animation.
+    </div>
+    
+    
+    
+<dl class="details">
+    
+        
+    
+    
+    
+
+    
+    <dd class="inherited-from"><ul class="dummy breadcrumb"><li>Inherited From:</li><li>
+        <a href="Animation.html#easing">Animation#easing</a>
+    </li></dd>
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+
+    
+    
+    
+    
+    
+    
+    
+</dl>
+
+    
+    
+</dd>
+
+        
+            
+<dt>
+    <h4 class="name" id="animating"><span class="label label-info">readonly</span> animating<span class="type-signature"> :Boolean</span></h4>
+    
+    
+</dt>
+<dd>
+    
+    <div class="description">
+        indicating whether it is in animating state.
+    </div>
+    
+    
+    
+<dl class="details">
+    
+        
+    
+    
+    
+
+    
+    <dd class="inherited-from"><ul class="dummy breadcrumb"><li>Inherited From:</li><li>
+        <a href="Animation.html#animating">Animation#animating</a>
+    </li></dd>
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+
+    
+    
+    
+    
+    
+    
+    
+</dl>
+
+    
+    
+</dd>
+
+        
+            
+<dt>
+    <h4 class="name" id="paused"><span class="label label-info">readonly</span> paused<span class="type-signature"> :Boolean</span></h4>
+    
+    
+</dt>
+<dd>
+    
+    <div class="description">
+        indicating whether it is in paused state.
+    </div>
+    
+    
+    
+<dl class="details">
+    
+        
+    
+    
+    
+
+    
+    <dd class="inherited-from"><ul class="dummy breadcrumb"><li>Inherited From:</li><li>
+        <a href="Animation.html#paused">Animation#paused</a>
+    </li></dd>
     
     
     
@@ -275,556 +502,6 @@
         <dl class="bs-docs-example bs-methods">
             
 <dt>
-    <h4 class="name" id="getParamAtIndex">getParamAtIndex(index)</h4>
-    
-    
-</dt>
-<dd>
-    
-    
-    <div class="description">
-        <p>
-        return the child ColumnLayout of index
-        </p>
-    </div>
-    
-
-    
-    
-    
-    
-    
-        <h5>Parameters:</h5>
-        
-
-<table class="params table table-bordered table-condensed">
-    <thead>
-	<tr>
-		
-		<th>Name</th>
-		
-
-		<th>Type</th>
-
-		
-
-		
-
-		<th class="last">Description</th>
-	</tr>
-	</thead>
-
-	<tbody>
-	
-
-        <tr>
-            
-                <td class="name">index</td>
-            
-
-            <td class="type">
-            
-                
-<span class="param-type">{Number}</span>
-
-
-
-            
-            </td>
-
-            
-
-            
-
-            <td class="description last">of the child ColumnLayout</td>
-        </tr>
-
-	
-	</tbody>
-</table>
-
-    
-    
-    
-<dl class="details">
-    
-        
-    
-    
-    
-
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-
-    
-    
-    
-    
-    
-    
-    
-</dl>
-
-    
-    
-
-    
-
-    
-    
-    
-    
-    
-    
-    
-</dd>
-
-        
-            
-<dt>
-    <h4 class="name" id="setLayoutParam">setLayoutParam(index, attribute, constraint)</h4>
-    
-    
-</dt>
-<dd>
-    
-    
-    <div class="description">
-        <p>
-        Add new constranit of the ColumnLayout
-        </p>
-    </div>
-    
-
-    
-    
-    
-    
-    
-        <h5>Parameters:</h5>
-        
-
-<table class="params table table-bordered table-condensed">
-    <thead>
-	<tr>
-		
-		<th>Name</th>
-		
-
-		<th>Type</th>
-
-		
-
-		
-
-		<th class="last">Description</th>
-	</tr>
-	</thead>
-
-	<tbody>
-	
-
-        <tr>
-            
-                <td class="name">index</td>
-            
-
-            <td class="type">
-            
-                
-<span class="param-type">{Number}</span>
-
-
-
-            
-            </td>
-
-            
-
-            
-
-            <td class="description last">index for the ChildParam</td>
-        </tr>
-
-	
-
-        <tr>
-            
-                <td class="name">attribute</td>
-            
-
-            <td class="type">
-            
-                
-<span class="param-type">{String}</span>
-
-
-
-            
-            </td>
-
-            
-
-            
-
-            <td class="description last">attribute string of "align", "margin" to set alignment/margins</td>
-        </tr>
-
-	
-
-        <tr>
-            
-                <td class="name">constraint</td>
-            
-
-            <td class="type">
-            
-                
-<span class="param-type">{Object}</span>
-
-
-
-            
-            </td>
-
-            
-
-            
-
-            <td class="description last">the constraint of the ColumnLayout</td>
-        </tr>
-
-	
-	</tbody>
-</table>
-
-    
-    
-    
-<dl class="details">
-    
-        
-    
-    
-    
-
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-
-    
-    
-    
-    
-    
-    
-    
-</dl>
-
-    
-    
-
-    
-
-    
-    
-    
-    
-    
-    
-    
-</dd>
-
-        
-            
-<dt>
-    <h4 class="name" id="perform">perform()</h4>
-    
-    
-</dt>
-<dd>
-    
-    
-    <div class="description">
-        <p>
-        calculate position of all the children views
-        </p>
-    </div>
-    
-
-    
-    
-    
-    
-    
-    
-    
-<dl class="details">
-    
-        
-    
-    
-    
-
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-
-    
-    
-    
-    
-    
-    
-    
-</dl>
-
-    
-    
-
-    
-
-    
-    
-    
-    
-    
-    
-    
-</dd>
-
-        
-            
-<dt>
-    <h4 class="name" id="getLayoutParam"><span class="label label-info">abstract</span> getLayoutParam()</h4>
-    
-    
-</dt>
-<dd>
-    
-    
-    <div class="description">
-        <p>
-        get childparam of child view at index
-        </p>
-    </div>
-    
-
-    
-    
-    
-    
-    
-    
-    
-<dl class="details">
-    
-        
-    
-    
-    
-
-    
-    <dd class="inherited-from"><ul class="dummy breadcrumb"><li>Inherited From:</li><li>
-        <a href="Layout.html#getLayoutParam">Layout#getLayoutParam</a>
-    </li></dd>
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-
-    
-    
-    
-    
-    
-    
-    
-</dl>
-
-    
-    
-
-    
-
-    
-    
-    
-    
-    
-    
-    
-</dd>
-
-        
-            
-<dt>
-    <h4 class="name" id="removeLayoutParam"><span class="label label-info">abstract</span> removeLayoutParam()</h4>
-    
-    
-</dt>
-<dd>
-    
-    
-    <div class="description">
-        <p>
-        remove childparam of child view at index
-        </p>
-    </div>
-    
-
-    
-    
-    
-    
-    
-    
-    
-<dl class="details">
-    
-        
-    
-    
-    
-
-    
-    <dd class="inherited-from"><ul class="dummy breadcrumb"><li>Inherited From:</li><li>
-        <a href="Layout.html#removeLayoutParam">Layout#removeLayoutParam</a>
-    </li></dd>
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-
-    
-    
-    
-    
-    
-    
-    
-</dl>
-
-    
-    
-
-    
-
-    
-    
-    
-    
-    
-    
-    
-</dd>
-
-        
-            
-<dt>
-    <h4 class="name" id="calculateFrame"><span class="label label-info">abstract</span> calculateFrame()</h4>
-    
-    
-</dt>
-<dd>
-    
-    
-
-    
-    
-    
-    
-    
-    
-    
-<dl class="details">
-    
-        
-    
-    
-    
-
-    
-    <dd class="inherited-from"><ul class="dummy breadcrumb"><li>Inherited From:</li><li>
-        <a href="Layout.html#calculateFrame">Layout#calculateFrame</a>
-    </li></dd>
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-
-    
-    
-    
-    
-    
-    
-    
-</dl>
-
-    
-    
-
-    
-
-    
-    
-    
-    
-    
-    
-    
-</dd>
-
-        
-            
-<dt>
     <h4 class="name" id="initialize">initialize()</h4>
     
     
@@ -834,8 +511,7 @@
     
     <div class="description">
         <p>
-        Constructor which will be invoked automatically at this object is constructed right now.
-Note that DO NOT invoke this directly.
+        Constructor that create a property animation.
         </p>
     </div>
     
@@ -854,10 +530,6 @@ Note that DO NOT invoke this directly.
     
     
 
-    
-    <dd class="inherited-from"><ul class="dummy breadcrumb"><li>Inherited From:</li><li>
-        <a href="YObject.html#initialize">YObject#initialize</a>
-    </li></dd>
     
     
     
@@ -905,8 +577,75 @@ Note that DO NOT invoke this directly.
     
     <div class="description">
         <p>
-        Destructor which need to be invoked when this object is not used anymore.
-Note that this method MUST BE invoked manually, otherwise it might caused something like memory leak.
+        Destructor that destroy this property animation.
+        </p>
+    </div>
+    
+
+    
+    
+    
+    
+    
+    
+    
+<dl class="details">
+    
+        
+    
+    
+    
+
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+
+    
+    
+    
+    
+    
+    
+    
+</dl>
+
+    
+    
+
+    
+
+    
+    
+    
+    
+    
+    
+    
+</dd>
+
+        
+            
+<dt>
+    <h4 class="name" id="start">start()</h4>
+    
+    
+</dt>
+<dd>
+    
+    
+    <div class="description">
+        <p>
+        Starts this animation. If the animation has a nonzero delay,
+the animation will start running after that delay elapses.
+A non-delayed animation will have its initial value(s) set immediately.
         </p>
     </div>
     
@@ -927,7 +666,1153 @@ Note that this method MUST BE invoked manually, otherwise it might caused someth
 
     
     <dd class="inherited-from"><ul class="dummy breadcrumb"><li>Inherited From:</li><li>
-        <a href="YObject.html#destroy">YObject#destroy</a>
+        <a href="Animation.html#start">Animation#start</a>
+    </li></dd>
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+
+    
+    
+    
+    
+    
+    
+    
+</dl>
+
+    
+    
+
+    
+
+    
+    
+    
+    
+    
+    
+    
+</dd>
+
+        
+            
+<dt>
+    <h4 class="name" id="stop">stop()</h4>
+    
+    
+</dt>
+<dd>
+    
+    
+    <div class="description">
+        <p>
+        Stops this animation. This causes the animation to assign the end value of the property being animated.
+        </p>
+    </div>
+    
+
+    
+    
+    
+    
+    
+    
+    
+<dl class="details">
+    
+        
+    
+    
+    
+
+    
+    <dd class="inherited-from"><ul class="dummy breadcrumb"><li>Inherited From:</li><li>
+        <a href="Animation.html#stop">Animation#stop</a>
+    </li></dd>
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+
+    
+    
+    
+    
+    
+    
+    
+</dl>
+
+    
+    
+
+    
+
+    
+    
+    
+    
+    
+    
+    
+</dd>
+
+        
+            
+<dt>
+    <h4 class="name" id="pause">pause()</h4>
+    
+    
+</dt>
+<dd>
+    
+    
+    <div class="description">
+        <p>
+        Pauses a running animation. This method should only be called on which the animation was started.
+If the animation has not yet been started or has since ended, then the call is ignored.
+        </p>
+    </div>
+    
+
+    
+    
+    
+    
+    
+    
+    
+<dl class="details">
+    
+        
+    
+    
+    
+
+    
+    <dd class="inherited-from"><ul class="dummy breadcrumb"><li>Inherited From:</li><li>
+        <a href="Animation.html#pause">Animation#pause</a>
+    </li></dd>
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+
+    
+    
+    
+    
+    
+    
+    
+</dl>
+
+    
+    
+
+    
+
+    
+    
+    
+    
+    
+    
+    
+</dd>
+
+        
+            
+<dt>
+    <h4 class="name" id="resume">resume()</h4>
+    
+    
+</dt>
+<dd>
+    
+    
+    <div class="description">
+        <p>
+        Resumes a paused animation, causing the animation to pick up where it left off when it was paused.
+This method should only be called on which the animation was paused.
+        </p>
+    </div>
+    
+
+    
+    
+    
+    
+    
+    
+    
+<dl class="details">
+    
+        
+    
+    
+    
+
+    
+    <dd class="inherited-from"><ul class="dummy breadcrumb"><li>Inherited From:</li><li>
+        <a href="Animation.html#resume">Animation#resume</a>
+    </li></dd>
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+
+    
+    
+    
+    
+    
+    
+    
+</dl>
+
+    
+    
+
+    
+
+    
+    
+    
+    
+    
+    
+    
+</dd>
+
+        
+            
+<dt>
+    <h4 class="name" id="dispatchEvent">dispatchEvent(event, argN)</h4>
+    
+    
+</dt>
+<dd>
+    
+    
+    <div class="description">
+        <p>
+        Invoke each of the listeners in order with the supplied arguments.
+        </p>
+    </div>
+    
+
+    
+    
+    
+    
+    
+        <h5>Parameters:</h5>
+        
+
+<table class="params table table-bordered table-condensed">
+    <thead>
+	<tr>
+		
+		<th>Name</th>
+		
+
+		<th>Type</th>
+
+		
+		<th>Argument</th>
+		
+
+		
+
+		<th class="last">Description</th>
+	</tr>
+	</thead>
+
+	<tbody>
+	
+
+        <tr>
+            
+                <td class="name">event</td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">{String}</span>
+
+
+
+            
+            </td>
+
+            
+                <td class="attributes">
+                
+
+                
+
+                
+                </td>
+            
+
+            
+
+            <td class="description last">event name</td>
+        </tr>
+
+	
+
+        <tr>
+            
+                <td class="name">argN</td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">{*}</span>
+
+
+
+            
+            </td>
+
+            
+                <td class="attributes">
+                
+
+                
+
+                
+                    <span class="label">repeatable</span>&nbsp;
+                
+                </td>
+            
+
+            
+
+            <td class="description last">the supplied arguments</td>
+        </tr>
+
+	
+	</tbody>
+</table>
+
+    
+    
+    
+<dl class="details">
+    
+        
+    
+    
+    
+
+    
+    <dd class="inherited-from"><ul class="dummy breadcrumb"><li>Inherited From:</li><li>
+        <a href="EventEmitter.html#dispatchEvent">EventEmitter#dispatchEvent</a>
+    </li></dd>
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+
+    
+    
+    
+    
+    
+    
+    
+</dl>
+
+    
+    
+
+    
+
+    
+    
+    
+    
+    
+    
+    
+</dd>
+
+        
+            
+<dt>
+    <h4 class="name" id="addEventListener">addEventListener(event, listener)</h4>
+    
+    
+</dt>
+<dd>
+    
+    
+    <div class="description">
+        <p>
+        Adds a listener to the end of the listeners array for the specified event.
+        </p>
+    </div>
+    
+
+    
+    
+    
+    
+    
+        <h5>Parameters:</h5>
+        
+
+<table class="params table table-bordered table-condensed">
+    <thead>
+	<tr>
+		
+		<th>Name</th>
+		
+
+		<th>Type</th>
+
+		
+
+		
+
+		<th class="last">Description</th>
+	</tr>
+	</thead>
+
+	<tbody>
+	
+
+        <tr>
+            
+                <td class="name">event</td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">{String}</span>
+
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last">event name</td>
+        </tr>
+
+	
+
+        <tr>
+            
+                <td class="name">listener</td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">{function}</span>
+
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last">a listener for the specified event</td>
+        </tr>
+
+	
+	</tbody>
+</table>
+
+    
+    
+    
+<dl class="details">
+    
+        
+    
+    
+    
+
+    
+    <dd class="inherited-from"><ul class="dummy breadcrumb"><li>Inherited From:</li><li>
+        <a href="EventEmitter.html#addEventListener">EventEmitter#addEventListener</a>
+    </li></dd>
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+
+    
+    
+    
+    
+    
+    
+    
+</dl>
+
+    
+    
+
+    
+
+    
+    
+    
+    
+    
+    
+    
+</dd>
+
+        
+            
+<dt>
+    <h4 class="name" id="removeEventListener">removeEventListener(event, listener)</h4>
+    
+    
+</dt>
+<dd>
+    
+    
+    <div class="description">
+        <p>
+        Remove a listener from the listener array for the specified event.
+        </p>
+    </div>
+    
+
+    
+    
+    
+    
+    
+        <h5>Parameters:</h5>
+        
+
+<table class="params table table-bordered table-condensed">
+    <thead>
+	<tr>
+		
+		<th>Name</th>
+		
+
+		<th>Type</th>
+
+		
+
+		
+
+		<th class="last">Description</th>
+	</tr>
+	</thead>
+
+	<tbody>
+	
+
+        <tr>
+            
+                <td class="name">event</td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">{String}</span>
+
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last">event name</td>
+        </tr>
+
+	
+
+        <tr>
+            
+                <td class="name">listener</td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">{function}</span>
+
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last">a listener for the specified event</td>
+        </tr>
+
+	
+	</tbody>
+</table>
+
+    
+    
+    
+<dl class="details">
+    
+        
+    
+    
+    
+
+    
+    <dd class="inherited-from"><ul class="dummy breadcrumb"><li>Inherited From:</li><li>
+        <a href="EventEmitter.html#removeEventListener">EventEmitter#removeEventListener</a>
+    </li></dd>
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+
+    
+    
+    
+    
+    
+    
+    
+</dl>
+
+    
+    
+
+    
+
+    
+    
+    
+    
+    
+    
+    
+</dd>
+
+        
+            
+<dt>
+    <h4 class="name" id="removeAllEventListeners">removeAllEventListeners(<span class="optional">event</span>)</h4>
+    
+    
+</dt>
+<dd>
+    
+    
+    <div class="description">
+        <p>
+        Removes all listeners, or those of the specified event.
+        </p>
+    </div>
+    
+
+    
+    
+    
+    
+    
+        <h5>Parameters:</h5>
+        
+
+<table class="params table table-bordered table-condensed">
+    <thead>
+	<tr>
+		
+		<th>Name</th>
+		
+
+		<th>Type</th>
+
+		
+		<th>Argument</th>
+		
+
+		
+
+		<th class="last">Description</th>
+	</tr>
+	</thead>
+
+	<tbody>
+	
+
+        <tr>
+            
+                <td class="name">event</td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">{String}</span>
+
+
+
+            
+            </td>
+
+            
+                <td class="attributes">
+                
+                    <span class="label">optional</span>&nbsp;
+                
+
+                
+
+                
+                </td>
+            
+
+            
+
+            <td class="description last">event name</td>
+        </tr>
+
+	
+	</tbody>
+</table>
+
+    
+    
+    
+<dl class="details">
+    
+        
+    
+    
+    
+
+    
+    <dd class="inherited-from"><ul class="dummy breadcrumb"><li>Inherited From:</li><li>
+        <a href="EventEmitter.html#removeAllEventListeners">EventEmitter#removeAllEventListeners</a>
+    </li></dd>
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+
+    
+    
+    
+    
+    
+    
+    
+</dl>
+
+    
+    
+
+    
+
+    
+    
+    
+    
+    
+    
+    
+</dd>
+
+        
+            
+<dt>
+    <h4 class="name" id="emit">emit()</h4>
+    
+    
+</dt>
+<dd>
+    
+    
+    <div class="description">
+        <p>
+        Alias of addEventListener.
+        </p>
+    </div>
+    
+
+    
+    
+    
+    
+    
+    
+    
+<dl class="details">
+    
+        
+    
+    
+    
+
+    
+    <dd class="inherited-from"><ul class="dummy breadcrumb"><li>Inherited From:</li><li>
+        <a href="EventEmitter.html#emit">EventEmitter#emit</a>
+    </li></dd>
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+
+    
+    
+    
+    
+    
+    
+    
+</dl>
+
+    
+    
+
+    
+
+    
+    
+    
+    
+    
+    
+    
+</dd>
+
+        
+            
+<dt>
+    <h4 class="name" id="addListener">addListener()</h4>
+    
+    
+</dt>
+<dd>
+    
+    
+    <div class="description">
+        <p>
+        Alias of addEventListener.
+        </p>
+    </div>
+    
+
+    
+    
+    
+    
+    
+    
+    
+<dl class="details">
+    
+        
+    
+    
+    
+
+    
+    <dd class="inherited-from"><ul class="dummy breadcrumb"><li>Inherited From:</li><li>
+        <a href="EventEmitter.html#addListener">EventEmitter#addListener</a>
+    </li></dd>
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+
+    
+    
+    
+    
+    
+    
+    
+</dl>
+
+    
+    
+
+    
+
+    
+    
+    
+    
+    
+    
+    
+</dd>
+
+        
+            
+<dt>
+    <h4 class="name" id="removeListener">removeListener()</h4>
+    
+    
+</dt>
+<dd>
+    
+    
+    <div class="description">
+        <p>
+        Alias of removeEventListener.
+        </p>
+    </div>
+    
+
+    
+    
+    
+    
+    
+    
+    
+<dl class="details">
+    
+        
+    
+    
+    
+
+    
+    <dd class="inherited-from"><ul class="dummy breadcrumb"><li>Inherited From:</li><li>
+        <a href="EventEmitter.html#removeListener">EventEmitter#removeListener</a>
+    </li></dd>
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+
+    
+    
+    
+    
+    
+    
+    
+</dl>
+
+    
+    
+
+    
+
+    
+    
+    
+    
+    
+    
+    
+</dd>
+
+        
+            
+<dt>
+    <h4 class="name" id="on">on()</h4>
+    
+    
+</dt>
+<dd>
+    
+    
+    <div class="description">
+        <p>
+        Alias of addEventListener.
+        </p>
+    </div>
+    
+
+    
+    
+    
+    
+    
+    
+    
+<dl class="details">
+    
+        
+    
+    
+    
+
+    
+    <dd class="inherited-from"><ul class="dummy breadcrumb"><li>Inherited From:</li><li>
+        <a href="EventEmitter.html#on">EventEmitter#on</a>
+    </li></dd>
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+
+    
+    
+    
+    
+    
+    
+    
+</dl>
+
+    
+    
+
+    
+
+    
+    
+    
+    
+    
+    
+    
+</dd>
+
+        
+            
+<dt>
+    <h4 class="name" id="off">off()</h4>
+    
+    
+</dt>
+<dd>
+    
+    
+    <div class="description">
+        <p>
+        Alias of removeEventListener.
+        </p>
+    </div>
+    
+
+    
+    
+    
+    
+    
+    
+    
+<dl class="details">
+    
+        
+    
+    
+    
+
+    
+    <dd class="inherited-from"><ul class="dummy breadcrumb"><li>Inherited From:</li><li>
+        <a href="EventEmitter.html#off">EventEmitter#off</a>
     </li></dd>
     
     

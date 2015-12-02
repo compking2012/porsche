@@ -884,8 +884,8 @@ Class.define("MyApp", App, {
       </div>
 
       <div class="demo">
-        <span>Animation</span>      
-        <iframe src="./demo/gui/animation/index.html"></iframe>
+        <span>PropertyAnimation</span>      
+        <iframe src="./demo/gui/propertyanimation/index.html"></iframe>
         <pre>
           <code>
 Class.define("MyApp", App, {
@@ -901,14 +901,14 @@ Class.define("MyApp", App, {
 
         this.window.addChild(this.view);
 
-        var animation = new Animation(this.view);
+        var animation = new PropertyAnimation(this.view);
         animation.from = {rotationZ: 0 * Math.PI / 180, width: 100, height: 100, opacity: 0, background: "#FF0000"};
         animation.to = {rotationZ: 360 * Math.PI / 180, width: 200, height: 200, opacity: 1, background: "rgb(0,255,0)"};
         animation.duration = 3000;
-        animation.repeat = 0;
+        animation.repeat = "infinite";
         animation.easing = "cubic-bezier(0.42, 0, 0.58, 1.0)";
         animation.addEventListener("iteration", function(iteration) {
-            if (iteration === 5) {
+            if (iteration % 5 === 0) {
                 animation.pause();
                 setTimeout(function() {
                     animation.resume();
@@ -949,18 +949,18 @@ Class.define("MyApp", App, {
         this.view2.height = 100;
         this.window.addChild(this.view2);
 
-        var animation1 = new Animation(this.view1);
+        var animation1 = new PropertyAnimation(this.view1);
         animation1.from = {rotationZ: 0 * Math.PI / 180};
         animation1.to = {rotationZ: 360 * Math.PI / 180};
         animation1.duration = 3000;
-        animation1.repeat = 5;
+        animation1.repeat = 4;
         animation1.easing = "cubic-bezier(0.42, 0, 0.58, 1.0)";
 
-        var animation2 = new Animation(this.view2);
+        var animation2 = new PropertyAnimation(this.view2);
         animation2.from = {rotationZ: 0 * Math.PI / 180};
         animation2.to = {rotationZ: 360 * Math.PI / 180};
         animation2.duration = 3000;
-        animation2.repeat = 5;
+        animation2.repeat = 4;
         animation2.easing = "linear";
 
         var animationGroup = new AnimationGroup();
@@ -980,6 +980,52 @@ Class.define("MyApp", App, {
             animationGroup2.start();
         });
         animationGroup.start();
+    }
+}, module);
+          </code>
+        </pre>
+      </div>
+
+      <div class="demo">
+        <span>FrameAnimation</span>      
+        <iframe src="./demo/gui/frameanimation/index.html"></iframe>
+        <pre>
+          <code>
+Class.define("MyApp", App, {
+    onStart: function() {
+        var imageView = new ImageView();
+        imageView.src = global.app.rootPath + "/coin.png";
+        imageView.scaleType = "matrix";
+        imageView.width = 1000;
+        imageView.height = 100;
+
+        var containerView = new CompositeView();
+        containerView.width = 100;
+        containerView.height = 100;
+        containerView.top = 160;
+        containerView.left = 110;
+        containerView.addChild(imageView);
+
+        var animation = new FrameAnimation(imageView);
+        animation.frames = {
+            "0%": {left: 0},
+            "10%": {left: -100},
+            "20%": {left: -200},
+            "30%": {left: -300},
+            "40%": {left: -400},
+            "50%": {left: -500},
+            "60%": {left: -600},
+            "70%": {left: -700},
+            "80%": {left: -800},
+            "90%": {left: -900},
+            "100%": {left: 0}
+        };
+        animation.duration = 1000;
+        animation.repeat = "infinite";
+        animation.easing = "cubic-bezier(0.42, 0, 0.58, 1.0)";
+        animation.start();
+
+        this.window.addChild(containerView);
     }
 }, module);
           </code>

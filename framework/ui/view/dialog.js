@@ -15,6 +15,7 @@ var Window = require("./window");
 
 /**
  * Base class for dialogs which provides a facility to manage the creation, saving and restoring of dialogs.
+ * Note that this class is never used to instantiate directly.
  * @class Dialog
  * @extends Window
  */

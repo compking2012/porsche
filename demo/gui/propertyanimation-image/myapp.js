@@ -4,7 +4,7 @@ define(function(require, exports, module) {
 var Class = require("../../../framework/class");
 var App = require("../../../framework/app/app");
 var ImageView = require("../../../framework/ui/view/imageview");
-var Animation = require("../../../framework/ui/animation/animation");
+var PropertyAnimation = require("../../../framework/ui/animation/propertyanimation");
 
 Class.define("MyApp", App, {
     onStart: function() {
@@ -20,11 +20,11 @@ Class.define("MyApp", App, {
 
             this.window.addChild(imageView);
 
-            var animation = new Animation(imageView);
+            var animation = new PropertyAnimation(imageView);
             animation.from = {rotationZ: 0 * Math.PI / 180, width: 100, height: 100, opacity: 0};
             animation.to = {rotationZ: 360 * Math.PI / 180, width: 200, height: 200, opacity: 1};
             animation.duration = 1000;
-            animation.repeat = 0;
+            animation.repeat = "infinite";
             animation.easing = "cubic-bezier(0.42, 0, 0.58, 1.0)";
             animation.start();
         }

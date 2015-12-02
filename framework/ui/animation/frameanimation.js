@@ -11,15 +11,23 @@ define(function(require, exports, module) {
 
 "use strict";
 var Class = require("../../class");
-var Animation = require("./animation");
+var PropertyAnimation = require("./propertyanimation");
 
-Class.define("framework.ui.animation.FrameAnimation", Animation, {
+/**
+ * Frame animation that holds a time/value pair for an animation.
+ * This class defines the frames that the animation target will have over the course of the animation.
+ * As the time proceeds from one frame to the other, the value of the target object will animate
+ * between the value at the previous frame and the value at the next frame.
+ * @class FrameAnimation
+ * @extends PropertyAnimation
+ */
+Class.define("framework.ui.animation.FrameAnimation", PropertyAnimation, {
     /**
      * Constructor
      * @method FrameAnimation#initialize
      */
     initialize: function(/*view*/) {
-        Animation.prototype.initialize.apply(this, arguments);
+        PropertyAnimation.prototype.initialize.apply(this, arguments);
 
         this._frames = {};
     },
@@ -31,9 +39,14 @@ Class.define("framework.ui.animation.FrameAnimation", Animation, {
     destroy: function() {
         this._frames = null;
 
-        Animation.prototype.destroy.apply(this, arguments);
+        PropertyAnimation.prototype.destroy.apply(this, arguments);
     },
 
+    /**
+     * @name FrameAnimation#frames
+     * @type {Object}
+     * @description the frames that plays in this frame animation.
+     */
     get frames() {
         return this._frames;
     },
@@ -42,6 +55,14 @@ Class.define("framework.ui.animation.FrameAnimation", Animation, {
         this._frames = value;
     },
 
+    /**
+     * Starts this animation. If the animation has a nonzero delay,
+     * the animation will start running after that delay elapses.
+     * A non-delayed animation will have its initial value(s) set immediately.
+     * @method FrameAnimation#start
+     * @protected
+     * @override
+     */
     start: function() {
         this._beziers = this.getCubicBezier();
 
@@ -76,9 +97,9 @@ Class.define("framework.ui.animation.FrameAnimation", Animation, {
             var time = new Date().getTime() - this._startTime;
             this._currentTime = time;
             if (time > remainTime) {
-                this.animate(0, this._duration);
+                this.animate(this._duration);
                 this._iteration++;
-                if (this._repeat === 0) {
+                if (this._repeat === "infinite") {
                     this._startTime = new Date().getTime();
                     this._animatorIndex = 0;
                     this.dispatchEvent("iteration", this._iteration);
@@ -94,10 +115,16 @@ Class.define("framework.ui.animation.FrameAnimation", Animation, {
                 }
                 return;
             }
-            this.animate(0, time);
+            this.animate(time);
         }.bind(this), 16);
     },
 
+    /**
+     * Stops this animation. This causes the animation to assign the end value of the property being animated.
+     * @method FrameAnimation#stop
+     * @protected
+     * @override
+     */
     stop: function() {
         this._timer.removeTimer(this._onTimerFunc);
         this._animators = [];
@@ -105,15 +132,35 @@ Class.define("framework.ui.animation.FrameAnimation", Animation, {
         this._animatorIndex = 0;
     },
 
+    /**
+     * Pauses a running animation. This method should only be called on which the animation was started.
+     * If the animation has not yet been started or has since ended, then the call is ignored.
+     * @method FrameAnimation#pause
+     * @protected
+     * @override
+     */
     pause: function() {
-
+        // TODO
     },
 
+    /**
+     * Resumes a paused animation, causing the animation to pick up where it left off when it was paused.
+     * This method should only be called on which the animation was paused.
+     * @method FrameAnimation#resume
+     * @protected
+     * @override
+     */
     resume: function() {
-
+        // TODO
     },
 
-    animate: function(startTime, time) {
+    /**
+     * Do the animation.
+     * @method FrameAnimation#animate
+     * @param {Number} time - the time, in milliseconds.
+     * @private
+     */
+    animate: function(time) {
         if (time / this._duration < this._animators[this._animatorIndex].percent) {
             return;
         }
