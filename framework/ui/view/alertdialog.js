@@ -16,7 +16,20 @@ var RelativeLayout = require("../layout/relativelayout");
 var TextView = require("./textview");
 var Button = require("./button");
 
+/**
+ * Alert dialog which is a subclass of dialog that can display a message with one button.
+ * User can only tap the button to continue.
+ * @class AlertDialog
+ * @extends Dialog
+ */
 Class.define("framework.ui.view.AlertDialog", Dialog, {
+    /**
+     * Constructor that create an alert dialog.
+     * @method AlertDialog#initialize
+     * @param  {Object} options - the required parameters for this alert dialog.
+     * messageText is a required parameter which is used to display a text as a message.
+     * actionText is a required parameter which is used for action button.
+     */
     initialize: function(options) {
         Dialog.prototype.initialize.apply(this, arguments);
 
@@ -51,6 +64,10 @@ Class.define("framework.ui.view.AlertDialog", Dialog, {
         this._actionButton.text = options.actionText;
     },
 
+    /**
+     * Destructor that destroy this dialog
+     * @method AlertDialog#destroy
+     */
     destroy: function() {
         this.removeChild(this._messageTextView);
         this._messageTextView.destroy();
@@ -65,7 +82,12 @@ Class.define("framework.ui.view.AlertDialog", Dialog, {
         Dialog.prototype.destroy.apply(this, arguments);
     },
 
-    onTapAction: function() {
+    /**
+     * Handle the tap event of the action button and will dispatch a result event.
+     * @method AlertDialog#onTapAction
+     * @param {GestureEvent} e - the gesture event info.
+     */
+    onTapAction: function(/*e*/) {
         this.dispatchEvent("result");
         this.close();
     }

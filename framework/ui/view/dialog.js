@@ -14,25 +14,42 @@ var Class = require("../../class");
 var Window = require("./window");
 
 /**
- * Base Dialog class
+ * Base class for dialogs which provides a facility to manage the creation, saving and restoring of dialogs.
  * @class Dialog
  * @extends Window
  */
 Class.define("framework.ui.view.Dialog", Window, {
+    /**
+     * Constructor that create a dialog
+     * @method Dialog#initialize
+     */
     initialize: function(/*options*/) {
         Window.prototype.initialize.apply(this, arguments);
-        this._width = 320;
-        this._height = 320;
     },
 
+    /**
+     * Destructor that destroy this dialog
+     * @method Dialog#destroy
+     */
     destroy: function() {
         Window.prototype.destroy.apply(this, arguments);
     },
 
+    /**
+     * Start the dialog and display it on screen.
+     * The dialog is placed in the application layer and opaque.
+     * Note that you should not override this method to do initialization when the dialog is shown.
+     * @method Dialog#show
+     */
     show: function() {
         global.app.windowManager.showDialog(this);
     },
 
+    /**
+     * Close this dialog, removing it from the screen.
+     * Note that you should not override this method to do cleanup when the dialog is closed.
+     * @method Dialog#close
+     */
     close: function() {
         global.app.windowManager.closeDialog();
     }

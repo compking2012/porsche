@@ -2,7 +2,7 @@
 <html lang="en">
   <head>
     <meta charset="utf-8">
-    <title>Porsche.js API documentation: <i class="icon-shield" style="color:#0186d1"></i> Dialog</title>
+    <title>Porsche.js API documentation: <i class="icon-shield" style="color:#0186d1"></i> AlertDialog</title>
 
     <script src="scripts/prettify/prettify.js"> </script>
     <script src="scripts/prettify/lang-css.js"> </script>
@@ -32,7 +32,7 @@
           </div>
 
           <div class="span9">
-              <h1 class="page-header"><i class="icon-shield" style="color:#0186d1"></i> Dialog</h1>
+              <h1 class="page-header"><i class="icon-shield" style="color:#0186d1"></i> AlertDialog</h1>
               
 
 
@@ -41,7 +41,7 @@
     
 <header>
     <!--h2>
-    Dialog
+    AlertDialog
     </h2-->
     
 </header>  
@@ -53,7 +53,7 @@
             
         <ul class="breadcrumb">
             <li>Extends</li>
-            <li><a href="Window.html" class="btn btn-primary">Window</a></li>
+            <li><a href="Dialog.html" class="btn btn-primary">Dialog</a></li>
         </ul>
     
 
@@ -62,7 +62,7 @@
     
         
 <dt>
-    <h4 class="name" id="Dialog">new Dialog()</h4>
+    <h4 class="name" id="AlertDialog">new AlertDialog()</h4>
     
     
 </dt>
@@ -71,7 +71,8 @@
     
     <div class="description">
         <p>
-        Base class for dialogs which provides a facility to manage the creation, saving and restoring of dialogs.
+        Alert dialog which is a subclass of dialog that can display a message with one button.
+User can only tap the button to continue.
         </p>
     </div>
     
@@ -1539,7 +1540,7 @@ You do not need to draw any pixels above it, since those are outside of the fram
         <dl class="bs-docs-example bs-methods">
             
 <dt>
-    <h4 class="name" id="initialize">initialize()</h4>
+    <h4 class="name" id="initialize">initialize(options)</h4>
     
     
 </dt>
@@ -1548,7 +1549,7 @@ You do not need to draw any pixels above it, since those are outside of the fram
     
     <div class="description">
         <p>
-        Constructor that create a dialog
+        Constructor that create an alert dialog.
         </p>
     </div>
     
@@ -1557,6 +1558,58 @@ You do not need to draw any pixels above it, since those are outside of the fram
     
     
     
+    
+        <h5>Parameters:</h5>
+        
+
+<table class="params table table-bordered table-condensed">
+    <thead>
+	<tr>
+		
+		<th>Name</th>
+		
+
+		<th>Type</th>
+
+		
+
+		
+
+		<th class="last">Description</th>
+	</tr>
+	</thead>
+
+	<tbody>
+	
+
+        <tr>
+            
+                <td class="name">options</td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">{Object}</span>
+
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last">the required parameters for this alert dialog.
+messageText is a required parameter which is used to display a text as a message.
+actionText is a required parameter which is used for action button.</td>
+        </tr>
+
+	
+	</tbody>
+</table>
+
     
     
     
@@ -1671,6 +1724,122 @@ You do not need to draw any pixels above it, since those are outside of the fram
         
             
 <dt>
+    <h4 class="name" id="onTapAction">onTapAction(e)</h4>
+    
+    
+</dt>
+<dd>
+    
+    
+    <div class="description">
+        <p>
+        Handle the tap event of the action button and will dispatch a result event.
+        </p>
+    </div>
+    
+
+    
+    
+    
+    
+    
+        <h5>Parameters:</h5>
+        
+
+<table class="params table table-bordered table-condensed">
+    <thead>
+	<tr>
+		
+		<th>Name</th>
+		
+
+		<th>Type</th>
+
+		
+
+		
+
+		<th class="last">Description</th>
+	</tr>
+	</thead>
+
+	<tbody>
+	
+
+        <tr>
+            
+                <td class="name">e</td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">{<a href="GestureEvent.html">GestureEvent</a>}</span>
+
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last">the gesture event info.</td>
+        </tr>
+
+	
+	</tbody>
+</table>
+
+    
+    
+    
+<dl class="details">
+    
+        
+    
+    
+    
+
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+
+    
+    
+    
+    
+    
+    
+    
+</dl>
+
+    
+    
+
+    
+
+    
+    
+    
+    
+    
+    
+    
+</dd>
+
+        
+            
+<dt>
     <h4 class="name" id="show">show()</h4>
     
     
@@ -1701,6 +1870,10 @@ Note that you should not override this method to do initialization when the dial
     
     
 
+    
+    <dd class="inherited-from"><ul class="dummy breadcrumb"><li>Inherited From:</li><li>
+        <a href="Dialog.html#show">Dialog#show</a>
+    </li></dd>
     
     
     
@@ -1768,6 +1941,10 @@ Note that you should not override this method to do cleanup when the dialog is c
     
     
 
+    
+    <dd class="inherited-from"><ul class="dummy breadcrumb"><li>Inherited From:</li><li>
+        <a href="Dialog.html#close">Dialog#close</a>
+    </li></dd>
     
     
     
