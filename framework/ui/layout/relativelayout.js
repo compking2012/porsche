@@ -14,14 +14,15 @@ var Layout = require("./layout");
 var RelativeLayoutParam = require("./relativelayoutparam");
 
 /**
- * Relative Layout which can automatically caculate views' position based on constraints
+ * Relative layout that can automatically calculate the position of the specified child views
+ * of an associated composite view based on the specified constraints.
  * @class RelativeLayout
  * @extends Layout
  */
 Class.define("framework.ui.layout.RelativeLayout", Layout, {
     initialize: function() {
         Layout.prototype.initialize.apply(this, arguments);
-        
+
         this._units = 0;
     },
 
@@ -31,7 +32,7 @@ Class.define("framework.ui.layout.RelativeLayout", Layout, {
 
     /**
      * @method RelativeLayout#getLayoutParam
-     * @param {Number} index of the child RelativeLayout
+     * @param {Number} index - the index of the child layout param.
      * @description return the child RelativeLayout of index
      * @override
      */

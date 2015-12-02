@@ -600,14 +600,13 @@ Class.define("framework.ui.view.View", EventEmitter, {
      * @type {Rectangle[] || null}
      * @description one or more rectangles which represent several areas that can be used to extend the touch area.
      * If omitted and left as null, it means the default touch area which is the bound of this view.
-     * @private
      */
     get touchRegion() {
         return this._touchRegion;
     },
 
     set touchRegion(value) {
-        this._touchRegion = value;
+        this.setProperty("touchRegion", value);
     },
 
     /**
@@ -790,6 +789,7 @@ Class.define("framework.ui.view.View", EventEmitter, {
      * Implement this to do your drawing.
      * @method View#draw
      * @param {Context} context - the canvas context to which the view is rendered
+     * @protected
      * @abstract
      */
     draw: function(/*context*/) {
@@ -800,7 +800,7 @@ Class.define("framework.ui.view.View", EventEmitter, {
      * Override and implement this to do your background drawing.
      * @method View#drawBackground
      * @param {Context} context - the canvas context to which the view is rendered
-     * @override
+     * @protected
      */
     drawBackground: function(context) {
         if (this._background !== "") {
@@ -876,8 +876,21 @@ Class.define("framework.ui.view.View", EventEmitter, {
      */
     containsPoint: function(point) {
         // FIXME: consider transform 2d cases
-        return this._left <= point.x && point.x <= this._left + this._width &&
-            this._top <= point.y && point.y <= this._top + this._height;
+        if (this._left <= point.x && point.x <= this._left + this._width &&
+            this._top <= point.y && point.y <= this._top + this._height) {
+            return true;
+        }
+
+        if (this._touchRegion !== null) {
+            var length = this._touchRegion.length;
+            for (var i = 0; i < length; i++) {
+                var rect = this._touchRegion[i];
+                if (rect.containsXY(point.x - this._left, point.y - this._top)) {
+                    return true;
+                }
+            }
+        }
+        return false;
     },
 
     /**

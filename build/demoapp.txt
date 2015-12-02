@@ -1,61 +1,30 @@
 ### GUI ###
-*) animation
+
+*) helloworld
 H5:     passed
 Node:   passed
 
-*) animation-image
+*) touchregion
 H5:     passed
 Node:   passed
 
-*) animationgroup
+*) transform2d
 H5:     passed
 Node:   passed
 
-*) autolayout
+*) transform2d-animation
 H5:     passed
 Node:   passed
 
-*) autolayout-relayout
+*) viewbounds
+H5:     no pass
+Node:   no pass
+
+*) viewhierarchy
 H5:     passed
 Node:   passed
 
-*) backgroundimage
-H5:     passed
-Node:   passed
-
-*) barcodeview
-H5:     passed
-Node:   passed
-
-*) button
-H5:     passed
-Node:   passed
-
-*) button-mouseevent
-H5:     passed
-Node:   passed
-
-*) chart
-H5:     passed
-Node:   passed
-
-*) checkbox
-H5:     passed
-Node:   passed
-
-*) circleprogressview
-H5:     passed
-Node:   passed
-
-*) circleprogressview-animation
-H5:     passed
-Node:   passed
-
-*) columnlayout
-H5:     passed
-Node:   passed
-
-*) dialog
+*) viewhierarchy-overlap
 H5:     passed
 Node:   passed
 
@@ -67,14 +36,6 @@ Node:   passed
 H5:     passed
 Node:   passed
 
-*) flowlayout
-H5:     no pass
-Node:   no pass
-
-*) frameanimation
-H5:     passed
-Node:   passed
-
 *) gesture
 H5:     passed
 Node:   passed
@@ -83,11 +44,31 @@ Node:   passed
 H5:     passed
 Node:   passed
 
-*) gridlayout
-H5:     no pass
-Node:   no pass
+*) backgroundimage
+H5:     passed
+Node:   passed
 
-*) helloworld
+*) barcodeview
+H5:     passed
+Node:   passed
+
+*) qrcodeview
+H5:     passed
+Node:   passed
+
+*) button
+H5:     passed
+Node:   passed
+
+*) button-mouseevent
+H5:     passed
+Node:   passed
+
+*) checkbox
+H5:     passed
+Node:   passed
+
+*) switch
 H5:     passed
 Node:   passed
 
@@ -111,6 +92,10 @@ Node:   passed
 H5:     passed
 Node:   passed
 
+*) twolinelistitem
+H5:     passed
+Node:   passed
+
 *) progressview
 H5:     passed
 Node:   passed
@@ -119,11 +104,23 @@ Node:   passed
 H5:     passed
 Node:   passed
 
-*) qrcodeview
+*) circleprogressview
 H5:     passed
 Node:   passed
 
-*) relativelayout
+*) circleprogressview-animation
+H5:     passed
+Node:   passed
+
+*) slider
+H5:     passed
+Node:   passed
+
+*) textfield
+H5:     passed
+Node:   passed
+
+*) textview
 H5:     passed
 Node:   passed
 
@@ -135,7 +132,7 @@ Node:   passed
 H5:     passed
 Node:   passed
 
-*) rowlayout
+*) chart
 H5:     passed
 Node:   passed
 
@@ -155,10 +152,6 @@ Node:   passed
 H5:     passed
 Node:   passed
 
-*) slider
-H5:     passed
-Node:   passed
-
 *) stackview
 H5:     passed
 Node:   passed
@@ -171,46 +164,57 @@ Node:   passed
 H5:     passed
 Node:   passed
 
-*) switch
+*) dialog
 H5:     passed
 Node:   passed
 
-*) textfield
+*) propertyanimation
 H5:     passed
 Node:   passed
 
-*) textview
+*) propertyanimation-image
 H5:     passed
 Node:   passed
 
-*) touchregion
+*) frameanimation
+H5:     passed
+Node:   passed
+
+*) animationgroup
+H5:     passed
+Node:   passed
+
+*) rowlayout
+H5:     passed
+Node:   passed
+
+*) columnlayout
+H5:     passed
+Node:   passed
+
+*) flowlayout
 H5:     no pass
 Node:   no pass
 
-*) transform2d
-H5:     passed
-Node:   passed
-
-*) transform2d-animation
-H5:     passed
-Node:   passed
-
-*) twolinelistitem
-H5:     passed
-Node:   passed
-
-*) viewbounds
+*) gridlayout
 H5:     no pass
 Node:   no pass
 
-*) viewhierarchy
+*) relativelayout
 H5:     passed
 Node:   passed
 
-*) viewhierarchy-overlap
+*) autolayout
 H5:     passed
 Node:   passed
 
+*) autolayout-relayout
+H5:     passed
+Node:   passed
+
+*) customlayout
+H5:     no pass
+Node:   no pass
 
 
 ### App Model ###

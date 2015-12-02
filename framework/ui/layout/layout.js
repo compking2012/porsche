@@ -13,11 +13,15 @@ var Class = require("../../class");
 var YObject = require("../../yobject");
 
 /**
- * Base Layout for all the layouts
+ * Base class for all the layouts
  * @class Layout
  * @extends YObject
  */
 Class.define("framework.ui.layout.Layout", YObject, {
+    /**
+     * Constructor that create a layout.
+     * @method Layout#initialize
+     */
     initialize: function() {
         YObject.prototype.initialize.apply(this, arguments);
 
@@ -25,6 +29,10 @@ Class.define("framework.ui.layout.Layout", YObject, {
         this._childparam = [];
     },
 
+    /**
+     * Destructor that destroy this layout.
+     * @method Layout#destroy
+     */
     destroy: function() {
         this._associatedView = null;
         for (var i = 0; i < this._childparam.length; i++) {
@@ -34,17 +42,12 @@ Class.define("framework.ui.layout.Layout", YObject, {
         YObject.prototype.destroy.apply(this, arguments);
     },
 
-    get view() {
-        return this._associatedView;
-    },
-
-    get childparam() {
-        return this._childparam;
-    },
-
     /**
+     * Get the layout param value for the child view at index.
      * @method Layout#getLayoutParam
-     * @description get childparam of child view at index
+     * @param {Number} index - the index of the child view.
+     * @param {String} attribute - the attribute in layout param.
+     * @protected
      * @abstract
      */
     getLayoutParam: function(/*index, attribute*/) {
@@ -52,8 +55,12 @@ Class.define("framework.ui.layout.Layout", YObject, {
     },
 
     /**
+     * Set the layout param value for the child view at index.
      * @method Layout#setLayoutParam
-     * @description set childparam of child view at index
+     * @param {Number} index - the index of the child view.
+     * @param {String} attribute - the attribute in layout param.
+     * @param {Object} constraint - the constraint value in layout param.
+     * @protected
      * @abstract
      */
     setLayoutParam: function(/*index, attribute, constraint*/) {
@@ -61,8 +68,8 @@ Class.define("framework.ui.layout.Layout", YObject, {
     },
 
     /**
+     * Remove childparam of child view at index.
      * @method Layout#removeLayoutParam
-     * @description remove childparam of child view at index
      * @abstract
      */
     removeLayoutParam: function(/*index, attribute*/) {
@@ -70,12 +77,20 @@ Class.define("framework.ui.layout.Layout", YObject, {
     },
 
     /**
-     * @method Layout#calculateFrame
      * @@description Handle view's layout
+     * @method Layout#calculateFrame
      * @abstract
      */
     perform: function() {
         // TO BE IMPLEMENTED
+    },
+
+    get view() {
+        return this._associatedView;
+    },
+
+    get childparam() {
+        return this._childparam;
     },
 
     /**
