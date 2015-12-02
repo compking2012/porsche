@@ -60,6 +60,7 @@ Class.define("framework.ui.animation.CubicBezier", YObject, {
          * Create an ease bezier.
          * @method CubicBezier#ease
          * @return {Object} an ease bezier object.
+         * @static
          */
         ease: function() {
             return new this(0.25, 0.1, 0.25, 1.0);
@@ -69,6 +70,7 @@ Class.define("framework.ui.animation.CubicBezier", YObject, {
          * Create a linear bezier.
          * @method CubicBezier#linear
          * @return {Object} an linear bezier object.
+         * @static
          */
         linear: function() {
             return new this(0.0, 0.0, 1.0, 1.0);
@@ -78,6 +80,7 @@ Class.define("framework.ui.animation.CubicBezier", YObject, {
          * Create an ease-in bezier.
          * @method CubicBezier#easeIn
          * @return {Object} an ease-in bezier object.
+         * @static
          */
         easeIn: function() {
             return new this(0.42, 0, 1.0, 1.0);
@@ -87,6 +90,7 @@ Class.define("framework.ui.animation.CubicBezier", YObject, {
          * Create an ease-out bezier.
          * @method CubicBezier#easeOut
          * @return {Object} an ease-out bezier object.
+         * @static
          */
         easeOut: function() {
             return new this(0, 0, 0.58, 1.0);
@@ -96,6 +100,7 @@ Class.define("framework.ui.animation.CubicBezier", YObject, {
          * Create an ease-in-out bezier.
          * @method CubicBezier#easeInOut
          * @return {Object} an ease-in-out bezier object.
+         * @static
          */
         easeInOut: function() {
             return new this(0.42, 0, 0.58, 1.0);
