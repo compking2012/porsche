@@ -3,7 +3,7 @@ var fx = require("framework");
 var Class = fx.import("framework.Class");
 var App = fx.import("framework.app.App");
 var View = fx.import("framework.ui.view.View");
-var Animation = fx.import("framework.ui.animation.Animation");
+var PropertyAnimation = fx.import("framework.ui.animation.PropertyAnimation");
 
 Class.define("MyApp", App, {
     onStart: function() {
@@ -18,14 +18,14 @@ Class.define("MyApp", App, {
 
         this.window.addChild(this.view);
 
-        var animation = new Animation(this.view);
+        var animation = new PropertyAnimation(this.view);
         animation.from = {rotationZ: 0 * Math.PI / 180, width: 100, height: 100, opacity: 0, background: "#FF0000"};
         animation.to = {rotationZ: 360 * Math.PI / 180, width: 200, height: 200, opacity: 1, background: "rgb(0,255,0)"};
         animation.duration = 3000;
-        animation.repeat = 0;
+        animation.repeat = "infinite";
         animation.easing = "cubic-bezier(0.42, 0, 0.58, 1.0)";
         animation.addEventListener("iteration", function(iteration) {
-            if (iteration === 5) {
+            if (iteration % 5 === 0) {
                 animation.pause();
                 setTimeout(function() {
                     animation.resume();

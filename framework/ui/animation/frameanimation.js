@@ -11,6 +11,8 @@
 "use strict";
 var Class = require("../../class");
 var Animation = require("./animation");
+var CubicBezier = require("./cubicbezier");
+var SharedTimer = require("./sharedtimer");
 
 Class.define("framework.ui.animation.FrameAnimation", Animation, {
     /**
@@ -21,6 +23,12 @@ Class.define("framework.ui.animation.FrameAnimation", Animation, {
         Animation.prototype.initialize.apply(this, arguments);
 
         this._frames = {};
+        this._beziers = CubicBezier.ease();
+        this._timer = SharedTimer.getInstance();
+        this._iteration = 0;
+        this._animators = [];
+        this._startTime = 0;
+        this._currentTime = 0;
     },
 
     /**
@@ -29,10 +37,20 @@ Class.define("framework.ui.animation.FrameAnimation", Animation, {
      */
     destroy: function() {
         this._frames = null;
+        this._beziers.destroy();
+        this._beziers = null;
+        this._timer.destroy();
+        this._timer = null;
+        this._animators = null;
 
         Animation.prototype.destroy.apply(this, arguments);
     },
 
+    /**
+     * @name FrameAnimation#frames
+     * @type {Object}
+     * @description the frames that plays in this frame animation.
+     */
     get frames() {
         return this._frames;
     },
@@ -41,6 +59,14 @@ Class.define("framework.ui.animation.FrameAnimation", Animation, {
         this._frames = value;
     },
 
+    /**
+     * Starts this animation. If the animation has a nonzero delay,
+     * the animation will start running after that delay elapses.
+     * A non-delayed animation will have its initial value(s) set immediately.
+     * @method FrameAnimation#start
+     * @protected
+     * @override
+     */
     start: function() {
         this._beziers = this.getCubicBezier();
 
@@ -75,9 +101,9 @@ Class.define("framework.ui.animation.FrameAnimation", Animation, {
             var time = new Date().getTime() - this._startTime;
             this._currentTime = time;
             if (time > remainTime) {
-                this.animate(0, this._duration);
+                this.animate(this._duration);
                 this._iteration++;
-                if (this._repeat === 0) {
+                if (this._repeat === "infinite") {
                     this._startTime = new Date().getTime();
                     this._animatorIndex = 0;
                     this.dispatchEvent("iteration", this._iteration);
@@ -93,10 +119,16 @@ Class.define("framework.ui.animation.FrameAnimation", Animation, {
                 }
                 return;
             }
-            this.animate(0, time);
+            this.animate(time);
         }.bind(this), 16);
     },
 
+    /**
+     * Stops this animation. This causes the animation to assign the end value of the property being animated.
+     * @method FrameAnimation#stop
+     * @protected
+     * @override
+     */
     stop: function() {
         this._timer.removeTimer(this._onTimerFunc);
         this._animators = [];
@@ -104,15 +136,35 @@ Class.define("framework.ui.animation.FrameAnimation", Animation, {
         this._animatorIndex = 0;
     },
 
+    /**
+     * Pauses a running animation. This method should only be called on which the animation was started.
+     * If the animation has not yet been started or has since ended, then the call is ignored.
+     * @method FrameAnimation#pause
+     * @protected
+     * @override
+     */
     pause: function() {
-
+        // TODO
     },
 
+    /**
+     * Resumes a paused animation, causing the animation to pick up where it left off when it was paused.
+     * This method should only be called on which the animation was paused.
+     * @method FrameAnimation#resume
+     * @protected
+     * @override
+     */
     resume: function() {
-
+        // TODO
     },
 
-    animate: function(startTime, time) {
+    /**
+     * Do the animation.
+     * @method FrameAnimation#animate
+     * @param {Number} time - the time, in milliseconds.
+     * @private
+     */
+    animate: function(time) {
         if (time / this._duration < this._animators[this._animatorIndex].percent) {
             return;
         }

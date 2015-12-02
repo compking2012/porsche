@@ -14,6 +14,7 @@ var Window = require("./window");
 
 /**
  * Base class for dialogs which provides a facility to manage the creation, saving and restoring of dialogs.
+ * Note that this class is never used to instantiate directly.
  * @class Dialog
  * @extends Window
  */
@@ -47,6 +48,7 @@ Class.define("framework.ui.view.Dialog", Window, {
     /**
      * Close this dialog, removing it from the screen.
      * Note that you should not override this method to do cleanup when the dialog is closed.
+     * @method Dialog#close
      */
     close: function() {
         global.app.windowManager.closeDialog();

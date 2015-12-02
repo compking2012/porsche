@@ -12,9 +12,14 @@
 var Class = require("../../class");
 var EventEmitter = require("../../eventemitter");
 
+/**
+ * Animation group represents a group of animations that should be played together (sequentially or parallelly).
+ * @class AnimationGroup
+ * @extends EventEmitter
+ */
 Class.define("framework.ui.animation.AnimationGroup", EventEmitter, {
     /**
-     * Constructor
+     * Constructor that create an animation group.
      * @method AnimationGroup#initialize
      */
     initialize: function(view) {
@@ -28,7 +33,7 @@ Class.define("framework.ui.animation.AnimationGroup", EventEmitter, {
     },
 
     /**
-     * Destructor
+     * Destructor that destroy this animation group.
      * @method AnimationGroup#destroy
      */
     destroy: function() {

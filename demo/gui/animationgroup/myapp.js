@@ -3,7 +3,7 @@ var fx = require("framework");
 var Class = fx.import("framework.Class");
 var App = fx.import("framework.app.App");
 var View = fx.import("framework.ui.view.View");
-var Animation = fx.import("framework.ui.animation.Animation");
+var PropertyAnimation = fx.import("framework.ui.animation.PropertyAnimation");
 var AnimationGroup = fx.import("framework.ui.animation.AnimationGroup");
 
 Class.define("MyApp", App, {
@@ -28,18 +28,18 @@ Class.define("MyApp", App, {
         this.view2.height = 100;
         this.window.addChild(this.view2);
 
-        var animation1 = new Animation(this.view1);
+        var animation1 = new PropertyAnimation(this.view1);
         animation1.from = {rotationZ: 0 * Math.PI / 180};
         animation1.to = {rotationZ: 360 * Math.PI / 180};
         animation1.duration = 3000;
-        animation1.repeat = 5;
+        animation1.repeat = 4;
         animation1.easing = "cubic-bezier(0.42, 0, 0.58, 1.0)";
 
-        var animation2 = new Animation(this.view2);
+        var animation2 = new PropertyAnimation(this.view2);
         animation2.from = {rotationZ: 0 * Math.PI / 180};
         animation2.to = {rotationZ: 360 * Math.PI / 180};
         animation2.duration = 3000;
-        animation2.repeat = 5;
+        animation2.repeat = 4;
         animation2.easing = "linear";
 
         var animationGroup = new AnimationGroup();
