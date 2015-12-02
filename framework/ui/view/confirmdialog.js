@@ -15,7 +15,21 @@ var RelativeLayout = require("../layout/relativelayout");
 var TextView = require("./textview");
 var Button = require("./button");
 
+/**
+ * Confirm dialog which is a subclass of dialog that can display a message with two buttons.
+ * User can tap the confirm button or the cancel button.
+ * @class ConfirmDialog
+ * @extends Dialog
+ */
 Class.define("framework.ui.view.ConfirmDialog", Dialog, {
+    /**
+     * Constructor that create an confirm dialog.
+     * @method ConfirmDialog#initialize
+     * @param  {Object} options - the required parameters for this confirm dialog.
+     * messageText is a required parameter which is used to display a text as a message.
+     * confirmText is a required parameter which is used for confirm button.
+     * cancelText is a required parameter which is used for cancel button.
+     */
     initialize: function(options) {
         Dialog.prototype.initialize.apply(this, arguments);
 
@@ -64,6 +78,10 @@ Class.define("framework.ui.view.ConfirmDialog", Dialog, {
         this._cancelButton.text = options.cancelText;
     },
 
+    /**
+     * Destructor that destroy this dialog
+     * @method ConfirmDialog#destroy
+     */
     destroy: function() {
         this.removeChild(this._messageTextView);
         this._messageTextView.destroy();
@@ -84,12 +102,22 @@ Class.define("framework.ui.view.ConfirmDialog", Dialog, {
         Dialog.prototype.destroy.apply(this, arguments);
     },
 
-    onTapConfirm: function() {
+    /**
+     * Handle the tap event of the confirm button and will dispatch a result event.
+     * @method ConfirmDialog#onTapConfirm
+     * @param {GestureEvent} e - the gesture event info.
+     */
+    onTapConfirm: function(/*e*/) {
         this.dispatchEvent("result", true);
         this.close();
     },
 
-    onTapCancel: function() {
+    /**
+     * Handle the tap event of the cancel button and will dispatch a result event.
+     * @method ConfirmDialog#onTapCancel
+     * @param {GestureEvent} e - the gesture event info.
+     */
+    onTapCancel: function(/*e*/) {
         this.dispatchEvent("result", false);
         this.close();
     }

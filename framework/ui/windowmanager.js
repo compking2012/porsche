@@ -91,6 +91,8 @@ Class.define("framework.ui.WindowManager", EventEmitter, {
         if (this._dialog !== null) {
             return;
         }
+        dialog.width = this._renderService.getWidth();
+        dialog.height = this._renderService.getHeight();
         dialog.windowManager = this;
         this._dialog = dialog;
         this.draw();
