@@ -154,7 +154,7 @@ Class.define("framework.ui.gesture.Input", EventEmitter, {
      * Create a simple clone from the input used for storage of firstInput and firstMultiple
      * @method Input#simpleCloneInputData
      * @param {Object} input
-     * @returns {Object} clonedInputData
+     * @return {Object} clonedInputData
      */
     simpleCloneInputData: function(input) {
         // make a simple copy of the pointers because we will get a reference if we don't

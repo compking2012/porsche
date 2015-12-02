@@ -73,7 +73,7 @@ Class.define("framework.ui.gesture.SwipeRecognizer", GestureRecognizer, {
      * Used to check if it the recognizer receives valid input, like input.distance > 10.
      * @method SwipeRecognizer#attrTest
      * @param {Object} input
-     * @returns {Boolean} recognized
+     * @return {Boolean} recognized
      * @private
      */
     attrTest: function(input) {

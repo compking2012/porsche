@@ -71,7 +71,7 @@
     
     <div class="description">
         <p>
-        Cubic bezier curve library
+        Cubic bezier curve library.
         </p>
     </div>
     
@@ -151,7 +151,7 @@
     
     <div class="description">
         <p>
-        Constructor
+        Constructor that create a cubic bezier.
         </p>
     </div>
     
@@ -217,7 +217,7 @@
     
     <div class="description">
         <p>
-        Destructor
+        Destructor that destroy this cubic bezier.
         </p>
     </div>
     
@@ -283,7 +283,7 @@
     
     <div class="description">
         <p>
-        ease bezier
+        Create an ease bezier.
         </p>
     </div>
     
@@ -346,7 +346,7 @@
 
 
 <span class="param-desc">
-    Returns ease bezier Object
+    an ease bezier object.
 </span>
 
 </div>
@@ -368,7 +368,7 @@
     
     <div class="description">
         <p>
-        linear bezier
+        Create a linear bezier.
         </p>
     </div>
     
@@ -431,7 +431,7 @@
 
 
 <span class="param-desc">
-    Returns linear bezier Object
+    an linear bezier object.
 </span>
 
 </div>
@@ -453,7 +453,7 @@
     
     <div class="description">
         <p>
-        easeIn bezier
+        Create an ease-in bezier.
         </p>
     </div>
     
@@ -516,7 +516,7 @@
 
 
 <span class="param-desc">
-    Returns easeIn bezier Object
+    an ease-in bezier object.
 </span>
 
 </div>
@@ -538,7 +538,7 @@
     
     <div class="description">
         <p>
-        easeOut bezier
+        Create an ease-out bezier.
         </p>
     </div>
     
@@ -601,7 +601,7 @@
 
 
 <span class="param-desc">
-    Returns easeOut bezier Object
+    an ease-out bezier object.
 </span>
 
 </div>
@@ -623,7 +623,7 @@
     
     <div class="description">
         <p>
-        easeInOut bezier
+        Create an ease-in-out bezier.
         </p>
     </div>
     
@@ -686,7 +686,7 @@
 
 
 <span class="param-desc">
-    Returns easeInOut bezier Object
+    an ease-in-out bezier object.
 </span>
 
 </div>
@@ -749,7 +749,7 @@
             <td class="type">
             
                 
-<span class="param-type">{number}</span>
+<span class="param-type">{Number}</span>
 
 
 
@@ -760,7 +760,7 @@
 
             
 
-            <td class="description last">value between 0 and 1</td>
+            <td class="description last">value between 0 and 1.</td>
         </tr>
 
 	
@@ -821,7 +821,7 @@
 
 
 <span class="param-desc">
-    Returns an object with x and y properties
+    an object with x and y properties.
 </span>
 
 </div>
@@ -834,7 +834,7 @@
         
             
 <dt>
-    <h4 class="name" id="divideAtT">divideAtT(t)</h4>
+    <h4 class="name" id="clone">clone()</h4>
     
     
 </dt>
@@ -843,8 +843,7 @@
     
     <div class="description">
         <p>
-        Divides the bezier curve into two bezier functions.
-De Casteljau's algorithm is used to compute the new starting, ending, and control points.
+        Creates and returns a copy of this cubic bezier.
         </p>
     </div>
     
@@ -853,57 +852,6 @@ De Casteljau's algorithm is used to compute the new starting, ending, and contro
     
     
     
-    
-        <h5>Parameters:</h5>
-        
-
-<table class="params table table-bordered table-condensed">
-    <thead>
-	<tr>
-		
-		<th>Name</th>
-		
-
-		<th>Type</th>
-
-		
-
-		
-
-		<th class="last">Description</th>
-	</tr>
-	</thead>
-
-	<tbody>
-	
-
-        <tr>
-            
-                <td class="name">t</td>
-            
-
-            <td class="type">
-            
-                
-<span class="param-type">{number}</span>
-
-
-
-            
-            </td>
-
-            
-
-            
-
-            <td class="description last">must be greater than 0 and lower than 1.
-    t == 1 or t == 0 are the starting/ending points of the curve, so no division is needed.</td>
-        </tr>
-
-	
-	</tbody>
-</table>
-
     
     
     
@@ -951,14 +899,14 @@ De Casteljau's algorithm is used to compute the new starting, ending, and contro
 
 
     
-<span class="param-type">{Array.&lt;<a href="CubicBezier.html">CubicBezier</a>>}</span>
+<span class="param-type">{Object}</span>
 
 
 
 
 
 <span class="param-desc">
-    Returns an array containing two bezier curves to the left and the right of t.
+    a copy of this cubic bezier.
 </span>
 
 </div>
@@ -1113,101 +1061,6 @@ no object reference other than null is equal to null.
         
             
 <dt>
-    <h4 class="name" id="clone">clone()</h4>
-    
-    
-</dt>
-<dd>
-    
-    
-    <div class="description">
-        <p>
-        Creates and returns a copy of this Object.
-The default implementation returns a so-called "shallow" copy:
-It creates a new instance of the same class and then copies the field values
-(including object references) from this instance to the new instance.
-A "deep" copy, in contrast, would also recursively clone nested objects.
-A subclass that needs to implement this kind of cloning should call super's clone()
-to create the new instance and then create deep copies of the nested, mutable objects.
-        </p>
-    </div>
-    
-
-    
-    
-    
-    
-    
-    
-    
-<dl class="details">
-    
-        
-    
-    
-    
-
-    
-    <dd class="inherited-from"><ul class="dummy breadcrumb"><li>Inherited From:</li><li>
-        <a href="YObject.html#clone">YObject#clone</a>
-    </li></dd>
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-
-    
-    
-    
-    
-    
-    
-    
-</dl>
-
-    
-    
-
-    
-
-    
-    
-    
-    
-    
-    <h5>Returns:</h5>
-    
-            <div class="returns">
-
-
-    
-<span class="param-type">{Object}</span>
-
-
-
-
-
-<span class="param-desc">
-    a copy of this object.
-</span>
-
-</div>
-
-        
-    
-    
-</dd>
-
-        
-            
-<dt>
     <h4 class="name" id="toString">toString()</h4>
     
     
@@ -1298,7 +1151,7 @@ this.className
         <br clear="both">
 
       <footer>
-        Documentation generated by <a href="https://github.com/jsdoc3/jsdoc">JSDoc 3.3.2</a> on Wed Dec 02 2015 15:06:03 GMT+0800 (CST)
+        Documentation generated by <a href="https://github.com/jsdoc3/jsdoc">JSDoc 3.3.2</a> on Wed Dec 02 2015 15:33:23 GMT+0800 (CST)
         <br>
       </footer>
       <script> prettyPrint(); </script>

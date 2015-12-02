@@ -92,7 +92,7 @@ Class.define("framework.ui.gesture.SingleTouchInput", Input, {
      * @method TouchInput#normalizeSingleTouches
      * @param {Object} ev
      * @param {Number} type flag
-     * @returns {undefined|Array} [all, changed]
+     * @return {undefined|Array} [all, changed]
      */
     normalizeSingleTouches: function(ev, type) {
         var all = Util.toArray(ev.touches);
