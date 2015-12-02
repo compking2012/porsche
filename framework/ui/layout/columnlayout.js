@@ -21,7 +21,7 @@ var ColumnLayoutParam = require("./columnlayoutparam");
 Class.define("framework.ui.layout.ColumnLayout", Layout, {
     initialize: function() {
         Layout.prototype.initialize.apply(this, arguments);
-        
+
         this._paddingLeft = 0;
         this._paddingRight = 0;
         this._defaultParam = new ColumnLayoutParam(this);
