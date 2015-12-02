@@ -25,8 +25,8 @@ Class.define("framework.ui.layout.FlowLayout", Layout, {
         this._valign = "middle";
         this._lineSpacing = 5; // horizontal spacing between views and parent container
         this._header = 10;
-        this._defaultparam = new FlowLayoutParam(-1, -1, this); // default values
-        this._defaultparam.setMargin(0, 0, 0, 0);
+        this._defaultLayoutParam = new FlowLayoutParam(-1, -1, this); // default values
+        this._defaultLayoutParam.setMargin(0, 0, 0, 0);
     },
 
     /**
@@ -71,8 +71,8 @@ Class.define("framework.ui.layout.FlowLayout", Layout, {
         this.invalidate();
     },
 
-    get defaultParam() {
-        return this._defaultparam;
+    get defaultLayoutParam() {
+        return this._defaultLayoutParam;
     },
 
     /**
@@ -90,7 +90,7 @@ Class.define("framework.ui.layout.FlowLayout", Layout, {
     },
 
     destroy: function() {
-        this._defaultparam = null;
+        this._defaultLayoutParam = null;
         Layout.prototype.destroy.apply(this, arguments);
     },
 
@@ -101,12 +101,12 @@ Class.define("framework.ui.layout.FlowLayout", Layout, {
      * @override
      */
     getParamAtIndex: function(index) {
-        if (this._childparam[index] ===  undefined) {
-            this._childparam[index] = new FlowLayoutParam(-1, -1, this);
-            this._childparam[index]._margin = this._defaultparam._margin;
-            this._childparam[index]._itemSpacing = this._defaultparam._itemSpacing;
+        if (this._layoutParams[index] ===  undefined) {
+            this._layoutParams[index] = new FlowLayoutParam(-1, -1, this);
+            this._layoutParams[index]._margin = this._defaultLayoutParam._margin;
+            this._layoutParams[index]._itemSpacing = this._defaultLayoutParam._itemSpacing;
         }
-        return this._childparam[index];
+        return this._layoutParams[index];
     },
 
     /**
@@ -126,11 +126,11 @@ Class.define("framework.ui.layout.FlowLayout", Layout, {
             while (beiginIndex < this._associatedView._children.length) {
                 endIndex = beginIndex + linesInfo[linesnum].viewnum;
                 for (var i = endIndex - 1; i >= beginIndex; i--) {
-                    if (this._childparam[i] !== undefined && this._childparam[i]._set === 1) {
-                        layoutParam = this._childparam[i];
+                    if (this._layoutParams[i] !== undefined && this._layoutParams[i]._set === 1) {
+                        layoutParam = this._layoutParams[i];
                     }
                     else {
-                        layoutParam = this._defaultparam;
+                        layoutParam = this._defaultLayoutParam;
                     }
                     var child = this._associatedView._children[i];
                     child.left = l - layoutParam._itemSpacing - child.width;
@@ -148,22 +148,22 @@ Class.define("framework.ui.layout.FlowLayout", Layout, {
                 rowWidth = 0;
                 for (var i = endIndex - 1; i >= beginIndex; i--) {
                     rowWidth += this._associatedView._children[i].width;
-                     if (this._childparam[i] !== undefined && this._childparam[i]._set === 1) {
-                        layoutParam = this._childparam[i];
+                     if (this._layoutParams[i] !== undefined && this._layoutParams[i]._set === 1) {
+                        layoutParam = this._layoutParams[i];
                     }
                     else {
-                        layoutParam = this._defaultparam;
+                        layoutParam = this._defaultLayoutParam;
                     }
                     rowWidth += layoutParam._itemSpacing;
                 }
                 rowWidth -= layoutParam._itemSpacing;
                 l = (this._associatedView.width - rowWidth) / 2;
                 for (var i = beginIndex; i < endIndex; i++) {
-                    if (this._childparam[i] !== undefined && this._childparam[i]._set === 1) {
-                        layoutParam = this._childparam[i];
+                    if (this._layoutParams[i] !== undefined && this._layoutParams[i]._set === 1) {
+                        layoutParam = this._layoutParams[i];
                     }
                     else {
-                        layoutParam = this._defaultparam;
+                        layoutParam = this._defaultLayoutParam;
                     }
                     var child = this._associatedView._children[i];
                     child.left = l;
@@ -178,11 +178,11 @@ Class.define("framework.ui.layout.FlowLayout", Layout, {
             while ( beginIndex < this._associatedView._children.length) {
                 endIndex = beginIndex + linesInfo[linesnum].viewnum;
                 for (var i = beginIndex; i < endIndex; i++) {
-                    if (this._childparam[i] !== undefined && this._childparam[i]._set === 1) {
-                        layoutParam = this._childparam[i];
+                    if (this._layoutParams[i] !== undefined && this._layoutParams[i]._set === 1) {
+                        layoutParam = this._layoutParams[i];
                     }
                     else {
-                        layoutParam = this._defaultparam;
+                        layoutParam = this._defaultLayoutParam;
                     }
                     var child = this._associatedView._children[i];
                     child.left = l + layoutParam._itemSpacing;
@@ -213,15 +213,15 @@ Class.define("framework.ui.layout.FlowLayout", Layout, {
         for (var i = 0; i < this._associatedView._children.length; i++) {
             var child = this._associatedView._children[i];
             var layoutParam = null;
-            if (this._childparam[i] === undefined) {
-                this._childparam[i] = new FlowLayoutParam(-1, -1, this);
+            if (this._layoutParams[i] === undefined) {
+                this._layoutParams[i] = new FlowLayoutParam(-1, -1, this);
             }
             this._childPosition[i] = {left: child.left, top: child.top, width: child.width, height: child.height};
-            if (this._childparam[i]._set === 1) {
-                layoutParam = this._childparam[i];
+            if (this._layoutParams[i]._set === 1) {
+                layoutParam = this._layoutParams[i];
             }
             else {
-                layoutParam = this._defaultparam;
+                layoutParam = this._defaultLayoutParam;
             }
             startpos += layoutParam._itemSpacing;
             startpos += child.width;

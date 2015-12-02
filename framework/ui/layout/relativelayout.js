@@ -37,10 +37,10 @@ Class.define("framework.ui.layout.RelativeLayout", Layout, {
      * @override
      */
     getLayoutParam: function(index, attribute) {
-        if (this._childparam[index] === undefined) {
+        if (this._layoutParams[index] === undefined) {
             throw "The RelativeLayoutParam required is not defind";
         }
-        var child = this._childparam[index];
+        var child = this._layoutParams[index];
         if (attribute === "align") {
             return child.getAlignAttribute();
         } else if (attribute === "margin") {
@@ -52,14 +52,14 @@ Class.define("framework.ui.layout.RelativeLayout", Layout, {
 
     /**
      * @method RelativeLayout#setLayoutParam
-     * @param {Number} index - index for the ChildParam
+     * @param {Number} index - index for the layoutParams
      * @param {String} attribute - attribute string of "align", "margin" to set alignment/margins
      * @param {Object} constraint - the constraint of the relativelayout
      * @description Add new constranit of the relativelayout
      */
     setLayoutParam: function(index, attribute, constraint) {
-        if (this._childparam[index] === undefined) {
-            this._childparam[index] = new RelativeLayoutParam(this);
+        if (this._layoutParams[index] === undefined) {
+            this._layoutParams[index] = new RelativeLayoutParam(this);
             if (this._units < index) {
                 this._units = index;
             }
@@ -87,34 +87,34 @@ Class.define("framework.ui.layout.RelativeLayout", Layout, {
                 }
                 switch (property) {
                     case "left":
-                        this._childparam[index].alignLeft = true;
-                        this._childparam[index].alignTargetLeft = referenceView;
-                        this._childparam[index].alignSideLeft = side === "" ? "left" : side;
+                        this._layoutParams[index].alignLeft = true;
+                        this._layoutParams[index].alignTargetLeft = referenceView;
+                        this._layoutParams[index].alignSideLeft = side === "" ? "left" : side;
                         break;
                     case "right":
-                        this._childparam[index].alignRight = true;
-                        this._childparam[index].alignTargetRight = referenceView;
-                        this._childparam[index].alignSideRight = side === "" ? "right" : side;
+                        this._layoutParams[index].alignRight = true;
+                        this._layoutParams[index].alignTargetRight = referenceView;
+                        this._layoutParams[index].alignSideRight = side === "" ? "right" : side;
                         break;
                     case "center":
-                        this._childparam[index].alignCenter = true;
-                        this._childparam[index].alignTargetCenter = referenceView;
-                        this._childparam[index].alignSideCenter = side === "" ? "center" : side;
+                        this._layoutParams[index].alignCenter = true;
+                        this._layoutParams[index].alignTargetCenter = referenceView;
+                        this._layoutParams[index].alignSideCenter = side === "" ? "center" : side;
                         break;
                     case "top":
-                        this._childparam[index].alignTop = true;
-                        this._childparam[index].alignTargetTop = referenceView;
-                        this._childparam[index].alignSideTop = side === "" ? "top" : side;
+                        this._layoutParams[index].alignTop = true;
+                        this._layoutParams[index].alignTargetTop = referenceView;
+                        this._layoutParams[index].alignSideTop = side === "" ? "top" : side;
                         break;
                     case "bottom":
-                        this._childparam[index].alignBottom = true;
-                        this._childparam[index].alignTargetBottom = referenceView;
-                        this._childparam[index].alignSideBottom = side === "" ? "bottom" : side;
+                        this._layoutParams[index].alignBottom = true;
+                        this._layoutParams[index].alignTargetBottom = referenceView;
+                        this._layoutParams[index].alignSideBottom = side === "" ? "bottom" : side;
                         break;
                     case "middle":
-                        this._childparam[index].alignMiddle = true;
-                        this._childparam[index].alignTargetMiddle = referenceView;
-                        this._childparam[index].alignSideMiddle = side === "" ? "middle" : side;
+                        this._layoutParams[index].alignMiddle = true;
+                        this._layoutParams[index].alignTargetMiddle = referenceView;
+                        this._layoutParams[index].alignSideMiddle = side === "" ? "middle" : side;
                         break;
                 }
             }
@@ -123,22 +123,22 @@ Class.define("framework.ui.layout.RelativeLayout", Layout, {
                 if (typeof constraint[property] === "number") {
                     switch (property) {
                         case "left":
-                            this._childparam[index].marginLeft = constraint[property];
+                            this._layoutParams[index].marginLeft = constraint[property];
                             break;
                         case "right":
-                            this._childparam[index].marginRight = constraint[property];
+                            this._layoutParams[index].marginRight = constraint[property];
                             break;
                         case "top":
-                            this._childparam[index].marginTop = constraint[property];
+                            this._layoutParams[index].marginTop = constraint[property];
                             break;
                         case "bottom":
-                            this._childparam[index].marginBottom = constraint[property];
+                            this._layoutParams[index].marginBottom = constraint[property];
                             break;
                         case "center":
-                            this._childparam[index].marginCenter = constraint[property];
+                            this._layoutParams[index].marginCenter = constraint[property];
                             break;
                         case "middle":
-                            this._childparam[index].marginMiddle = constraint[property];
+                            this._layoutParams[index].marginMiddle = constraint[property];
                             break;
                     }
                 } else {
@@ -152,13 +152,13 @@ Class.define("framework.ui.layout.RelativeLayout", Layout, {
 
     /**
      * @method RelativeLayout#removeLayoutParam
-     * @param {Number} index - index for the ChildParam
+     * @param {Number} index - index for the layoutParams
      * @param {String} attribute - attribute string of "align", "margin" to set alignment/margins
-     * @description remove "align" or "margin" attribute of childParam at index
+     * @description remove "align" or "margin" attribute of layoutParams at index
      */
     removeLayoutParam: function(index, attribute) {
-        if (this._childparam[index] !== undefined) {
-            var param = this._childparam[index];
+        if (this._layoutParams[index] !== undefined) {
+            var param = this._layoutParams[index];
             if (attribute === "align") {
                 param.removeAlignAttribute();
             } else if (attribute === "margin") {
@@ -186,13 +186,13 @@ Class.define("framework.ui.layout.RelativeLayout", Layout, {
             horizontalList[i] = false;
             verticalList[i] = false;
             list[i] = false;
-            if (this._childparam[i] === undefined) {
+            if (this._layoutParams[i] === undefined) {
                 horizontalList[i] = true;
                 verticalList[i] = true;
                 list[i] = true;
                 waitNum--;
-            } else if (this._childparam[i] !== undefined) {
-                var param = this._childparam[i];
+            } else if (this._layoutParams[i] !== undefined) {
+                var param = this._layoutParams[i];
                 if (param.alignLeft && param.alignTargetLeft === -1 || param.alignRight && param.alignTargetRight === -1 || param.alignCenter && param.alignTargetCenter === -1) {
                     horizontalList[i] = true;
                 }
@@ -254,10 +254,10 @@ Class.define("framework.ui.layout.RelativeLayout", Layout, {
      * @private
      */
     calculatePositionAtIndex: function(index) {
-        if (this._childparam[index] !== undefined && this._associatedView.children[index] !== undefined) {
+        if (this._layoutParams[index] !== undefined && this._associatedView.children[index] !== undefined) {
             var child = this._associatedView.children[index];
             var startPosition;
-            var param = this._childparam[index];
+            var param = this._layoutParams[index];
             if (param.alignLeft) {
                 startPosition = this.getReferencePositonInfo(param.alignSideLeft, param.alignTargetLeft);
                 child.left = startPosition + param.marginLeft;
@@ -323,7 +323,7 @@ Class.define("framework.ui.layout.RelativeLayout", Layout, {
                 if (list[i]) {
                     continue;
                 }
-                if (this._childparam[i] === undefined) {
+                if (this._layoutParams[i] === undefined) {
                     // if there is no constraint for current view deal as the views' absolute position
                     horizontalList[i] = true;
                     verticalList[i] = true;
@@ -332,7 +332,7 @@ Class.define("framework.ui.layout.RelativeLayout", Layout, {
                     flag = true;
                 } else {
                     // code here to calculate the other view's position
-                    var param = this._childparam[i];
+                    var param = this._layoutParams[i];
                     var left = param.alignLeft && (param.alignTargetLeft === -1 || horizontalList[param.alignTargetLeft]);
                     var center = param.alignCenter && (param.alignTargetCenter === -1 || horizontalList[param.alignTargetCenter]);
                     var right = param.alignRight && (param.alignTargetRight === -1 || horizontalList[param.alignTargetRight]);
@@ -379,16 +379,16 @@ Class.define("framework.ui.layout.RelativeLayout", Layout, {
             horizontalList[i] = false;
             verticalList[i] = false;
             list[i] = false;
-            if (this._childparam[i] === undefined) {
+            if (this._layoutParams[i] === undefined) {
                 horizontalList[i] = true;
                 verticalList[i] = true;
                 list[i] = true;
                 waitNum--;
-            } else if (this._childparam[i] !== undefined) {
-                if (this._childparam[i].alignLeft && this._childparam[i].alignTargetLeft === -1 || this._childparam[i].alignRight && this._childparam[i].alignTargetRight === -1 || this._childparam[i].alignCenter && this._childparam[i].alignTargetCenter === -1) {
+            } else if (this._layoutParams[i] !== undefined) {
+                if (this._layoutParams[i].alignLeft && this._layoutParams[i].alignTargetLeft === -1 || this._layoutParams[i].alignRight && this._layoutParams[i].alignTargetRight === -1 || this._layoutParams[i].alignCenter && this._layoutParams[i].alignTargetCenter === -1) {
                     horizontalList[i] = true;
                 }
-                if (this._childparam[i].alignTop && this._childparam[i].alignTargetTop === -1 || this._childparam[i].alignBottom && this._childparam[i].alignTargetBottom === -1 || this._childparam[i].alignMiddle && this._childparam[i].alignTargetMiddle === -1) {
+                if (this._layoutParams[i].alignTop && this._layoutParams[i].alignTargetTop === -1 || this._layoutParams[i].alignBottom && this._layoutParams[i].alignTargetBottom === -1 || this._layoutParams[i].alignMiddle && this._layoutParams[i].alignTargetMiddle === -1) {
                     verticalList[i] = true;
                 }
                 if (horizontalList[i] && verticalList[i]) {
@@ -404,15 +404,15 @@ Class.define("framework.ui.layout.RelativeLayout", Layout, {
                 if (list[i]) {
                     continue;
                 }
-                if (this._childparam[i] !== undefined) {
-                    var left = this._childparam[i].alignLeft && (this._childparam[i].alignTargetLeft === -1 || horizontalList[this._childparam[i].alignTargetLeft]);
-                    var center = this._childparam[i].alignCenter && (this._childparam[i].alignTargetCenter === -1 || horizontalList[this._childparam[i].alignTargetCenter]);
-                    var right = this._childparam[i].alignRight && (this._childparam[i].alignTargetRight === -1 || horizontalList[this._childparam[i].alignTargetRight]);
-                    var top = this._childparam[i].alignTop && (this._childparam[i].alignTargetTop === -1 || verticalList[this._childparam[i].alignTargetTop]);
-                    var bottom = this._childparam[i].alignBottom && (this._childparam[i].alignTargetBottom === -1 || verticalList[this._childparam[i].alignTargetBottom]);
-                    var middle = this._childparam[i].alignMiddle && (this._childparam[i].alignTargetMiddle === -1 || verticalList[this._childparam[i].alignTargetMiddle]);
+                if (this._layoutParams[i] !== undefined) {
+                    var left = this._layoutParams[i].alignLeft && (this._layoutParams[i].alignTargetLeft === -1 || horizontalList[this._layoutParams[i].alignTargetLeft]);
+                    var center = this._layoutParams[i].alignCenter && (this._layoutParams[i].alignTargetCenter === -1 || horizontalList[this._layoutParams[i].alignTargetCenter]);
+                    var right = this._layoutParams[i].alignRight && (this._layoutParams[i].alignTargetRight === -1 || horizontalList[this._layoutParams[i].alignTargetRight]);
+                    var top = this._layoutParams[i].alignTop && (this._layoutParams[i].alignTargetTop === -1 || verticalList[this._layoutParams[i].alignTargetTop]);
+                    var bottom = this._layoutParams[i].alignBottom && (this._layoutParams[i].alignTargetBottom === -1 || verticalList[this._layoutParams[i].alignTargetBottom]);
+                    var middle = this._layoutParams[i].alignMiddle && (this._layoutParams[i].alignTargetMiddle === -1 || verticalList[this._layoutParams[i].alignTargetMiddle]);
                     if (left || center || right) {
-                        if (this._childparam[i].alignLeft === left && this._childparam[i].alignRight === right || this._childparam.alignCenter === center) {
+                        if (this._layoutParams[i].alignLeft === left && this._layoutParams[i].alignRight === right || this._layoutParams.alignCenter === center) {
                             if (!horizontalList[i]) {
                                 horizontalList[i] = true;
                                 flag = true;
@@ -420,7 +420,7 @@ Class.define("framework.ui.layout.RelativeLayout", Layout, {
                         }
                     }
                     if (top || bottom || middle) {
-                        if (this._childparam[i].alignTop === top && this._childparam[i].alignBottom === bottom || this._childparam.alignMiddle === middle) {
+                        if (this._layoutParams[i].alignTop === top && this._layoutParams[i].alignBottom === bottom || this._layoutParams.alignMiddle === middle) {
                             if (!verticalList[i]) {
                                 verticalList[i] = true;
                                 flag = true;

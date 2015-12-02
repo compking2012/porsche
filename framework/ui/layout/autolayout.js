@@ -83,7 +83,7 @@ Class.define("framework.ui.layout.AutoLayout", Layout, {
 
     /**
      * @method AutoLayout#getLayoutParam
-     * @description get childparam of child view at index
+     * @description get layoutParams of child view at index
      * @abstract
      */
     getLayoutParam: function(index, attribute) {
@@ -91,7 +91,7 @@ Class.define("framework.ui.layout.AutoLayout", Layout, {
 
     /**
      * @method AutoLayout#setLayoutParam
-     * @description set childparam of child view at index
+     * @description set layoutParams of child view at index
      * @abstract
      */
     setLayoutParam: function(index, attribute, constraint) {
@@ -99,7 +99,7 @@ Class.define("framework.ui.layout.AutoLayout", Layout, {
 
     /**
      * @method AutoLayout#removeLayoutParam
-     * @description remove childparam of child view at index
+     * @description remove layoutParams of child view at index
      * @abstract
      */
     removeLayoutParam: function(index, attribute) {
