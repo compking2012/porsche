@@ -21,14 +21,14 @@ var GridLayoutParam = require("./gridlayoutparam");
 Class.define("framework.ui.layout.GridLayout", Layout, {
     initialize: function() {
         Layout.prototype.initialize.apply(this, arguments);
-        this._defaultparam = new GridLayoutParam(-1, -1, this);
-        this._defaultparam.setMargin(0, 0, 0, 0);
+        this._defaultLayoutParam = new GridLayoutParam(-1, -1, this);
+        this._defaultLayoutParam.setMargin(0, 0, 0, 0);
         this._rows = 1;
         this._columns = 1;
     },
 
-    get defaultparam() {
-        return this._defaultparam;
+    get defaultLayoutParam() {
+        return this._defaultLayoutParam;
     },
 
     /**
@@ -66,13 +66,13 @@ Class.define("framework.ui.layout.GridLayout", Layout, {
      * @override
      */
     getParamAtIndex: function(index) {
-        if (this._childparam[index] ===  undefined) {
-            this._childparam[index] = new GridLayoutParam(-1, -1, this);
-            this._childparam[index]._margin = this._defaultparam._margin;
-            this._childparam[index]._align = this._defaultparam._align;
-            this._childparam[index]._valign = this._defaultparam._valign;
+        if (this._layoutParams[index] ===  undefined) {
+            this._layoutParams[index] = new GridLayoutParam(-1, -1, this);
+            this._layoutParams[index]._margin = this._defaultLayoutParam._margin;
+            this._layoutParams[index]._align = this._defaultLayoutParam._align;
+            this._layoutParams[index]._valign = this._defaultLayoutParam._valign;
         }
-        return this._childparam[index];
+        return this._layoutParams[index];
     },
 
     /**
@@ -88,10 +88,10 @@ Class.define("framework.ui.layout.GridLayout", Layout, {
             var child = this._associatedView._children[i];
             var layoutParam = null;
             this._childPosition[i] = {left: child.left, top: child.top, width: child.width, height: child.height};
-            if (this._childparam[i] !== undefined && this._childparam[i]._set === 1) {
-                layoutParam = this._childparam[i];
+            if (this._layoutParams[i] !== undefined && this._layoutParams[i]._set === 1) {
+                layoutParam = this._layoutParams[i];
             } else {
-                layoutParam = this._defaultparam;
+                layoutParam = this._defaultLayoutParam;
             }
             // if the child view's width/height beyond the grid cell, then adjust its width/height to adapt the grid cell
             if (child.width > columnWidth) {

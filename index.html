@@ -1032,6 +1032,84 @@ Class.define("MyApp", App, {
         </pre>
       </div>
 
+      <div class="demo">
+        <span>RowLayout</span>      
+        <iframe src="./demo/gui/rowlayout/index.html"></iframe>
+        <pre>
+          <code>
+Class.define("MyApp", App, {
+    onStart: function() {
+        var colors = ["#FF0000", "#00FF00", "#0000FF", "#FFFF00", "#00FFFF"];
+
+        this.rowLayout = new RowLayout();
+        this.rowLayout.paddingTop = 10;
+        this.rowLayout.paddingTop = 10;
+        this.rowLayout.defaultLayoutParam = {align: "top", margin: {left: 10}};
+
+        this.view1 = new View();
+        this.view1.width = 20;
+        this.view1.height = 80;
+        this.view1.background = colors[0];
+        this.window.addChild(this.view1);
+
+        this.view2 = new View();
+        this.view2.width = 50;
+        this.view2.height = 120;
+        this.view2.background = colors[1];
+        this.window.addChild(this.view2);
+
+        this.window.layout = this.rowLayout;
+
+        this.view3 = new View();
+        this.view3.width = 100;
+        this.view3.height = 160;
+        this.view3.background = colors[2];
+        this.window.addChild(this.view3);
+    }
+}, module);
+          </code>
+        </pre>
+      </div>
+
+      <div class="demo">
+        <span>ColumnLayout</span>      
+        <iframe src="./demo/gui/columnlayout/index.html"></iframe>
+        <pre>
+          <code>
+Class.define("MyApp", App, {
+    onStart: function() {
+        var colors = ["#FF0000", "#00FF00", "#0000FF", "#FFFF00", "#00FFFF"];
+
+        this.columnLayout = new ColumnLayout();
+        this.columnLayout.paddingLeft = 10;
+        this.columnLayout.paddingRight = 10;
+        this.columnLayout.defaultLayoutParam = {align: "left", margin: {top: 10}};
+
+        this.view1 = new View();
+        this.view1.width = 80;
+        this.view1.height = 20;
+        this.view1.background = colors[0];
+        this.window.addChild(this.view1);
+
+        this.view2 = new View();
+        this.view2.width = 120;
+        this.view2.height = 50;
+        this.view2.background = colors[1];
+        this.window.addChild(this.view2);
+
+        this.window.layout = this.columnLayout;
+
+        this.view3 = new View();
+        this.view3.width = 160;
+        this.view3.height = 100;
+        this.view3.background = colors[2];
+        this.window.addChild(this.view3);
+    }
+}, module);
+          </code>
+        </pre>
+      </div>
+
       <footer class="site-footer">
         <span class="site-footer-owner"><a href="https://github.com/compking2012/porsche">Porsche</a> is maintained by <a href="https://github.com/compking2012">compking2012</a>.</span>
 

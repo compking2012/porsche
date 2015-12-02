@@ -2,7 +2,7 @@
 <html lang="en">
   <head>
     <meta charset="utf-8">
-    <title>Porsche.js API documentation: <i class="icon-shield" style="color:#0186d1"></i> Point</title>
+    <title>Porsche.js API documentation: <i class="icon-shield" style="color:#0186d1"></i> LayoutParam</title>
 
     <script src="scripts/prettify/prettify.js"> </script>
     <script src="scripts/prettify/lang-css.js"> </script>
@@ -32,7 +32,7 @@
           </div>
 
           <div class="span9">
-              <h1 class="page-header"><i class="icon-shield" style="color:#0186d1"></i> Point</h1>
+              <h1 class="page-header"><i class="icon-shield" style="color:#0186d1"></i> LayoutParam</h1>
               
 
 
@@ -41,7 +41,7 @@
     
 <header>
     <!--h2>
-    Point
+    LayoutParam
     </h2-->
     
 </header>  
@@ -62,7 +62,7 @@
     
         
 <dt>
-    <h4 class="name" id="Point">new Point()</h4>
+    <h4 class="name" id="LayoutParam">new LayoutParam()</h4>
     
     
 </dt>
@@ -71,7 +71,7 @@
     
     <div class="description">
         <p>
-        Base struct for point
+        Base class for all the layout params.
         </p>
     </div>
     
@@ -140,14 +140,14 @@
         <dl class="bs-docs-example bs-members">
             
 <dt>
-    <h4 class="name" id="x">x<span class="type-signature"> :Number</span></h4>
+    <h4 class="name" id="width">width<span class="type-signature"> :Number</span></h4>
     
     
 </dt>
 <dd>
     
     <div class="description">
-        Get x-axis value.
+        the width for the cell view.
     </div>
     
     
@@ -187,14 +187,578 @@
         
             
 <dt>
-    <h4 class="name" id="y">y<span class="type-signature"> :Number</span></h4>
+    <h4 class="name" id="height">height<span class="type-signature"> :Number</span></h4>
     
     
 </dt>
 <dd>
     
     <div class="description">
-        Get y-axis value.
+        the height for the cell view.
+    </div>
+    
+    
+    
+<dl class="details">
+    
+        
+    
+    
+    
+
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+
+    
+    
+    
+    
+    
+    
+    
+</dl>
+
+    
+    
+</dd>
+
+        
+            
+<dt>
+    <h4 class="name" id="alignLeft">alignLeft<span class="type-signature"> :Boolean</span></h4>
+    
+    
+</dt>
+<dd>
+    
+    <div class="description">
+        the value indicates whether align left.
+    </div>
+    
+    
+    
+<dl class="details">
+    
+        
+    
+    
+    
+
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+
+    
+    
+    
+    
+    
+    
+    
+</dl>
+
+    
+    
+</dd>
+
+        
+            
+<dt>
+    <h4 class="name" id="alignRight">alignRight<span class="type-signature"> :Boolean</span></h4>
+    
+    
+</dt>
+<dd>
+    
+    <div class="description">
+        the value indicates whether align right.
+    </div>
+    
+    
+    
+<dl class="details">
+    
+        
+    
+    
+    
+
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+
+    
+    
+    
+    
+    
+    
+    
+</dl>
+
+    
+    
+</dd>
+
+        
+            
+<dt>
+    <h4 class="name" id="alignCenter">alignCenter<span class="type-signature"> :Boolean</span></h4>
+    
+    
+</dt>
+<dd>
+    
+    <div class="description">
+        the value indicates whether align horizontal center.
+    </div>
+    
+    
+    
+<dl class="details">
+    
+        
+    
+    
+    
+
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+
+    
+    
+    
+    
+    
+    
+    
+</dl>
+
+    
+    
+</dd>
+
+        
+            
+<dt>
+    <h4 class="name" id="alignTop">alignTop<span class="type-signature"> :Boolean</span></h4>
+    
+    
+</dt>
+<dd>
+    
+    <div class="description">
+        the value indicates whether align top.
+    </div>
+    
+    
+    
+<dl class="details">
+    
+        
+    
+    
+    
+
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+
+    
+    
+    
+    
+    
+    
+    
+</dl>
+
+    
+    
+</dd>
+
+        
+            
+<dt>
+    <h4 class="name" id="alignBottom">alignBottom<span class="type-signature"> :Boolean</span></h4>
+    
+    
+</dt>
+<dd>
+    
+    <div class="description">
+        the value indicates whether align bottom.
+    </div>
+    
+    
+    
+<dl class="details">
+    
+        
+    
+    
+    
+
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+
+    
+    
+    
+    
+    
+    
+    
+</dl>
+
+    
+    
+</dd>
+
+        
+            
+<dt>
+    <h4 class="name" id="alignMiddle">alignMiddle<span class="type-signature"> :Boolean</span></h4>
+    
+    
+</dt>
+<dd>
+    
+    <div class="description">
+        the value indicates wheter align vertical middle.
+    </div>
+    
+    
+    
+<dl class="details">
+    
+        
+    
+    
+    
+
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+
+    
+    
+    
+    
+    
+    
+    
+</dl>
+
+    
+    
+</dd>
+
+        
+            
+<dt>
+    <h4 class="name" id="marginLeft">marginLeft<span class="type-signature"> :Number</span></h4>
+    
+    
+</dt>
+<dd>
+    
+    <div class="description">
+        the left margin for the cell view.
+    </div>
+    
+    
+    
+<dl class="details">
+    
+        
+    
+    
+    
+
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+
+    
+    
+    
+    
+    
+    
+    
+</dl>
+
+    
+    
+</dd>
+
+        
+            
+<dt>
+    <h4 class="name" id="marginRight">marginRight<span class="type-signature"> :Number</span></h4>
+    
+    
+</dt>
+<dd>
+    
+    <div class="description">
+        the right margin for the cell view.
+    </div>
+    
+    
+    
+<dl class="details">
+    
+        
+    
+    
+    
+
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+
+    
+    
+    
+    
+    
+    
+    
+</dl>
+
+    
+    
+</dd>
+
+        
+            
+<dt>
+    <h4 class="name" id="marginTop">marginTop<span class="type-signature"> :Number</span></h4>
+    
+    
+</dt>
+<dd>
+    
+    <div class="description">
+        the top margin for the cell view.
+    </div>
+    
+    
+    
+<dl class="details">
+    
+        
+    
+    
+    
+
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+
+    
+    
+    
+    
+    
+    
+    
+</dl>
+
+    
+    
+</dd>
+
+        
+            
+<dt>
+    <h4 class="name" id="marginBottom">marginBottom<span class="type-signature"> :Number</span></h4>
+    
+    
+</dt>
+<dd>
+    
+    <div class="description">
+        the bottom margin for the cell view.
+    </div>
+    
+    
+    
+<dl class="details">
+    
+        
+    
+    
+    
+
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+
+    
+    
+    
+    
+    
+    
+    
+</dl>
+
+    
+    
+</dd>
+
+        
+            
+<dt>
+    <h4 class="name" id="marginCenter">marginCenter<span class="type-signature"> :Number</span></h4>
+    
+    
+</dt>
+<dd>
+    
+    <div class="description">
+        the center margin for the cell view.
+    </div>
+    
+    
+    
+<dl class="details">
+    
+        
+    
+    
+    
+
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+
+    
+    
+    
+    
+    
+    
+    
+</dl>
+
+    
+    
+</dd>
+
+        
+            
+<dt>
+    <h4 class="name" id="marginMiddle">marginMiddle<span class="type-signature"> :Number</span></h4>
+    
+    
+</dt>
+<dd>
+    
+    <div class="description">
+        the middle margin for the cell view.
     </div>
     
     
@@ -240,7 +804,7 @@
         <dl class="bs-docs-example bs-methods">
             
 <dt>
-    <h4 class="name" id="initialize">initialize(x, y)</h4>
+    <h4 class="name" id="initialize">initialize(layout)</h4>
     
     
 </dt>
@@ -249,7 +813,7 @@
     
     <div class="description">
         <p>
-        Constructor
+        Constructor that create a layout param.
         </p>
     </div>
     
@@ -284,13 +848,13 @@
 
         <tr>
             
-                <td class="name">x</td>
+                <td class="name">layout</td>
             
 
             <td class="type">
             
                 
-<span class="param-type">{Number}</span>
+<span class="param-type">{<a href="Layout.html">Layout</a>}</span>
 
 
 
@@ -301,31 +865,7 @@
 
             
 
-            <td class="description last">the x-axis value</td>
-        </tr>
-
-	
-
-        <tr>
-            
-                <td class="name">y</td>
-            
-
-            <td class="type">
-            
-                
-<span class="param-type">{Number}</span>
-
-
-
-            
-            </td>
-
-            
-
-            
-
-            <td class="description last">the y-axis value</td>
+            <td class="description last">the associated layout.</td>
         </tr>
 
 	
@@ -380,7 +920,7 @@
         
             
 <dt>
-    <h4 class="name" id="assign">assign(x, y)</h4>
+    <h4 class="name" id="destroy">destroy()</h4>
     
     
 </dt>
@@ -389,7 +929,7 @@
     
     <div class="description">
         <p>
-        Set the point params.
+        Destructor that destroy this layout param.
         </p>
     </div>
     
@@ -398,80 +938,6 @@
     
     
     
-    
-        <h5>Parameters:</h5>
-        
-
-<table class="params table table-bordered table-condensed">
-    <thead>
-	<tr>
-		
-		<th>Name</th>
-		
-
-		<th>Type</th>
-
-		
-
-		
-
-		<th class="last">Description</th>
-	</tr>
-	</thead>
-
-	<tbody>
-	
-
-        <tr>
-            
-                <td class="name">x</td>
-            
-
-            <td class="type">
-            
-                
-<span class="param-type">{Number}</span>
-
-
-
-            
-            </td>
-
-            
-
-            
-
-            <td class="description last">the point's x-axis.</td>
-        </tr>
-
-	
-
-        <tr>
-            
-                <td class="name">y</td>
-            
-
-            <td class="type">
-            
-                
-<span class="param-type">{Number}</span>
-
-
-
-            
-            </td>
-
-            
-
-            
-
-            <td class="description last">the point's y-axis.</td>
-        </tr>
-
-	
-	</tbody>
-</table>
-
     
     
     
@@ -520,7 +986,7 @@
         
             
 <dt>
-    <h4 class="name" id="equals">equals(point)</h4>
+    <h4 class="name" id="equals">equals(value)</h4>
     
     
 </dt>
@@ -529,7 +995,10 @@
     
     <div class="description">
         <p>
-        Check the point equal with current or not .
+        Compares this instance with the specified object and indicates if they are equal.
+In order to be equal, o must represent the same object as this instance using a class-specific comparison.
+The general contract is that this comparison should be reflexive, symmetric, and transitive. Also,
+no object reference other than null is equal to null.
         </p>
     </div>
     
@@ -564,13 +1033,13 @@
 
         <tr>
             
-                <td class="name">point</td>
+                <td class="name">value</td>
             
 
             <td class="type">
             
                 
-<span class="param-type">{<a href="Point.html">Point</a>}</span>
+<span class="param-type">{Object}</span>
 
 
 
@@ -581,7 +1050,7 @@
 
             
 
-            <td class="description last">the point to be checked.</td>
+            <td class="description last">the object to compare this instance with.</td>
         </tr>
 
 	
@@ -598,6 +1067,10 @@
     
     
 
+    
+    <dd class="inherited-from"><ul class="dummy breadcrumb"><li>Inherited From:</li><li>
+        <a href="YObject.html#equals">YObject#equals</a>
+    </li></dd>
     
     
     
@@ -642,83 +1115,12 @@
 
 
 <span class="param-desc">
-    whether equal
+    true if the specified object is equal to this object; false otherwise.
 </span>
 
 </div>
 
         
-    
-    
-</dd>
-
-        
-            
-<dt>
-    <h4 class="name" id="destroy">destroy()</h4>
-    
-    
-</dt>
-<dd>
-    
-    
-    <div class="description">
-        <p>
-        Destructor which need to be invoked when this object is not used anymore.
-Note that this method MUST BE invoked manually, otherwise it might caused something like memory leak.
-        </p>
-    </div>
-    
-
-    
-    
-    
-    
-    
-    
-    
-<dl class="details">
-    
-        
-    
-    
-    
-
-    
-    <dd class="inherited-from"><ul class="dummy breadcrumb"><li>Inherited From:</li><li>
-        <a href="YObject.html#destroy">YObject#destroy</a>
-    </li></dd>
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-
-    
-    
-    
-    
-    
-    
-    
-</dl>
-
-    
-    
-
-    
-
-    
-    
-    
-    
-    
     
     
 </dd>

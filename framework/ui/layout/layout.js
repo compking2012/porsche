@@ -14,38 +14,50 @@ var Class = require("../../class");
 var YObject = require("../../yobject");
 
 /**
- * Base Layout for all the layouts
+ * Base class for all the layouts.
  * @class Layout
  * @extends YObject
  */
 Class.define("framework.ui.layout.Layout", YObject, {
+    /**
+     * Constructor that create a layout.
+     * @method Layout#initialize
+     */
     initialize: function() {
         YObject.prototype.initialize.apply(this, arguments);
 
         this._associatedView = null;
-        this._childparam = [];
+        this._layoutParams = [];
     },
 
+    /**
+     * Destructor that destroy this layout.
+     * @method Layout#destroy
+     */
     destroy: function() {
         this._associatedView = null;
-        for (var i = 0; i < this._childparam.length; i++) {
-            this._childparam[i] = null;
+        for (var i = 0; i < this._layoutParams.length; i++) {
+            this._layoutParams[i] = null;
         }
 
         YObject.prototype.destroy.apply(this, arguments);
     },
 
-    get view() {
-        return this._associatedView;
-    },
-
-    get childparam() {
-        return this._childparam;
+    /**
+     * @method Layout#layoutParams
+     * @type {LayoutParam[]}
+     * @description all layout params that indicates the layout of each views in the associated composite view.
+     */
+    get layoutParams() {
+        return this._layoutParams;
     },
 
     /**
+     * Get the layout param value for the child view at index.
      * @method Layout#getLayoutParam
-     * @description get childparam of child view at index
+     * @param {Number} index - the index of the child view.
+     * @param {String} attribute - the attribute in layout param.
+     * @protected
      * @abstract
      */
     getLayoutParam: function(/*index, attribute*/) {
@@ -53,8 +65,12 @@ Class.define("framework.ui.layout.Layout", YObject, {
     },
 
     /**
+     * Set the layout param value for the child view at index.
      * @method Layout#setLayoutParam
-     * @description set childparam of child view at index
+     * @param {Number} index - the index of the child view.
+     * @param {String} attribute - the attribute in layout param.
+     * @param {Object} constraint - the constraint value in layout param.
+     * @protected
      * @abstract
      */
     setLayoutParam: function(/*index, attribute, constraint*/) {
@@ -62,8 +78,11 @@ Class.define("framework.ui.layout.Layout", YObject, {
     },
 
     /**
+     * Remove the layout param value for the child view at index.
      * @method Layout#removeLayoutParam
-     * @description remove childparam of child view at index
+     * @param {Number} index - the index of the child view.
+     * @param {String} attribute - the attribute in layout param.
+     * @protected
      * @abstract
      */
     removeLayoutParam: function(/*index, attribute*/) {
@@ -71,8 +90,9 @@ Class.define("framework.ui.layout.Layout", YObject, {
     },
 
     /**
-     * @method Layout#calculateFrame
-     * @@description Handle view's layout
+     * Implement this to perform the layouting for the associated view.
+     * @method Layout#perform
+     * @protected
      * @abstract
      */
     perform: function() {
@@ -80,14 +100,19 @@ Class.define("framework.ui.layout.Layout", YObject, {
     },
 
     /**
-     * set the current layout for the  parametric compositeview
-     * @method Layout#setView
+     * @name Layout#associatedView
+     * @type {CompositeView}
+     * @description the current layout for the  parametric compositeview.
      * @private
      */
-    setView: function(view) {
-        this._associatedView = view;
+    get associatedView() {
+        return this._associatedView;
+    },
 
-        if (view !== null) {
+    set associatedView(value) {
+        this._associatedView = value;
+
+        if (this._associatedView !== null) {
             for (var i = 0; i < this._associatedView.children.length; i++) {
                 var child = this._associatedView.children[i];
                 child.saveAbsoluteInfo();
@@ -96,8 +121,8 @@ Class.define("framework.ui.layout.Layout", YObject, {
     },
 
     /**
-     * set the current layout for the  parametric compositeview
-     * @method Layout#setView
+     * Mark the associated view need to relayout.
+     * @method Layout#invalidate
      * @private
      */
     invalidate: function() {

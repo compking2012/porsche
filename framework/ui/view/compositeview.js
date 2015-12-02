@@ -64,10 +64,10 @@ Class.define("framework.ui.view.CompositeView", View, {
                     view.resetToNoLayout();
                 }
                 this._needRelayout = false;
-                this._layout.setView(null);
+                this._layout.associatedView = null;
             } else if (value !== null) {
                 this._needRelayout = true;
-                value.setView(this);
+                value.associatedView = this;
             }
         }.bind(this));
     },

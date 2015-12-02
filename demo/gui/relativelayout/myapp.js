@@ -21,7 +21,6 @@ Class.define("MyApp", App, {
         this.compositeView.height = 320;
         this.compositeView.background = "#FFFFFF";
 
-        // this is only for test cases, when actually should use var layout instead of this.layout
         this.layout = new RelativeLayout();
         this.layout.setLayoutParam(0, "align", {left: "parent", top: "parent"});
         this.layout.setLayoutParam(0, "margin", {left: 20, top: 20});

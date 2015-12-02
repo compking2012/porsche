@@ -13,7 +13,17 @@ define(function(require, exports, module) {
 var Class = require("../../class");
 var YObject = require("../../yobject");
 
+/**
+ * Base class for all the layout params.
+ * @class LayoutParam
+ * @extends YObject
+ */
 Class.define("framework.ui.layout.LayoutParam", YObject, {
+    /**
+     * Constructor that create a layout param.
+     * @method LayoutParam#initialize
+     * @param {Layout} layout - the associated layout.
+     */
     initialize: function(layout) {
         YObject.prototype.initialize.apply(this, arguments);
 
@@ -34,17 +44,23 @@ Class.define("framework.ui.layout.LayoutParam", YObject, {
         this._marginCenter = 0;
         this._marginMiddle = 0;
 
-        this._layoutgravity = 0;
-        this._weightsum = 0;
-        this._weight = 0;
-        this._set = 0;
         this._layout = layout;
+    },
+
+    /**
+     * Destructor that destroy this layout param.
+     * @method LayoutParam#destroy
+     */
+    destroy: function() {
+        this._layout = null;
+
+        YObject.prototype.destroy.apply(this, arguments);
     },
 
     /**
      * @name LayoutParam#width
      * @type {Number}
-     * @description Width of the item
+     * @description the width for the cell view.
      */
     get width() {
         return this._width;
@@ -58,7 +74,7 @@ Class.define("framework.ui.layout.LayoutParam", YObject, {
     /**
      * @name LayoutParam#height
      * @type {Number}
-     * @description Height of the item
+     * @description the height for the cell view.
      */
     get height() {
         return this._height;
@@ -72,7 +88,7 @@ Class.define("framework.ui.layout.LayoutParam", YObject, {
     /**
      * @name LayoutParam#alignLeft
      * @type {Boolean}
-     * @description whether the left align is set
+     * @description the value indicates whether align left.
      */
     get alignLeft() {
         return this._alignLeft;
@@ -86,7 +102,7 @@ Class.define("framework.ui.layout.LayoutParam", YObject, {
     /**
      * @name LayoutParam#alignRight
      * @type {Boolean}
-     * @description whether the right align is set
+     * @description the value indicates whether align right.
      */
     get alignRight() {
         return this._alignRight;
@@ -100,7 +116,7 @@ Class.define("framework.ui.layout.LayoutParam", YObject, {
     /**
      * @name LayoutParam#alignCenter
      * @type {Boolean}
-     * @description whether the center align is set
+     * @description the value indicates whether align horizontal center.
      */
     get alignCenter() {
         return this._alignCenter;
@@ -114,7 +130,7 @@ Class.define("framework.ui.layout.LayoutParam", YObject, {
     /**
      * @name LayoutParam#alignTop
      * @type {Boolean}
-     * @description whether the top align is set
+     * @description the value indicates whether align top.
      */
     get alignTop() {
         return this._alignTop;
@@ -128,7 +144,7 @@ Class.define("framework.ui.layout.LayoutParam", YObject, {
     /**
      * @name LayoutParam#alignBottom
      * @type {Boolean}
-     * @description whether the bottom align is set
+     * @description the value indicates whether align bottom.
      */
     get alignBottom() {
         return this._alignBottom;
@@ -142,7 +158,7 @@ Class.define("framework.ui.layout.LayoutParam", YObject, {
     /**
      * @name LayoutParam#alignMiddle
      * @type {Boolean}
-     * @description whether the middle align is set
+     * @description the value indicates wheter align vertical middle.
      */
     get alignMiddle() {
         return this._alignMiddle;
@@ -156,7 +172,7 @@ Class.define("framework.ui.layout.LayoutParam", YObject, {
     /**
      * @name LayoutParam#marginLeft
      * @type {Number}
-     * @description The left margin for the current item
+     * @description the left margin for the cell view.
      */
     get marginLeft() {
         return this._marginLeft;
@@ -170,7 +186,7 @@ Class.define("framework.ui.layout.LayoutParam", YObject, {
     /**
      * @name LayoutParam#marginRight
      * @type {Number}
-     * @description The right margin for the current item
+     * @description the right margin for the cell view.
      */
     get marginRight() {
         return this._marginRight;
@@ -184,7 +200,7 @@ Class.define("framework.ui.layout.LayoutParam", YObject, {
     /**
      * @name LayoutParam#marginTop
      * @type {Number}
-     * @description The top margin for the current item
+     * @description the top margin for the cell view.
      */
     get marginTop() {
         return this._marginTop;
@@ -198,7 +214,7 @@ Class.define("framework.ui.layout.LayoutParam", YObject, {
     /**
      * @name LayoutParam#marginBottom
      * @type {Number}
-     * @description The bottom margin for the current item
+     * @description the bottom margin for the cell view.
      */
     get marginBottom() {
         return this._marginBottom;
@@ -212,7 +228,7 @@ Class.define("framework.ui.layout.LayoutParam", YObject, {
     /**
      * @name LayoutParam#marginCenter
      * @type {Number}
-     * @description The center margin for the current item
+     * @description the center margin for the cell view.
      */
     get marginCenter() {
         return this._marginCenter;
@@ -226,7 +242,7 @@ Class.define("framework.ui.layout.LayoutParam", YObject, {
     /**
      * @name LayoutParam#marginMiddle
      * @type {Number}
-     * @description The middle margin for the current item
+     * @description the middle margin for the cell view.
      */
     get marginMiddle() {
         return this._marginMiddle;
@@ -238,26 +254,11 @@ Class.define("framework.ui.layout.LayoutParam", YObject, {
     },
 
     /**
-     * @name LayoutParam#layoutgravity
-     * @type {Number}
-     * @description The alignment for the item, such as left/right/center/top/bottom/middle
-     */
-    set layoutgravity(value) {
-        this._layoutgravity = value;
-        this.invalidate();
-    },
-
-    get layoutgravity() {
-        return this._layoutgravity;
-    },
-
-    /**
+     * Mark its associated layout invalidated.
      * @method LayoutParam#invalidate
-     * @description Mark the area defined by dirty as needing to be drawn
      * @private
      */
     invalidate: function() {
-        this._set = 1;
         if (this._layout !== null) {
             this._layout.invalidate();
         }
