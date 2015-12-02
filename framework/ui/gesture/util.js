@@ -20,7 +20,7 @@ Class.define("framework.ui.gesture.Util", YObject, {
          * @param {Object} dest
          * @param {Object} src
          * @param {Boolean} [merge]
-         * @returns {Object} dest
+         * @return {Object} dest
          */
         extend: function(dest, src, merge) {
             var keys = Object.keys(src);
@@ -39,7 +39,7 @@ Class.define("framework.ui.gesture.Util", YObject, {
          * means that properties that exist in dest will not be overwritten by src
          * @param {Object} dest
          * @param {Object} src
-         * @returns {Object} dest
+         * @return {Object} dest
          */
         merge: function(dest, src) {
             return this.extend(dest, src, true);
@@ -50,7 +50,7 @@ Class.define("framework.ui.gesture.Util", YObject, {
          * this first item in args will be used as the context
          * @param {Boolean|Function} val
          * @param {Array} [args]
-         * @returns {Boolean}
+         * @return {Boolean}
          */
         boolOrFn: function(val, args) {
             if (typeof val === "function") {
@@ -63,7 +63,7 @@ Class.define("framework.ui.gesture.Util", YObject, {
          * use the val2 when val1 is undefined
          * @param {*} val1
          * @param {*} val2
-         * @returns {*}
+         * @return {*}
          */
         ifUndefined: function(val1, val2) {
             return val1 === undefined ? val2 : val1;
@@ -94,7 +94,7 @@ Class.define("framework.ui.gesture.Util", YObject, {
         /**
          * convert array-like objects to real arrays
          * @param {Object} obj
-         * @returns {Array}
+         * @return {Array}
          */
         toArray: function(obj) {
             return Array.prototype.slice.call(obj, 0);
@@ -105,7 +105,7 @@ Class.define("framework.ui.gesture.Util", YObject, {
          * @param {Array} src [{id:1},{id:2},{id:1}]
          * @param {String} [key]
          * @param {Boolean} [sort=False]
-         * @returns {Array} [{id:1},{id:2}]
+         * @return {Array} [{id:1},{id:2}]
          */
         uniqueArray: function(src, key, sort) {
             var results = [];
@@ -136,7 +136,7 @@ Class.define("framework.ui.gesture.Util", YObject, {
 
         /**
          * get a unique id
-         * @returns {number} uniqueId
+         * @return {number} uniqueId
          */
         uniqueId: function() {
             if (global._uniqueId === undefined) {

@@ -129,7 +129,7 @@ Class.define("framework.ui.gesture.GestureRecognizer", EventEmitter, {
     /**
      * Whether has require failures boolean
      * @method GestureRecognizer#hasRequireFailures
-     * @returns {Boolean}
+     * @return {Boolean}
      */
     hasRequireFailures: function() {
         return this._requireFail.length > 0;
@@ -139,7 +139,7 @@ Class.define("framework.ui.gesture.GestureRecognizer", EventEmitter, {
      * If the gesture recognizer can recognize simultaneous with an other gesture recognizer
      * @method GestureRecognizer#canRecognizeWith
      * @param {Recognizer} otherRecognizer
-     * @returns {Boolean}
+     * @return {Boolean}
      */
     canRecognizeWith: function(otherRecognizer) {
         return this._simultaneous.hasOwnProperty(otherRecognizer.id);
@@ -187,7 +187,7 @@ Class.define("framework.ui.gesture.GestureRecognizer", EventEmitter, {
     /**
      * Can we emit?
      * @method GestureRecognizer#canEmit
-     * @returns {Boolean}
+     * @return {Boolean}
      */
     canEmit: function() {
         var i = 0;
@@ -204,7 +204,7 @@ Class.define("framework.ui.gesture.GestureRecognizer", EventEmitter, {
      * get a usable string, used as event postfix
      * @method GestureRecognizer#stateStr
      * @param {Const} state
-     * @returns {String} state
+     * @return {String} state
      * @private
      */
     stateStr: function(state) {
@@ -224,7 +224,7 @@ Class.define("framework.ui.gesture.GestureRecognizer", EventEmitter, {
      * direction cons to string
      * @method GestureRecognizer#directionStr
      * @param {Const} direction
-     * @returns {String}
+     * @return {String}
      * @private
      */
     directionStr: function(direction) {

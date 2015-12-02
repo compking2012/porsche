@@ -62,7 +62,7 @@ Class.define("framework.ui.gesture.GestureManager", EventEmitter, {
      * Create new input type manager
      * called by the Manager constructor
      * @method GestureManager#createInputs
-     * @returns {Input}
+     * @return {Input}
      */
     createInputs: function() {
         return [
