@@ -10,25 +10,25 @@
 
 "use strict";
 var Class = require("../../class");
-var Animation = require("./animation");
-var CubicBezier = require("./cubicbezier");
-var SharedTimer = require("./sharedtimer");
+var PropertyAnimation = require("./propertyanimation");
 
-Class.define("framework.ui.animation.FrameAnimation", Animation, {
+/**
+ * Frame animation that holds a time/value pair for an animation.
+ * This class defines the frames that the animation target will have over the course of the animation.
+ * As the time proceeds from one frame to the other, the value of the target object will animate
+ * between the value at the previous frame and the value at the next frame.
+ * @class FrameAnimation
+ * @extends PropertyAnimation
+ */
+Class.define("framework.ui.animation.FrameAnimation", PropertyAnimation, {
     /**
      * Constructor
      * @method FrameAnimation#initialize
      */
     initialize: function(/*view*/) {
-        Animation.prototype.initialize.apply(this, arguments);
+        PropertyAnimation.prototype.initialize.apply(this, arguments);
 
         this._frames = {};
-        this._beziers = CubicBezier.ease();
-        this._timer = SharedTimer.getInstance();
-        this._iteration = 0;
-        this._animators = [];
-        this._startTime = 0;
-        this._currentTime = 0;
     },
 
     /**
@@ -37,13 +37,8 @@ Class.define("framework.ui.animation.FrameAnimation", Animation, {
      */
     destroy: function() {
         this._frames = null;
-        this._beziers.destroy();
-        this._beziers = null;
-        this._timer.destroy();
-        this._timer = null;
-        this._animators = null;
 
-        Animation.prototype.destroy.apply(this, arguments);
+        PropertyAnimation.prototype.destroy.apply(this, arguments);
     },
 
     /**
