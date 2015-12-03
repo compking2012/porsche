@@ -14,7 +14,8 @@ var Class = require("../../class");
 var UIEvent = require("./uievent");
 
 /**
- * Base event for input
+ * Base event for all input events.
+ * Note that this class is never used to instantiate directly.
  * @class InputEvent
  * @extends UIEvent
  */

@@ -17,6 +17,7 @@ var YObject = require("../yobject");
  * Base struct for matrix
  * @class Matrix
  * @extends YObject
+ * @private
  */
 Class.define("framework.ui.Matrix", YObject, {
     /**
@@ -124,7 +125,7 @@ Class.define("framework.ui.Matrix", YObject, {
     },
 
     clone: function() {
-        var matrix = new this();
+        var matrix = new this.constructor();
         matrix.assign(this);
         return matrix;
     }

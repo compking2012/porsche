@@ -15,7 +15,8 @@ var EventEmitter = require("../../eventemitter");
 
 /**
  * @class Input
- * @extends {EventEmitter}
+ * @extends EventEmitter
+ * @private
  */
 Class.define("framework.ui.gesture.Input", EventEmitter, {
     /**

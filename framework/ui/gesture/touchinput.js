@@ -16,6 +16,7 @@ var Util = require("./util");
 
 /**
  * @class TouchInput
+ * @private
  */
 Class.define("framework.ui.gesture.TouchInput", Input, {
     initialize: function(/*manager*/) {

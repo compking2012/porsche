@@ -15,6 +15,7 @@ var YObject = require("../../yobject");
 
 /**
  * Base class for all the layouts.
+ * Note that this class is never used to instantiate directly.
  * @class Layout
  * @extends YObject
  */

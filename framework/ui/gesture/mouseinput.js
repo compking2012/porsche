@@ -15,6 +15,7 @@ var Input = require("./input");
 
 /**
  * @class MouseInput
+ * @private
  */
 Class.define("framework.ui.gesture.MouseInput", Input, {
     initialize: function(/*manager*/) {

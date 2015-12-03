@@ -14,7 +14,8 @@ var Class = require("../../class");
 var YObject = require("../../yobject");
 
 /**
- * Base class for event
+ * Base class for all events.
+ * Note that this class is never used to instantiate directly.
  * @class Event
  * @extends YObject
  */

@@ -14,16 +14,16 @@ var Class = require("../class");
 var YObject = require("../yobject");
 
 /**
- * Base struct for point
+ * Point that represents a point with x and y-axis value.
  * @class Point
  * @extends YObject
  */
 Class.define("framework.ui.Point", YObject, {
     /**
-     * Constructor
+     * Constructor that create a point.
      * @method Point#initialize
-     * @param {Number} x the x-axis value
-     * @param {Number} y the y-axis value
+     * @param {Number} x - the x-axis value.
+     * @param {Number} y - the y-axis value.
      */
     initialize: function(x, y) {
         YObject.prototype.initialize.apply(this, arguments);
@@ -33,25 +33,33 @@ Class.define("framework.ui.Point", YObject, {
     },
 
     /**
-     * Get x-axis value.
+     * Destructor that destroy this point.
+     * @method Point#destroy
+     */
+    destroy: function() {
+        YObject.prototype.destroy.apply(this, arguments);
+    },
+
+    /**
      * @name Point#x
      * @type {Number}
+     * @description the x-axis value.
      */
     get x() {
         return this._x;
     },
 
     /**
-     * Get y-axis value.
      * @name Point#y
      * @type {Number}
+     * @description the y-axis value.
      */
     get y() {
         return this._y;
     },
 
     /**
-     * Set the point params.
+     * Assign the x and y value of this point.
      * @method Point#assign
      * @param {Number} x the point's x-axis.
      * @param {Number} y the point's y-axis.
@@ -62,28 +70,47 @@ Class.define("framework.ui.Point", YObject, {
         return this;
     },
 
+    /**
+     * Offset the point's coordinates by the specified x and y value.
+     * @method Point#offset
+     * @param  {Number} x - the x value.
+     * @param  {Number} y - the y value.
+     */
     offset: function(dx, dy) {
         this._x += dx;
         this._y += dy;
     },
 
+    /**
+     * Clone a new point from this point.
+     * @method Point#clone
+     * @return {Point} a new point that has the same x and y value with this point.
+     * @protected
+     * @override
+     */
     clone: function() {
-        var obj = YObject.prototype.clone.apply(this, arguments);
-        obj.x = this._x;
-        obj.y = this._y;
-        return obj;
+        return new this.constructor(this._x, this._y);
     },
 
     /**
-     * Check the point equal with current or not .
+     * Check whether this point equals a specified point.
      * @method Point#equals
-     * @param {Point} point the point to be checked.
-     * @return {Boolean} whether equal
+     * @param {Point} point - the specified point.
+     * @return {Boolean} true means equal, otherwise false.
+     * @protected
+     * @override
      */
     equals: function(point) {
         return this.x === point.x && this.y === point.y;
     },
 
+    /**
+     * Returns a human-readable point string.
+     * @method Point#toString
+     * @return {String} the point string.
+     * @protected
+     * @override
+     */
     toString: function() {
         return this.className + "(" + this._x + "," + this._y + ")";
     }

@@ -14,34 +14,27 @@ var Class = require("../../class");
 var LayoutParam = require("./layoutparam");
 
 /**
- * Column LayoutParam
+ * Column layout param that provides all parameters for the associated column layout.
  * @class ColumnLayoutParam
  * @extends LayoutParam
  */
 Class.define("framework.ui.layout.ColumnLayoutParam", LayoutParam, {
+    /**
+     * Constructor that create a column layout param.
+     * @method ColumnLayoutParam#initialize
+     * @param {Layout} layout - the associated layout.
+     */
     initialize: function() {
         LayoutParam.prototype.initialize.apply(this, arguments);
     },
 
     /**
-     * @name ColumnLayoutParam#align
-     * @type {Boolean}
-     * @description 
+     * Destructor that destroy this column layout param.
+     * @method ColumnLayoutParam#destroy
      */
-    get align() {
-        return this._align;
-    },
-
-    set align(value) {
-        if (value === "right") {
-            this.alignRight = true;
-        } else if (value === "center") {
-            this.alignCenter = true;
-        } else {
-            this.alignLeft = true;
-        }
+    destroy: function() {
+        LayoutParam.prototype.destroy.apply(this, arguments);
     }
-
 }, module);
 
 });

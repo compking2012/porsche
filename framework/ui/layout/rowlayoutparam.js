@@ -14,34 +14,27 @@ var Class = require("../../class");
 var LayoutParam = require("./layoutparam");
 
 /**
- * Row LayoutParam
+ * Row layout param that provides all parameters for the associated row layout.
  * @class RowLayoutParam
  * @extends LayoutParam
  */
 Class.define("framework.ui.layout.RowLayoutParam", LayoutParam, {
-    initialize: function() {
+    /**
+     * Constructor that create a row layout param.
+     * @method RowLayoutParam#initialize
+     * @param {Layout} layout - the associated layout.
+     */
+    initialize: function(/*layout*/) {
         LayoutParam.prototype.initialize.apply(this, arguments);
     },
 
     /**
-     * @name RowLayoutParam#align
-     * @type {Boolean}
-     * @description 
+     * Destructor that destroy this column layout param.
+     * @method ColumnLayoutParam#destroy
      */
-    get align() {
-        return this._align;
-    },
-
-    set align(value) {
-        if (value === "bottom") {
-            this.alignBottom = true;
-        } else if (value === "middle") {
-            this.alignMiddle = true;
-        } else {
-            this.alignTop = true;
-        }
+    destroy: function() {
+        LayoutParam.prototype.destroy.apply(this, arguments);
     }
-
 }, module);
 
 });

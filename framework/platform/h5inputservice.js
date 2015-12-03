@@ -53,21 +53,29 @@ Class.define("framework.ui.platform.H5InputService", EventEmitter, {
     },
 
     onMouseDown: function(e) {
+        e.stopPropagation();
+        e.preventDefault();
         var point = {x: e.clientX, y: e.clientY, button: e.button};
         this.dispatchEvent("input", "mousedown", point);
     },
 
     onMouseMove: function(e) {
+        e.stopPropagation();
+        e.preventDefault();
         var point = {x: e.clientX, y: e.clientY, button: e.button};
         this.dispatchEvent("input", "mousemove", point);
     },
 
     onMouseUp: function(e) {
+        e.stopPropagation();
+        e.preventDefault();
         var point = {x: e.clientX, y: e.clientY, button: e.button};
         this.dispatchEvent("input", "mouseup", point);
     },
 
     onTouchStart: function(e) {
+        e.stopPropagation();
+        e.preventDefault();
         var points = [];
         for (var i = 0; i < e.targetTouches.length; i++) {
             points.push({x: e.targetTouches[i].clientX, y: e.targetTouches[i].clientY});
@@ -76,6 +84,8 @@ Class.define("framework.ui.platform.H5InputService", EventEmitter, {
     },
 
     onTouchMove: function(e) {
+        e.stopPropagation();
+        e.preventDefault();
         var points = [];
         for (var i = 0; i < e.targetTouches.length; i++) {
             points.push({x: e.targetTouches[i].clientX, y: e.targetTouches[i].clientY});
@@ -84,6 +94,8 @@ Class.define("framework.ui.platform.H5InputService", EventEmitter, {
     },
 
     onTouchEnd: function(e) {
+        e.stopPropagation();
+        e.preventDefault();
         var points = [];
         for (var i = 0; i < e.changedTouches.length; i++) {
             points.push({x: e.changedTouches[i].clientX, y: e.changedTouches[i].clientY});
@@ -92,6 +104,8 @@ Class.define("framework.ui.platform.H5InputService", EventEmitter, {
     },
 
     onTouchCancel: function(e) {
+        e.stopPropagation();
+        e.preventDefault();
         var points = [];
         for (var i = 0; i < e.changedTouches.length; i++) {
             points.push({x: e.changedTouches[i].clientX, y: e.changedTouches[i].clientY});
@@ -100,10 +114,14 @@ Class.define("framework.ui.platform.H5InputService", EventEmitter, {
     },
 
     onKeyDown: function(e) {
+        e.stopPropagation();
+        e.preventDefault();
         this.dispatchEvent("input", "keydown", {keyCode: e.keyCode});
     },
 
     onKeyUp: function(e) {
+        e.stopPropagation();
+        e.preventDefault();
         this.dispatchEvent("input", "keyup", {keyCode: e.keyCode});
     }
 }, module);

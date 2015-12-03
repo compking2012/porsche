@@ -17,9 +17,21 @@ Class.define("framework.ui.platform.H5AppService", EventEmitter, {
     initialize: function() {
         EventEmitter.prototype.initialize.apply(this, arguments);
 
+        window.addEventListener("load", this._onLoadFunc = this.onLoad.bind(this));
+        window.addEventListener("unload", this._onUnloadFunc = this.onUnload.bind(this));
+        document.addEventListener("visibilitychange", this._onVisibilityChangeFunc = this.onVisibilityChange.bind(this));
     },
 
     destroy: function() {
+        window.removeEventListener("load", this._onLoadFunc);
+        this._onLoadFunc = null;
+
+        window.removeEventListener("unload", this._onUnloadFunc);
+        this._onUnloadFunc = null;
+
+        document.removeEventListener("visibilitychange", this._onVisibilityChangeFunc);
+        this._onVisibilityChangeFunc = null;
+
         EventEmitter.prototype.destroy.apply(this, arguments);
     },
 
@@ -52,6 +64,22 @@ Class.define("framework.ui.platform.H5AppService", EventEmitter, {
 
     registerGlobal: function() {
         window.global = window;
+    },
+
+    onLoad: function() {
+        this.dispatchEvent("start");
+    },
+
+    onUnload: function() {
+        this.dispatchEvent("finish");
+    },
+
+    onVisibilityChange: function() {
+        if (document.visibilityState === "hidden") {
+            this.dispatchEvent("inactive");
+        } else if (document.visibilityState === "visible") {
+            this.dispatchEvent("active");
+        }
     }
 }, module);
 

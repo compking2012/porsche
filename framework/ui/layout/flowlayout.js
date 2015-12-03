@@ -18,6 +18,7 @@ var FlowLayoutParam = require("./flowlayoutparam");
  * Flow Layout which can assign views as word editor
  * @class FlowLayout
  * @extends Layout
+ * @private
  */
 Class.define("framework.ui.layout.FlowLayout", Layout, {
     initialize: function() {

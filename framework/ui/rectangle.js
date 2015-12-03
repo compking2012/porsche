@@ -14,31 +14,42 @@ var Class = require("../class");
 var YObject = require("../yobject");
 
 /**
- * Base struct for rectangle
+ * Rectangle that represents by the coordinates of its 4 edges (left, top, right bottom).
+ * These fields can be accessed directly. Use width and height to retrieve the rectangle's width and height.
+ * Note that most methods do not check to see that the coordinates are sorted correctly (i.e. left <= right and top <= bottom).
  * @class Rectangle
  * @extends YObject
  */
 Class.define("framework.ui.Rectangle", YObject, {
     /**
-     * Constructor
-     * @method Button#initialize
-     * @param {Number} x left edge of rectangle, in pixels.
-     * @param {Number} y top edge of rectangle, in pixels.
-     * @param {Number} width width edge of rectangle, in pixels.
-     * @param {Number} height height edge of rectangle, in pixels.
+     * Constructor that create a rectangle.
+     * @method Rectangle#initialize
+     * @param {Number} left - the X coordinate of the left side of the rectangle.
+     * @param {Number} top - the Y coordinate of the top of the rectangle
+     * @param {Number} right - the X coordinate of the right side of the rectangle
+     * @param {Number} bottom - the Y coordinate of the bottom of the rectangle
      */
-    initialize: function(left, top, width, height) {
+    initialize: function(left, top, right, bottom) {
         YObject.prototype.initialize.apply(this, arguments);
+
         this._left = left;
         this._top = top;
-        this._width = width;
-        this._height = height;
+        this._right = right;
+        this._bottom = bottom;
+    },
+
+    /**
+     * Destructor that destroy this rectangle.
+     * @method Rectangle#destroy
+     */
+    destroy: function() {
+        YObject.prototype.destroy.apply(this, arguments);
     },
 
     /**
      * @name Rectangle#left
      * @type {Number}
-     * @description x-axis value.
+     * @description the X coordinate of the left side of the rectangle.
      */
     get left() {
         return this._left;
@@ -51,7 +62,7 @@ Class.define("framework.ui.Rectangle", YObject, {
     /**
      * @name Rectangle#top
      * @type {Number}
-     * @description y-axis value.
+     * @description the Y coordinate of the top side of the rectangle.
      */
     get top() {
         return this._top;
@@ -61,165 +72,239 @@ Class.define("framework.ui.Rectangle", YObject, {
         this._top = value;
     },
 
+    /**
+     * @name Rectangle#right
+     * @type {Number}
+     * @description the X coordinate of the right side of the rectangle.
+     */
     get right() {
-        return this._left + this._width;
+        return this._right;
     },
 
     set right(value) {
-        this._left = value - this._width;
+        this._right = value;
     },
 
+    /**
+     * @name Rectangle#top
+     * @type {Number}
+     * @description the Y coordinate of the bottom side of the rectangle.
+     */
     get bottom() {
-        return this._top + this._height;
+        return this._bottom;
     },
 
     set bottom(value) {
-        this._top = value - this._height;
+        this._bottom = value;
     },
 
+    /**
+     * @name Rectangle#width
+     * @type {Number}
+     * @description the rectangle's width.
+     * This does not check for a valid rectangle (i.e. left <= right) so the result may be negative.
+     */
     get width() {
-        return this._width;
+        return this._right - this._left;
     },
 
-    set width(value) {
-        this._width = value;
-    },
-
+    /**
+     * @name Rectangle#height
+     * @type {Number}
+     * @description the rectangle's height.
+     * This does not check for a valid rectangle (i.e. top <= bottom) so the result may be negative.
+     */
     get height() {
-        return this._height;
+        return this._bottom - this._top;
     },
 
-    set height(value) {
-        this._height = value;
-    },
-
+    /**
+     * Set the rectangle to an empty rectangle (0,0,0,0).
+     * @method Rectangle#empty
+     */
     empty: function() {
         this._left = 0;
         this._top = 0;
-        this._width = 0;
-        this._height = 0;
+        this._right = 0;
+        this._bottom = 0;
     },
 
-    assign: function(left, top, width, height) {
+    /**
+     * Set the rectangle's coordinates to the specified values.
+     * Note that no range checking is performed, so it is up to the caller to ensure that left <= right and top <= bottom.
+     * @method Rectangle#assign
+     * @param {Number} left - the X coordinate of the left side of the rectangle.
+     * @param {Number} top - the Y coordinate of the top of the rectangle.
+     * @param {Number} right - the X coordinate of the right side of the rectangle.
+     * @param {Number} bottom - the Y coordinate of the bottom of the rectangle.
+     */
+    assign: function(left, top, right, bottom) {
         this._left = left;
         this._top = top;
-        this._width = width;
-        this._height = height;
+        this._right = right;
+        this._bottom = bottom;
     },
 
+    /**
+     * Offset the rectangle by adding dx to its left and right coordinates,
+     * and adding dy to its top and bottom coordinates.
+     * @method Rectangle#offset
+     * @param {Number} dx - the amount to add to the rectangle's left and right coordinates.
+     * @param {Number} dy - the amount to add to the rectangle's top and bottom coordinates.
+     */
     offset: function(dx, dy) {
         this._left += dx;
         this._top += dy;
     },
 
+    /**
+     * Offset the rectangle to a specific (left, top) position,
+     * keeping its width and height the same.
+     * @method Rectangle#offsetTo
+     * @param {Number} left - the new left coordinate for the rectangle.
+     * @param {Number} top  - the new top coordinate for the rectangle.
+     */
     offsetTo: function(left, top) {
         this._left = left;
         this._top = top;
     },
 
     /**
-     * Returns a new rectangle representing the union of this rectangle with the
-     * specified rectangle.
+     * Update this rectangle to enclose itself and the specified rectangle.
+     * If the specified rectangle is empty, nothing is done. If this rectangle is empty it is set to the specified rectangle.
      * @method Rectangle#unite
-     * @param {Rectangle} rect the rectangle to be combined with this rectangle
-     * @return {Rectangle} the smallest rectangle containing both the specified
-     *                     rectangle and this rectangle.
+     * @param {Rectangle} rect - the rectangle to be combined with this rectangle.
      */
     unite: function(rect) {
-        if (this._width === 0 && this._height === 0) {
+        if (this._right - this._top === 0 && this._bottom - this._top === 0) {
             this._left = rect.left;
             this._top = rect.top;
-            this._width = rect.width;
-            this._height = rect.height;
+            this._right = rect.right;
+            this._bottom = rect.bottom;
             return;
         }
-        var x1 = Math.min(this._left, rect.left);
-        var y1 = Math.min(this._top, rect.top);
-        var x2 = Math.max(this._left + this._width, rect.left + rect.width);
-        var y2 = Math.max(this._top + this._height, rect.top + rect.height);
-        this._left = x1;
-        this._top = y1;
-        this._width = x2 - x1;
-        this._height = y2 - y1;
+        this._left = Math.min(this._left, rect.left);
+        this._top = Math.min(this._top, rect.top);
+        this._right = Math.max(this._right, rect.right);
+        this._bottom = Math.max(this._bottom, rect.bottom);
     },
 
     /**
-     * Returns a new rectangle representing the intersection of this rectangle
-     * with the specified rectangle.
+     * Update this rectangle to the intersection of this rectangle with the specified rectangle.
      * @method Rectangle#intersect
-     * @param {Rectangle} rect The rectangle to be intersected with this
-     *                         rectangle
-     * @return {Rectangle} the largest rectangle contained in both the specified
-     *                     rectangle and in this rectangle
+     * @param {Rectangle} rect - the rectangle to be intersected with this rectangle.
      */
     intersect: function(rect) {
-        var x1 = Math.max(this._left, rect.left);
-        var y1 = Math.max(this._top, rect.top);
-        var x2 = Math.min(this._left + this._width, rect.right);
-        var y2 = Math.min(this._top + this._height, rect.bottom);
-
-        this._left = x1;
-        this._top = y1;
-        this._width = x2 - x1;
-        this._height = y2 - y1;
-    },
-
-    isEmpty: function() {
-        return this._left === 0 && this._top === 0 && this._width === 0 && this._height === 0;
-    },
-
-    intersects: function(rect) {
-        return rect.right > this._left && rect.bottom > this._top &&
-            rect.left < this._left + this._width && rect.top < this._top + this._height;
-    },
-
-    touches: function(rect) {
-        return rect.right >= this._left && rect.bottom >= this._top &&
-            rect.left <= this._left + this._width && rect.top <= this._top + this._height;
+        this._left = Math.max(this._left, rect.left);
+        this._top = Math.max(this._top, rect.top);
+        this._right = Math.min(this._right, rect.right);
+        this._bottom = Math.min(this._bottom, rect.bottom);
     },
 
     /**
-     * Returns true if this rectangle fully encloses the described point or rectangle.
+     * Indicates whether the rectangle is empty.
+     * @method Rectangle#isEmpty
+     * @return {Boolean} true if the rectangle is empty (left >= right or top >= bottom).
+     */
+    isEmpty: function() {
+        return this._left === 0 && this._top === 0 && this._right === 0 && this._bottom === 0;
+    },
+
+    /**
+     * Indicates whether this rectangle intersects the specified rectangle.
+     * @method Rectangle#intersects
+     * @param {Rectangle} rect - the rectangle being intersected with this rectangle.
+     * @return {Boolean} true if this rectangle intersects the specified rectangle, otherwise false.
+     */
+    intersects: function(rect) {
+        return rect.right > this._left && rect.bottom > this._top &&
+            rect.left < this._right && rect.top < this._bottom;
+    },
+
+    /**
+     * Indicates whether this rectangle touches the specified rectangle.
+     * @method Rectangle#touches
+     * @param {Rectangle} rect - the rectangle being touched with this rectangle.
+     * @return {Boolean} true if this rectangle touches the specified rectangle, otherwise false.
+     */
+    touches: function(rect) {
+        return rect.right >= this._left && rect.bottom >= this._top &&
+            rect.left <= this._right && rect.top <= this._bottom;
+    },
+
+    /**
+     * Indicates whether the specified rectangle is inside or equal to this rectangle.
+     * An empty rectangle never contains another rectangle.
      * @method Rectangle#contains
-     * @param {Rectangle} rect The rectangle to be intersected with this
-     *                         rectangle
-     * @return {Boolean} True if the described point or rectangle is contained within this rectangle.
+     * @param {Rectangle} rect - the rectangle being tested for containment.
+     * @return {Boolean} true if the specified rectangle is inside or equal to this rectangle, otherwise false.
     */
     contains: function(rect) {
         return rect.left >= this._left && rect.right <= this._left + this._width &&
             rect.top >= this._top && rect.bottom <= this._top + this._height;
     },
 
+    /**
+     * Indicates whether the specified point is inside this rectangle.
+     * The left and top are considered to be inside, while the right and bottom are not.
+     * This means that for a x,y to be contained: left <= x < right and top <= y < bottom.
+     * An empty rectangle never contains any point.
+     * @method Rectangle#containsXY
+     * @param {Number} x - the X coordinate of the point being tested for containment.
+     * @param {Number} y - the Y coordinate of the point being tested for containment.
+     * @return {Boolean} true if (x,y) is inside the rectangle, otherwise false.
+     */
     containsXY: function(x, y) {
-        return x >= this._left && y >= this._top && x <= this._left + this._width && y <= this._top + this._height;
+        return x >= this._left && y >= this._top && x <= this._right && y <= this._bottom;
     },
 
+    /**
+     * Indicates whether the specified point is inside this rectangle.
+     * The left and top are considered to be inside,
+     * while the right and bottom are not.
+     * This means that for a x,y to be contained: left <= x < right and top <= y < bottom.
+     * An empty rectangle never contains any point.
+     * @method Rectangle#containsXY
+     * @param {Point} point - the point being tested for containment.
+     * @return {Boolean} true if the point is inside the rectangle, otherwise false.
+     */
     containsPoint: function(point) {
         return point.x >= this._left && point.y >= this._top && point.x <= this._left + this._width && point.y <= this._top + this._height;
     },
 
     /**
-     * copy this rectangle to a new object.
-     * @return {Rectangle} rect other rectangle to be checked with.
+     * Clone a new rectangle from this rectangle.
      * @method Rectangle#clone
+     * @return {Rectangle} a new rectangle that has the same left, top, right and bottom value with this rectangle.
+     * @protected
+     * @override
      */
     clone: function() {
-        return new this.constructor(this._left, this._top, this._width, this._height);
+        return new this.constructor(this._left, this._top, this._right, this._bottom);
     },
 
     /**
-     * Check the point equal with current or not.
+     * Check whether this rectangle equals a specified rectangle.
      * @method Rectangle#equals
-     * @param {Rectangle} rect the rectangle to be checked.
-     * @return {boolean} whether equal
+     * @param {Rectangle} rect - the specified rectangle.
+     * @return {Boolean} true means equal, otherwise false.
+     * @protected
+     * @override
      */
     equals: function(rect) {
         return this._left === rect.left && this._top === rect.top &&
-            this._width === rect.width && this._height === rect.height;
+            this._right === rect.right && this._bottom === rect.bottom;
     },
 
+    /**
+     * Returns a human-readable rectangle string.
+     * @method Rectangle#toString
+     * @return {String} the rectangle string.
+     * @protected
+     * @override
+     */
     toString: function() {
-        return this.className + "(" + this._left + "," + this._top + " - " + this._width + "," + this._height + ")";
+        return this.className + "(" + this._left + "," + this._top + " - " + this._right + "," + this._bottom + ")";
     }
 }, module);
 
