@@ -20,6 +20,10 @@ var AutoLayoutParam = require("./autolayoutparam");
  * @extends Layout
  */
 Class.define("framework.ui.layout.AutoLayout", Layout, {
+    /**
+     * Constructor that create an auto layout.
+     * @method AutoLayout#initialize
+     */
     initialize: function() {
         Layout.prototype.initialize.apply(this, arguments);
 
@@ -31,6 +35,10 @@ Class.define("framework.ui.layout.AutoLayout", Layout, {
         this._paddingBottom = 0;
     },
 
+    /**
+     * Destructor that destroy this auto layout.
+     * @method AutoLayout#destroy
+     */
     destroy: function() {
         this._autoLayoutView = null;
         this._constraints = null;
@@ -38,6 +46,12 @@ Class.define("framework.ui.layout.AutoLayout", Layout, {
         Layout.prototype.destroy.apply(this, arguments);
     },
 
+    /**
+     * Add constraint definitions for this auto layout.
+     * The constraint must follow the Extended Visual Format Language (EVFL).
+     * @method AutoLayout#addConstraints
+     * @param {String[]} constraints - an array of constraint definitions.
+     */
     addConstraints: function(constraints) {
         for (var i = 0; i < constraints.length; i++) {
             this._constraints.push(constraints[i]);
@@ -45,66 +59,112 @@ Class.define("framework.ui.layout.AutoLayout", Layout, {
         this._autoLayoutView.addConstraints(AutoLayoutJS.VisualFormat.parse(this._constraints, {extended: true}));
     },
 
+    /**
+     * Add a constraint definition for this auto layout.
+     * The constraint must follow the Extended Visual Format Language (EVFL).
+     * @method AutoLayout#addConstraint
+     * @param {String} constraint - the constraint definition.
+     */
     addConstraint: function(constraint) {
         this._constraints.push(constraint);
     },
 
+    /**
+     * @name AutoLayout#paddingLeft
+     * @type {Number}
+     * @description the left padding to the left side of the associated composite view.
+     */
     get paddingLeft() {
         return this._paddingLeft;
     },
 
     set paddingLeft(value) {
         this._paddingLeft = value;
+        this.invalidate();
     },
 
+    /**
+     * @name AutoLayout#paddingRight
+     * @type {Number}
+     * @description the right padding to the right side of the associated composite view.
+     */
     get paddingRight() {
         return this._paddingRight;
     },
 
     set paddingRight(value) {
         this._paddingRight = value;
+        this.invalidate();
     },
 
+    /**
+     * @name AutoLayout#paddingTop
+     * @type {Number}
+     * @description the top padding to the top side of the associated composite view.
+     */
     get paddingTop() {
         return this._paddingTop;
     },
 
     set paddingTop(value) {
         this._paddingTop = value;
+        this.invalidate();
     },
 
+    /**
+     * @name AutoLayout#paddingBottom
+     * @type {Number}
+     * @description the bottom padding to the bottom side of the associated composite view.
+     */
     get paddingBottom() {
         return this._paddingBottom;
     },
 
     set paddingBottom(value) {
         this._paddingBottom = value;
+        this.invalidate();
     },
 
     /**
-     * @method AutoLayout#getLayoutParam
-     * @description get layoutParams of child view at index
-     * @abstract
+     * Get the layout param value for the child view at index.
+     * @method Layout#getLayoutParam
+     * @param {Number} index - the index of the child view.
+     * @param {String} attribute - the attribute in layout param.
+     * @protected
+     * @override
      */
     getLayoutParam: function(index, attribute) {
     },
 
     /**
-     * @method AutoLayout#setLayoutParam
-     * @description set layoutParams of child view at index
-     * @abstract
+     * Set the layout param value for the child view at index.
+     * @method Layout#setLayoutParam
+     * @param {Number} index - the index of the child view.
+     * @param {String} attribute - the attribute in layout param.
+     * @param {Object} constraint - the constraint value in layout param.
+     * @protected
+     * @override
      */
     setLayoutParam: function(index, attribute, constraint) {
     },
 
     /**
-     * @method AutoLayout#removeLayoutParam
-     * @description remove layoutParams of child view at index
-     * @abstract
+     * Remove the layout param value for the child view at index.
+     * @method Layout#removeLayoutParam
+     * @param {Number} index - the index of the child view.
+     * @param {String} attribute - the attribute in layout param.
+     * @protected
+     * @override
      */
     removeLayoutParam: function(index, attribute) {
     },
 
+    /**
+     * Perform the auto layouting for the associated view.
+     * @method AutoLayout#perform
+     * @protected
+     * @override
+     */
     perform: function() {
         this._autoLayoutView.setSize(this._associatedView.width, this._associatedView.height);
         this._autoLayoutView.setSpacing([this._paddingTop, this._paddingRight, this._paddingBottom, this._paddingLeft, 0, 0, 0]);

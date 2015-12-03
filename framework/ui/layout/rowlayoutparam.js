@@ -13,7 +13,7 @@ var Class = require("../../class");
 var LayoutParam = require("./layoutparam");
 
 /**
- * Row layout params that provides all parameters for the associated row layout.
+ * Row layout param that provides all parameters for the associated row layout.
  * @class RowLayoutParam
  * @extends LayoutParam
  */

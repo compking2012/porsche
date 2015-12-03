@@ -13,7 +13,7 @@ var Class = require("../../class");
 var LayoutParam = require("./layoutparam");
 
 /**
- * Column layout params that provides all parameters for the associated column layout.
+ * Column layout param that provides all parameters for the associated column layout.
  * @class ColumnLayoutParam
  * @extends LayoutParam
  */

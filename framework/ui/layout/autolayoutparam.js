@@ -13,15 +13,24 @@ var Class = require("../../class");
 var LayoutParam = require("./layoutparam");
 
 /**
- * Auto layout param
- * @class ColumnLayoutParam
+ * Auto layout param that provides all parameters for the associated auto layout.
+ * @class AutoLayoutParam
  * @extends LayoutParam
  */
 Class.define("framework.ui.layout.AutoLayoutParam", LayoutParam, {
+    /**
+     * Constructor that create an auto layout param.
+     * @method AutoLayoutParam#initialize
+     * @param {Layout} layout - the associated layout.
+     */
     initialize: function() {
         LayoutParam.prototype.initialize.apply(this, arguments);
     },
 
+    /**
+     * Destructor that destroy this auto layout param.
+     * @method AutoLayoutParam#destroy
+     */
     destroy: function() {
         LayoutParam.prototype.destroy.apply(this, arguments);
     }
