@@ -34,9 +34,20 @@ Class.define("framework.app.App", EventEmitter, {
         this._renderService = new RenderService();
         this._inputService = new InputService(this._renderService.getTarget());
 
-        this._appService.addEventListener("start", this._onStartFunc = this.onStart.bind(this));
-        this._appService.addEventListener("background", this._onInactiveFunc = this.onInactive.bind(this));
-        this._appService.addEventListener("foreground", this._onActiveFunc = this.onActive.bind(this));
+        this._appService.addEventListener("start", this._onStartFunc = function() {
+            this._i18nManager = new I18nManager();
+            this._i18nManager.addEventListener("load", this._onLoadI18nFunc = function() {
+                this._windowManager = new WindowManager(this._inputService, this._renderService);
+
+                this._window = new Window(this._appName);
+                this._windowManager.addWindow(this._window);
+
+                this.onStart();
+            }.bind(this));
+            this._i18nManager.locale = "zh-CN";
+        }.bind(this));
+        this._appService.addEventListener("inactive", this._onInactiveFunc = this.onInactive.bind(this));
+        this._appService.addEventListener("active", this._onActiveFunc = this.onActive.bind(this));
         this._appService.addEventListener("finish", this._onFinishFunc = this.onFinish.bind(this));
         this._appService.registerGlobal();
         this._renderService.registerImageToGlobal();
@@ -46,17 +57,6 @@ Class.define("framework.app.App", EventEmitter, {
 
         this._appName = this._appService.getAppName();
         this._rootController = null;
-
-        this._i18nManager = new I18nManager();
-        this._i18nManager.addEventListener("load", this._onLoadI18nFunc = function() {
-            this._windowManager = new WindowManager(this._inputService, this._renderService);
-
-            this._window = new Window(this._appName);
-            this._windowManager.addWindow(this._window);
-
-            this.onStart();
-        }.bind(this));
-        this._i18nManager.locale = "zh-CN";
     },
 
     /**
@@ -64,23 +64,33 @@ Class.define("framework.app.App", EventEmitter, {
      * @method App#destroy
      */
     destroy: function() {
-        this._i18nManager.removeEventListener("load", this._onLoadI18nFunc);
-        this._onLoadI18nFunc = null;
-        this._i18nManager.destroy();
-        this._i18nManager = null;
-        this._windowManager.destroy();
-        this._windowManager = null;
-        this._window.destroy();
-        this._window = null;
+        if (this._i18nManager !== undefined) {
+            this._i18nManager.removeEventListener("load", this._onLoadI18nFunc);
+            this._onLoadI18nFunc = null;
+            this._i18nManager.destroy();
+            this._i18nManager = null;
+        }
+
+        if (this._windowManager !== undefined) {
+            this._windowManager.destroy();
+            this._windowManager = null;
+            this._window.destroy();
+            this._window = null;
+        }
         this._rootController = null;
+
         this._appService.removeEventListener("start", this._onStartFunc);
         this._onStartFunc = null;
-        this._appService.removeEventListener("background", this._onInactiveFunc);
+
+        this._appService.removeEventListener("inactive", this._onInactiveFunc);
         this._onInactiveFunc = null;
-        this._appService.removeEventListener("foreground", this._onActiveFunc);
+
+        this._appService.removeEventListener("active", this._onActiveFunc);
         this._onActiveFunc = null;
+
         this._appService.removeEventListener("finish", this._onFinishFunc);
         this._onFinishFunc = null;
+
         global.app = null;
 
         EventEmitter.prototype.destroy.apply(this, arguments);
@@ -102,70 +112,100 @@ Class.define("framework.app.App", EventEmitter, {
     /**
      * @name App#window
      * @type {Window}
-     * @description the window associated with this current app
+     * @description the window associated with this current app.
+     * @readonly
      */
     get window() {
         return this._window;
     },
 
     /**
+     * @name App#rootPath
+     * @type {String}
+     * @description the root path of this current app.
+     * @readonly
+     */
+    get rootPath() {
+        return this._appService.getAppRootPath();
+    },
+
+    /**
+     * Get the internationalization text of the specified key.
+     * @param  {String} key - the key value.
+     * @return {String} the corresponding internationalization text.
+     */
+    getI18nString: function(key) {
+        return this._i18nManager.getString(key);
+    },
+
+    /**
+     * Handle event when set app start.
+     * @method App#onStart
+     * @protected
+     * @abstract
+     */
+    onStart: function() {
+        // TO BE IMPLEMENTED
+    },
+
+    /**
+     * Handle event when set app run in background.
+     * @method App#onInactive
+     * @protected
+     * @abstract
+     */
+    onInactive: function() {
+        // TO BE IMPLEMENTED
+    },
+
+    /**
+     * Handle event when set app run in foreground.
+     * @method App#onActive
+     * @protected
+     * @abstract
+     */
+    onActive: function() {
+        // TO BE IMPLEMENTED
+    },
+
+    /**
+     * Handle event when set app finish.
+     * @method App#onFinish
+     * @protected
+     * @abstract
+     */
+    onFinish: function() {
+        // TO BE IMPLEMENTED
+    },
+
+    /**
      * @name App#windowManager
      * @type {WindowManager}
      * @description access the window manager associated with this current app
+     * @readonly
      * @private
      */
     get windowManager() {
         return this._windowManager;
     },
 
+    /**
+     * @name App#appService
+     * @type {AppService}
+     * @description access the app service associated with this current app
+     * @readonly
+     * @private
+     */
     get appService() {
         return this._appService;
     },
 
-    getI18nString: function(key) {
-        return this._i18nManager.getString(key);
-    },
-
     /**
-     * Handle Event when set app start
-     * @abstract
-     * @method App#onStart
+     * Process debug flag.
+     * @method App#processDebug
+     * @param {Object} debug - the debug info.
+     * @private
      */
-    onStart: function() {
-
-    },
-
-    /**
-     * Handle Event when set app run in background
-     * @method App#onInactive
-     * @abstract
-     */
-    onInactive: function() {
-
-    },
-
-    /**
-     * Handle Event when set app run in foreground
-     * @abstract
-     * @method App#onActive
-     */
-    onActive: function() {
-
-    },
-
-    /**
-     * Handle Event when set app finish
-     * @abstract
-     * @method App#onFinish
-     */
-    onFinish: function() {
-
-    },
-
-    get rootPath() {
-        return this._appService.getAppRootPath();
-    },
-
     processDebug: function(debug) {
         if (debug.paintFPS) {
             global.AppFXDebugPaintFPS = true;
