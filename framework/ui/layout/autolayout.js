@@ -15,8 +15,8 @@ var AutoLayoutJS = require("./autolayout/autolayout");
 var AutoLayoutParam = require("./autolayoutparam");
 
 /**
- * Column Layout
- * @class ColumnLayout
+ * Auto layout that layouts the child views in associated composite view, following the constraints.
+ * @class AutoLayout
  * @extends Layout
  */
 Class.define("framework.ui.layout.AutoLayout", Layout, {

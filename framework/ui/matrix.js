@@ -124,7 +124,7 @@ Class.define("framework.ui.Matrix", YObject, {
     },
 
     clone: function() {
-        var matrix = new this();
+        var matrix = new this.constructor();
         matrix.assign(this);
         return matrix;
     }
