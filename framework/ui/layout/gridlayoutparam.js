@@ -16,6 +16,7 @@ var LayoutParam = require("./layoutparam");
  * Grid LayoutParam
  * @class GridLayoutParam
  * @extends LayoutParam
+ * @private
  */
 Class.define("framework.ui.layout.GridLayoutParam", LayoutParam, {
     initialize: function() {

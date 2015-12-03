@@ -131,6 +131,7 @@ Class.define("framework.app.App", EventEmitter, {
 
     /**
      * Get the internationalization text of the specified key.
+     * @method App#getI18nString
      * @param  {String} key - the key value.
      * @return {String} the corresponding internationalization text.
      */

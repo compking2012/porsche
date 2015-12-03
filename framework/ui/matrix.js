@@ -16,6 +16,7 @@ var YObject = require("../yobject");
  * Base struct for matrix
  * @class Matrix
  * @extends YObject
+ * @private
  */
 Class.define("framework.ui.Matrix", YObject, {
     /**
