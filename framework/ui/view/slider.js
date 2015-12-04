@@ -31,7 +31,7 @@ Class.define("framework.ui.view.Slider", ProgressView, {
 
         this._defaultThumbSrc = global.AppFXRootPath + "/resources/sliderthumb.png";
         this._thumbImage = new Image();
-        this._thumbRect = new Rectangle();
+        this._thumbRect = new Rectangle(0, 0, 0, 0);
         this._continuous = true;
 
         this.addGestureRecognizer(this._tapRecognizer = new TapRecognizer());
@@ -176,7 +176,7 @@ Class.define("framework.ui.view.Slider", ProgressView, {
         var halfHeight = this._height / 2;
         var tx = (this._width - w) * this._value + w / 2;
         var ty = halfHeight - h / 2;
-        this._thumbRect.assign(tx, ty, w, h);
+        this._thumbRect.assign(tx, ty, tx + w, ty + h);
         if (!this._thumbRect.containsXY(x, y)) {
             var value = (x - w / 2) / (this._width - w);
             if (value < 0) {
@@ -272,7 +272,7 @@ Class.define("framework.ui.view.Slider", ProgressView, {
         var halfHeight = this._height / 2;
         var tx = (this._width - w) * this._value + w / 2;
         var ty = halfHeight - h / 2;
-        this._thumbRect.assign(tx, ty, w, h);
+        this._thumbRect.assign(tx, ty, tx + w, ty + h);
         if (this._thumbRect.containsXY(x, y)) {
             this._dragging = true;
             this.invalidate();

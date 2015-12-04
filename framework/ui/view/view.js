@@ -946,7 +946,7 @@ Class.define("framework.ui.view.View", EventEmitter, {
      */
     invalidateInternal: function(/*rect*/) {
         this._dirty = true;
-        this._dirtyRect.assign(this._boundRect.left, this._boundRect.top, this._boundRect.width, this._boundRect.height);
+        this._dirtyRect.assign(this._boundRect.left, this._boundRect.top, this._boundRect.right, this._boundRect.bottom);
 
         if (this._parent !== null) {
             this._parent.invalidateChild(this, this._dirtyRect);
@@ -961,7 +961,7 @@ Class.define("framework.ui.view.View", EventEmitter, {
      */
     setDirty: function(/*rect*/) {
         this._dirty = true;
-        this._dirtyRect.assign(this._boundRect.left, this._boundRect.top, this._boundRect.width, this._boundRect.height);
+        this._dirtyRect.assign(this._boundRect.left, this._boundRect.top, this._boundRect.right, this._boundRect.bottom);
     },
 
     /**
@@ -1024,10 +1024,7 @@ Class.define("framework.ui.view.View", EventEmitter, {
         var boundRight = Math.ceil(Math.max(p0x, Math.max(p1x, Math.max(p2x, p3x))));
         var boundBottom = Math.ceil(Math.max(p0y, Math.max(p1y, Math.max(p2y, p3y))));
 
-        var boundWidth = boundRight - boundLeft;
-        var boundHeight = boundBottom - boundTop;
-
-        this._boundRect.assign(boundLeft, boundTop, boundWidth, boundHeight);
+        this._boundRect.assign(boundLeft, boundTop, boundRight, boundBottom);
         return this._boundRect;
     },
 

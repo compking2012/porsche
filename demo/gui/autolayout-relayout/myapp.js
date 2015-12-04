@@ -5,12 +5,10 @@ var App = fx.import("framework.app.App");
 var CompositeView = fx.import("framework.ui.view.CompositeView");
 var TextView = fx.import("framework.ui.view.TextView");
 var AutoLayout = fx.import("framework.ui.layout.AutoLayout");
-var TapRecognizer = fx.import("framework.ui.gesture.TapRecognizer");
 
 Class.define("MyApp", App, {
     onStart: function() {
-        this.window.addGestureRecognizer(new TapRecognizer());
-        this.window.addEventListener("tap", this.onTap.bind(this));
+        this.window.addEventListener("touchend", this.onTouchEnd.bind(this));
 
         this.compositeView = new CompositeView();
         this.compositeView.width = 200;
@@ -57,7 +55,7 @@ Class.define("MyApp", App, {
         this.stopflag = true;
     },
 
-    onTap: function() {
+    onTouchEnd: function() {
         if (this.stopflag) {
             this.compositeView.width = 320;
             this.compositeView.height = 200;

@@ -299,7 +299,7 @@ Class.define("framework.ui.view.CompositeView", View, {
      */
     invalidateChild: function(view, rect) {
         this._dirty = true;
-        this._dirtyRect.assign(this._boundRect.left, this._boundRect.top, this._boundRect.width, this._boundRect.height);
+        this._dirtyRect.assign(this._boundRect.left, this._boundRect.top, this._boundRect.right, this._boundRect.bottom);
 
         var length = this._children.length;
         for (var i = 0; i < length; i++) {
