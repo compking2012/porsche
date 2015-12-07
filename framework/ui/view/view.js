@@ -15,6 +15,7 @@ var Rectangle = require("../rectangle");
 var Matrix = require("../matrix");
 var ColorManager = require("../../util/colormanager");
 var GestureManager = require("../gesture/gesturemanager");
+var TransitionManager = require("../transition/transitionmanager");
 
 /**
  * This class represents the basic building block for user interface components.
@@ -87,6 +88,7 @@ Class.define("framework.ui.view.View", EventEmitter, {
 
         this._colorManager = new ColorManager();
         this._gestureManager = new GestureManager(this);
+        this._transitionManager = new TransitionManager(this);
 
         this.addEventListener("mousedown", this._onMouseDownFunc = this.onMouseDown.bind(this));
         this.addEventListener("mousemove", this._onMouseMoveFunc = this.onMouseMove.bind(this));
@@ -693,6 +695,24 @@ Class.define("framework.ui.view.View", EventEmitter, {
     },
 
     /**
+     * Add transition to this view.
+     * @method View#addTransition
+     * @param {Transition} transition - the transition.
+     */
+    addTransition: function(transition) {
+        this._transitionManager.add(transition);
+    },
+
+    /**
+     * Remove transition from this view.
+     * @method View#removeTransition
+     * @param {Transition} transition - the transition.
+     */
+    removeTransition: function(transition) {
+        this._transitionManager.remove(transition);
+    },
+
+    /**
      * Set left and top in one function
      * @method View#setPosition
      * @param {Number} left view's left value
@@ -1102,9 +1122,15 @@ Class.define("framework.ui.view.View", EventEmitter, {
         if (oldValue === value) {
             return;
         }
+
+        if (!this._transitionManager.setProperty(property, oldValue, value)) {
+            return;
+        }
+
         if (callback) {
             callback();
         }
+
         this["_" + property] = value;
         this.dispatchEvent("propertychange", property, oldValue, value);
         this.invalidate();
