@@ -40,7 +40,8 @@ files.forEach(function(file) {
         var fxRequire = "var fx = require(\"framework\");";
         var fxImport = /fx.import\(\"(\w+[\.|\w+]*)\"\)/g;
         content = content.replace(fxRequire, "").replace(fxImport, function(line, match) {
-            var newLine = "require(\"" + prefix + "/" + match.toLowerCase().replace(/\./g, "/") + "\")";
+            match = match.toLowerCase();
+            var newLine = "require(\"" + prefix + (match.startsWith("framework") ? "/" : "") + match.replace(/\./g, "/") + "\")";
             return newLine;
         });
     }

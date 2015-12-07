@@ -184,6 +184,10 @@ Node:   passed
 H5:     passed
 Node:   passed
 
+*) propertytransition
+H5:     passed
+Node:   passed
+
 *) rowlayout
 H5:     passed
 Node:   passed

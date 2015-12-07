@@ -68,6 +68,7 @@ Class.define("framework.ui.view.CompositeView", View, {
                 this._needRelayout = true;
                 value.associatedView = this;
             }
+            this._transitionManager.setLayout(this._layout, value);
         }.bind(this));
     },
 
@@ -255,10 +256,13 @@ Class.define("framework.ui.view.CompositeView", View, {
      * @protected
      */
     paintChildren: function(context) {
-        if (this._layout !== null && this._needRelayout) {
-            this._layout.perform();
-            this._needRelayout = false;
+        if (!this._transitionManager.layoutTransiting) {
+            if (this._layout !== null && this._needRelayout) {
+                this._layout.perform();
+                this._needRelayout = false;
+            }
         }
+
         var length = this._children.length;
         for (var i = 0; i < length; i++) {
             var view = this._children[i];

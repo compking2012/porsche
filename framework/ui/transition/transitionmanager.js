@@ -12,6 +12,7 @@
 var Class = require("../../class");
 var EventEmitter = require("../../eventemitter");
 var PropertyTransition = require("./propertytransition");
+var LayoutTransition = require("./layouttransition");
 
 Class.define("framework.ui.transition.TransitionManager", EventEmitter, {
     initialize: function(view) {
@@ -19,6 +20,7 @@ Class.define("framework.ui.transition.TransitionManager", EventEmitter, {
 
         this._associatedView = view;
         this._transitions = [];
+        this._layoutTransiting = false;
     },
 
     destroy: function() {
@@ -31,12 +33,25 @@ Class.define("framework.ui.transition.TransitionManager", EventEmitter, {
         EventEmitter.prototype.destroy.apply(this, arguments);
     },
 
+    get layoutTransiting() {
+        return this._layoutTransiting;
+    },
+
     getPropertyTransition: function(property) {
         for (var i = 0; i < this._transitions.length; i++) {
             if (this._transitions[i] instanceof PropertyTransition) {
                 if (this._transitions[i].property === property) {
                     return this._transitions[i];
                 }
+            }
+        }
+        return null;
+    },
+
+    getLayoutTransition: function() {
+        for (var i = 0; i < this._transitions.length; i++) {
+            if (this._transitions[i] instanceof LayoutTransition) {
+                return this._transitions[i];
             }
         }
         return null;
@@ -58,12 +73,30 @@ Class.define("framework.ui.transition.TransitionManager", EventEmitter, {
     },
 
     setProperty: function(property, oldValue, newValue) {
-        var propertyTransition = this.getPropertyTransition(property);
-        if (propertyTransition !== null) {
-            if (!propertyTransition.transiting) {
-                propertyTransition.from = oldValue;
-                propertyTransition.to = newValue;
-                propertyTransition.start();
+        if (property === "layout") {
+            return true;
+        } else {
+            var propertyTransition = this.getPropertyTransition(property);
+            if (propertyTransition !== null) {
+                if (!propertyTransition.transiting) {
+                    propertyTransition.from = oldValue;
+                    propertyTransition.to = newValue;
+                    propertyTransition.start();
+                    return false;
+                }
+            }
+            return true;
+        }
+    },
+
+    setLayout: function(oldLayout, newLayout) {
+        var layoutTransition = this.getLayoutTransition();
+        if (layoutTransition !== null) {
+            if (!layoutTransition.transiting) {
+                layoutTransition.from = oldLayout;
+                layoutTransition.to = newLayout;
+                layoutTransition.start();
+                this._layoutTransiting = true;
                 return false;
             }
         }

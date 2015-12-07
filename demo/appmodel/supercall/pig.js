@@ -1,7 +1,7 @@
 "use strict";
 var fx = require("framework");
 var Class = fx.import("framework.Class");
-var Animal = require("./animal");
+var Animal = fx.import("Animal");
 
 Class.define("Pig", Animal, {
     initialize: function(age, name) {

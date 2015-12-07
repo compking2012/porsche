@@ -1,4 +1,4 @@
 "use strict";
 
 var MyApp = require("./myapp");
-new MyApp("RowLayout");
+new MyApp();

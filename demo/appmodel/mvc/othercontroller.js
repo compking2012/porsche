@@ -3,7 +3,7 @@ var fx = require("framework");
 var Class = fx.import("framework.Class");
 var Controller = fx.import("framework.controller.Controller");
 var View = fx.import("framework.ui.view.View");
-var Other2Controller = require("./other2controller");
+var Other2Controller = fx.import("Other2Controller");
 
 Class.define("MyApp.Other2Controller", Controller, {
     initialize: function() {

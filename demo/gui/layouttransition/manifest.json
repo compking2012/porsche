@@ -1,5 +1,5 @@
 {
-    "appName": "LayoutChange-Animation",
+    "appName": "LayoutTransition",
     "debug": {
         "paintFPS": true,
         "dirtyRect": false

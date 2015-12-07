@@ -23,9 +23,14 @@ Class.define("framework.ui.transition.Transition", EventEmitter, {
      * Constructor that create an animation.
      * @method Transition#initialize
      */
-    initialize: function(property) {
+    initialize: function() {
         EventEmitter.prototype.initialize.apply(this, arguments);
 
+        this._defaultDuration = 300;
+        this._defaultEasing = "cubic-bezier(0.42, 0, 0.58, 1.0)";
+        this._associatedView = null;
+        this._from = null;
+        this._to = null;
     },
 
     /**
@@ -33,7 +38,36 @@ Class.define("framework.ui.transition.Transition", EventEmitter, {
      * @method Transition#destroy
      */
     destroy: function() {
+        this._associatedView = null;
 
         EventEmitter.prototype.destroy.apply(this, arguments);
+    },
+
+    get from() {
+        return this._from;
+    },
+
+    set from(value) {
+        this._from = value;
+    },
+
+    get to() {
+        return this._from;
+    },
+
+    set to(value) {
+        this._to = value;
+    },
+
+    get transiting() {
+        return false;
+    },
+
+    start: function() {
+
+    },
+
+    set associatedView(value) {
+        this._associatedView = value;
     }
 }, module);

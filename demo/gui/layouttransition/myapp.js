@@ -5,6 +5,8 @@ var App = fx.import("framework.app.App");
 var View = fx.import("framework.ui.view.View");
 var RowLayout = fx.import("framework.ui.layout.RowLayout");
 var ColumnLayout = fx.import("framework.ui.layout.ColumnLayout");
+var LayoutTransition = fx.import("framework.ui.transition.LayoutTransition");
+var CircleLayout = fx.import("CircleLayout");
 
 Class.define("MyApp", App, {
     onStart: function() {
@@ -19,6 +21,8 @@ Class.define("MyApp", App, {
         this.columnLayout.paddingLeft = 10;
         this.columnLayout.paddingRight = 10;
         this.columnLayout.defaultLayoutParam = {align: "left", margin: {top: 10}};
+
+        this.circleLayout = new CircleLayout();
 
         this.view1 = new View();
         this.view1.width = 40;
@@ -40,12 +44,16 @@ Class.define("MyApp", App, {
         this.view3.background = colors[2];
         this.window.addChild(this.view3);
 
+        this.window.addTransition(new LayoutTransition());
+
         this.window.addEventListener("touchend", this.onTouchEnd.bind(this));
     },
 
     onTouchEnd: function() {
         if (this.window.layout === this.columnLayout) {
             this.window.layout = this.rowLayout;
+        } else if (this.window.layout === this.rowLayout) {
+            this.window.layout = this.circleLayout;
         } else {
             this.window.layout = this.columnLayout;
         }

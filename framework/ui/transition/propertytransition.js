@@ -26,14 +26,9 @@ Class.define("framework.ui.transition.PropertyTransition", Transition, {
     initialize: function(property) {
         Transition.prototype.initialize.apply(this, arguments);
 
-        this._defaultDuration = 300;
-        this._defaultEasing = "cubic-bezier(0.42, 0, 0.58, 1.0)";
-
         this._property = property;
-        this._associatedView = null;
         this._animation = null;
-        this._from = null;
-        this._to = null;
+        this._animationCompleteFunc = null;
     },
 
     /**
@@ -41,11 +36,6 @@ Class.define("framework.ui.transition.PropertyTransition", Transition, {
      * @method PropertyTransition#destroy
      */
     destroy: function() {
-        if (this._animation !== null) {
-            this._animation.destroy();
-            this._animation = null;
-        }
-
         Transition.prototype.destroy.apply(this, arguments);
     },
 
@@ -57,22 +47,6 @@ Class.define("framework.ui.transition.PropertyTransition", Transition, {
         this._property = value;
     },
 
-    get from() {
-        return this._from;
-    },
-
-    set from(value) {
-        this._from = value;
-    },
-
-    get to() {
-        return this._from;
-    },
-
-    set to(value) {
-        this._to = value;
-    },
-
     get transiting() {
         if (this._animation === null) {
             return false;
@@ -82,6 +56,7 @@ Class.define("framework.ui.transition.PropertyTransition", Transition, {
     },
 
     start: function() {
+        this._animation = new PropertyAnimation(this._associatedView);
         this._animation.from = {};
         this._animation.from[this._property] = this._from;
         this._animation.to = {};
@@ -89,11 +64,20 @@ Class.define("framework.ui.transition.PropertyTransition", Transition, {
         this._animation.duration = this._defaultDuration;
         this._animation.easing = this._defaultEasing;
 
+        this._animation.addEventListener("complete", this._animationCompleteFunc = function() {
+            this._associatedView[this._property] = this._to;
+            this.stop();
+        }.bind(this));
         this._animation.start();
     },
 
-    set associatedView(value) {
-        this._associatedView = value;
-        this._animation = new PropertyAnimation(this._associatedView);
+    stop: function() {
+        if (this._animation !== null) {
+            this._animation.removeEventListener("complete", this._animationCompleteFunc);
+            this._animationCompleteFunc = null;
+
+            this._animation.destroy();
+            this._animation = null;
+        }
     }
 }, module);
