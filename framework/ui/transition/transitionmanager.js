@@ -13,6 +13,7 @@ var Class = require("../../class");
 var EventEmitter = require("../../eventemitter");
 var PropertyTransition = require("./propertytransition");
 var LayoutTransition = require("./layouttransition");
+var ChildTransition = require("./childtransition");
 
 Class.define("framework.ui.transition.TransitionManager", EventEmitter, {
     initialize: function(view) {
@@ -21,6 +22,7 @@ Class.define("framework.ui.transition.TransitionManager", EventEmitter, {
         this._associatedView = view;
         this._transitions = [];
         this._layoutTransiting = false;
+        this._childTransiting = false;
     },
 
     destroy: function() {
@@ -37,6 +39,10 @@ Class.define("framework.ui.transition.TransitionManager", EventEmitter, {
         return this._layoutTransiting;
     },
 
+    get childTransiting() {
+        return this._childTransiting;
+    },
+
     getPropertyTransition: function(property) {
         for (var i = 0; i < this._transitions.length; i++) {
             if (this._transitions[i] instanceof PropertyTransition) {
@@ -51,6 +57,15 @@ Class.define("framework.ui.transition.TransitionManager", EventEmitter, {
     getLayoutTransition: function() {
         for (var i = 0; i < this._transitions.length; i++) {
             if (this._transitions[i] instanceof LayoutTransition) {
+                return this._transitions[i];
+            }
+        }
+        return null;
+    },
+
+    getChildTransition: function() {
+        for (var i = 0; i < this._transitions.length; i++) {
+            if (this._transitions[i] instanceof ChildTransition) {
                 return this._transitions[i];
             }
         }
@@ -97,9 +112,40 @@ Class.define("framework.ui.transition.TransitionManager", EventEmitter, {
                 layoutTransition.to = newLayout;
                 layoutTransition.start();
                 this._layoutTransiting = true;
-                return false;
             }
         }
-        return true;
+    },
+
+    addChild: function(view, index, callback) {
+        var childTransition = this.getChildTransition();
+        if (childTransition !== null) {
+            if (!childTransition.transiting) {
+                childTransition.childView = view;
+                childTransition.index = index;
+                childTransition.action = "add";
+                childTransition.callback = callback;
+                childTransition.start();
+                this._childTransiting = true;
+                return;
+            }
+        }
+        callback();
+    },
+
+    removeChild: function(view, index) {
+        var childTransition = this.getChildTransition();
+        if (childTransition !== null) {
+            if (!childTransition.transiting) {
+                childTransition.childView = view;
+                childTransition.index = index;
+                childTransition.action = "remove";
+                childTransition.start();
+                this._childTransiting = true;
+            }
+        }
+    },
+
+    removeAllChildren: function() {
+
     }
 }, module);

@@ -1,0 +1,7 @@
+{
+    "appName": "ChildTransition",
+    "debug": {
+        "paintFPS": true,
+        "dirtyRect": true
+    }
+}

@@ -29,8 +29,6 @@ Class.define("framework.ui.transition.Transition", EventEmitter, {
         this._defaultDuration = 300;
         this._defaultEasing = "cubic-bezier(0.42, 0, 0.58, 1.0)";
         this._associatedView = null;
-        this._from = null;
-        this._to = null;
     },
 
     /**
@@ -43,28 +41,43 @@ Class.define("framework.ui.transition.Transition", EventEmitter, {
         EventEmitter.prototype.destroy.apply(this, arguments);
     },
 
-    get from() {
-        return this._from;
-    },
-
-    set from(value) {
-        this._from = value;
-    },
-
-    get to() {
-        return this._from;
-    },
-
-    set to(value) {
-        this._to = value;
-    },
-
+    /**
+     * @name Transition#transiting
+     * @type {Boolean}
+     * @description indicating whether it is in transiting.
+     */
     get transiting() {
         return false;
     },
 
+    /**
+     * Implement this to start the transition.
+     * @method Transition#start
+     * @protected
+     * @abstract
+     */
     start: function() {
+        // TO BE IMPLEMENTED
+    },
 
+    /**
+     * Implement this to stop the transition.
+     * @method Transition#stop
+     * @protected
+     * @abstract
+     */
+    stop: function() {
+        // TO BE IMPLEMENTED
+    },
+
+    /**
+     * @name Transition#associatedView
+     * @type {View}
+     * @description the associated view with this transition.
+     * @private
+     */
+    get associatedView() {
+        return this._associatedView;
     },
 
     set associatedView(value) {

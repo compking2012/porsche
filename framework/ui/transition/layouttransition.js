@@ -27,6 +27,8 @@ Class.define("framework.ui.transition.LayoutTransition", Transition, {
     initialize: function() {
         Transition.prototype.initialize.apply(this, arguments);
 
+        this._from = null;
+        this._to = null;
         this._animationGroup = null;
         this._animationGroupCompleteFunc = null;
     },
@@ -36,12 +38,37 @@ Class.define("framework.ui.transition.LayoutTransition", Transition, {
      * @method LayoutTransition#destroy
      */
     destroy: function() {
-        if (this._animationGroup !== null) {
-            this._animationGroup.destroy();
-            this._animationGroup = null;
-        }
+        this.stop();
+        this._from = null;
+        this._to = null;
 
         Transition.prototype.destroy.apply(this, arguments);
+    },
+
+    /**
+     * @name LayoutTransition#from
+     * @type {Layout}
+     * @description the start value of this transition.
+     */
+    get from() {
+        return this._from;
+    },
+
+    set from(value) {
+        this._from = value;
+    },
+
+    /**
+     * @name LayoutTransition#to
+     * @type {Layout}
+     * @description the end value of this transition.
+     */
+    get to() {
+        return this._from;
+    },
+
+    set to(value) {
+        this._to = value;
     },
 
     get transiting() {
@@ -53,6 +80,7 @@ Class.define("framework.ui.transition.LayoutTransition", Transition, {
     },
 
     start: function() {
+        this.stop();
         var originPositions = this._from.getOriginPositions();
         var newPositions = this._to.measure(originPositions);
 

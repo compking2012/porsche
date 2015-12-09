@@ -27,6 +27,8 @@ Class.define("framework.ui.transition.PropertyTransition", Transition, {
         Transition.prototype.initialize.apply(this, arguments);
 
         this._property = property;
+        this._from = null;
+        this._to = null;
         this._animation = null;
         this._animationCompleteFunc = null;
     },
@@ -36,6 +38,10 @@ Class.define("framework.ui.transition.PropertyTransition", Transition, {
      * @method PropertyTransition#destroy
      */
     destroy: function() {
+        this.stop();
+        this._from = null;
+        this._to = null;
+
         Transition.prototype.destroy.apply(this, arguments);
     },
 
@@ -47,6 +53,32 @@ Class.define("framework.ui.transition.PropertyTransition", Transition, {
         this._property = value;
     },
 
+    /**
+     * @name PropertyTransition#from
+     * @type {Object}
+     * @description the start value of this transition.
+     */
+    get from() {
+        return this._from;
+    },
+
+    set from(value) {
+        this._from = value;
+    },
+
+    /**
+     * @name PropertyTransition#to
+     * @type {Object}
+     * @description the end value of this transition.
+     */
+    get to() {
+        return this._from;
+    },
+
+    set to(value) {
+        this._to = value;
+    },
+
     get transiting() {
         if (this._animation === null) {
             return false;
@@ -56,6 +88,7 @@ Class.define("framework.ui.transition.PropertyTransition", Transition, {
     },
 
     start: function() {
+        this.stop();
         this._animation = new PropertyAnimation(this._associatedView);
         this._animation.from = {};
         this._animation.from[this._property] = this._from;

@@ -95,19 +95,22 @@ Class.define("framework.ui.view.CompositeView", View, {
             }
         }
 
-        this.dispatchEvent("childwilladd", view);
-        view.dispatchEvent("willadd");
+        this._transitionManager.addChild(view, length, function() {
+            this.dispatchEvent("childwilladd", view);
+            view.dispatchEvent("willadd");
 
-        if (view.parent !== null) {
-            view.parent.removeChild(view);
-        }
-        this._children.push(view);
-        view.parent = this;
-        this._needRelayout = true;
-        this.invalidate();
+            if (view.parent !== null) {
+                view.parent.removeChild(view);
+            }
+            this._children.push(view);
+            view.parent = this;
+            this._needRelayout = true;
 
-        this.dispatchEvent("childadded", view);
-        view.dispatchEvent("added");
+            this.dispatchEvent("childadded", view);
+            view.dispatchEvent("added");
+
+            this.invalidate();
+        }.bind(this));
     },
 
     /**
@@ -133,10 +136,13 @@ Class.define("framework.ui.view.CompositeView", View, {
         this._children.splice(index, 0, view);
         view.parent = this;
         this._needRelayout = true;
-        this.invalidate();
+
+        this._transitionManager.addChild(view, index);
 
         this.dispatchEvent("childadded", view, index);
         view.dispatchEvent("added", index);
+
+        this.invalidate();
     },
 
     /**
@@ -153,13 +159,16 @@ Class.define("framework.ui.view.CompositeView", View, {
         this.dispatchEvent("childwillremove", view);
         view.dispatchEvent("willremove");
 
+        this._transitionManager.removeChild(view, index);
+
         this._children.splice(index, 1);
         view.parent = null;
         this._needRelayout = true;
-        this.invalidate();
 
         this.dispatchEvent("childremoved", view);
         view.dispatchEvent("removed");
+
+        this.invalidate();
     },
 
     /**
@@ -169,6 +178,7 @@ Class.define("framework.ui.view.CompositeView", View, {
     removeAllChildren: function() {
         this._children.splice(0, this._children.length);
         this._needRelayout = true;
+        this._transitionManager.removeAllChildren();
         this.invalidate();
     },
 
@@ -256,7 +266,7 @@ Class.define("framework.ui.view.CompositeView", View, {
      * @protected
      */
     paintChildren: function(context) {
-        if (!this._transitionManager.layoutTransiting) {
+        if (!this._transitionManager.layoutTransiting && !this._transitionManager.childTransiting) {
             if (this._layout !== null && this._needRelayout) {
                 this._layout.perform();
                 this._needRelayout = false;
