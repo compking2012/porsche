@@ -1114,7 +1114,7 @@ Class.define("framework.ui.view.View", EventEmitter, {
      * @method View#setProperty
      * @param {String} property - the property name
      * @param {*} value - the new value
-     * @param {Function} callback - the immediate action callback
+     * @param {Function} callback - the immediate action callback before assigning new value.
      * @protected
      */
     setProperty: function(property, value, callback) {
@@ -1123,17 +1123,16 @@ Class.define("framework.ui.view.View", EventEmitter, {
             return;
         }
 
-        if (!this._transitionManager.setProperty(property, oldValue, value)) {
-            return;
-        }
+        this._transitionManager.setProperty(property, oldValue, value, function() {
+            if (callback) {
+                callback();
+            }
 
-        if (callback) {
-            callback();
-        }
+            this["_" + property] = value;
+            this.invalidate();
 
-        this["_" + property] = value;
-        this.dispatchEvent("propertychange", property, oldValue, value);
-        this.invalidate();
+            this.dispatchEvent("propertychange", property, oldValue, value);
+        }.bind(this));
     },
 
     /**

@@ -87,20 +87,22 @@ Class.define("framework.ui.transition.TransitionManager", EventEmitter, {
         transition.associatedView = null;
     },
 
-    setProperty: function(property, oldValue, newValue) {
+    setProperty: function(property, oldValue, newValue, callback) {
         if (property === "layout") {
-            return true;
+            callback();
         } else {
             var propertyTransition = this.getPropertyTransition(property);
             if (propertyTransition !== null) {
-                if (!propertyTransition.transiting) {
-                    propertyTransition.from = oldValue;
-                    propertyTransition.to = newValue;
-                    propertyTransition.start();
-                    return false;
-                }
+                propertyTransition.stop();
+                propertyTransition.from = oldValue;
+                propertyTransition.to = newValue;
+                propertyTransition.addEventListener("complete", function() {
+                    callback();
+                }.bind(this));
+                propertyTransition.start();
+                return;
             }
-            return true;
+            callback();
         }
     },
 
@@ -123,7 +125,10 @@ Class.define("framework.ui.transition.TransitionManager", EventEmitter, {
                 childTransition.childView = view;
                 childTransition.index = index;
                 childTransition.action = "add";
-                childTransition.callback = callback;
+                childTransition.addEventListener("complete", function() {
+                    this._childTransiting = false;
+                    callback();
+                }.bind(this));
                 childTransition.start();
                 this._childTransiting = true;
                 return;
@@ -132,17 +137,20 @@ Class.define("framework.ui.transition.TransitionManager", EventEmitter, {
         callback();
     },
 
-    removeChild: function(view, index) {
+    removeChild: function(view, index, callback) {
         var childTransition = this.getChildTransition();
         if (childTransition !== null) {
             if (!childTransition.transiting) {
                 childTransition.childView = view;
                 childTransition.index = index;
                 childTransition.action = "remove";
+                childTransition.addEventListener("complete", callback);
                 childTransition.start();
                 this._childTransiting = true;
+                return;
             }
         }
+        callback();
     },
 
     removeAllChildren: function() {

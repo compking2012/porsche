@@ -29,7 +29,10 @@ Class.define("framework.ui.transition.PropertyTransition", Transition, {
         this._property = property;
         this._from = null;
         this._to = null;
+        this._duration = 300;
+        this._easing = "cubic-bezier(0.42, 0, 0.58, 1.0)";
         this._animation = null;
+        this._animationFrameFunc = null;
         this._animationCompleteFunc = null;
     },
 
@@ -45,6 +48,11 @@ Class.define("framework.ui.transition.PropertyTransition", Transition, {
         Transition.prototype.destroy.apply(this, arguments);
     },
 
+    /**
+     * @name PropertyTransition#property
+     * @type {String}
+     * @description the property name that applies to this transition.
+     */
     get property() {
         return this._property;
     },
@@ -56,7 +64,7 @@ Class.define("framework.ui.transition.PropertyTransition", Transition, {
     /**
      * @name PropertyTransition#from
      * @type {Object}
-     * @description the start value of this transition.
+     * @description the start value of this property transition.
      */
     get from() {
         return this._from;
@@ -69,7 +77,7 @@ Class.define("framework.ui.transition.PropertyTransition", Transition, {
     /**
      * @name PropertyTransition#to
      * @type {Object}
-     * @description the end value of this transition.
+     * @description the end value of this property transition.
      */
     get to() {
         return this._from;
@@ -79,6 +87,39 @@ Class.define("framework.ui.transition.PropertyTransition", Transition, {
         this._to = value;
     },
 
+    /**
+     * @name PropertyTransition#duration
+     * @type {Number}
+     * @description the duration of this property transition.
+     */
+    get duration() {
+        return this._duration;
+    },
+
+    set duration(value) {
+        this._duration = value;
+    },
+
+    /**
+     * @name PropertyTransition#easing
+     * @type {String}
+     * @description the cubic bezier that will be used on this property transition.
+     */
+    get easing() {
+        return this._easing;
+    },
+
+    set easing(value) {
+        this._easing = value;
+    },
+
+    /**
+     * @name PropertyTransition#transiting
+     * @type {Boolean}
+     * @description indicating whether it is in transiting.
+     * @protected
+     * @override
+     */
     get transiting() {
         if (this._animation === null) {
             return false;
@@ -87,28 +128,45 @@ Class.define("framework.ui.transition.PropertyTransition", Transition, {
         return this._animation.animating;
     },
 
+    /**
+     * Start this property transition.
+     * @method PropertyTransition#start
+     * @protected
+     * @override
+     */
     start: function() {
-        this.stop();
         this._animation = new PropertyAnimation(this._associatedView);
         this._animation.from = {};
-        this._animation.from[this._property] = this._from;
+        this._animation.from["_" + this._property] = this._from;
         this._animation.to = {};
-        this._animation.to[this._property] = this._to;
-        this._animation.duration = this._defaultDuration;
-        this._animation.easing = this._defaultEasing;
+        this._animation.to["_" + this._property] = this._to;
+        this._animation.duration = this._duration;
+        this._animation.easing = this._easing;
 
+        this._animation.addEventListener("frame", this._animationFrameFunc = function() {
+            this._associatedView.invalidate();
+            this.dispatchEvent("frame");
+        }.bind(this));
         this._animation.addEventListener("complete", this._animationCompleteFunc = function() {
             this._associatedView[this._property] = this._to;
             this.stop();
+            this.dispatchEvent("complete");
         }.bind(this));
         this._animation.start();
     },
 
+    /**
+     * Stop this property transition.
+     * @method PropertyTransition#stop
+     * @protected
+     * @override
+     */
     stop: function() {
         if (this._animation !== null) {
+            this._animation.removeEventListener("frame", this._animationFrameFunc);
+            this._animationFrameFunc = null;
             this._animation.removeEventListener("complete", this._animationCompleteFunc);
             this._animationCompleteFunc = null;
-
             this._animation.destroy();
             this._animation = null;
         }

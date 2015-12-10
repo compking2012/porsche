@@ -78,7 +78,6 @@ Class.define("framework.ui.transition.ChildTransition", Transition, {
     },
 
     start: function() {
-        this.stop();
         if (this._action === "add") {
             var originPositions = this._associatedView.layout.getOriginPositions();
             var newPosition = {
@@ -141,6 +140,7 @@ Class.define("framework.ui.transition.ChildTransition", Transition, {
                 animation.duration = this._defaultDuration;
                 animation.easing = this._defaultEasing;
                 animation.addEventListener("complete", this._animationCompleteFunc = function() {
+                    this.dispatchEvent("complete");
                 }.bind(this));
                 animation.start();
             }.bind(this));

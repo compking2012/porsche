@@ -29,6 +29,8 @@ Class.define("framework.ui.transition.LayoutTransition", Transition, {
 
         this._from = null;
         this._to = null;
+        this._duration = 300;
+        this._easing = "cubic-bezier(0.42, 0, 0.58, 1.0)";
         this._animationGroup = null;
         this._animationGroupCompleteFunc = null;
     },
@@ -71,6 +73,13 @@ Class.define("framework.ui.transition.LayoutTransition", Transition, {
         this._to = value;
     },
 
+    /**
+     * @name LayoutTransition#transiting
+     * @type {Boolean}
+     * @description indicating whether it is in transiting.
+     * @protected
+     * @override
+     */
     get transiting() {
         if (this._animationGroup === null) {
             return false;
@@ -79,8 +88,13 @@ Class.define("framework.ui.transition.LayoutTransition", Transition, {
         return this._animationGroup.animating;
     },
 
+    /**
+     * Start this layout transition.
+     * @method LayoutTransition#start
+     * @protected
+     * @override
+     */
     start: function() {
-        this.stop();
         var originPositions = this._from.getOriginPositions();
         var newPositions = this._to.measure(originPositions);
 
@@ -102,19 +116,27 @@ Class.define("framework.ui.transition.LayoutTransition", Transition, {
                 width: newPosition.width,
                 height: newPosition.height
             };
-            animation.duration = this._defaultDuration;
-            animation.easing = this._defaultEasing;
+            animation.duration = this._duration;
+            animation.easing = this._easing;
             this._animationGroup.add(animation);
         }
-        this._animationGroup.addEventListener("complete", function() {
+        this._animationGroup.addEventListener("complete", this._animationGroupCompleteFunc = function() {
             this._to.setNewPositions(newPositions);
             this.stop();
+            this.dispatchEvent("complete");
         }.bind(this));
         this._animationGroup.start();
     },
 
+    /**
+     * Stop this layout transition.
+     * @method LayoutTransition#stop
+     * @protected
+     * @override
+     */
     stop: function() {
         if (this._animationGroup !== null) {
+            var length = this._animationGroup.animations.length;
             for (var i = 0; i < length; i++) {
                 this._animationGroup.animations[i].destroy();
             }

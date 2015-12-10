@@ -76,7 +76,7 @@ Class.define("framework.ui.animation.Animation", EventEmitter, {
 
     /**
      * @name Animation#easing
-     * @type {CubicBezier}
+     * @type {String}
      * @description the cubic bezier that will be used on this animation.
      */
     get easing() {

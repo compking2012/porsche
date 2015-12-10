@@ -44,6 +44,7 @@ Class.define("framework.ui.animation.PropertyAnimation", Animation, {
      * @method PropertyAnimation#destroy
      */
     destroy: function() {
+        this.stop();
         this._from = null;
         this._to = null;
         this._beziers.destroy();
@@ -216,6 +217,7 @@ Class.define("framework.ui.animation.PropertyAnimation", Animation, {
                 animator.current = offset;
             }
         }
+        this.dispatchEvent("frame", endTime);
     },
 
     /**

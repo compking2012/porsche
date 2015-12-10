@@ -26,8 +26,6 @@ Class.define("framework.ui.transition.Transition", EventEmitter, {
     initialize: function() {
         EventEmitter.prototype.initialize.apply(this, arguments);
 
-        this._defaultDuration = 300;
-        this._defaultEasing = "cubic-bezier(0.42, 0, 0.58, 1.0)";
         this._associatedView = null;
     },
 
@@ -45,9 +43,11 @@ Class.define("framework.ui.transition.Transition", EventEmitter, {
      * @name Transition#transiting
      * @type {Boolean}
      * @description indicating whether it is in transiting.
+     * @protected
+     * @abstract
      */
     get transiting() {
-        return false;
+        // TO BE IMPLEMENTED
     },
 
     /**
