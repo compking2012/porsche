@@ -4,7 +4,7 @@ var Class = fx.import("framework.Class");
 var App = fx.import("framework.app.App");
 var View = fx.import("framework.ui.view.View");
 var ChildTransition = fx.import("framework.ui.transition.ChildTransition");
-var CircleLayout = fx.import("CircleLayout");
+var CircleLayout = require("./circlelayout");
 
 Class.define("MyApp", App, {
     onStart: function() {

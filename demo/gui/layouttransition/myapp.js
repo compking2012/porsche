@@ -6,7 +6,7 @@ var View = fx.import("framework.ui.view.View");
 var RowLayout = fx.import("framework.ui.layout.RowLayout");
 var ColumnLayout = fx.import("framework.ui.layout.ColumnLayout");
 var LayoutTransition = fx.import("framework.ui.transition.LayoutTransition");
-var CircleLayout = fx.import("CircleLayout");
+var CircleLayout = require("./circlelayout");
 
 Class.define("MyApp", App, {
     onStart: function() {

@@ -1,6 +1,6 @@
 #!/bin/bash
 adb push ./noderunner.sh /system/bin
-adb shell chmod 777 /system/bin/noderrunner.sh
+adb shell chmod 777 /system/bin/noderunner.sh
 adb push ../out/$1 /system/app/$1
 cp ../out/$1/index.js ../out/$1/index.js.bak
 echo "setInterval(function(){}, 10000000);">>../out/$1/index.js.bak

@@ -15,9 +15,14 @@ module.exports = {
         if (this.hasOwnProperty(namespace)) {
             return this[namespace];
         } else {
-            var idx = namespace.indexOf(".") + 1;
-            var path = "./" + namespace.substr(idx).replace(/\./g, "/").toLowerCase();
-            return require(path);
+            if (/^framework\./.test(namespace)) {
+                var idx = namespace.indexOf(".") + 1;
+                var path = "./" + namespace.substr(idx).replace(/\./g, "/").toLowerCase();
+                return require(path);
+            } else {
+                var path = namespace.toLowerCase();
+                return require(path);
+            }
         }
     }
 };

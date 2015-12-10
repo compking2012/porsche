@@ -30,6 +30,8 @@ Class.define("framework.ui.transition.ChildTransition", Transition, {
         this._childView = null;
         this._index = 0;
         this._action = null;
+        this._duration = 300;
+        this._easing = "cubic-bezier(0.42, 0, 0.58, 1.0)";
         this._animationGroup = null;
         this._animationGroupCompleteFunc = null;
     },
@@ -69,6 +71,13 @@ Class.define("framework.ui.transition.ChildTransition", Transition, {
         this._action = value;
     },
 
+    /**
+     * @name ChildTransition#transiting
+     * @type {Boolean}
+     * @description indicating whether it is in transiting.
+     * @protected
+     * @override
+     */
     get transiting() {
         if (this._animationGroup === null) {
             return false;
@@ -77,6 +86,12 @@ Class.define("framework.ui.transition.ChildTransition", Transition, {
         return this._animationGroup.animating;
     },
 
+    /**
+     * Start this child transition.
+     * @method ChildTransition#start
+     * @protected
+     * @override
+     */
     start: function() {
         if (this._action === "add") {
             var originPositions = this._associatedView.layout.getOriginPositions();
@@ -113,14 +128,12 @@ Class.define("framework.ui.transition.ChildTransition", Transition, {
                         width: newPosition.width,
                         height: newPosition.height
                     };
-                    animation.duration = this._defaultDuration;
-                    animation.easing = this._defaultEasing;
+                    animation.duration = this._duration;
+                    animation.easing = this._easing;
                     this._animationGroup.add(animation);
                 }
             }
             this._animationGroup.addEventListener("complete", this._animationGroupCompleteFunc = function() {
-                this.callback();
-
                 var newPosition = newPositions[this._index];
                 var animation = new PropertyAnimation(this._childView);
                 animation.from = {
@@ -137,8 +150,8 @@ Class.define("framework.ui.transition.ChildTransition", Transition, {
                     height: newPosition.height,
                     opacity: 1
                 };
-                animation.duration = this._defaultDuration;
-                animation.easing = this._defaultEasing;
+                animation.duration = this._duration;
+                animation.easing = this._easing;
                 animation.addEventListener("complete", this._animationCompleteFunc = function() {
                     this.dispatchEvent("complete");
                 }.bind(this));
@@ -148,6 +161,12 @@ Class.define("framework.ui.transition.ChildTransition", Transition, {
         }
     },
 
+    /**
+     * Stop this child transition.
+     * @method ChildTransition#stop
+     * @protected
+     * @override
+     */
     stop: function() {
 
     }

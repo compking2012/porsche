@@ -18,9 +18,12 @@ Class.define("framework.ui.platform.NodeAppService", EventEmitter, {
     initialize: function() {
         EventEmitter.prototype.initialize.apply(this, arguments);
 
+        setTimeout(this.onStart.bind(this), 0);
     },
 
     destroy: function() {
+        this.onEnd();
+
         EventEmitter.prototype.destroy.apply(this, arguments);
     },
 
@@ -52,5 +55,13 @@ Class.define("framework.ui.platform.NodeAppService", EventEmitter, {
 
     registerGlobal: function() {
         // Nothing need to do
+    },
+
+    onStart: function() {
+        this.dispatchEvent("start");
+    },
+
+    onEnd: function() {
+        this.dispatchEvent("finish");
     }
 }, module);
