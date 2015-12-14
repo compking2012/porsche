@@ -46,6 +46,19 @@ Class.define("framework.ui.animation.Animation", EventEmitter, {
     },
 
     /**
+     * @name Animation#view
+     * @type {View}
+     * @description the view that is associated with this animation.
+     */
+    get view() {
+        return this._view;
+    },
+
+    set view(value) {
+        this._view = value;
+    },
+
+    /**
      * @name Animation#duration
      * @type {Number}
      * @description the duration of this animation, in milliseconds.

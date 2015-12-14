@@ -55,20 +55,29 @@ Class.define("framework.ui.view.CompositeView", View, {
     },
 
     set layout(value) {
-        this.setProperty("layout", value, function() {
-            if (value === null && this._layout !== null) {
-                var length = this._children.length;
-                for (var i = 0; i < length; i++) {
-                    var view = this._children[i];
-                    view.resetToNoLayout();
-                }
-                this._needRelayout = false;
-                this._layout.associatedView = null;
-            } else if (value !== null) {
-                this._needRelayout = true;
-                value.associatedView = this;
+        var oldValue = this._layout;
+        if (oldValue === value) {
+            return;
+        }
+
+        if (value === null && this._layout !== null) {
+            var length = this._children.length;
+            for (var i = 0; i < length; i++) {
+                var view = this._children[i];
+                view.resetToNoLayout();
             }
-            this._transitionManager.setLayout(this._layout, value);
+            this._needRelayout = false;
+            this._layout.associatedView = null;
+        } else if (value !== null) {
+            this._needRelayout = true;
+            value.associatedView = this;
+        }
+
+        this._transitionManager.setLayout(this._layout, value, function() {
+            this._layout = value;
+            this.invalidate();
+
+            this.dispatchEvent("propertychange", "layout", oldValue, value);
         }.bind(this));
     },
 
@@ -95,20 +104,20 @@ Class.define("framework.ui.view.CompositeView", View, {
             }
         }
 
-        this._transitionManager.addChild(view, length, function() {
-            this.dispatchEvent("childwilladd", view);
-            view.dispatchEvent("willadd");
+        if (view.parent !== null) {
+            throw "The view is still contained by another composite view. Need to remove from it first.";
+        }
 
-            if (view.parent !== null) {
-                view.parent.removeChild(view);
-            }
+        this.dispatchEvent("childwilladd", view);
+        view.dispatchEvent("willadd");
+
+        this._transitionManager.addChild(view, length, function() {
             this._children.push(view);
             view.parent = this;
             this._needRelayout = true;
-
+        }.bind(this), function() {
             this.dispatchEvent("childadded", view);
             view.dispatchEvent("added");
-
             this.invalidate();
         }.bind(this));
     },
@@ -127,22 +136,22 @@ Class.define("framework.ui.view.CompositeView", View, {
             }
         }
 
+        if (view.parent !== null) {
+            throw "The view is still contained by another composite view. Need to remove from it first.";
+        }
+
         this.dispatchEvent("childwilladd", view, index);
         view.dispatchEvent("willadd", index);
 
-        if (view.parent !== null) {
-            view.parent.removeChild(view);
-        }
-        this._children.splice(index, 0, view);
-        view.parent = this;
-        this._needRelayout = true;
-
-        this._transitionManager.addChild(view, index);
-
-        this.dispatchEvent("childadded", view, index);
-        view.dispatchEvent("added", index);
-
-        this.invalidate();
+        this._transitionManager.addChild(view, index, function() {
+            this._children.splice(index, 0, view);
+            view.parent = this;
+            this._needRelayout = true;
+        }.bind(this), function() {
+            this.dispatchEvent("childadded", view, index);
+            view.dispatchEvent("added", index);
+            this.invalidate();
+        }.bind(this));
     },
 
     /**
@@ -159,16 +168,15 @@ Class.define("framework.ui.view.CompositeView", View, {
         this.dispatchEvent("childwillremove", view);
         view.dispatchEvent("willremove");
 
-        this._transitionManager.removeChild(view, index);
-
-        this._children.splice(index, 1);
-        view.parent = null;
-        this._needRelayout = true;
-
-        this.dispatchEvent("childremoved", view);
-        view.dispatchEvent("removed");
-
-        this.invalidate();
+        this._transitionManager.removeChild(view, index, function() {
+            this._children.splice(index, 1);
+            view.parent = null;
+            this._needRelayout = true;
+        }.bind(this), function() {
+            this.dispatchEvent("childremoved", view);
+            view.dispatchEvent("removed");
+            this.invalidate();
+        }.bind(this));
     },
 
     /**

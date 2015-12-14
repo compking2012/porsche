@@ -88,69 +88,95 @@ Class.define("framework.ui.transition.TransitionManager", EventEmitter, {
     },
 
     setProperty: function(property, oldValue, newValue, callback) {
-        if (property === "layout") {
-            callback();
-        } else {
-            var propertyTransition = this.getPropertyTransition(property);
-            if (propertyTransition !== null) {
-                propertyTransition.stop();
-                propertyTransition.from = oldValue;
-                propertyTransition.to = newValue;
-                propertyTransition.addEventListener("complete", function() {
-                    callback();
-                }.bind(this));
-                propertyTransition.start();
-                return;
-            }
-            callback();
+        var propertyTransition = this.getPropertyTransition(property);
+        if (propertyTransition !== null) {
+            propertyTransition.stop();
+            propertyTransition.from = oldValue;
+            propertyTransition.to = newValue;
+            var completeFunc = null;
+            propertyTransition.addEventListener("complete", completeFunc = function() {
+                propertyTransition.removeEventListener("complete", completeFunc);
+                callback();
+            }.bind(this));
+            propertyTransition.start();
+            return;
         }
+        callback();
     },
 
-    setLayout: function(oldLayout, newLayout) {
+    setLayout: function(oldLayout, newLayout, callback) {
         var layoutTransition = this.getLayoutTransition();
         if (layoutTransition !== null) {
-            if (!layoutTransition.transiting) {
-                layoutTransition.from = oldLayout;
-                layoutTransition.to = newLayout;
-                layoutTransition.start();
-                this._layoutTransiting = true;
-            }
+            layoutTransition.stop();
+            layoutTransition.from = oldLayout;
+            layoutTransition.to = newLayout;
+            var completeFunc = null;
+            layoutTransition.addEventListener("complete", completeFunc = function() {
+                layoutTransition.removeEventListener("complete", completeFunc);
+                this._layoutTransiting = false;
+                callback();
+            }.bind(this));
+            layoutTransition.start();
+            this._layoutTransiting = true;
+            return;
         }
+        callback();
     },
 
-    addChild: function(view, index, callback) {
+    addChild: function(view, index, changeCallback, completeCallback) {
         var childTransition = this.getChildTransition();
         if (childTransition !== null) {
             if (!childTransition.transiting) {
+                childTransition.stop();
                 childTransition.childView = view;
                 childTransition.index = index;
                 childTransition.action = "add";
-                childTransition.addEventListener("complete", function() {
+                var changeFunc = null;
+                var completeFunc = null;
+                childTransition.addEventListener("change", changeFunc = function() {
+                    childTransition.removeEventListener("change", changeFunc);
+                    changeCallback();
+                }.bind(this));
+                childTransition.addEventListener("complete", completeFunc = function() {
+                    childTransition.removeEventListener("change", completeFunc);
                     this._childTransiting = false;
-                    callback();
+                    completeCallback();
                 }.bind(this));
                 childTransition.start();
                 this._childTransiting = true;
                 return;
             }
         }
-        callback();
+        changeCallback();
+        completeCallback();
     },
 
-    removeChild: function(view, index, callback) {
+    removeChild: function(view, index, changeCallback, completeCallback) {
         var childTransition = this.getChildTransition();
         if (childTransition !== null) {
             if (!childTransition.transiting) {
+                childTransition.stop();
                 childTransition.childView = view;
                 childTransition.index = index;
                 childTransition.action = "remove";
-                childTransition.addEventListener("complete", callback);
+                var changeFunc = null;
+                var completeFunc = null;
+                childTransition.addEventListener("change", changeFunc = function() {
+                    childTransition.removeEventListener("change", changeFunc);
+                    changeCallback();
+                }.bind(this));
+                childTransition.addEventListener("complete", completeFunc = function() {
+                    childTransition.removeEventListener("complete", completeFunc);
+                    this._childTransiting = false;
+                    completeCallback();
+                });
                 childTransition.start();
                 this._childTransiting = true;
                 return;
             }
         }
-        callback();
+        changeCallback();
+        completeCallback();
     },
 
     removeAllChildren: function() {

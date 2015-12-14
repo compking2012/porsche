@@ -31,7 +31,10 @@ Class.define("framework.ui.transition.LayoutTransition", Transition, {
         this._to = null;
         this._duration = 300;
         this._easing = "cubic-bezier(0.42, 0, 0.58, 1.0)";
+        this._animations = [];
+        this._defaultAnimations = [];
         this._animationGroup = null;
+        this._animationGroupFrameFunc = null;
         this._animationGroupCompleteFunc = null;
     },
 
@@ -43,6 +46,12 @@ Class.define("framework.ui.transition.LayoutTransition", Transition, {
         this.stop();
         this._from = null;
         this._to = null;
+        var length = this._defaultAnimations.length;
+        for (var i = 0; i < length; i++) {
+            this._defaultAnimations[i].destroy();
+        }
+        this._defaultAnimations = null;
+        this._animations = null;
 
         Transition.prototype.destroy.apply(this, arguments);
     },
@@ -74,6 +83,15 @@ Class.define("framework.ui.transition.LayoutTransition", Transition, {
     },
 
     /**
+     * Set a custom animation for the view which is at the specified index of the layout.
+     * @param {Number} index - the specified index.
+     * @param {PropertyAnimation} animation - the custom property animation.
+     */
+    setAnimation: function(index, animation) {
+        this._animations[index] = animation;
+    },
+
+    /**
      * @name LayoutTransition#transiting
      * @type {Boolean}
      * @description indicating whether it is in transiting.
@@ -101,25 +119,36 @@ Class.define("framework.ui.transition.LayoutTransition", Transition, {
         this._animationGroup = new AnimationGroup();
         var length = this._associatedView.children.length;
         for (var i = 0; i < length; i++) {
-            var animation = new PropertyAnimation(this._associatedView.children[i]);
             var originPosition = originPositions[i];
             var newPosition = newPositions[i];
-            animation.from = {
-                left: originPosition.left,
-                top: originPosition.top,
-                width: originPosition.width,
-                height: originPosition.height
-            };
-            animation.to = {
-                left: newPosition.left,
-                top: newPosition.top,
-                width: newPosition.width,
-                height: newPosition.height
-            };
-            animation.duration = this._duration;
-            animation.easing = this._easing;
+
+            var animation = null;
+            if (this._animations[i] !== undefined) {
+                animation = this._animations[i];
+                animation.from._left = originPosition.left;
+                animation.from._top = originPosition.top;
+                animation.to._left = newPosition.left;
+                animation.to._top = newPosition.top;
+            } else {
+                animation = new PropertyAnimation(this._associatedView.children[i]);
+                animation.from = {
+                    _left: originPosition.left,
+                    _top: originPosition.top
+                };
+                animation.to = {
+                    _left: newPosition.left,
+                    _top: newPosition.top
+                };
+                animation.duration = this._duration;
+                animation.easing = this._easing;
+                this._defaultAnimations.push(animation);
+            }
+
             this._animationGroup.add(animation);
         }
+        this._animationGroup.addEventListener("frame", this._animationGroupFrameFunc = function() {
+            this._associatedView.invalidate();
+        }.bind(this));
         this._animationGroup.addEventListener("complete", this._animationGroupCompleteFunc = function() {
             this._to.setNewPositions(newPositions);
             this.stop();
@@ -136,10 +165,8 @@ Class.define("framework.ui.transition.LayoutTransition", Transition, {
      */
     stop: function() {
         if (this._animationGroup !== null) {
-            var length = this._animationGroup.animations.length;
-            for (var i = 0; i < length; i++) {
-                this._animationGroup.animations[i].destroy();
-            }
+            this._animationGroup.removeEventListener("frame", this._animationGroupFrameFunc);
+            this._animationGroupFrameFunc = null;
             this._animationGroup.removeEventListener("complete", this._animationGroupCompleteFunc);
             this._animationGroupCompleteFunc = null;
             this._animationGroup.destroy();

@@ -37,6 +37,7 @@ Class.define("framework.ui.animation.PropertyAnimation", Animation, {
         this._animators = [];
         this._startTime = 0;
         this._currentTime = 0;
+        this._onTimerFunc = null;
     },
 
     /**
@@ -150,7 +151,9 @@ Class.define("framework.ui.animation.PropertyAnimation", Animation, {
      * @override
      */
     stop: function() {
-        this._timer.removeTimer(this._onTimerFunc);
+        if (this._onTimerFunc !== undefined) {
+            this._timer.removeTimer(this._onTimerFunc);
+        }
         this._animators = [];
         this._currentTime = 0;
         this._startTime = 0;
@@ -165,7 +168,9 @@ Class.define("framework.ui.animation.PropertyAnimation", Animation, {
      * @override
      */
     pause: function() {
-        this._timer.removeTimer(this._onTimerFunc);
+        if (this._onTimerFunc !== undefined) {
+            this._timer.removeTimer(this._onTimerFunc);
+        }
         this._animating = false;
         this._paused = true;
     },
