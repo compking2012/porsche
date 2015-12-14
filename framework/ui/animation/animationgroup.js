@@ -99,6 +99,11 @@ Class.define("framework.ui.animation.AnimationGroup", EventEmitter, {
     },
 
     start: function() {
+        if (this._animations.length === 0) {
+            this.stop();
+            this.dispatchEvent("complete");
+            return;
+        }
         this._completed = 0;
         this._animating = true;
         if (this._type === "parallel") {
