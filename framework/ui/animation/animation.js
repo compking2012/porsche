@@ -161,6 +161,20 @@ Class.define("framework.ui.animation.Animation", EventEmitter, {
     },
 
     /**
+     * Creates and returns a copy of this animation.
+     * @method Animation#clone
+     * @return {Animation} a copy of this animation.
+     */
+    clone: function() {
+        var clone = EventEmitter.prototype.clone.call(this);
+        clone.view = this._view;
+        clone.duration = this._duration;
+        clone.repeat = this._repeat;
+        clone.easing = this._easing;
+        return clone;
+    },
+
+    /**
      * Parse and get the cubic bezier
      * @method Animation#getCubicBezier
      * @private

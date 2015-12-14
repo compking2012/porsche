@@ -32,7 +32,6 @@ Class.define("framework.ui.transition.LayoutTransition", Transition, {
         this._duration = 300;
         this._easing = "cubic-bezier(0.42, 0, 0.58, 1.0)";
         this._animations = [];
-        this._defaultAnimations = [];
         this._animationGroup = null;
         this._animationGroupFrameFunc = null;
         this._animationGroupCompleteFunc = null;
@@ -46,11 +45,6 @@ Class.define("framework.ui.transition.LayoutTransition", Transition, {
         this.stop();
         this._from = null;
         this._to = null;
-        var length = this._defaultAnimations.length;
-        for (var i = 0; i < length; i++) {
-            this._defaultAnimations[i].destroy();
-        }
-        this._defaultAnimations = null;
         this._animations = null;
 
         Transition.prototype.destroy.apply(this, arguments);
@@ -124,7 +118,7 @@ Class.define("framework.ui.transition.LayoutTransition", Transition, {
 
             var animation = null;
             if (this._animations[i] !== undefined) {
-                animation = this._animations[i];
+                animation = this._animations[i].clone();
                 animation.from._left = originPosition.left;
                 animation.from._top = originPosition.top;
                 animation.to._left = newPosition.left;
@@ -141,7 +135,6 @@ Class.define("framework.ui.transition.LayoutTransition", Transition, {
                 };
                 animation.duration = this._duration;
                 animation.easing = this._easing;
-                this._defaultAnimations.push(animation);
             }
 
             this._animationGroup.add(animation);

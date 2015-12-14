@@ -35,7 +35,7 @@ Class.define("framework.ui.animation.SharedTimer", YObject, {
         if (this.constructor.refCount > 0) {
             return;
         }
-        this._timerQueue = null;
+        this._timerQueue = [];
         clearInterval(this._timer);
         this._timer = null;
 
