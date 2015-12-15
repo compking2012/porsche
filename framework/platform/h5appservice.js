@@ -39,7 +39,13 @@ Class.define("framework.ui.platform.H5AppService", EventEmitter, {
     },
 
     getAppRootPath: function() {
-        return ".";
+        var path = location.pathname;
+        var idx = path.lastIndexOf("/");
+        if (idx !== path.length - 1) {
+            return path.substr(0, idx);
+        } else {
+            return path;
+        }
     },
 
     loadFile: function(file, callback) {
@@ -63,6 +69,10 @@ Class.define("framework.ui.platform.H5AppService", EventEmitter, {
 
     registerGlobal: function() {
         window.global = window;
+    },
+
+    asyncLoadModule: function(file, callback) {
+        require.async(file, callback);
     },
 
     onLoad: function() {

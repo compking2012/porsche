@@ -45,7 +45,7 @@ Class.define("framework.ui.platform.NodeAppService", EventEmitter, {
                 callback(null);
                 return;
             }
-            callback(data);
+            callback(data.toString());
         }.bind(this));
     },
 
@@ -55,6 +55,11 @@ Class.define("framework.ui.platform.NodeAppService", EventEmitter, {
 
     registerGlobal: function() {
         // Nothing need to do
+    },
+
+    asyncLoadModule: function(file, callback) {
+        var mod = require(file);
+        callback(mod);
     },
 
     onStart: function() {

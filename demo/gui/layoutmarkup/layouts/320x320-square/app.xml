@@ -1,0 +1,45 @@
+<?xml version="1.0"?>
+<Window class="framework.ui.view.Window" 
+    id="window"
+    background="#CCCCCC">
+    <View class="framework.ui.view.View"
+        id="view"
+        background="#FF0000"
+        left="0"
+        top="0"
+        width="100"
+        height="100">
+    </View>
+    <CompositeView class="framework.ui.view.CompositeView"
+        id="compositeView"
+        background="#00FF00"
+        left="220"
+        top="0"
+        width="100"
+        height="100">
+        <Button class="framework.ui.view.Button"
+            text="Hello!"
+            background="#0000FF"
+            left="25"
+            top="25"
+            width="50"
+            height="50">
+        </Button>
+    </CompositeView>
+    <MyView class="views.MyView"
+        id="myView"
+        background="#FFFF00"
+        left="0"
+        top="220"
+        width="100"
+        height="100">
+    </MyView>
+    <MyCompositeView class="views.MyCompositeView"
+        id="myCompositeView"
+        background="#00FFFF"
+        left="220"
+        top="220"
+        width="100"
+        height="100">
+    </MyCompositeView>
+</Window>

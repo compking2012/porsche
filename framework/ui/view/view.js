@@ -89,6 +89,7 @@ Class.define("framework.ui.view.View", EventEmitter, {
         this._colorManager = new ColorManager();
         this._gestureManager = new GestureManager(this);
         this._transitionManager = new TransitionManager(this);
+        this._layoutManager = global.app.layoutManager;
 
         this.addEventListener("mousedown", this._onMouseDownFunc = this.onMouseDown.bind(this));
         this.addEventListener("mousemove", this._onMouseMoveFunc = this.onMouseMove.bind(this));
@@ -105,12 +106,23 @@ Class.define("framework.ui.view.View", EventEmitter, {
      * @method View#destroy
      */
     destroy: function() {
+        this._layoutManager = null;
+
+        this._transitionManager.destroy();
+        this._transitionManager = null;
+
+        this._colorManager.destroy();
+        this._colorManager = null;
+
         this._gestureManager.destroy();
         this._gestureManager = null;
+
         this._matrix.destroy();
         this._matrix = null;
+
         this._dirtyRect.destroy();
         this._dirtyRect = null;
+
         this._boundRect.destroy();
         this._boundRect = null;
 
@@ -156,6 +168,7 @@ Class.define("framework.ui.view.View", EventEmitter, {
     },
 
     set left(value) {
+        value = Number(value);
         this.setProperty("left", value, function() {
             this.relayout(false);
         }.bind(this));
@@ -171,6 +184,7 @@ Class.define("framework.ui.view.View", EventEmitter, {
     },
 
     set top(value) {
+        value = Number(value);
         this.setProperty("top", value, function() {
             this.relayout(false);
         }.bind(this));
@@ -186,6 +200,7 @@ Class.define("framework.ui.view.View", EventEmitter, {
     },
 
     set bottom(value) {
+        value = Number(value);
         // FIXME
         this.setProperty("bottom", value, function() {
             this.relayout(false);
@@ -202,6 +217,7 @@ Class.define("framework.ui.view.View", EventEmitter, {
     },
 
     set right(value) {
+        value = Number(value);
         // FIXME
         this.setProperty("right", value, function() {
             this.relayout(false);
@@ -232,6 +248,7 @@ Class.define("framework.ui.view.View", EventEmitter, {
     },
 
     set width(value) {
+        value = Number(value);
         this.setProperty("width", value, function() {
             this.relayout(true);
         }.bind(this));
@@ -247,6 +264,7 @@ Class.define("framework.ui.view.View", EventEmitter, {
     },
 
     set height(value) {
+        value = Number(value);
         this.setProperty("height", value, function() {
             this.relayout(true);
         }.bind(this));
@@ -277,6 +295,7 @@ Class.define("framework.ui.view.View", EventEmitter, {
     },
 
     set opacity(value) {
+        value = Number(value);
         this.setProperty("opacity", value);
     },
 
@@ -290,6 +309,7 @@ Class.define("framework.ui.view.View", EventEmitter, {
     },
 
     set enabled(value) {
+        value = Boolean(value);
         this.setProperty("enabled", value);
     },
 
@@ -334,6 +354,7 @@ Class.define("framework.ui.view.View", EventEmitter, {
     },
 
     set translationX(value) {
+        value = Number(value);
         this.setProperty("translationX", value, function() {
             this._matrix.translate(value, this._translationY);
         }.bind(this));
@@ -349,6 +370,7 @@ Class.define("framework.ui.view.View", EventEmitter, {
     },
 
     set translationY(value) {
+        value = Number(value);
         this.setProperty("translationY", value, function() {
             this._matrix.translate(this._translationX, value);
         }.bind(this));
@@ -365,6 +387,7 @@ Class.define("framework.ui.view.View", EventEmitter, {
     },
 
     set translationZ(value) {
+        value = Number(value);
         this._translationZ = value;
     },
 
@@ -401,6 +424,7 @@ Class.define("framework.ui.view.View", EventEmitter, {
     },
 
     set rotationX(value) {
+        value = Number(value);
         this._rotationX = value;
     },
 
@@ -415,6 +439,7 @@ Class.define("framework.ui.view.View", EventEmitter, {
     },
 
     set rotationY(value) {
+        value = Number(value);
         this._rotationY = value;
     },
 
@@ -428,6 +453,7 @@ Class.define("framework.ui.view.View", EventEmitter, {
     },
 
     set rotationZ(value) {
+        value = Number(value);
         this.setProperty("rotationZ", value, function() {
             this._matrix.rotate(value);
         }.bind(this));
@@ -466,6 +492,7 @@ Class.define("framework.ui.view.View", EventEmitter, {
     },
 
     set scaleX(value) {
+        value = Number(value);
         this.setProperty("scaleX", value, function() {
             this._matrix.scale(value, this._scaleY);
         }.bind(this));
@@ -482,6 +509,7 @@ Class.define("framework.ui.view.View", EventEmitter, {
     },
 
     set scaleY(value) {
+        value = Number(value);
         this.setProperty("scaleY", value, function() {
             this._matrix.scale(this._scaleX, value);
         }.bind(this));
@@ -522,6 +550,7 @@ Class.define("framework.ui.view.View", EventEmitter, {
     },
 
     set originX(value) {
+        value = Number(value);
         this.setProperty("originX", value, function() {
             this._matrix.at(value, this._originY);
         }.bind(this));
@@ -537,6 +566,7 @@ Class.define("framework.ui.view.View", EventEmitter, {
     },
 
     set originY(value) {
+        value = Number(value);
         this.setProperty("originY", value, function() {
             this._matrix.at(this._originX, value);
         }.bind(this));
@@ -559,6 +589,8 @@ Class.define("framework.ui.view.View", EventEmitter, {
         if (oldValue.x === this._originX && oldValue.y === this._originY) {
             return;
         }
+        value.x = Number(value.x);
+        value.y = Number(value.y);
         this._originX = value.x;
         this._originY = value.y;
         this._matrix.at(this._originX, this._originY);
@@ -579,6 +611,7 @@ Class.define("framework.ui.view.View", EventEmitter, {
     },
 
     set scrollX(value) {
+        value = Number(value);
         this.setProperty("scrollX", value);
     },
 
@@ -594,6 +627,7 @@ Class.define("framework.ui.view.View", EventEmitter, {
     },
 
     set scrollY(value) {
+        value = Number(value);
         this.setProperty("scrollY", value);
     },
 
@@ -622,6 +656,7 @@ Class.define("framework.ui.view.View", EventEmitter, {
     },
 
     set hardwareAccelerated(value) {
+        value = Boolean(value);
         this._hardwareAccelerated = value;
         this.processHardwareAcceleration();
     },
@@ -636,6 +671,7 @@ Class.define("framework.ui.view.View", EventEmitter, {
     },
 
     set focused(value) {
+        value = Boolean(value);
         this.setProperty("focused", value);
     },
 
@@ -710,6 +746,17 @@ Class.define("framework.ui.view.View", EventEmitter, {
      */
     removeTransition: function(transition) {
         this._transitionManager.remove(transition);
+    },
+
+    /**
+     * Load content from the layout xml.
+     * @method View#loadContent
+     */
+    loadContent: function(layoutFile) {
+        if (layoutFile === undefined) {
+            layoutFile = this.className;
+        }
+        this._layoutManager.loadContent(this, layoutFile);
     },
 
     /**
