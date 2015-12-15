@@ -243,48 +243,56 @@ Class.define("framework.ui.layout.ColumnLayout", Layout, {
     },
 
     /**
-     * Perform the column layouting for the associated view.
-     * @method ColumnLayout#perform
+     * Measure the column layout for the associated view.
+     * @method ColumnLayout#measure
+     * @param {Object[]} originPositions - the original positions of each child view in the associated view.
+     * @return {Object[]} the new positions of each child view in the associated view.
      * @protected
      * @override
      */
-    perform: function() {
+    measure: function(originPositions) {
         var startPosition = 0;
-        for (var i = 0; i < this._associatedView.children.length; i++) {
-            var child = this._associatedView.children[i];
-            child.saveAbsoluteInfo();
-        }
-        for (var i = 0; i < this._associatedView.children.length; i++) {
-            var child = this._associatedView.children[i];
+        var newPositions = [];
+        var length = originPositions.length;
+        for (var i = 0; i < length; i++) {
+            var originPosition = originPositions[i];
+            var newPosition = {
+                left: originPosition.left,
+                top: originPosition.top,
+                width: originPosition.width,
+                height: originPosition.height
+            };
             var param = this._defaultLayoutParam;
             if (this._layoutParams[i] !== undefined) {
                 param = this._layoutParams[i];
             }
             if (param.alignLeft) {
-                child.left = this._paddingLeft + param.marginLeft;
+                newPosition.left = this._paddingLeft + param.marginLeft;
                 if (param.alignRight) {
-                    child.width = this._associatedView.width - this._paddingLeft - this._paddingRight - param.marginLeft - param.marginRight;
+                    newPosition.width = this._associatedView.width - this._paddingLeft - this._paddingRight - param.marginLeft - param.marginRight;
                 } else if (param.alignCenter) {
-                    child.width = this._associatedView.width - this._paddingLeft - this._paddingRight + param.marginCenter * 2;
+                    newPosition.width = this._associatedView.width - this._paddingLeft - this._paddingRight + param.marginCenter * 2;
                 }
             } else if (param.alignRight) {
-                child.right = this._associatedView.width - this._paddingRight - param.marginRight;
+                newPosition.right = this._associatedView.width - this._paddingRight - param.marginRight;
                 if (param.alignCenter) {
-                    child.width = (this._associatedView.width - this._paddingRight - this._paddingLeft) / 2 - param.marginLeft + param.marginCenter;
+                    newPosition.width = (this._associatedView.width - this._paddingRight - this._paddingLeft) / 2 - param.marginLeft + param.marginCenter;
                 }
             } else if (param.alignCenter) {
-                child.left = this._paddingLeft + (this._associatedView.width - this._paddingLeft - this._paddingRight - child.width) / 2;
+                newPosition.left = this._paddingLeft + (this._associatedView.width - this._paddingLeft - this._paddingRight - newPosition.width) / 2;
             } else {
-                child.left = this._paddingLeft + param.marginLeft;
+                newPosition.left = this._paddingLeft + param.marginLeft;
             }
-            child.top = startPosition + param.marginTop;
+            newPosition.top = startPosition + param.marginTop;
             if (param.alignTop) {
                 startPosition += param.marginTop;
             } else if (param.alignBottom) {
                 startPosition += param.marginBottom;
             }
-            startPosition += child.height;
+            startPosition += newPosition.height;
+            newPositions.push(newPosition);
         }
+        return newPositions;
     }
 }, module);
 

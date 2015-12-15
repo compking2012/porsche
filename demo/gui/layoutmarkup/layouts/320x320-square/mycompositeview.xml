@@ -1,0 +1,23 @@
+<?xml version="1.0"?>
+<MyCompositeView class="views.MyCompositeView"
+    background="#0000FF">
+    <TextView class="framework.ui.view.TextView"
+        id="textView"
+        text="World!"
+        background="#000000"
+        color="#FFFFFF"
+        left="5"
+        top="5"
+        width="90"
+        height="40">
+    </TextView>
+    <Button class="framework.ui.view.Button"
+        id="button"
+        text="Tap"
+        background="#FF00FF"
+        left="5"
+        top="50"
+        width="90"
+        height="40">
+    </Button>
+</MyCompositeView>

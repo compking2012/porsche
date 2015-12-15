@@ -1163,6 +1163,203 @@ Class.define("MyApp", App, {
         </pre>
       </div>
 
+      <div class="demo">
+        <span>PropertyTransition</span>      
+        <iframe src="./demo/gui/propertytransition/index.html"></iframe>
+        <pre>
+          <code>
+Class.define("MyApp", App, {
+    onStart: function() {
+        this.view = new View();
+        this.view.background = "#FF0000";
+        this.view.left = 0;
+        this.view.top = 0;
+        this.view.width = 100;
+        this.view.height = 100;
+
+        this.view.addTransition(new PropertyTransition("left"));
+        this.view.addTransition(new PropertyTransition("top"));
+        this.view.addTransition(new PropertyTransition("opacity"));
+
+        this.window.addChild(this.view);
+        this.window.addEventListener("touchend", this.onTouchEnd.bind(this));
+        this.moved = false;
+    },
+
+    onTouchEnd: function(/*e*/) {
+        if (!this.moved) {
+            this.view.left = 200;
+            this.view.top = 200;
+            this.view.opacity = 0.3;
+        } else {
+            this.view.left = 0;
+            this.view.top = 0;
+            this.view.opacity = 1;
+        }
+        this.moved = !this.moved;
+    }
+}, module);
+          </code>
+        </pre>
+      </div>
+
+      <div class="demo">
+        <span>LayoutTransition</span>      
+        <iframe src="./demo/gui/layouttransition/index.html"></iframe>
+        <pre>
+          <code>
+Class.define("MyApp", App, {
+    onStart: function() {
+        var colors = ["#FF0000", "#00FF00", "#0000FF", "#FFFF00", "#00FFFF"];
+
+        this.rowLayout = new RowLayout();
+        this.rowLayout.paddingTop = 10;
+        this.rowLayout.paddingTop = 10;
+        this.rowLayout.defaultLayoutParam = {align: "top", margin: {left: 10}};
+
+        this.columnLayout = new ColumnLayout();
+        this.columnLayout.paddingLeft = 10;
+        this.columnLayout.paddingRight = 10;
+        this.columnLayout.defaultLayoutParam = {align: "left", margin: {top: 10}};
+
+        this.circleLayout = new CircleLayout();
+
+        this.view1 = new View();
+        this.view1.width = 40;
+        this.view1.height = 40;
+        this.view1.originX = 20;
+        this.view1.originY = 20;
+        this.view1.background = colors[0];
+        this.window.addChild(this.view1);
+
+        this.view2 = new View();
+        this.view2.width = 80;
+        this.view2.height = 80;
+        this.view2.originX = 40;
+        this.view2.originY = 40;
+        this.view2.background = colors[1];
+        this.window.addChild(this.view2);
+
+        this.window.layout = this.rowLayout;
+
+        this.view3 = new View();
+        this.view3.width = 120;
+        this.view3.height = 120;
+        this.view3.originX = 60;
+        this.view3.originY = 60;
+        this.view3.background = colors[2];
+        this.window.addChild(this.view3);
+
+        var layoutTranstion = new LayoutTransition();
+
+        var animation2 = new PropertyAnimation(this.view2);
+        animation2.from = {rotationZ: 0, opacity: 0};
+        animation2.to = {rotationZ: 2 * Math.PI, opacity: 1};
+        animation2.duration = 300;
+        layoutTranstion.setAnimation(1, animation2);
+
+        var animation3 = new PropertyAnimation(this.view3);
+        animation3.from = {scaleX: 0.5, scaleY: 0.5};
+        animation3.to = {scaleX: 1, scaleY: 1};
+        animation3.duration = 300;
+        layoutTranstion.setAnimation(2, animation3);
+        this.window.addTransition(layoutTranstion);
+
+        this.window.addEventListener("touchend", this.onTouchEnd.bind(this));
+    },
+
+    onTouchEnd: function() {
+        if (this.window.layout === this.columnLayout) {
+            this.window.layout = this.circleLayout;
+        } else if (this.window.layout === this.rowLayout) {
+            this.window.layout = this.columnLayout;
+        } else {
+            this.window.layout = this.rowLayout;
+        }
+    }
+}, module);
+          </code>
+        </pre>
+      </div>
+
+      <div class="demo">
+        <span>ChildTransition</span>      
+        <iframe src="./demo/gui/childtransition/index.html"></iframe>
+        <pre>
+          <code>
+Class.define("MyApp", App, {
+    onStart: function() {
+        this.colors = ["red", "orange", "yellow", "green", "blue", "indigo", "violet", "navy", "magenta", "salmon", "sienna", "turquoise"];
+        this.index = 0;
+        while (this.index < 3) {
+            var view = new View();
+            view.background = this.colors[this.index];
+            view.width = 60;
+            view.height = 60;
+            view.originX = 30;
+            view.originY = 30;
+            view.addEventListener("touchstart", this.onTouchStartRemove.bind(this));
+            this.window.addChild(view);
+            this.index++;
+        }
+        this.window.addEventListener("touchend", this.onTouchEndAdd.bind(this));
+
+        var childTransition = new ChildTransition();
+
+        var appearingAnimation = new PropertyAnimation();
+        appearingAnimation.from = {rotationZ: 0, opacity: 0};
+        appearingAnimation.to = {rotationZ: 2 * Math.PI, opacity: 1};
+        appearingAnimation.duration = 300;
+        childTransition.setAnimation("appearing", appearingAnimation);
+
+        var changeAppearingAnimation = new PropertyAnimation();
+        changeAppearingAnimation.from = {scaleX: 0.5, scaleY: 0.5};
+        changeAppearingAnimation.to = {scaleX: 1, scaleY: 1};
+        changeAppearingAnimation.duration = 300;
+        childTransition.setAnimation("change-appearing", changeAppearingAnimation);
+
+        var disappearingAnimation = new PropertyAnimation();
+        disappearingAnimation.from = {rotationZ: 0, opacity: 1};
+        disappearingAnimation.to = {rotationZ: 2 * Math.PI, opacity: 0};
+        disappearingAnimation.duration = 300;
+        childTransition.setAnimation("disappearing", disappearingAnimation);
+
+        var changeDisappearingAnimation = new PropertyAnimation();
+        changeDisappearingAnimation.from = {scaleX: 0.5, scaleY: 0.5};
+        changeDisappearingAnimation.to = {scaleX: 1, scaleY: 1};
+        changeDisappearingAnimation.duration = 300;
+        childTransition.setAnimation("change-disappearing", changeDisappearingAnimation);
+
+        this.window.addTransition(childTransition);
+
+        this.window.layout = new CircleLayout();
+    },
+
+    onTouchEndAdd: function(e) {
+        if (e.target !== this.window) {
+            return;
+        }
+        var view = new View();
+        view.background = this.colors[this.index % this.colors.length];
+        view.width = 60;
+        view.height = 60;
+        view.originX = 30;
+        view.originY = 30;
+        view.addEventListener("touchstart", this.onTouchStartRemove.bind(this));
+        this.window.addChild(view);
+        this.index++;
+    },
+
+    onTouchStartRemove: function(e) {
+        var view = e.target;
+        this.window.removeChild(view);
+    }
+}, module);
+          </code>
+        </pre>
+      </div>
+
+
       <footer class="site-footer">
         <span class="site-footer-owner"><a href="https://github.com/compking2012/porsche">Porsche</a> is maintained by <a href="https://github.com/compking2012">compking2012</a>.</span>
 

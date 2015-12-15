@@ -1,0 +1,7 @@
+{
+    "appName": "LayoutTransition",
+    "debug": {
+        "paintFPS": true,
+        "dirtyRect": false
+    }
+}

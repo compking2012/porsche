@@ -15,6 +15,7 @@ var EventEmitter = require("../eventemitter");
 var Window = require("../ui/view/window");
 var WindowManager = require("../ui/windowmanager");
 var I18nManager = require("../util/i18nmanager");
+var LayoutManager = require("../ui/layout/layoutmanager");
 var AppService = require("../platform/h5appservice");
 var InputService = require("../platform/h5inputservice");
 var RenderService = require("../platform/h5renderservice");
@@ -39,11 +40,14 @@ Class.define("framework.app.App", EventEmitter, {
             this._i18nManager = new I18nManager();
             this._i18nManager.addEventListener("load", this._onLoadI18nFunc = function() {
                 this._windowManager = new WindowManager(this._inputService, this._renderService);
+                this._layoutManager = new LayoutManager();
+                this._layoutManager.addEventListener("load", this._onLoadLayoutManagerFunc = function() {
+                    this._window = new Window(this._appName);
+                    this._windowManager.addWindow(this._window);
 
-                this._window = new Window(this._appName);
-                this._windowManager.addWindow(this._window);
-
-                this.onStart();
+                    this.onStart();
+                }.bind(this));
+                this._layoutManager.load();
             }.bind(this));
             this._i18nManager.locale = "zh-CN";
         }.bind(this));
@@ -65,6 +69,13 @@ Class.define("framework.app.App", EventEmitter, {
      * @method App#destroy
      */
     destroy: function() {
+        if (this._layoutManager !== undefined) {
+            this._layoutManager.removeEventListener("load", this._onLoadLayoutManagerFunc);
+            this._onLoadLayoutManagerFunc = null;
+            this._layoutManager.destroy();
+            this._layoutManager = null;
+        }
+
         if (this._i18nManager !== undefined) {
             this._i18nManager.removeEventListener("load", this._onLoadI18nFunc);
             this._onLoadI18nFunc = null;
@@ -118,6 +129,10 @@ Class.define("framework.app.App", EventEmitter, {
      */
     get window() {
         return this._window;
+    },
+
+    get layoutManager() {
+        return this._layoutManager;
     },
 
     /**

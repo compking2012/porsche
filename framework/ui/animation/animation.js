@@ -47,6 +47,19 @@ Class.define("framework.ui.animation.Animation", EventEmitter, {
     },
 
     /**
+     * @name Animation#view
+     * @type {View}
+     * @description the view that is associated with this animation.
+     */
+    get view() {
+        return this._view;
+    },
+
+    set view(value) {
+        this._view = value;
+    },
+
+    /**
      * @name Animation#duration
      * @type {Number}
      * @description the duration of this animation, in milliseconds.
@@ -77,7 +90,7 @@ Class.define("framework.ui.animation.Animation", EventEmitter, {
 
     /**
      * @name Animation#easing
-     * @type {CubicBezier}
+     * @type {String}
      * @description the cubic bezier that will be used on this animation.
      */
     get easing() {
@@ -146,6 +159,20 @@ Class.define("framework.ui.animation.Animation", EventEmitter, {
      */
     resume: function() {
         // TO BE IMPLEMENTED
+    },
+
+    /**
+     * Creates and returns a copy of this animation.
+     * @method Animation#clone
+     * @return {Animation} a copy of this animation.
+     */
+    clone: function() {
+        var clone = EventEmitter.prototype.clone.call(this);
+        clone.view = this._view;
+        clone.duration = this._duration;
+        clone.repeat = this._repeat;
+        clone.easing = this._easing;
+        return clone;
     },
 
     /**

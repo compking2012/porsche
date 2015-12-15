@@ -86,6 +86,7 @@ Class.define("framework.ui.WindowManager", EventEmitter, {
         if (this._windows.length === 1) {
             this._mainWindow = win;
         }
+        win.invalidate();
     },
 
     showDialog: function(dialog) {

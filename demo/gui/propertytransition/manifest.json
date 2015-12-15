@@ -1,0 +1,7 @@
+{
+    "appName": "PropertyTransition",
+    "debug": {
+        "paintFPS": true,
+        "dirtyRect": true
+    }
+}

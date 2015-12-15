@@ -12,7 +12,6 @@ define(function(require, exports, module) {
 "use strict";
 var Class = require("../../class");
 var Animation = require("./animation");
-var CubicBezier = require("./cubicbezier");
 var SharedTimer = require("./sharedtimer");
 
 /**
@@ -32,12 +31,13 @@ Class.define("framework.ui.animation.PropertyAnimation", Animation, {
 
         this._from = {};
         this._to = {};
-        this._beziers = CubicBezier.ease();
+        this._beziers = null;
         this._timer = SharedTimer.getInstance();
         this._iteration = 0;
         this._animators = [];
         this._startTime = 0;
         this._currentTime = 0;
+        this._onTimerFunc = null;
     },
 
     /**
@@ -45,6 +45,7 @@ Class.define("framework.ui.animation.PropertyAnimation", Animation, {
      * @method PropertyAnimation#destroy
      */
     destroy: function() {
+        this.stop();
         this._from = null;
         this._to = null;
         this._beziers.destroy();
@@ -150,7 +151,9 @@ Class.define("framework.ui.animation.PropertyAnimation", Animation, {
      * @override
      */
     stop: function() {
-        this._timer.removeTimer(this._onTimerFunc);
+        if (this._onTimerFunc !== null) {
+            this._timer.removeTimer(this._onTimerFunc);
+        }
         this._animators = [];
         this._currentTime = 0;
         this._startTime = 0;
@@ -165,7 +168,9 @@ Class.define("framework.ui.animation.PropertyAnimation", Animation, {
      * @override
      */
     pause: function() {
-        this._timer.removeTimer(this._onTimerFunc);
+        if (this._onTimerFunc !== null) {
+            this._timer.removeTimer(this._onTimerFunc);
+        }
         this._animating = false;
         this._paused = true;
     },
@@ -180,6 +185,31 @@ Class.define("framework.ui.animation.PropertyAnimation", Animation, {
     resume: function() {
         this._paused = false;
         this.start();
+    },
+
+    /**
+     * Creates and returns a copy of this property animation.
+     * @method PropertyAnimation#clone
+     * @return {PropertyAnimation} a copy of this property animation.
+     */
+    clone: function() {
+        var clone = Animation.prototype.clone.call(this);
+        var from = {};
+        for (var key in this._from) {
+            if (this._from.hasOwnProperty(key)) {
+                from[key] = this._from[key];
+            }
+        }
+        clone.from = from;
+
+        var to = {};
+        for (var key in this._to) {
+            if (this._to.hasOwnProperty(key)) {
+                to[key] = this._to[key];
+            }
+        }
+        clone.to = to;
+        return clone;
     },
 
     /**
@@ -217,6 +247,7 @@ Class.define("framework.ui.animation.PropertyAnimation", Animation, {
                 animator.current = offset;
             }
         }
+        this.dispatchEvent("frame", endTime);
     },
 
     /**

@@ -128,7 +128,7 @@ Class.define("framework.ui.layout.AutoLayout", Layout, {
 
     /**
      * Get the layout param value for the child view at index.
-     * @method Layout#getLayoutParam
+     * @method AutoLayout#getLayoutParam
      * @param {Number} index - the index of the child view.
      * @param {String} attribute - the attribute in layout param.
      * @protected
@@ -139,7 +139,7 @@ Class.define("framework.ui.layout.AutoLayout", Layout, {
 
     /**
      * Set the layout param value for the child view at index.
-     * @method Layout#setLayoutParam
+     * @method AutoLayout#setLayoutParam
      * @param {Number} index - the index of the child view.
      * @param {String} attribute - the attribute in layout param.
      * @param {Object} constraint - the constraint value in layout param.
@@ -151,7 +151,7 @@ Class.define("framework.ui.layout.AutoLayout", Layout, {
 
     /**
      * Remove the layout param value for the child view at index.
-     * @method Layout#removeLayoutParam
+     * @method AutoLayout#removeLayoutParam
      * @param {Number} index - the index of the child view.
      * @param {String} attribute - the attribute in layout param.
      * @protected
@@ -161,22 +161,29 @@ Class.define("framework.ui.layout.AutoLayout", Layout, {
     },
 
     /**
-     * Perform the auto layouting for the associated view.
-     * @method AutoLayout#perform
+     * Measure the auto layout for the associated view.
+     * @method AutoLayout#measure
+     * @param {Object[]} originPositions - the original positions of each child view in the associated view.
+     * @return {Object[]} the new positions of each child view in the associated view.
      * @protected
      * @override
      */
-    perform: function() {
+    measure: function(/*originPositions*/) {
+        var newPositions = [];
         this._autoLayoutView.setSize(this._associatedView.width, this._associatedView.height);
         this._autoLayoutView.setSpacing([this._paddingTop, this._paddingRight, this._paddingBottom, this._paddingLeft, 0, 0, 0]);
-        for (var i = 0; i < this._associatedView.children.length; i++) {
-            var view = this._associatedView.children[i];
+        var length = this._associatedView.children.length;
+        for (var i = 0; i < length; i++) {
             var autoLayoutJSSubView = this._autoLayoutView.subViews["child" + (i + 1)];
-            view.left = autoLayoutJSSubView.left;
-            view.top = autoLayoutJSSubView.top;
-            view.width = autoLayoutJSSubView.width;
-            view.height = autoLayoutJSSubView.height;
+            var newPosition = {
+                left: autoLayoutJSSubView.left,
+                top: autoLayoutJSSubView.top,
+                width: autoLayoutJSSubView.width,
+                height: autoLayoutJSSubView.height
+            };
+            newPositions.push(newPosition);
         }
+        return newPositions;
     }
 }, module);
 

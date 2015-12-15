@@ -21,20 +21,30 @@ var RelativeLayoutParam = require("./relativelayoutparam");
  * @extends Layout
  */
 Class.define("framework.ui.layout.RelativeLayout", Layout, {
+    /**
+     * Constructor that create a relative layout.
+     * @method RelativeLayout#initialize
+     */
     initialize: function() {
         Layout.prototype.initialize.apply(this, arguments);
 
         this._units = 0;
     },
 
+    /**
+     * Constructor that destroy a relative layout.
+     * @method RelativeLayout#destroy
+     */
     destroy: function() {
         Layout.prototype.destroy.apply(this, arguments);
     },
 
     /**
+     * Get the layout param value for the child view at index.
      * @method RelativeLayout#getLayoutParam
-     * @param {Number} index - the index of the child layout param.
-     * @description return the child RelativeLayout of index
+     * @param {Number} index - the index of the child view.
+     * @param {String} attribute - the attribute in layout param.
+     * @protected
      * @override
      */
     getLayoutParam: function(index, attribute) {
@@ -52,11 +62,13 @@ Class.define("framework.ui.layout.RelativeLayout", Layout, {
     },
 
     /**
+     * Set the layout param value for the child view at index.
      * @method RelativeLayout#setLayoutParam
-     * @param {Number} index - index for the layoutParams
-     * @param {String} attribute - attribute string of "align", "margin" to set alignment/margins
-     * @param {Object} constraint - the constraint of the relativelayout
-     * @description Add new constranit of the relativelayout
+     * @param {Number} index - the index of the child view.
+     * @param {String} attribute - the attribute in layout param.
+     * @param {Object} constraint - the constraint value in layout param.
+     * @protected
+     * @override
      */
     setLayoutParam: function(index, attribute, constraint) {
         if (this._layoutParams[index] === undefined) {
@@ -152,10 +164,12 @@ Class.define("framework.ui.layout.RelativeLayout", Layout, {
     },
 
     /**
+     * Remove the layout param value for the child view at index.
      * @method RelativeLayout#removeLayoutParam
-     * @param {Number} index - index for the layoutParams
-     * @param {String} attribute - attribute string of "align", "margin" to set alignment/margins
-     * @description remove "align" or "margin" attribute of layoutParams at index
+     * @param {Number} index - the index of the child view.
+     * @param {String} attribute - the attribute in layout param.
+     * @protected
+     * @override
      */
     removeLayoutParam: function(index, attribute) {
         if (this._layoutParams[index] !== undefined) {
@@ -169,21 +183,35 @@ Class.define("framework.ui.layout.RelativeLayout", Layout, {
     },
 
     /**
-     * @method RelativeLayout#perform
-     * @description calculate position for all children views
+     * Measure the relative layout for the associated view.
+     * @method RelativeLayout#measure
+     * @param {Object[]} originPositions - the original positions of each child view in the associated view.
+     * @return {Object[]} the new positions of each child view in the associated view.
+     * @protected
      * @override
      */
-    perform: function() {
+    measure: function(originPositions) {
         var hasCircle = this.checkCircle();
         if (hasCircle) {
             throw "There is a circle reference in constraints";
         }
-
+        var newPositions = [];
         var horizontalList = [];
         var verticalList = [];
         var list = [];
         var waitNum = this._associatedView.children.length;
+        for (var i = 0; i < waitNum; i++) {
+            var originPosition = originPositions[i];
+            var newPosition = {
+                left: originPosition.left,
+                top: originPosition.top,
+                width: originPosition.width,
+                height: originPosition.height
+            };
+            newPositions.push(newPosition);
+        }
         for (var i = 0; i <= this._units; i++) {
+            var newPosition = newPositions[i];
             horizontalList[i] = false;
             verticalList[i] = false;
             list[i] = false;
@@ -203,35 +231,40 @@ Class.define("framework.ui.layout.RelativeLayout", Layout, {
                 if (horizontalList[i] && verticalList[i]) {
                     list[i] = true;
                     waitNum--;
-                    this.calculatePositionAtIndex(i);
+                    this.calculatePositionAtIndex(newPositions, i);
                 }
             }
         }
         this.iterationCalculate(waitNum, horizontalList, verticalList, list);
+        return newPositions;
     },
 
     /**
+     * Get reference position info.
      * @method RelativeLayout#getReferencePositonInfo
-     * @description get reference position info
+     * @param {Object} newPositions - the new position infos.
+     * @param {String} referenceSide - the side.
+     * @param {Number} referenID - the index.
+     * @return {Number} the position value of the side.
      * @private
      */
-    getReferencePositonInfo: function(referenceSide, referenID) {
+    getReferencePositonInfo: function(newPositions, referenceSide, referenID) {
         var l, t, width, height;
         if (referenID === -1) {
             l = 0;
             t = 0;
             width = this._associatedView.width;
             height = this._associatedView.height;
-        } else if (this._associatedView.children[referenID] === undefined) {
+        } else if (newPositions[referenID] === undefined) {
             l = 0;
             t = 0;
             width = 0;
             height = 0;
         } else {
-            l = this._associatedView.children[referenID].left;
-            t = this._associatedView.children[referenID].top;
-            width = this._associatedView.children[referenID].width;
-            height = this._associatedView.children[referenID].height;
+            l = newPositions[referenID].left;
+            t = newPositions[referenID].top;
+            width = newPositions[referenID].width;
+            height = newPositions[referenID].height;
         }
         switch (referenceSide) {
             case "left":
@@ -250,70 +283,76 @@ Class.define("framework.ui.layout.RelativeLayout", Layout, {
     },
 
     /**
+     * Calculate the specified position by index.
      * @method RelativeLayout#calculatePositionAtIndex
-     * @description calculate the specified position by index
+     * @param {Object} newPositions - the new position infos.
+     * @param {Number} index - the index.
      * @private
      */
-    calculatePositionAtIndex: function(index) {
-        if (this._layoutParams[index] !== undefined && this._associatedView.children[index] !== undefined) {
-            var child = this._associatedView.children[index];
+    calculatePositionAtIndex: function(newPositions, index) {
+        if (this._layoutParams[index] !== undefined && newPositions[index] !== undefined) {
+            var child = newPositions[index];
             var startPosition;
             var param = this._layoutParams[index];
             if (param.alignLeft) {
-                startPosition = this.getReferencePositonInfo(param.alignSideLeft, param.alignTargetLeft);
+                startPosition = this.getReferencePositonInfo(newPositions, param.alignSideLeft, param.alignTargetLeft);
                 child.left = startPosition + param.marginLeft;
                 if (param.alignRight) {
-                    startPosition = this.getReferencePositonInfo(param.alignSideRight, param.alignTargetRight);
+                    startPosition = this.getReferencePositonInfo(newPositions, param.alignSideRight, param.alignTargetRight);
                     child.width = startPosition - param.marginRight - child.left;
                 } else if (param.alignCenter) {
-                    startPosition = this.getReferencePositonInfo(param.alignSideCenter, param.alignTargetCenter);
+                    startPosition = this.getReferencePositonInfo(newPositions, param.alignSideCenter, param.alignTargetCenter);
                     child.width = (startPosition + param.marginCenter - child.left) * 2;
                 }
             } else if (param.alignRight) {
                 var rightPosition, centerPosition;
-                startPosition = this.getReferencePositonInfo(param.alignSideRight, param.alignTargetRight);
+                startPosition = this.getReferencePositonInfo(newPositions, param.alignSideRight, param.alignTargetRight);
                 rightPosition = startPosition - param.marginRight;
                 if (param._alignCenter) {
-                    startPosition = this.getReferencePositonInfo(param.alignSideCenter, param.alignTargetCenter);
+                    startPosition = this.getReferencePositonInfo(newPositions, param.alignSideCenter, param.alignTargetCenter);
                     centerPosition = startPosition + param.marginCenter;
                     child.width = (child.right - centerPosition) * 2;
                 }
                 child.left = rightPosition - child.width;
             } else if (param.alignCenter) {
-                startPosition = this.getReferencePositonInfo(param.alignSideCenter, param.alignTargetCenter);
+                startPosition = this.getReferencePositonInfo(newPositions, param.alignSideCenter, param.alignTargetCenter);
                 child.left = startPosition + param.marginCenter - child.width / 2;
             }
 
             if (param.alignTop) {
-                startPosition = this.getReferencePositonInfo(param.alignSideTop, param.alignTargetTop);
+                startPosition = this.getReferencePositonInfo(newPositions, param.alignSideTop, param.alignTargetTop);
                 child.top = startPosition + param.marginTop;
                 if (param.alignBottom) {
-                    startPosition = this.getReferencePositonInfo(param.alignSideBottom, param.alignTargetBottom);
+                    startPosition = this.getReferencePositonInfo(newPositions, param.alignSideBottom, param.alignTargetBottom);
                     child.height = startPosition - param.marginBottom - child.top;
                 } else if (param.alignMiddle) {
-                    startPosition = this.getReferencePositonparamInfo(param.alignSideMiddle, param.alignTargetMiddle);
+                    startPosition = this.getReferencePositonparamInfo(newPositions, param.alignSideMiddle, param.alignTargetMiddle);
                     child.height = (startPosition + param.marginMiddle - child.top) * 2;
                 }
             } else if (param.alignBottom) {
                 var bottomPosition, middlePosition;
-                startPosition = this.getReferencePositonInfo(param.alignSideBottom, param.alignTargetBottom);
+                startPosition = this.getReferencePositonInfo(newPositions, param.alignSideBottom, param.alignTargetBottom);
                 bottomPosition = startPosition - param.marginBottom;
                 if (param._alignMiddle) {
-                    startPosition = this.getReferencePositonInfo(param.alignSideMiddle, param.alignTargetMiddle);
+                    startPosition = this.getReferencePositonInfo(newPositions, param.alignSideMiddle, param.alignTargetMiddle);
                     middlePosition = startPosition + param.marginMiddle;
                     child.height = (child.bottom - middlePosition) * 2;
                 }
                 child.top = bottomPosition - child.height;
             } else if (param.alignMiddle) {
-                startPosition = this.getReferencePositonInfo(param.alignSideMiddle, param.alignTargetMiddle);
+                startPosition = this.getReferencePositonInfo(newPositions, param.alignSideMiddle, param.alignTargetMiddle);
                 child.top = startPosition + param.marginMiddle - child.height / 2;
             }
         }
     },
 
     /**
+     * Iterate to calculate.
      * @method RelativeLayout#iterationCalculate
-     * @description iterated to calculate
+     * @param {Number} waitNum - the wait number.
+     * @param {Boolean[]} horizontalList - the horizontal list.
+     * @param {Boolean[]} verticalList - the vertical list.
+     * @param {Boolean[]} list - the list.
      * @private
      */
     iterationCalculate: function(waitNum, horizontalList, verticalList, list) {
@@ -367,8 +406,9 @@ Class.define("framework.ui.layout.RelativeLayout", Layout, {
     },
 
     /**
+     * Check whether circle reference exists.
      * @method RelativeLayout#checkCircle
-     * @description check whether circle reference exists
+     * @return {Boolean} true means circle reference exists, otherwise false.
      * @private
      */
     checkCircle: function() {

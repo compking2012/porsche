@@ -38,6 +38,7 @@ Class.define("framework.ui.animation.SharedTimer", YObject, {
         }
         this._timerQueue = [];
         clearInterval(this._timer);
+        this._timer = null;
 
         YObject.prototype.destroy.apply(this, arguments);
     },
@@ -48,6 +49,7 @@ Class.define("framework.ui.animation.SharedTimer", YObject, {
                 this.instance = new this();
             }
             this.refCount++;
+
             return this.instance;
         }
     },
@@ -71,14 +73,6 @@ Class.define("framework.ui.animation.SharedTimer", YObject, {
         if (this._timerQueue.length === 0) {
             clearInterval(this._timer);
             this._timer = null;
-        }
-    },
-
-    getGCD: function(num1, num2) {
-        for (var i = Math.min(num1, num2); i > 0; i--) {
-            if (num1 % i === 0 && num2 % i === 0) {
-                return i;
-            }
         }
     },
 

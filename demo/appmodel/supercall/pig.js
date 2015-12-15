@@ -2,7 +2,7 @@ define(function(require, exports, module) {
 "use strict";
 
 var Class = require("../../../framework/class");
-var Animal = require("./animal");
+var Animal = require("../../..animal");
 
 Class.define("Pig", Animal, {
     initialize: function(age, name) {

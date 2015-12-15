@@ -6,12 +6,10 @@ var App = require("../../../framework/app/app");
 var CompositeView = require("../../../framework/ui/view/compositeview");
 var TextView = require("../../../framework/ui/view/textview");
 var AutoLayout = require("../../../framework/ui/layout/autolayout");
-var TapRecognizer = require("../../../framework/ui/gesture/taprecognizer");
 
 Class.define("MyApp", App, {
     onStart: function() {
-        this.window.addGestureRecognizer(new TapRecognizer());
-        this.window.addEventListener("tap", this.onTap.bind(this));
+        this.window.addEventListener("touchend", this.onTouchEnd.bind(this));
 
         this.compositeView = new CompositeView();
         this.compositeView.width = 200;
@@ -58,7 +56,7 @@ Class.define("MyApp", App, {
         this.stopflag = true;
     },
 
-    onTap: function() {
+    onTouchEnd: function() {
         if (this.stopflag) {
             this.compositeView.width = 320;
             this.compositeView.height = 200;

@@ -53,6 +53,12 @@ Class.define("framework.ui.layout.Layout", YObject, {
         return this._layoutParams;
     },
 
+    perform: function() {
+        var originPositions = this.getOriginPositions();
+        var newPositions = this.measure(originPositions);
+        this.setNewPositions(newPositions);
+    },
+
     /**
      * Get the layout param value for the child view at index.
      * @method Layout#getLayoutParam
@@ -91,13 +97,42 @@ Class.define("framework.ui.layout.Layout", YObject, {
     },
 
     /**
-     * Implement this to perform the layouting for the associated view.
-     * @method Layout#perform
+     * Implement this to measure the layout for the associated view.
+     * @method Layout#measure
+     * @param {Object[]} originPositions - the original positions of each child view in the associated view.
+     * @return {Object[]} the new positions of each child view in the associated view.
      * @protected
      * @abstract
      */
-    perform: function() {
+    measure: function(/*originPositions*/) {
         // TO BE IMPLEMENTED
+    },
+
+    getOriginPositions: function() {
+        var originPositions = [];
+        var length = this._associatedView.children.length;
+        for (var i = 0; i < length; i++) {
+            var child = this._associatedView.children[i];
+            originPositions.push({
+                left: child.left,
+                top: child.top,
+                width: child.width,
+                height: child.height
+            });
+        }
+
+        return originPositions;
+    },
+
+    setNewPositions: function(newPositions) {
+        var length = this._associatedView.children.length;
+        for (var i = 0; i < length; i++) {
+            var child = this._associatedView.children[i];
+            child.left = newPositions[i].left;
+            child.top = newPositions[i].top;
+            child.width = newPositions[i].width;
+            child.height = newPositions[i].height;
+        }
     },
 
     /**
@@ -113,10 +148,13 @@ Class.define("framework.ui.layout.Layout", YObject, {
     set associatedView(value) {
         this._associatedView = value;
 
-        if (this._associatedView !== null) {
-            for (var i = 0; i < this._associatedView.children.length; i++) {
-                var child = this._associatedView.children[i];
+        var length = this._associatedView.children.length;
+        for (var i = 0; i < length; i++) {
+            var child = this._associatedView.children[i];
+            if (this._associatedView !== null) {
                 child.saveAbsoluteInfo();
+            } else {
+                child.resetToNoLayout();
             }
         }
     },

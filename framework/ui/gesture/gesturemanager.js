@@ -37,6 +37,12 @@ Class.define("framework.ui.gesture.GestureManager", EventEmitter, {
             this._inputs[i].destroy();
         }
         this._inputs = null;
+
+        for (var i = 0; i < this._recognizers.length; i++) {
+            this._recognizers[i].destroy();
+        }
+        this._recognizers = null;
+
         this._view = null;
 
         EventEmitter.prototype.destroy.apply(this, arguments);

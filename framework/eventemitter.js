@@ -163,6 +163,28 @@ Class.define("framework.EventEmitter", YObject, {
      */
     off: function(/*event, handler*/) {
         this.removeEventListener.apply(this, arguments);
+    },
+
+    /**
+     * Creates and returns a copy of this event emitter.
+     * @method EventEmitter#clone
+     * @return {EventEmitter} a copy of this event emitter.
+     */
+    clone: function() {
+        var clone = YObject.prototype.clone.call(this);
+        for (var event in this._events) {
+            if (this._events.hasOwnProperty(event)) {
+                if (this._events[event] instanceof Array) {
+                    var length = this._events[event].length;
+                    for (var i = 0; i < length; i++) {
+                        clone.addEventListener(event, this._events[event][i]);
+                    }
+                } else {
+                    clone.addEventListener(event, this._events[event]);
+                }
+            }
+        }
+        return clone;
     }
 }, module);
 
