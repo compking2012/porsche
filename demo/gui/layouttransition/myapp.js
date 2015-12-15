@@ -8,11 +8,14 @@ var RowLayout = require("../../../framework/ui/layout/rowlayout");
 var ColumnLayout = require("../../../framework/ui/layout/columnlayout");
 var LayoutTransition = require("../../../framework/ui/transition/layouttransition");
 var PropertyAnimation = require("../../../framework/ui/animation/propertyanimation");
+var TapRecognizer = require("../../../framework/ui/gesture/taprecognizer");
 var CircleLayout = require("./circlelayout");
 
 Class.define("MyApp", App, {
     onStart: function() {
         var colors = ["#FF0000", "#00FF00", "#0000FF", "#FFFF00", "#00FFFF"];
+
+        this.window.addGestureRecognizer(new TapRecognizer());
 
         this.rowLayout = new RowLayout();
         this.rowLayout.paddingTop = 10;
@@ -67,10 +70,10 @@ Class.define("MyApp", App, {
         layoutTranstion.setAnimation(2, animation3);
         this.window.addTransition(layoutTranstion);
 
-        this.window.addEventListener("touchend", this.onTouchEnd.bind(this));
+        this.window.addEventListener("tap", this.onTap.bind(this));
     },
 
-    onTouchEnd: function() {
+    onTap: function() {
         if (this.window.layout === this.columnLayout) {
             this.window.layout = this.circleLayout;
         } else if (this.window.layout === this.rowLayout) {
