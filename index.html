@@ -1176,17 +1176,18 @@ Class.define("MyApp", App, {
         this.view.top = 0;
         this.view.width = 100;
         this.view.height = 100;
+        this.view.addGestureRecognizer(new TapRecognizer());
+        this.view.addEventListener("tap", this.onTap.bind(this));
 
         this.view.addTransition(new PropertyTransition("left"));
         this.view.addTransition(new PropertyTransition("top"));
         this.view.addTransition(new PropertyTransition("opacity"));
 
         this.window.addChild(this.view);
-        this.window.addEventListener("touchend", this.onTouchEnd.bind(this));
         this.moved = false;
     },
 
-    onTouchEnd: function(/*e*/) {
+    onTap: function(/*e*/) {
         if (!this.moved) {
             this.view.left = 200;
             this.view.top = 200;
@@ -1211,6 +1212,8 @@ Class.define("MyApp", App, {
 Class.define("MyApp", App, {
     onStart: function() {
         var colors = ["#FF0000", "#00FF00", "#0000FF", "#FFFF00", "#00FFFF"];
+
+        this.window.addGestureRecognizer(new TapRecognizer());
 
         this.rowLayout = new RowLayout();
         this.rowLayout.paddingTop = 10;
@@ -1265,10 +1268,10 @@ Class.define("MyApp", App, {
         layoutTranstion.setAnimation(2, animation3);
         this.window.addTransition(layoutTranstion);
 
-        this.window.addEventListener("touchend", this.onTouchEnd.bind(this));
+        this.window.addEventListener("tap", this.onTap.bind(this));
     },
 
-    onTouchEnd: function() {
+    onTap: function() {
         if (this.window.layout === this.columnLayout) {
             this.window.layout = this.circleLayout;
         } else if (this.window.layout === this.rowLayout) {
@@ -1290,19 +1293,13 @@ Class.define("MyApp", App, {
 Class.define("MyApp", App, {
     onStart: function() {
         this.colors = ["red", "orange", "yellow", "green", "blue", "indigo", "violet", "navy", "magenta", "salmon", "sienna", "turquoise"];
+        this.window.addGestureRecognizer(new TapRecognizer());
+        this.window.addEventListener("tap", this.onTapWindow.bind(this));
+
         this.index = 0;
         while (this.index < 3) {
-            var view = new View();
-            view.background = this.colors[this.index];
-            view.width = 60;
-            view.height = 60;
-            view.originX = 30;
-            view.originY = 30;
-            view.addEventListener("touchstart", this.onTouchStartRemove.bind(this));
-            this.window.addChild(view);
-            this.index++;
+            this.createView();
         }
-        this.window.addEventListener("touchend", this.onTouchEndAdd.bind(this));
 
         var childTransition = new ChildTransition();
 
@@ -1335,24 +1332,30 @@ Class.define("MyApp", App, {
         this.window.layout = new CircleLayout();
     },
 
-    onTouchEndAdd: function(e) {
+    onTapWindow: function(e) {
         if (e.target !== this.window) {
             return;
         }
+        this.createView();
+    },
+
+    onTapView: function(e) {
+        e.stopPropagation();
+        var view = e.target;
+        this.window.removeChild(view);
+    },
+
+    createView: function() {
         var view = new View();
         view.background = this.colors[this.index % this.colors.length];
         view.width = 60;
         view.height = 60;
         view.originX = 30;
         view.originY = 30;
-        view.addEventListener("touchstart", this.onTouchStartRemove.bind(this));
+        view.addGestureRecognizer(new TapRecognizer());
+        view.addEventListener("tap", this.onTapView.bind(this));
         this.window.addChild(view);
         this.index++;
-    },
-
-    onTouchStartRemove: function(e) {
-        var view = e.target;
-        this.window.removeChild(view);
     }
 }, module);
           </code>

@@ -34,7 +34,7 @@ Class.define("MyApp", App, {
     },
 
     onChange: function(e) {
-        this.textView.text = this.slider.value;
+        this.textView.text = this.slider.value.toFixed(2);
     }
 }, module);
 
