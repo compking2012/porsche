@@ -80,10 +80,6 @@ Class.define("framework.ui.gesture.MouseInput", Input, {
             this._pressed = false;
         }
 
-        console.log(eventType === Input.INPUT_START ? "INPUT_START" : 
-            eventType === Input.INPUT_MOVE ? "INPUT_MOVE" : 
-            eventType === Input.INPUT_END ? "INPUT_END" : "UNKNOWN");
-
         this.handleInputEvent(eventType, {
             pointers: [ev],
             changedPointers: [ev],
