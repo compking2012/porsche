@@ -79,6 +79,7 @@ Class.define("framework.ui.transition.LayoutTransition", Transition, {
 
     /**
      * Set a custom animation for the view which is at the specified index of the layout.
+     * @method LayoutTransition#setAnimation
      * @param {Number} index - the specified index.
      * @param {PropertyAnimation} animation - the custom property animation.
      */

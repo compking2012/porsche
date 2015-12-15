@@ -6,7 +6,7 @@
     "source": {
         "includePattern": ".+\\.js(doc)?$",
         "excludePattern": "(^|\\/|\\\\)_",
-        "exclude": ["../../porsche/framework/vendor", "../../porsche/framework/platform", "../../porsche/framework/util/gradient-parser", "../../porsche/framework/util/i18next", "../../porsche/framework/ui/layout/autolayout"]
+        "exclude": ["../../porsche/framework/vendor", "../../porsche/framework/platform", "../../porsche/framework/util/gradient-parser", "../../porsche/framework/util/i18next", "../../porsche/framework/util/xmldom", "../../porsche/framework/ui/layout/autolayout"]
     },
     "plugins": [],
     "templates": {
