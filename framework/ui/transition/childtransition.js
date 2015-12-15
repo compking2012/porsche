@@ -66,6 +66,11 @@ Class.define("framework.ui.transition.ChildTransition", Transition, {
         Transition.prototype.destroy.apply(this, arguments);
     },
 
+    /**
+     * @name ChildTransition#childView
+     * @type {View}
+     * @description the manipulated child view.
+     */
     get childView() {
         return this._childView;
     },
@@ -74,6 +79,11 @@ Class.define("framework.ui.transition.ChildTransition", Transition, {
         this._childView = value;
     },
 
+    /**
+     * @name ChildTransition#index
+     * @type {Number}
+     * @description the index of the child view that is specified for manipulation.
+     */
     get index() {
         return this._index;
     },
@@ -82,6 +92,11 @@ Class.define("framework.ui.transition.ChildTransition", Transition, {
         this._index = value;
     },
 
+    /**
+     * @name ChildTransition#action
+     * @type {String}
+     * @description the action of manipulation, either "add" or "remove".
+     */
     get action() {
         return this._action;
     },
@@ -107,6 +122,7 @@ Class.define("framework.ui.transition.ChildTransition", Transition, {
 
     /**
      * Set a custom animation of the specified type for the view.
+     * @method ChildTransition#setAnimation
      * @param {String} type - the specified index.
      * @param {PropertyAnimation} animation - the custom property animation.
      */
@@ -157,6 +173,11 @@ Class.define("framework.ui.transition.ChildTransition", Transition, {
         }
     },
 
+    /**
+     * Start the add action transition.
+     * @method ChildTransition#startAdd
+     * @private
+     */
     startAdd: function() {
         var layout = this._associatedView.layout;
         var originPositions = layout.getOriginPositions();
@@ -253,6 +274,11 @@ Class.define("framework.ui.transition.ChildTransition", Transition, {
         this._animationGroup.start();
     },
 
+    /**
+     * Start the remove action transition.
+     * @method ChildTransition#startRemove
+     * @private
+     */
     startRemove: function() {
         var layout = this._associatedView.layout;
         var originPositions = layout.getOriginPositions();
