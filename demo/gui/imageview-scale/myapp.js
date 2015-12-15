@@ -4,10 +4,12 @@ var Class = fx.import("framework.Class");
 var App = fx.import("framework.app.App");
 var ImageView = fx.import("framework.ui.view.ImageView");
 var TextView = fx.import("framework.ui.view.TextView");
+var TapRecognizer = fx.import("framework.ui.gesture.TapRecognizer");
 
 Class.define("MyApp", App, {
     onStart: function() {
-        this.window.addEventListener("touchend", this.onTouchEnd.bind(this));
+        this.window.addGestureRecognizer(new TapRecognizer());
+        this.window.addEventListener("tap", this.onTap.bind(this));
 
         this.scaleTypes = ["matrix", "fitxy", "fitstart", "fitcenter", "fitend", "center", "centercrop", "centerinside"];
         this.index = 0;
@@ -27,7 +29,7 @@ Class.define("MyApp", App, {
         this.window.addChild(this.textView);
     },
 
-    onTouchEnd: function() {
+    onTap: function() {
         this.imageView.scaleType = this.scaleTypes[this.index++ % this.scaleTypes.length];
         this.textView.text = this.imageView.scaleType;
     }

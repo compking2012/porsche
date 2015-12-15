@@ -277,7 +277,6 @@ Class.define("framework.ui.gesture.Input", EventEmitter, {
      * @return {Object} velocity `x` and `y`
      */
     getVelocity: function(deltaTime, x, y) {
-        console.log("deltaTime, x, y: ", deltaTime, x, y);
         return {
             x: x / deltaTime || 0,
             y: y / deltaTime || 0
