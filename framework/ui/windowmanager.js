@@ -25,6 +25,7 @@ Class.define("framework.ui.WindowManager", EventEmitter, {
         this._renderService = renderService;
 
         this._windows = [];
+        this._mainWindow = null;
         this._dialog = null;
 
         this._redraw = false;
@@ -60,10 +61,16 @@ Class.define("framework.ui.WindowManager", EventEmitter, {
 
         this._activeView = null;
 
+        var length = this._windows.length;
+        for (var i = 0; i < length; i++) {
+            this._windows[i].destroy();
+        }
+        this._windows = null;
+        this._mainWindow = null;
+
         this._screenContext = null;
         this.destroyCanvas(this._screenCanvas);
         this._screenCanvas = null;
-        this._windows = null;
 
         this._renderService.destroy();
         this._renderService = null;
@@ -151,6 +158,10 @@ Class.define("framework.ui.WindowManager", EventEmitter, {
     },
 
     processInputEvent: function(type, e) {
+        if (this._mainWindow === null) {
+            return;
+        }
+
         if (type === "touchstart" || type === "touchmove" || type === "touchend" || type === "touchcancel") {
             this.processTouchEvent(type, e);
         } else if (type === "mousedown" || type === "mousemove" || type === "mouseup") {

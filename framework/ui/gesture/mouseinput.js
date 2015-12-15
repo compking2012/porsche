@@ -66,7 +66,7 @@ Class.define("framework.ui.gesture.MouseInput", Input, {
             this._pressed = true;
         }
 
-        if (eventType & this.constructor.INPUT_MOVE && ev.which !== 1) {
+        if (eventType & this.constructor.INPUT_MOVE && ev.button !== 0) {
             eventType = this.constructor.INPUT_END;
         }
 

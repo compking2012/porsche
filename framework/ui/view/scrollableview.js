@@ -411,6 +411,7 @@ Class.define("framework.ui.view.ScrollableView", CompositeView, {
      * @private
      */
     startAutoScroll: function(amplitudeX, amplitudeY) {
+        console.log("amplitudeX, amplitudeY: ", amplitudeX, amplitudeY);
         var startTime = new Date().getTime();
         var totalTime = 0;
         if (amplitudeX !== 0 && amplitudeY !== 0) {
