@@ -166,6 +166,10 @@ a {
   clear: both;
   visibility: hidden;
 }
+.main-content div.demo > h4 {
+  margin-top: 0;
+  margin-bottom: 0;
+}
 .main-content div.demo > span {
   display: block;
 }
