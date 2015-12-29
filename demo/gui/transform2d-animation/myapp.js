@@ -4,7 +4,7 @@ var Class = fx.import("framework.Class");
 var App = fx.import("framework.app.App");
 var CompositeView = fx.import("framework.ui.view.CompositeView");
 var View = fx.import("framework.ui.view.View");
-var Animation = fx.import("framework.ui.animation.Animation");
+var PropertyAnimation = fx.import("framework.ui.animation.PropertyAnimation");
 var AnimationGroup = fx.import("framework.ui.animation.AnimationGroup");
 
 Class.define("MyApp", App, {
@@ -47,18 +47,18 @@ Class.define("MyApp", App, {
         view2.scaleY = 1.5;
         this.window.addChild(view2);
 
-        var animation1 = new Animation(view1);
+        var animation1 = new PropertyAnimation(view1);
         animation1.from = {rotationZ: 0 * Math.PI / 180, scaleX: 0.5, scaleY: 0.5, translationX: -200, translationY: -200};
         animation1.to = {rotationZ: 360 * Math.PI / 180, scaleX: 2, scaleY: 2, translationX: 200, translationY: 200};
         animation1.duration = 5000;
-        animation1.repeat = 0;
+        animation1.repeat = "infinite";
         animation1.easing = "cubic-bezier(0.42, 0, 0.58, 1.0)";
 
-        var animation2 = new Animation(view2);
+        var animation2 = new PropertyAnimation(view2);
         animation2.from = {rotationZ: 0 * Math.PI / 180, scaleX: 0.5, scaleY: 0.5, translationX: -200, translationY: -200};
         animation2.to = {rotationZ: 360 * Math.PI / 180, scaleX: 2, scaleY: 2, translationX: 200, translationY: 200};
         animation2.duration = 5000;
-        animation2.repeat = 0;
+        animation2.repeat = "infinite";
         animation2.easing = "cubic-bezier(0.42, 0, 0.58, 1.0)";
 
         var animationGroup = new AnimationGroup();

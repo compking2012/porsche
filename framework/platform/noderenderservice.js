@@ -15,7 +15,7 @@ var UIServer = require("core/ui");
 var Canvas = require("canvas/lib/canvas");
 var fs = require("fs");
 
-Class.define("framework.ui.platform.RenderService", EventEmitter, {
+Class.define("framework.ui.platform.NodeRenderService", EventEmitter, {
     initialize: function() {
         EventEmitter.prototype.initialize.apply(this, arguments);
 

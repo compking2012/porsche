@@ -34,7 +34,7 @@ Class.define("MyApp", App, {
     onTapAlert: function() {
         var alert = new AlertDialog({
             messageText: "Hi, are you OK?",
-            actionText: "完成"
+            actionText: "OK"
         });
         alert.addEventListener("result", this.onAlertResult.bind(this));
         alert.show();
@@ -43,8 +43,8 @@ Class.define("MyApp", App, {
     onTapConfirm: function() {
         var confirm = new ConfirmDialog({
             messageText: "Hi, are you OK?",
-            confirmText: "完成",
-            cancelText: "取消"
+            confirmText: "OK",
+            cancelText: "Cancel"
         });
         confirm.addEventListener("result", this.onConfirmResult.bind(this));
         confirm.show();

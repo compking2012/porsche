@@ -345,6 +345,7 @@ Class.define("framework.ui.util.Polyfiller", YObject, {
                         context.fill();
                     }
                 };
+
                 // fillStyle property
                 var fillStylePd = Object.getOwnPropertyDescriptor(global.CanvasRenderingContext2D.prototype, "fillStyle");
                 if (fillStylePd !== undefined) {
@@ -379,6 +380,30 @@ Class.define("framework.ui.util.Polyfiller", YObject, {
                     }
                 };
                 Object.defineProperty(global.CanvasRenderingContext2D.prototype, "fillRect", fillRectPd);
+
+                // strokeStyle property
+                var strokeStylePd = Object.getOwnPropertyDescriptor(global.CanvasRenderingContext2D.prototype, "storkeStyle");
+                if (strokeStylePd !== undefined) {
+                    var strokeStyleGetFunc = strokeStylePd.get;
+                    var strokeStyleSetFunc = strokeStylePd.set;
+                    strokeStylePd.get = function() {
+                        if (this._strokeStyle && this._strokeStyle instanceof ConicalGradient) {
+                            return this._strokeStyle;
+                        } else {
+                            strokeStyleGetFunc.apply(this, arguments);
+                        }
+                    };
+                    strokeStylePd.set = function(value) {
+                        if (value instanceof ConicalGradient) {
+                            this._strokeStyle = value;
+                        } else {
+                            this._strokeStyle = undefined;
+                            strokeStyleSetFunc.apply(this, arguments);
+                        }
+                    };
+                    Object.defineProperty(global.CanvasRenderingContext2D.prototype, "strokeStyle", strokeStylePd);
+                }
+
             }
         }
     }

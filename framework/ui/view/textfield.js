@@ -12,7 +12,7 @@
 var Class = require("../../class");
 var TextView = require("./textview");
 var TapRecognizer = require("../gesture/taprecognizer");
-var Point = require("../point");
+var Point = require("../../graphics/point");
 
 /**
  * Text field.

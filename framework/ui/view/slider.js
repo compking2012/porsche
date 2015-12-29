@@ -11,7 +11,7 @@
 "use strict";
 var Class = require("../../class");
 var ProgressView = require("./progressview");
-var Rectangle = require("../rectangle");
+var Rectangle = require("../../graphics/rectangle");
 var TapRecognizer = require("../gesture/taprecognizer");
 
 /**

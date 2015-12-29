@@ -3,7 +3,7 @@ var fx = require("framework");
 var Class = fx.import("framework.Class");
 var App = fx.import("framework.app.App");
 var View = fx.import("framework.ui.view.View");
-var Rectangle = fx.import("framework.ui.Rectangle");
+var Rectangle = fx.import("framework.graphics.Rectangle");
 
 Class.define("MyApp", App, {
     onStart: function() {
@@ -14,8 +14,8 @@ Class.define("MyApp", App, {
         this.view.width = 100;
         this.view.height = 100;
         this.view.touchRegion = [
-            new Rectangle(-50, 0, 50, this.view.height),
-            new Rectangle(this.view.width, 0, 50, this.view.height)
+            new Rectangle(-50, 0, 0, this.view.height),
+            new Rectangle(this.view.width, 0, this.view.width + 50, this.view.height)
         ];
         this.view.addEventListener("touchstart", this.onTouchStart.bind(this));
         this.view.addEventListener("touchend", this.onTouchEnd.bind(this));

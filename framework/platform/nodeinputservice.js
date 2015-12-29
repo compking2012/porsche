@@ -12,7 +12,7 @@
 var Class = require("../class");
 var EventEmitter = require("../eventemitter");
 
-Class.define("framework.ui.platform.InputService", EventEmitter, {
+Class.define("framework.ui.platform.NodeInputService", EventEmitter, {
     initialize: function(target) {
         EventEmitter.prototype.initialize.apply(this, arguments);
 

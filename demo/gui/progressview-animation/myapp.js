@@ -3,7 +3,7 @@ var fx = require("framework");
 var Class = fx.import("framework.Class");
 var App = fx.import("framework.app.App");
 var ProgressView = fx.import("framework.ui.view.ProgressView");
-var Animation = fx.import("framework.ui.animation.Animation");
+var PropertyAnimation = fx.import("framework.ui.animation.PropertyAnimation");
 var AnimationGroup = fx.import("framework.ui.animation.AnimationGroup");
 
 Class.define("MyApp", App, {
@@ -35,19 +35,19 @@ Class.define("MyApp", App, {
         this.progressView3.color = "linear-gradient(#F20026, #FFFFFF)";
         this.window.addChild(this.progressView3);
 
-        var animation1 = new Animation(this.progressView1);
+        var animation1 = new PropertyAnimation(this.progressView1);
         animation1.from = {value: 0};
         animation1.to = {value: 0.3};
         animation1.duration = 1000;
         animation1.easing = "ease";
 
-        var animation2 = new Animation(this.progressView2);
+        var animation2 = new PropertyAnimation(this.progressView2);
         animation2.from = {value: 0};
         animation2.to = {value: 0.5};
         animation2.duration = 1000;
         animation2.easing = "ease";
 
-        var animation3 = new Animation(this.progressView3);
+        var animation3 = new PropertyAnimation(this.progressView3);
         animation3.from = {value: 0};
         animation3.to = {value: 0.7};
         animation3.duration = 1000;

@@ -11,8 +11,8 @@
 "use strict";
 var Class = require("../../class");
 var EventEmitter = require("../../eventemitter");
-var Rectangle = require("../rectangle");
-var Matrix = require("../matrix");
+var Rectangle = require("../../graphics/rectangle");
+var Matrix = require("../../graphics/matrix");
 var ColorManager = require("../../util/colormanager");
 var GestureManager = require("../gesture/gesturemanager");
 var TransitionManager = require("../transition/transitionmanager");

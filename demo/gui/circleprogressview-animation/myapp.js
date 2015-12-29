@@ -3,7 +3,7 @@ var fx = require("framework");
 var Class = fx.import("framework.Class");
 var App = fx.import("framework.app.App");
 var CircleProgressView = fx.import("framework.ui.view.CircleProgressView");
-var Animation = fx.import("framework.ui.animation.Animation");
+var PropertyAnimation = fx.import("framework.ui.animation.PropertyAnimation");
 var AnimationGroup = fx.import("framework.ui.animation.AnimationGroup");
 
 Class.define("MyApp", App, {
@@ -15,7 +15,7 @@ Class.define("MyApp", App, {
         this.circleProgressView1.height = 140;
         this.circleProgressView1.lineWidth = 30;
         this.circleProgressView1.background = "#0D171C";
-        this.circleProgressView1.color = "linear-gradient(#3ECCD3, #FFFFFF)";
+        this.circleProgressView1.color = "#3ECCD3";
         this.window.addChild(this.circleProgressView1);
 
         this.circleProgressView2 = new CircleProgressView();
@@ -25,7 +25,7 @@ Class.define("MyApp", App, {
         this.circleProgressView2.height = 200;
         this.circleProgressView2.lineWidth = 30;
         this.circleProgressView2.background = "#223403";
-        this.circleProgressView2.color = "linear-gradient(#97FF01, #FFFFFF)";
+        this.circleProgressView2.color = "#97FF01";
         this.window.addChild(this.circleProgressView2);
 
         this.circleProgressView3 = new CircleProgressView();
@@ -35,22 +35,22 @@ Class.define("MyApp", App, {
         this.circleProgressView3.height = 260;
         this.circleProgressView3.lineWidth = 30;
         this.circleProgressView3.background = "#0E171C";
-        this.circleProgressView3.color = "linear-gradient(#F20026, #FFFFFF)";
+        this.circleProgressView3.color = "#F20026";
         this.window.addChild(this.circleProgressView3);
 
-        var animation1 = new Animation(this.circleProgressView1);
+        var animation1 = new PropertyAnimation(this.circleProgressView1);
         animation1.from = {value: 0};
         animation1.to = {value: 0.3};
         animation1.duration = 1000;
         animation1.easing = "ease";
 
-        var animation2 = new Animation(this.circleProgressView2);
+        var animation2 = new PropertyAnimation(this.circleProgressView2);
         animation2.from = {value: 0};
         animation2.to = {value: 0.5};
         animation2.duration = 1000;
         animation2.easing = "ease";
 
-        var animation3 = new Animation(this.circleProgressView3);
+        var animation3 = new PropertyAnimation(this.circleProgressView3);
         animation3.from = {value: 0};
         animation3.to = {value: 0.7};
         animation3.duration = 1000;

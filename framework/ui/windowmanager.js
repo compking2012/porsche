@@ -14,7 +14,7 @@ var EventEmitter = require("../eventemitter");
 var TouchEvent = require("./event/touchevent");
 var MouseEvent = require("./event/mouseevent");
 var KeyboardEvent = require("./event/keyboardevent");
-var Point = require("./point");
+var Point = require("../graphics/point");
 var Polyfiller = require("../util/polyfiller");
 
 Class.define("framework.ui.WindowManager", EventEmitter, {

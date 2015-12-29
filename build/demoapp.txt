@@ -225,8 +225,8 @@ H5:     passed
 Node:   passed
 
 *) customlayout
-H5:     no pass
-Node:   no pass
+H5:     passed
+Node:   passed
 
 
 ### App Model ###
