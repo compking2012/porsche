@@ -40,6 +40,8 @@ Class.define("framework.ui.WindowManager", EventEmitter, {
         this._lastMousePoint = new Point(0, 0);
         this._identifier = 0;
 
+        this._renderCallback = null;
+
         this._screenCanvas = this._renderService.createCanvas(this._renderService.getWidth(), this._renderService.getHeight());
         this._screenContext = this.getContext(this._screenCanvas);
 
@@ -69,8 +71,10 @@ Class.define("framework.ui.WindowManager", EventEmitter, {
         this._mainWindow = null;
 
         this._screenContext = null;
-        this.destroyCanvas(this._screenCanvas);
+        this._renderService.destroyCanvas(this._screenCanvas);
         this._screenCanvas = null;
+
+        this._renderCallback = null;
 
         this._renderService.destroy();
         this._renderService = null;
@@ -131,7 +135,7 @@ Class.define("framework.ui.WindowManager", EventEmitter, {
         }
 
         this._redraw = true;
-        this._renderService.requestRenderFrame(function() {
+        this._renderService.requestRenderFrame(this._renderCallback = function() {
             this._redraw = false;
             this._redrawTime = new Date().getTime();
 

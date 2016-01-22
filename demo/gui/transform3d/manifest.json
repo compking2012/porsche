@@ -1,0 +1,8 @@
+{
+    "appName": "Transform3D",
+    "hardwareAccelerated": true,
+    "debug": {
+        "paintFPS": true,
+        "dirtyRect": true
+    }
+}

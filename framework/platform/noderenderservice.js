@@ -21,11 +21,14 @@ Class.define("framework.ui.platform.NodeRenderService", EventEmitter, {
 
         this._uiServer = new UIServer("MyApp");
         this._canvasIdGen = 0;
+
         this._timer = null;
     },
 
     destroy: function() {
-        clearTimeout(this._timer);
+        if (this._timer !== null) {
+            clearTimeout(this._timer);
+        }
         this._timer = null;
 
         this._uiServer = null;

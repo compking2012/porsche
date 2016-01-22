@@ -16,6 +16,8 @@ Class.define("framework.ui.platform.H5RenderService", EventEmitter, {
     initialize: function() {
         EventEmitter.prototype.initialize.apply(this, arguments);
 
+        this._renderFrameId = null;
+
         this._canvas = document.createElement("canvas");
         document.body.appendChild(this._canvas);
     },
@@ -23,6 +25,11 @@ Class.define("framework.ui.platform.H5RenderService", EventEmitter, {
     destroy: function() {
         document.body.removeChild(this._canvas);
         this._canvas = null;
+
+        if (this._renderFrameId !== null) {
+            window.cancelAnimationFrame(this._renderFrameId);
+        }
+        this._renderFrameId = null;
 
         EventEmitter.prototype.destroy.apply(this, arguments);
     },
@@ -55,7 +62,7 @@ Class.define("framework.ui.platform.H5RenderService", EventEmitter, {
     },
 
     requestRenderFrame: function(renderFrameCallback) {
-        requestAnimationFrame(renderFrameCallback);
+        this._renderFrameId = window.requestAnimationFrame(renderFrameCallback);
     },
 
     render: function() {
