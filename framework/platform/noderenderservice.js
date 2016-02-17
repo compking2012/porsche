@@ -11,6 +11,7 @@
 "use strict";
 var Class = require("../class");
 var EventEmitter = require("../eventemitter");
+var Polyfiller = require("../util/polyfiller");
 var UIServer = require("core/ui");
 var Canvas = require("canvas/lib/canvas");
 var fs = require("fs");
@@ -60,6 +61,14 @@ Class.define("framework.ui.platform.NodeRenderService", EventEmitter, {
         canvas.getContext("2d").addFont(chsFont);
 
         return canvas;
+    },
+
+    getContext: function(canvas) {
+        var context = canvas.getContext("2d");
+        Polyfiller.polyfillContext(context);
+        context.clearRect(0, 0, canvas.width, canvas.height);
+
+        return context;
     },
 
     destroyCanvas: function(canvas) {

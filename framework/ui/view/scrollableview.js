@@ -245,9 +245,17 @@ Class.define("framework.ui.view.ScrollableView", CompositeView, {
         for (var i = 0; i < length; i++) {
             var view = this._children[i];
             if (view.bottom >= this._scrollY && view.top <= this._scrollY + this._height) {
-                context.translate(view.left - this._scrollX, view.top - this._scrollY);
+                if (context !== null) {
+                    context.save();
+                    context.translate(view.left - this._scrollX, view.top - this._scrollY);
+                } else {
+                    view.offsetLeft = view.left - this._scrollX;
+                    view.offsetTop = view.top - this._scrollY;
+                }
                 view.paint(context);
-                context.translate(-view.left + this._scrollX, -view.top + this._scrollY);
+                if (context !== null) {
+                    context.restore();
+                }
             }
         }
     },

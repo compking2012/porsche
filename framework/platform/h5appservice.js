@@ -63,10 +63,6 @@ Class.define("framework.ui.platform.H5AppService", EventEmitter, {
         xhr.send(null);
     },
 
-    getAppName: function() {
-        return "App";
-    },
-
     registerGlobal: function() {
         window.global = window;
     },

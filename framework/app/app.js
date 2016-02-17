@@ -36,19 +36,28 @@ Class.define("framework.app.App", EventEmitter, {
         this._inputService = new InputService(this._renderService.getTarget());
 
         this._appService.addEventListener("start", this._onStartFunc = function() {
-            this._i18nManager = new I18nManager();
-            this._i18nManager.addEventListener("load", this._onLoadI18nFunc = function() {
-                this._windowManager = new WindowManager(this._inputService, this._renderService);
-                this._layoutManager = new LayoutManager();
-                this._layoutManager.addEventListener("load", this._onLoadLayoutManagerFunc = function() {
-                    this._window = new Window(this._appName);
-                    this._windowManager.addWindow(this._window);
+            this._appService.loadFile(this.rootPath + "/manifest.json", function(content) {
+                if (content === null) {
+                    throw "Load the manifest.json error.";
+                }
+                this._manifest = JSON.parse(content);
+                this._appName = this._manifest.appName;
+                global.hardwareAccelerated = this._manifest.hardwareAccelerated;
 
-                    this.onStart();
+                this._i18nManager = new I18nManager();
+                this._i18nManager.addEventListener("load", this._onLoadI18nFunc = function() {
+                    this._windowManager = new WindowManager(this._inputService, this._renderService);
+                    this._layoutManager = new LayoutManager();
+                    this._layoutManager.addEventListener("load", this._onLoadLayoutManagerFunc = function() {
+                        this._window = new Window(this._appName);
+                        this._windowManager.addWindow(this._window);
+
+                        this.onStart();
+                    }.bind(this));
+                    this._layoutManager.load();
                 }.bind(this));
-                this._layoutManager.load();
+                this._i18nManager.locale = "zh-CN";
             }.bind(this));
-            this._i18nManager.locale = "zh-CN";
         }.bind(this));
         this._appService.addEventListener("inactive", this._onInactiveFunc = this.onInactive.bind(this));
         this._appService.addEventListener("active", this._onActiveFunc = this.onActive.bind(this));
@@ -59,7 +68,6 @@ Class.define("framework.app.App", EventEmitter, {
         global.app = this;
         global.AppFXRootPath = this._appService.getFXRootPath();
 
-        this._appName = this._appService.getAppName();
         this._rootController = null;
     },
 

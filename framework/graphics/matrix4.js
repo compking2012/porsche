@@ -832,12 +832,12 @@ Class.define("framework.graphics.Matrix4", YObject, {
          *
          *     Matrix4.identity(dest);
          *     Matrix4.rotateX(dest, dest, rad);
-         * @method Matrix4#fromXRotation
+         * @method Matrix4#fromRotationX
          * @param {Matrix4} dest - the destination matrix.
          * @param {Number} rad - the angle to rotate the matrix by.
          * @static
          */
-        fromXRotation: function(dest, rad) {
+        fromRotationX: function(dest, rad) {
             var dm = dest.matrix;
             var s = Math.sin(rad);
             var c = Math.cos(rad);
@@ -867,12 +867,12 @@ Class.define("framework.graphics.Matrix4", YObject, {
          *
          *     Matrix4.identity(dest);
          *     Matrix4.rotateY(dest, dest, rad);
-         * @method Matrix4#fromYRotation
+         * @method Matrix4#fromRotationY
          * @param {Matrix4} dest - the destination matrix.
          * @param {Number} rad - the angle to rotate the matrix by.
          * @static
          */
-        fromYRotation: function(dest, rad) {
+        fromRotationY: function(dest, rad) {
             var dm = dest.matrix;
             var s = Math.sin(rad);
             var c = Math.cos(rad);
@@ -902,12 +902,12 @@ Class.define("framework.graphics.Matrix4", YObject, {
          *
          *     Matrix4.identity(dest);
          *     Matrix4.rotateZ(dest, dest, rad);
-         * @method Matrix4#fromZRotation
+         * @method Matrix4#fromRotationZ
          * @param {Matrix4} dest - the destination matrix.
          * @param {Number} rad - the angle to rotate the matrix by.
          * @static
          */
-        fromZRotation: function(dest, rad) {
+        fromRotationZ: function(dest, rad) {
             var dm = dest.matrix;
             var s = Math.sin(rad);
             var c = Math.cos(rad);
@@ -943,7 +943,7 @@ Class.define("framework.graphics.Matrix4", YObject, {
          * @method Matrix4#fromRotationTranslation
          * @param {Matrix4} dest - the destination matrix.
          * @param {Quaternion} qtn - the rotation quaternion.
-         * @param {vec3} vec - the translation vector.
+         * @param {Vector3} vec - the translation vector.
          * @static
          */
         fromRotationTranslation: function(dest, qtn, vec) {
@@ -994,69 +994,72 @@ Class.define("framework.graphics.Matrix4", YObject, {
          *     Matrix4.identity(dest);
          *     Matrix4.translate(dest, vec);
          *     var quatMat = new Matrix4();
-         *     quat4.toMatrix4(quat, quatMat);
+         *     Quaternion.toMatrix4(quat, quatMat);
          *     Matrix4.multiply(dest, quatMat);
          *     Matrix4.scale(dest, scale);
          * @method Matrix4#fromRotationTranslationScale
-         * @param {mat4} out mat4 receiving operation result
-         * @param {quat4} q Rotation quaternion
-         * @param {vec3} v Translation vector
-         * @param {vec3} s Scaling vector
-         * @returns {mat4} out
+         * @param {Matrix4} dest - the destination matrix.
+         * @param {Quaternion} qtn - Rotation quaternion.
+         * @param {Vector3} vec - the translation vector.
+         * @param {Vector3} scale - the scaling vector.
          */
-        fromRotationTranslationScale: function (out, q, v, s) {
+        fromRotationTranslationScale: function(dest, qtn, vec, scale) {
+            var dm = dest.matrix;
+            var q = qtn.quaternion;
+            var v = vec.vector;
+            var s = scale.vector;
             // Quaternion math
-            var x = q[0], y = q[1], z = q[2], w = q[3],
-                x2 = x + x,
-                y2 = y + y,
-                z2 = z + z,
+            var x = q[0];
+            var y = q[1];
+            var z = q[2];
+            var w = q[3];
+            var x2 = x + x;
+            var y2 = y + y;
+            var z2 = z + z;
 
-                xx = x * x2,
-                xy = x * y2,
-                xz = x * z2,
-                yy = y * y2,
-                yz = y * z2,
-                zz = z * z2,
-                wx = w * x2,
-                wy = w * y2,
-                wz = w * z2,
-                sx = s[0],
-                sy = s[1],
-                sz = s[2];
+            var xx = x * x2;
+            var xy = x * y2;
+            var xz = x * z2;
+            var yy = y * y2;
+            var yz = y * z2;
+            var zz = z * z2;
+            var wx = w * x2;
+            var wy = w * y2;
+            var wz = w * z2;
+            var sx = s[0];
+            var sy = s[1];
+            var sz = s[2];
 
-            out[0] = (1 - (yy + zz)) * sx;
-            out[1] = (xy + wz) * sx;
-            out[2] = (xz - wy) * sx;
-            out[3] = 0;
-            out[4] = (xy - wz) * sy;
-            out[5] = (1 - (xx + zz)) * sy;
-            out[6] = (yz + wx) * sy;
-            out[7] = 0;
-            out[8] = (xz + wy) * sz;
-            out[9] = (yz - wx) * sz;
-            out[10] = (1 - (xx + yy)) * sz;
-            out[11] = 0;
-            out[12] = v[0];
-            out[13] = v[1];
-            out[14] = v[2];
-            out[15] = 1;
-            
-            return out;
-        };
+            dm[0] = (1 - (yy + zz)) * sx;
+            dm[1] = (xy + wz) * sx;
+            dm[2] = (xz - wy) * sx;
+            dm[3] = 0;
+            dm[4] = (xy - wz) * sy;
+            dm[5] = (1 - (xx + zz)) * sy;
+            dm[6] = (yz + wx) * sy;
+            dm[7] = 0;
+            dm[8] = (xz + wy) * sz;
+            dm[9] = (yz - wx) * sz;
+            dm[10] = (1 - (xx + yy)) * sz;
+            dm[11] = 0;
+            dm[12] = v[0];
+            dm[13] = v[1];
+            dm[14] = v[2];
+            dm[15] = 1;
+        },
 
         /**
          * Creates a matrix from a quaternion rotation, vector translation and vector scale, rotating and scaling around the given origin
          * This is equivalent to (but much faster than):
          *
-         *     mat4.identity(dest);
-         *     mat4.translate(dest, vec);
-         *     mat4.translate(dest, origin);
-         *     var quatMat = mat4.create();
-         *     quat4.toMat4(quat, quatMat);
-         *     mat4.multiply(dest, quatMat);
-         *     mat4.scale(dest, scale)
-         *     mat4.translate(dest, negativeOrigin);
-         *
+         *     Matrix4.identity(dest);
+         *     Matrix4.translate(dest, vec);
+         *     Matrix4.translate(dest, origin);
+         *     var quatMat = new Matrix4();
+         *     quaternion.toMatrix4(quat, quatMat);
+         *     Matrix4.multiply(dest, quatMat);
+         *     Matrix4.scale(dest, scale)
+         *     Matrix4.translate(dest, negativeOrigin);
          * @param {mat4} out mat4 receiving operation result
          * @param {quat4} q Rotation quaternion
          * @param {vec3} v Translation vector
@@ -1064,7 +1067,7 @@ Class.define("framework.graphics.Matrix4", YObject, {
          * @param {vec3} o The origin vector around which to scale and rotate
          * @returns {mat4} out
          */
-        mat4.fromRotationTranslationScaleOrigin = function (out, q, v, s, o) {
+        fromRotationTranslationScaleOrigin: function(out, q, v, s, o) {
           // Quaternion math
           var x = q[0], y = q[1], z = q[2], w = q[3],
               x2 = x + x,
@@ -1107,9 +1110,9 @@ Class.define("framework.graphics.Matrix4", YObject, {
           out[15] = 1;
                 
           return out;
-        };
+        },
 
-        mat4.fromQuat = function (out, q) {
+        fromQuat = function (out, q) {
             var x = q[0], y = q[1], z = q[2], w = q[3],
                 x2 = x + x,
                 y2 = y + y,
@@ -1146,290 +1149,564 @@ Class.define("framework.graphics.Matrix4", YObject, {
             out[15] = 1;
 
             return out;
+        },
+
+
+        /**
+         * Generates a frustum matrix with the given bounds
+         *
+         * @param {mat4} out mat4 frustum matrix will be written into
+         * @param {Number} left Left bound of the frustum
+         * @param {Number} right Right bound of the frustum
+         * @param {Number} bottom Bottom bound of the frustum
+         * @param {Number} top Top bound of the frustum
+         * @param {Number} near Near bound of the frustum
+         * @param {Number} far Far bound of the frustum
+         * @returns {mat4} out
+         */
+        mat4.frustum = function (out, left, right, bottom, top, near, far) {
+            var rl = 1 / (right - left),
+                tb = 1 / (top - bottom),
+                nf = 1 / (near - far);
+            out[0] = (near * 2) * rl;
+            out[1] = 0;
+            out[2] = 0;
+            out[3] = 0;
+            out[4] = 0;
+            out[5] = (near * 2) * tb;
+            out[6] = 0;
+            out[7] = 0;
+            out[8] = (right + left) * rl;
+            out[9] = (top + bottom) * tb;
+            out[10] = (far + near) * nf;
+            out[11] = -1;
+            out[12] = 0;
+            out[13] = 0;
+            out[14] = (far * near * 2) * nf;
+            out[15] = 0;
+            return out;
         };
 
+        /**
+         * Generates a perspective projection matrix with the given bounds
+         *
+         * @param {mat4} out mat4 frustum matrix will be written into
+         * @param {number} fovy Vertical field of view in radians
+         * @param {number} aspect Aspect ratio. typically viewport width/height
+         * @param {number} near Near bound of the frustum
+         * @param {number} far Far bound of the frustum
+         * @returns {mat4} out
+         */
+        mat4.perspective = function (out, fovy, aspect, near, far) {
+            var f = 1.0 / Math.tan(fovy / 2),
+                nf = 1 / (near - far);
+            out[0] = f / aspect;
+            out[1] = 0;
+            out[2] = 0;
+            out[3] = 0;
+            out[4] = 0;
+            out[5] = f;
+            out[6] = 0;
+            out[7] = 0;
+            out[8] = 0;
+            out[9] = 0;
+            out[10] = (far + near) * nf;
+            out[11] = -1;
+            out[12] = 0;
+            out[13] = 0;
+            out[14] = (2 * far * near) * nf;
+            out[15] = 0;
+            return out;
+        };
+
+        /**
+         * Generates a perspective projection matrix with the given field of view.
+         * This is primarily useful for generating projection matrices to be used
+         * with the still experiemental WebVR API.
+         *
+         * @param {mat4} out mat4 frustum matrix will be written into
+         * @param {number} fov Object containing the following values: upDegrees, downDegrees, leftDegrees, rightDegrees
+         * @param {number} near Near bound of the frustum
+         * @param {number} far Far bound of the frustum
+         * @returns {mat4} out
+         */
+        mat4.perspectiveFromFieldOfView = function (out, fov, near, far) {
+            var upTan = Math.tan(fov.upDegrees * Math.PI/180.0),
+                downTan = Math.tan(fov.downDegrees * Math.PI/180.0),
+                leftTan = Math.tan(fov.leftDegrees * Math.PI/180.0),
+                rightTan = Math.tan(fov.rightDegrees * Math.PI/180.0),
+                xScale = 2.0 / (leftTan + rightTan),
+                yScale = 2.0 / (upTan + downTan);
+
+            out[0] = xScale;
+            out[1] = 0.0;
+            out[2] = 0.0;
+            out[3] = 0.0;
+            out[4] = 0.0;
+            out[5] = yScale;
+            out[6] = 0.0;
+            out[7] = 0.0;
+            out[8] = -((leftTan - rightTan) * xScale * 0.5);
+            out[9] = ((upTan - downTan) * yScale * 0.5);
+            out[10] = far / (near - far);
+            out[11] = -1.0;
+            out[12] = 0.0;
+            out[13] = 0.0;
+            out[14] = (far * near) / (near - far);
+            out[15] = 0.0;
+            return out;
+        }
+
+        /**
+         * Generates a orthogonal projection matrix with the given bounds
+         *
+         * @param {mat4} out mat4 frustum matrix will be written into
+         * @param {number} left Left bound of the frustum
+         * @param {number} right Right bound of the frustum
+         * @param {number} bottom Bottom bound of the frustum
+         * @param {number} top Top bound of the frustum
+         * @param {number} near Near bound of the frustum
+         * @param {number} far Far bound of the frustum
+         * @returns {mat4} out
+         */
+        mat4.ortho = function (out, left, right, bottom, top, near, far) {
+            var lr = 1 / (left - right),
+                bt = 1 / (bottom - top),
+                nf = 1 / (near - far);
+            out[0] = -2 * lr;
+            out[1] = 0;
+            out[2] = 0;
+            out[3] = 0;
+            out[4] = 0;
+            out[5] = -2 * bt;
+            out[6] = 0;
+            out[7] = 0;
+            out[8] = 0;
+            out[9] = 0;
+            out[10] = 2 * nf;
+            out[11] = 0;
+            out[12] = (left + right) * lr;
+            out[13] = (top + bottom) * bt;
+            out[14] = (far + near) * nf;
+            out[15] = 1;
+            return out;
+        };
+
+        /**
+         * Generates a look-at matrix with the given eye position, focal point, and up axis
+         *
+         * @param {mat4} out mat4 frustum matrix will be written into
+         * @param {vec3} eye Position of the viewer
+         * @param {vec3} center Point the viewer is looking at
+         * @param {vec3} up vec3 pointing up
+         * @returns {mat4} out
+         */
+        mat4.lookAt = function (out, eye, center, up) {
+            var x0, x1, x2, y0, y1, y2, z0, z1, z2, len,
+                eyex = eye[0],
+                eyey = eye[1],
+                eyez = eye[2],
+                upx = up[0],
+                upy = up[1],
+                upz = up[2],
+                centerx = center[0],
+                centery = center[1],
+                centerz = center[2];
+
+            if (Math.abs(eyex - centerx) < glMatrix.EPSILON &&
+                Math.abs(eyey - centery) < glMatrix.EPSILON &&
+                Math.abs(eyez - centerz) < glMatrix.EPSILON) {
+                return mat4.identity(out);
+            }
+
+            z0 = eyex - centerx;
+            z1 = eyey - centery;
+            z2 = eyez - centerz;
+
+            len = 1 / Math.sqrt(z0 * z0 + z1 * z1 + z2 * z2);
+            z0 *= len;
+            z1 *= len;
+            z2 *= len;
+
+            x0 = upy * z2 - upz * z1;
+            x1 = upz * z0 - upx * z2;
+            x2 = upx * z1 - upy * z0;
+            len = Math.sqrt(x0 * x0 + x1 * x1 + x2 * x2);
+            if (!len) {
+                x0 = 0;
+                x1 = 0;
+                x2 = 0;
+            } else {
+                len = 1 / len;
+                x0 *= len;
+                x1 *= len;
+                x2 *= len;
+            }
+
+            y0 = z1 * x2 - z2 * x1;
+            y1 = z2 * x0 - z0 * x2;
+            y2 = z0 * x1 - z1 * x0;
+
+            len = Math.sqrt(y0 * y0 + y1 * y1 + y2 * y2);
+            if (!len) {
+                y0 = 0;
+                y1 = 0;
+                y2 = 0;
+            } else {
+                len = 1 / len;
+                y0 *= len;
+                y1 *= len;
+                y2 *= len;
+            }
+
+            out[0] = x0;
+            out[1] = y0;
+            out[2] = z0;
+            out[3] = 0;
+            out[4] = x1;
+            out[5] = y1;
+            out[6] = z1;
+            out[7] = 0;
+            out[8] = x2;
+            out[9] = y2;
+            out[10] = z2;
+            out[11] = 0;
+            out[12] = -(x0 * eyex + x1 * eyey + x2 * eyez);
+            out[13] = -(y0 * eyex + y1 * eyey + y2 * eyez);
+            out[14] = -(z0 * eyex + z1 * eyey + z2 * eyez);
+            out[15] = 1;
+
+            return out;
+        },
+
+        /**
+         * Returns Frobenius norm of a mat4
+         *
+         * @param {mat4} a the matrix to calculate Frobenius norm of
+         * @returns {Number} Frobenius norm
+         */
+        mat4.frob = function (a) {
+            return(Math.sqrt(Math.pow(a[0], 2) + Math.pow(a[1], 2) + Math.pow(a[2], 2) + Math.pow(a[3], 2) + Math.pow(a[4], 2) + Math.pow(a[5], 2) + Math.pow(a[6], 2) + Math.pow(a[7], 2) + Math.pow(a[8], 2) + Math.pow(a[9], 2) + Math.pow(a[10], 2) + Math.pow(a[11], 2) + Math.pow(a[12], 2) + Math.pow(a[13], 2) + Math.pow(a[14], 2) + Math.pow(a[15], 2) ))
+        };
     },
-/**
- * Creates a new mat4 initialized with values from an existing matrix
- *
- * @param {mat4} a matrix to clone
- * @returns {mat4} a new 4x4 matrix
- */
-mat4.clone = function(a) {
-    var out = new glMatrix.ARRAY_TYPE(16);
-    out[0] = a[0];
-    out[1] = a[1];
-    out[2] = a[2];
-    out[3] = a[3];
-    out[4] = a[4];
-    out[5] = a[5];
-    out[6] = a[6];
-    out[7] = a[7];
-    out[8] = a[8];
-    out[9] = a[9];
-    out[10] = a[10];
-    out[11] = a[11];
-    out[12] = a[12];
-    out[13] = a[13];
-    out[14] = a[14];
-    out[15] = a[15];
-    return out;
-};
 
+    /**
+     * Copy the values from one 4x4 to another.
+     * @method Matrix4#copy
+     * @param {Matrix4} src - the source matrix.
+     */
+    copy: function(src) {
+        this.constructor.copy(this, src);
+    },
 
+    /**
+     * Set a 4x4 matrix to the identity matrix.
+     * @method Matrix4#identity
+     */
+    identity: function() {
+        this.constructor.identity(this);
+    },
 
+    /**
+     * Transpose the values of a 4x4 matrix.
+     * @method Matrix4#transpose
+     */
+    transpose: function() {
+        this.constructor.transpose(this, this);
+    },
 
+    /**
+     * Inverts a 4x4 matrix.
+     * @method Matrix4#invert
+     */
+    invert: function() {
+        this.constructor.invert(this, this);
+    },
 
+    /**
+     * Calculates the adjugate of a 4x4 matrix.
+     * @method Matrix4#adjoint
+     */
+    adjoint: function() {
+        this.constructor.adjoint(this, this);
+    },
 
-/**
- * Generates a frustum matrix with the given bounds
- *
- * @param {mat4} out mat4 frustum matrix will be written into
- * @param {Number} left Left bound of the frustum
- * @param {Number} right Right bound of the frustum
- * @param {Number} bottom Bottom bound of the frustum
- * @param {Number} top Top bound of the frustum
- * @param {Number} near Near bound of the frustum
- * @param {Number} far Far bound of the frustum
- * @returns {mat4} out
- */
-mat4.frustum = function (out, left, right, bottom, top, near, far) {
-    var rl = 1 / (right - left),
-        tb = 1 / (top - bottom),
-        nf = 1 / (near - far);
-    out[0] = (near * 2) * rl;
-    out[1] = 0;
-    out[2] = 0;
-    out[3] = 0;
-    out[4] = 0;
-    out[5] = (near * 2) * tb;
-    out[6] = 0;
-    out[7] = 0;
-    out[8] = (right + left) * rl;
-    out[9] = (top + bottom) * tb;
-    out[10] = (far + near) * nf;
-    out[11] = -1;
-    out[12] = 0;
-    out[13] = 0;
-    out[14] = (far * near * 2) * nf;
-    out[15] = 0;
-    return out;
-};
+    /**
+     * Calculates the determinant of a 4x4 matrix.
+     * @method Matrix4#determinant
+     * @return {Number} determinant of this 4x4 matrix.
+     */
+    determinant: function() {
+        return this.constructor.determinant(this);
+    },
 
-/**
- * Generates a perspective projection matrix with the given bounds
- *
- * @param {mat4} out mat4 frustum matrix will be written into
- * @param {number} fovy Vertical field of view in radians
- * @param {number} aspect Aspect ratio. typically viewport width/height
- * @param {number} near Near bound of the frustum
- * @param {number} far Far bound of the frustum
- * @returns {mat4} out
- */
-mat4.perspective = function (out, fovy, aspect, near, far) {
-    var f = 1.0 / Math.tan(fovy / 2),
-        nf = 1 / (near - far);
-    out[0] = f / aspect;
-    out[1] = 0;
-    out[2] = 0;
-    out[3] = 0;
-    out[4] = 0;
-    out[5] = f;
-    out[6] = 0;
-    out[7] = 0;
-    out[8] = 0;
-    out[9] = 0;
-    out[10] = (far + near) * nf;
-    out[11] = -1;
-    out[12] = 0;
-    out[13] = 0;
-    out[14] = (2 * far * near) * nf;
-    out[15] = 0;
-    return out;
-};
+    /**
+     * Multiplies two 4x4 matrix's.
+     * @method Matrix4#multiply
+     * @param {Matrix4} dest - the destination matrix.
+     * @param {Matrix4} src1 - the first operand.
+     * @param {Matrix4} src2 - the second operand.
+     */
+    multiply: function(src) {
+        this.constructor.multiply(this, this, src);
+    },
 
-/**
- * Generates a perspective projection matrix with the given field of view.
- * This is primarily useful for generating projection matrices to be used
- * with the still experiemental WebVR API.
- *
- * @param {mat4} out mat4 frustum matrix will be written into
- * @param {number} fov Object containing the following values: upDegrees, downDegrees, leftDegrees, rightDegrees
- * @param {number} near Near bound of the frustum
- * @param {number} far Far bound of the frustum
- * @returns {mat4} out
- */
-mat4.perspectiveFromFieldOfView = function (out, fov, near, far) {
-    var upTan = Math.tan(fov.upDegrees * Math.PI/180.0),
-        downTan = Math.tan(fov.downDegrees * Math.PI/180.0),
-        leftTan = Math.tan(fov.leftDegrees * Math.PI/180.0),
-        rightTan = Math.tan(fov.rightDegrees * Math.PI/180.0),
-        xScale = 2.0 / (leftTan + rightTan),
-        yScale = 2.0 / (upTan + downTan);
+    /**
+     * Alias for multiply.
+     * @method Matrix4#mul
+     */
+    mul: function(src) {
+        this.constructor.multiply(this. this, src);
+    },
 
-    out[0] = xScale;
-    out[1] = 0.0;
-    out[2] = 0.0;
-    out[3] = 0.0;
-    out[4] = 0.0;
-    out[5] = yScale;
-    out[6] = 0.0;
-    out[7] = 0.0;
-    out[8] = -((leftTan - rightTan) * xScale * 0.5);
-    out[9] = ((upTan - downTan) * yScale * 0.5);
-    out[10] = far / (near - far);
-    out[11] = -1.0;
-    out[12] = 0.0;
-    out[13] = 0.0;
-    out[14] = (far * near) / (near - far);
-    out[15] = 0.0;
-    return out;
-}
+    /**
+     * Translate a 4x4 matrix by the given vector.
+     * @method Matrix4#translate
+     * @param {Vector3} vec - the 3D vector to translate by.
+     */
+    translate: function(vec) {
+        this.constructor.translate(this, this, vec);
+    },
 
-/**
- * Generates a orthogonal projection matrix with the given bounds
- *
- * @param {mat4} out mat4 frustum matrix will be written into
- * @param {number} left Left bound of the frustum
- * @param {number} right Right bound of the frustum
- * @param {number} bottom Bottom bound of the frustum
- * @param {number} top Top bound of the frustum
- * @param {number} near Near bound of the frustum
- * @param {number} far Far bound of the frustum
- * @returns {mat4} out
- */
-mat4.ortho = function (out, left, right, bottom, top, near, far) {
-    var lr = 1 / (left - right),
-        bt = 1 / (bottom - top),
-        nf = 1 / (near - far);
-    out[0] = -2 * lr;
-    out[1] = 0;
-    out[2] = 0;
-    out[3] = 0;
-    out[4] = 0;
-    out[5] = -2 * bt;
-    out[6] = 0;
-    out[7] = 0;
-    out[8] = 0;
-    out[9] = 0;
-    out[10] = 2 * nf;
-    out[11] = 0;
-    out[12] = (left + right) * lr;
-    out[13] = (top + bottom) * bt;
-    out[14] = (far + near) * nf;
-    out[15] = 1;
-    return out;
-};
+    /**
+     * Rotates a 4x4 matrix by the given angle around the given axis.
+     * @method Matrix4#rotate
+     * @param {Number} rad - the angle to rotate the matrix by.
+     * @param {Vector3} axis - the axis to rotate around.
+     */
+    rotate: function(rad, axis) {
+        this.constructor.rotate(this, this, rad, axis);
+    },
 
-/**
- * Generates a look-at matrix with the given eye position, focal point, and up axis
- *
- * @param {mat4} out mat4 frustum matrix will be written into
- * @param {vec3} eye Position of the viewer
- * @param {vec3} center Point the viewer is looking at
- * @param {vec3} up vec3 pointing up
- * @returns {mat4} out
- */
-mat4.lookAt = function (out, eye, center, up) {
-    var x0, x1, x2, y0, y1, y2, z0, z1, z2, len,
-        eyex = eye[0],
-        eyey = eye[1],
-        eyez = eye[2],
-        upx = up[0],
-        upy = up[1],
-        upz = up[2],
-        centerx = center[0],
-        centery = center[1],
-        centerz = center[2];
+    /**
+     * Rotates a matrix by the given angle around the X axis.
+     * @method Matrix4#rotateX
+     * @param {Number} rad - the angle to rotate the matrix by.
+     */
+    rotateX: function(rad) {
+        this.constructor.rotateX(this, this, rad);
+    },
 
-    if (Math.abs(eyex - centerx) < glMatrix.EPSILON &&
-        Math.abs(eyey - centery) < glMatrix.EPSILON &&
-        Math.abs(eyez - centerz) < glMatrix.EPSILON) {
-        return mat4.identity(out);
+    /**
+     * Rotates a matrix by the given angle around the Y axis
+     * @method Matrix4#rotateY
+     * @param {Number} rad - the angle to rotate the matrix by.
+     */
+    rotateY: function(rad) {
+        this.constructor.rotateY(this, this, rad);
+    },
+
+    /**
+     * Rotates a matrix by the given angle around the Z axis
+     * @method Matrix4#rotateZ
+     * @param {Number} rad - the angle to rotate the matrix by.
+     */
+    rotateZ: function(rad) {
+        this.constructor.rotateZ(this, this, rad);
+    },
+
+    /**
+     * Scales the 4x4 matrix by the dimensions in the given 3D vector.
+     * @method Matrix4#scale
+     * @param {Vector3} vec - the 3D vector to scale the matrix by.
+     */
+    scale: function(vec) {
+        this.constructor.scale(this, this, vec);
+    },
+
+    /**
+     * Creates a matrix from a vector translation.
+     * This is equivalent to (but much faster than):
+     *
+     *     matrix4.identity();
+     *     matrix4.translate(vec);
+     * @method Matrix4#fromTranslation
+     * @param {Vector3} vec - the translation vector.
+     */
+    fromTranslation: function(vec) {
+        this.constructor.fromTranslation(this, vec);
+    },
+    /**
+     * Creates a matrix from a vector scaling.
+     * This is equivalent to (but much faster than):
+     *
+     *     matrix4.identity();
+     *     matrix4.scale(vec);
+     * @method Matrix4#fromScaling
+     * @param {Vector3} vec - the scaling vector.
+     */
+    fromScaling: function(vec) {
+        this.constructor.fromScaling(this, vec);
+    },
+
+    /**
+     * Creates a matrix from a given angle around a given axis.
+     * This is equivalent to (but much faster than):
+     *
+     *     matrix4.identity();
+     *     matrix4.rotate(rad, axis);
+     * @method Matrix4#fromRotation
+     * @param {Number} rad - the angle to rotate the matrix by.
+     * @param {Vector3} axis - the axis to rotate around.
+     */
+    fromRotation: function(rad, axis) {
+        this.constructor.fromRotation(this, rad, axis);
+    },
+
+    /**
+     * Creates a matrix from the given angle around the X axis.
+     * This is equivalent to (but much faster than):
+     *
+     *     matrix4.identity();
+     *     matrix4.rotateX(rad);
+     * @method Matrix4#fromRotationX
+     * @param {Number} rad - the angle to rotate the matrix by.
+     */
+    fromRotationX: function(rad) {
+        this.constructor.fromRotationX(this, rad);
+    },
+
+    /**
+     * Creates a matrix from the given angle around the Y axis.
+     * This is equivalent to (but much faster than):
+     *
+     *     matrix4.identity();
+     *     matrix4.rotateY(rad);
+     * @method Matrix4#fromRotationY
+     * @param {Number} rad - the angle to rotate the matrix by.
+     */
+    fromRotationY: function(rad) {
+        this.constructor.fromRotationY(this, rad);
+    },
+
+    /**
+     * Creates a matrix from the given angle around the Z axis.
+     * This is equivalent to (but much faster than):
+     *
+     *     matrix4.identity();
+     *     matrix4.rotateZ(rad);
+     * @method Matrix4#fromRotationZ
+     * @param {Number} rad - the angle to rotate the matrix by.
+     * @static
+     */
+    fromRotationZ: function(rad) {
+        this.constructor.fromRotationZ(this, rad);
+    },
+
+    /**
+     * Creates a matrix from a quaternion rotation and vector translation.
+     * This is equivalent to (but much faster than):
+     *
+     *     matrix4.identity();
+     *     matrix4.translate(vec);
+     *     var quatMat = new Matrix4();
+     *     Quaternion.toMatrix4(quat, quatMat);
+     *     matrix4.multiply(quatMat);
+     * @method Matrix4#fromRotationTranslation
+     * @param {Quaternion} qtn - the rotation quaternion.
+     * @param {Vector3} vec - the translation vector.
+     */
+    fromRotationTranslation: function(qtn, vec) {
+        this.constructor.fromRotationTranslation(this, qtn, vec);
+    },
+
+    /**
+     * Creates a matrix from a quaternion rotation, vector translation and vector scale.
+     * This is equivalent to (but much faster than):
+     *
+     *     matrix4.identity();
+     *     matrix4.translate(vec);
+     *     var quatMat = new Matrix4();
+     *     Quaternion.toMatrix4(quat, quatMat);
+     *     matrix4.multiply(quatMat);
+     *     matrix4.scale(scale);
+     * @method Matrix4#fromRotationTranslationScale
+     * @param {Quaternion} qtn - Rotation quaternion.
+     * @param {Vector3} vec - the translation vector.
+     * @param {Vector3} scale - the scaling vector.
+     */
+    fromRotationTranslationScale: function(qtn, vec, scale) {
+        this.constructor.fromRotationTranslationScale(this, qtn, vec, scale);
+    },
+
+    /**
+     * Creates a matrix from a quaternion rotation, vector translation and vector scale, rotating and scaling around the given origin
+     * This is equivalent to (but much faster than):
+     *
+     *     matrix4.identity();
+     *     matrix4.translate(vec);
+     *     matrix4.translate(origin);
+     *     var quatMat = new Matrix4();
+     *     quat4.toMatrix4(quat, quatMat);
+     *     matrix4.multiply(quatMat);
+     *     matrix4.scale(scale)
+     *     matrix4.translate(negativeOrigin);
+     * @param {Quaternion} qtn - the rotation quaternion.
+     * @param {Vector3} vec - the translation vector.
+     * @param {Vector3} scale - the scaling vector.
+     * @param {Vector3} origin - the origin vector around which to scale and rotate.
+     */
+    fromRotationTranslationScaleOrigin: function(qtn, vec, scale, origin) {
+        this.constructor.fromRotationTranslationScaleOrigin(this, qtn, vec, scale, origin);
+    },
+        
+    /**
+     * Creates a new mat4 initialized with values from an existing matrix
+     * @method Matrix4#clone
+     * @return {Matrix4} a new 4x4 matrix.
+     * @protected
+     * @override
+     */
+    clone: function() {
+        var matrix = this._matrix;
+        var clone = YObject.prototype.clone.call(this);
+        clone.matrix = new Common.ARRAY_TYPE(16);
+        var newMatrix = clone.matrix;
+        newMatrix[0] = matrix[0];
+        newMatrix[1] = matrix[1];
+        newMatrix[2] = matrix[2];
+        newMatrix[3] = matrix[3];
+        newMatrix[4] = matrix[4];
+        newMatrix[5] = matrix[5];
+        newMatrix[6] = matrix[6];
+        newMatrix[7] = matrix[7];
+        newMatrix[8] = matrix[8];
+        newMatrix[9] = matrix[9];
+        newMatrix[10] = matrix[10];
+        newMatrix[11] = matrix[11];
+        newMatrix[12] = matrix[12];
+        newMatrix[13] = matrix[13];
+        newMatrix[14] = matrix[14];
+        newMatrix[15] = matrix[15];
+        return newMatrix;
+    },
+
+    /**
+     * Returns a string representation of a mat4
+     * @method Matrix4#toString
+     * @return {String} string representation of the matrix.
+     * @protected
+     * @override
+     */
+    toString: function() {
+        var matrix = this._matrix;
+        return "Matrix4(" + matrix[0] + ", " + matrix[1] + ", " + matrix[2] + ", " + matrix[3] + ", " +
+                        matrix[4] + ", " + matrix[5] + ", " + matrix[6] + ", " + matrix[7] + ", " +
+                        matrix[8] + ", " + matrix[9] + ", " + matrix[10] + ", " + matrix[11] + ", " + 
+                        matrix[12] + ", " + matrix[13] + ", " + matrix[14] + ", " + matrix[15] + ")";
+    },
+
+    /**
+     * @name Matrix4#matrix
+     * @type {Object}
+     * @description the matrix.
+     * @private
+     */
+    get matrix() {
+        return this._matrix;
+    },
+
+    set matrix(value) {
+        this._matrix = value;
     }
-
-    z0 = eyex - centerx;
-    z1 = eyey - centery;
-    z2 = eyez - centerz;
-
-    len = 1 / Math.sqrt(z0 * z0 + z1 * z1 + z2 * z2);
-    z0 *= len;
-    z1 *= len;
-    z2 *= len;
-
-    x0 = upy * z2 - upz * z1;
-    x1 = upz * z0 - upx * z2;
-    x2 = upx * z1 - upy * z0;
-    len = Math.sqrt(x0 * x0 + x1 * x1 + x2 * x2);
-    if (!len) {
-        x0 = 0;
-        x1 = 0;
-        x2 = 0;
-    } else {
-        len = 1 / len;
-        x0 *= len;
-        x1 *= len;
-        x2 *= len;
-    }
-
-    y0 = z1 * x2 - z2 * x1;
-    y1 = z2 * x0 - z0 * x2;
-    y2 = z0 * x1 - z1 * x0;
-
-    len = Math.sqrt(y0 * y0 + y1 * y1 + y2 * y2);
-    if (!len) {
-        y0 = 0;
-        y1 = 0;
-        y2 = 0;
-    } else {
-        len = 1 / len;
-        y0 *= len;
-        y1 *= len;
-        y2 *= len;
-    }
-
-    out[0] = x0;
-    out[1] = y0;
-    out[2] = z0;
-    out[3] = 0;
-    out[4] = x1;
-    out[5] = y1;
-    out[6] = z1;
-    out[7] = 0;
-    out[8] = x2;
-    out[9] = y2;
-    out[10] = z2;
-    out[11] = 0;
-    out[12] = -(x0 * eyex + x1 * eyey + x2 * eyez);
-    out[13] = -(y0 * eyex + y1 * eyey + y2 * eyez);
-    out[14] = -(z0 * eyex + z1 * eyey + z2 * eyez);
-    out[15] = 1;
-
-    return out;
-};
-
-/**
- * Returns a string representation of a mat4
- *
- * @param {mat4} mat matrix to represent as a string
- * @returns {String} string representation of the matrix
- */
-mat4.str = function (a) {
-    return 'mat4(' + a[0] + ', ' + a[1] + ', ' + a[2] + ', ' + a[3] + ', ' +
-                    a[4] + ', ' + a[5] + ', ' + a[6] + ', ' + a[7] + ', ' +
-                    a[8] + ', ' + a[9] + ', ' + a[10] + ', ' + a[11] + ', ' + 
-                    a[12] + ', ' + a[13] + ', ' + a[14] + ', ' + a[15] + ')';
-};
-
-/**
- * Returns Frobenius norm of a mat4
- *
- * @param {mat4} a the matrix to calculate Frobenius norm of
- * @returns {Number} Frobenius norm
- */
-mat4.frob = function (a) {
-    return(Math.sqrt(Math.pow(a[0], 2) + Math.pow(a[1], 2) + Math.pow(a[2], 2) + Math.pow(a[3], 2) + Math.pow(a[4], 2) + Math.pow(a[5], 2) + Math.pow(a[6], 2) + Math.pow(a[7], 2) + Math.pow(a[8], 2) + Math.pow(a[9], 2) + Math.pow(a[10], 2) + Math.pow(a[11], 2) + Math.pow(a[12], 2) + Math.pow(a[13], 2) + Math.pow(a[14], 2) + Math.pow(a[15], 2) ))
-};
-
-
-module.exports = mat4;
+}, module);

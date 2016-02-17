@@ -697,7 +697,6 @@ Class.define("framework.graphics.Matrix3", YObject, {
     /**
      * Alias for multiply.
      * @method Matrix3#mul
-     * @static
      */
     mul: function(src) {
         this.constructor.multiply(this, this, src);

@@ -254,15 +254,31 @@ Class.define("framework.ui.view.SwipeView", CompositeView, {
     paintChildren: function(context) {
         if (this._nextIndex !== -1) {
             var nextView = this._children[this._nextIndex];
-            context.translate(nextView.left, nextView.top);
+            if (context !== null) {
+                context.save();
+                context.translate(nextView.left, nextView.top);
+            } else {
+                nextView.offsetLeft = nextView.left;
+                nextView.offsetTop = nextView.top;
+            }
             nextView.paint(context);
-            context.translate(-nextView.left, -nextView.top);
+            if (context !== null) {
+                context.restore();
+            }
         }
 
         var currentView = this._children[this._currentIndex];
-        context.translate(currentView.left, currentView.top);
+        if (context !== null) {
+            context.save();
+            context.translate(currentView.left, currentView.top);
+        } else {
+            currentView.offsetLeft = currentView.left;
+            currentView.offsetTop = currentView.top;
+        }
         currentView.paint(context);
-        context.translate(-currentView.left, -currentView.top);
+        if (context !== null) {
+            context.restore();
+        }
     },
 
     /**

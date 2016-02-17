@@ -211,9 +211,17 @@ Class.define("framework.ui.view.ListView", ScrollableView, {
         var endIndex = this._orientation === "vertical" ? Math.min(this._children.length, Math.ceil((this._scrollY + this._height) / this._itemHeight)) : Math.min(this._children.length, Math.ceil((this._scrollX + this._width) / this._itemWidth));
         for (var i = startIndex; i < endIndex; i++) {
             var listitem = this._children[i];
-            context.translate(listitem.left - this._scrollX, listitem.top - this._scrollY);
+            if (context !== null) {
+                context.save();
+                context.translate(listitem.left - this._scrollX, listitem.top - this._scrollY);
+            } else {
+                listitem.offsetLeft = listitem.left - this._scrollX;
+                listitem.offsetTop = listitem.top - this._scrollY;
+            }
             listitem.paint(context);
-            context.translate(-listitem.left + this._scrollX, -listitem.top + this._scrollY);
+            if (context !== null) {
+                context.restore();
+            }
         }
     },
 

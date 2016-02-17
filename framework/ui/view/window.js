@@ -60,7 +60,9 @@ Class.define("framework.ui.view.Window", CompositeView, {
      * @protected
      */
     paint: function(context) {
-        context.clearRect(this._dirtyRect.left, this._dirtyRect.top, this._dirtyRect.width, this._dirtyRect.height);
+        if (context !== null) {
+            context.clearRect(this._dirtyRect.left, this._dirtyRect.top, this._dirtyRect.width, this._dirtyRect.height);
+        }
 
         CompositeView.prototype.paint.call(this, context);
     },

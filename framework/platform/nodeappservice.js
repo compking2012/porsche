@@ -49,10 +49,6 @@ Class.define("framework.ui.platform.NodeAppService", EventEmitter, {
         }.bind(this));
     },
 
-    getAppName: function() {
-        return "App";
-    },
-
     registerGlobal: function() {
         // Nothing need to do
     },

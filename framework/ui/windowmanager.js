@@ -15,7 +15,7 @@ var TouchEvent = require("./event/touchevent");
 var MouseEvent = require("./event/mouseevent");
 var KeyboardEvent = require("./event/keyboardevent");
 var Point = require("../graphics/point");
-var Polyfiller = require("../util/polyfiller");
+var Mat = require("../graphics/mat");
 
 Class.define("framework.ui.WindowManager", EventEmitter, {
     initialize: function(inputService, renderService) {
@@ -42,8 +42,13 @@ Class.define("framework.ui.WindowManager", EventEmitter, {
 
         this._renderCallback = null;
 
-        this._screenCanvas = this._renderService.createCanvas(this._renderService.getWidth(), this._renderService.getHeight());
-        this._screenContext = this.getContext(this._screenCanvas);
+        if (!global.hardwareAccelerated) {
+            this._screenCanvas = this._renderService.createCanvas(this._renderService.getWidth(), this._renderService.getHeight());
+            this._screenContext = this._renderService.getContext(this._screenCanvas);
+        } else {
+            this._screenCanvas = this._renderService.createWebGLCanvas(this._renderService.getWidth(), this._renderService.getHeight());
+            this._screenContext = this._renderService.getWebGLContext(this._screenCanvas);
+        }
 
         this._inputService.addEventListener("input", this._processInputEventFunc = this.processInputEvent.bind(this));
     },
@@ -71,7 +76,11 @@ Class.define("framework.ui.WindowManager", EventEmitter, {
         this._mainWindow = null;
 
         this._screenContext = null;
-        this._renderService.destroyCanvas(this._screenCanvas);
+        if (!global.hardwareAccelerated) {
+            this._renderService.destroyCanvas(this._screenCanvas);
+        } else {
+            this._renderService.destroyWebGLCanvas(this._screenCanvas);
+        }
         this._screenCanvas = null;
 
         this._renderCallback = null;
@@ -116,14 +125,6 @@ Class.define("framework.ui.WindowManager", EventEmitter, {
         this._mainWindow.invalidate();
     },
 
-    getContext: function(canvas) {
-        var context = canvas.getContext("2d");
-        Polyfiller.polyfillContext(context);
-        context.clearRect(0, 0, canvas.width, canvas.height);
-
-        return context;
-    },
-
     draw: function() {
         if (this._redraw) {
             return;
@@ -139,9 +140,21 @@ Class.define("framework.ui.WindowManager", EventEmitter, {
             this._redraw = false;
             this._redrawTime = new Date().getTime();
 
-            this._mainWindow.paint(this._screenContext);
-            if (this._dialog !== null) {
-                this._dialog.paint(this._screenContext);
+            if (!global.hardwareAccelerated) {
+                this._mainWindow.paint(this._screenContext);
+                if (this._dialog !== null) {
+                    this._dialog.paint(this._screenContext);
+                }
+            } else {
+                this._mainWindow.paint(null);
+                if (this._dialog !== null) {
+                    this._dialog.paint(null);
+                }
+
+                this.renderScreen(this._mainWindow);
+                if (this._dialog !== null) {
+                    this.renderScreen(this._dialog);
+                }
             }
 
             if (global.FXDebugPaintFPS) {
@@ -159,6 +172,133 @@ Class.define("framework.ui.WindowManager", EventEmitter, {
             }
             this._renderService.render();
         }.bind(this));
+    },
+
+    createBackBuffer: function(width, height) {
+        return this._renderService.createBackBuffer(width, height);
+    },
+
+    getBackBufferContext: function(canvas) {
+        return this._renderService.getBackBufferContext(canvas);
+    },
+
+    destroyBackBuffer: function(canvas) {
+        this._renderService.destroyBackBuffer(canvas);
+    },
+
+    renderScreen: function(rootView) {
+        var renderQueue = [rootView];
+        var view = renderQueue.shift();
+        while (view !== undefined) {
+            this.renderRect(view);
+            if (view.children !== undefined) {
+                for (var i = 0; i < view.children.length; i++) {
+                    var child = view.children[i];
+                    child.offsetLeft += view.offsetLeft;
+                    child.offsetTop += view.offsetLeft;
+                    renderQueue.unshift(child);
+                }
+            }
+            view = renderQueue.shift();
+        }
+        this._screenContext.flush();
+    },
+
+    renderRect: function(view) {
+        var left = view.offsetLeft;
+        var top = view.offsetTop;
+        var right = left + view.width;
+        var bottom = top + view.height;
+        var width = this._screenCanvas.width;
+        var height = this._screenCanvas.height;
+        var halfWidth = width / 2;
+        var halfHeight = height / 2;
+        var context = this._screenContext;
+        left -= halfWidth;
+        right -= halfWidth;
+        top -= halfHeight;
+        bottom -= halfHeight;
+        var position = [
+            left / width, bottom / height, 0.0,
+            right / width, bottom / height, 0.0,
+            left / width, top / height, 0.0,
+            right / width, top / height, 0.0
+        ];
+        var vboPosition = context.createBuffer();
+        context.bindBuffer(context.ARRAY_BUFFER, vboPosition);
+        context.bufferData(context.ARRAY_BUFFER, new Float32Array(position), context.STATIC_DRAW);
+        context.enableVertexAttribArray(context.attPosition);
+        context.vertexAttribPointer(context.attPosition, context.attPositionStride, context.FLOAT, false, 0, 0);
+
+        // var color = [
+        //     1.0, 1.0, 1.0, 1.0,
+        //     1.0, 1.0, 1.0, 1.0,
+        //     1.0, 1.0, 1.0, 1.0,
+        //     1.0, 1.0, 1.0, 1.0
+        // ];
+        // var vboColor = context.createBuffer();
+        // context.bindBuffer(context.ARRAY_BUFFER, vboColor);
+        // context.bufferData(context.ARRAY_BUFFER, new Float32Array(color), context.STATIC_DRAW);
+        // context.enableVertexAttribArray(context.attColor);
+        // context.vertexAttribPointer(context.attColor, context.attColorStride, context.FLOAT, false, 0, 0);
+
+        var textureCoord = [
+            0.0, 0.0,
+            1.0, 0.0,
+            0.0, 1.0,
+            1.0, 1.0
+        ];
+        var vboTextureCoord = context.createBuffer();
+        context.bindBuffer(context.ARRAY_BUFFER, vboTextureCoord);
+        context.bufferData(context.ARRAY_BUFFER, new Float32Array(textureCoord), context.STATIC_DRAW);
+        context.enableVertexAttribArray(context.attTextureCoord);
+        context.vertexAttribPointer(context.attTextureCoord, context.attTextureCoordStride, context.FLOAT, false, 0, 0);
+
+        var index = [
+            0, 1, 2,
+            3, 2, 1
+        ];
+        var iboIndex = context.createBuffer();
+        context.bindBuffer(context.ELEMENT_ARRAY_BUFFER, iboIndex);
+        context.bufferData(context.ELEMENT_ARRAY_BUFFER, new Int16Array(index), context.STATIC_DRAW);
+
+        var m = new Mat();
+        var mMatrix = m.identity(m.create());
+        var vMatrix = m.identity(m.create());
+        var pMatrix = m.identity(m.create());
+        var mvpMatrix = m.identity(m.create());
+
+        m.lookAt([0, 1, 1.21], [0, 0, 0], [0, 1, 0], vMatrix);
+        m.perspective(45, width / height, 0.1, 100, pMatrix);
+
+        // m.translate(mMatrix, [view.translationX / width, -view.translationY / height, view.translationZ / 100], mMatrix);
+        m.rotate(mMatrix, view.rotationX, [-1, 0, 0], mMatrix);
+        // m.rotate(mMatrix, view.rotationY, [0, -1, 0], mMatrix);
+        // m.rotate(mMatrix, view.rotationZ, [0, 0, -1], mMatrix);
+        // m.scale(mMatrix, [view.scaleX, view.scaleY, 1], mMatrix);
+
+        m.multiply(pMatrix, vMatrix, mvpMatrix);
+        m.multiply(mvpMatrix, mMatrix, mvpMatrix);
+
+        var texture = context.createTexture();
+        context.bindTexture(context.TEXTURE_2D, texture);
+        context.texParameteri(context.TEXTURE_2D, context.TEXTURE_MIN_FILTER, context.LINEAR);
+        context.texParameteri(context.TEXTURE_2D, context.TEXTURE_WRAP_S, context.CLAMP_TO_EDGE);
+        context.texParameteri(context.TEXTURE_2D, context.TEXTURE_WRAP_T, context.CLAMP_TO_EDGE);
+        context.texImage2D(context.TEXTURE_2D, 0, context.RGBA, context.RGBA, context.UNSIGNED_BYTE, view.backBuffer);
+        context.bindTexture(context.TEXTURE_2D, null);
+
+        var mvpMatrixUniform = context.getUniformLocation(context.program, "mvpMatrix");
+        var textureUniform = context.getUniformLocation(context.program, "texture");
+
+        context.bindTexture(context.TEXTURE_2D, texture);
+        context.uniformMatrix4fv(mvpMatrixUniform, false, mvpMatrix);
+        context.uniform1i(textureUniform, 0);
+        context.drawElements(context.TRIANGLES, index.length, context.UNSIGNED_SHORT, 0);
+        context.bindTexture(context.TEXTURE_2D, null);
+
+        view.offsetLeft = 0;
+        view.offsetTop = 0;
     },
 
     processInputEvent: function(type, e) {

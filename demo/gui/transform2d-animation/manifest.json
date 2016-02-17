@@ -1,5 +1,6 @@
 {
     "appName": "Transform2D-Animation",
+    "hardwareAccelerated": false,
     "debug": {
         "paintFPS": true,
         "dirtyRect": true

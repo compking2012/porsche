@@ -71,9 +71,10 @@ Class.define("framework.ui.view.View", EventEmitter, {
         this._scrollX = 0;
         this._scrollY = 0;
 
-        this._hardwareAccelerated = false;
-        this._bitmapBuffer = null;
-        this._bitmapBufferContext = null;
+        this._backBuffer = null;
+        this._backBufferContext = null;
+        this._offsetLeft = 0;
+        this._offsetTop = 0;
 
         this._touchRegion = null;
 
@@ -605,7 +606,6 @@ Class.define("framework.ui.view.View", EventEmitter, {
      * This is the left edge of the displayed part of your view.
      * You do not need to draw any pixels farther left, since those are outside of the frame of your view on screen.
      */
-
     get scrollX() {
         return this._scrollX;
     },
@@ -643,22 +643,6 @@ Class.define("framework.ui.view.View", EventEmitter, {
 
     set touchRegion(value) {
         this.setProperty("touchRegion", value);
-    },
-
-    /**
-     * @name View#hardwareAccelerated
-     * @type {Boolean}
-     * @description indicating whether the view's rendering should be hardware accelerated if possible.
-     * @private
-     */
-    get hardwareAccelerated() {
-        return this._hardwareAccelerated;
-    },
-
-    set hardwareAccelerated(value) {
-        value = Boolean(value);
-        this._hardwareAccelerated = value;
-        this.processHardwareAcceleration();
     },
 
     /**
@@ -889,7 +873,9 @@ Class.define("framework.ui.view.View", EventEmitter, {
             return;
         }
 
-        context.restore();
+        if (context !== null) {
+            context.restore();
+        }
 
         this._dirty = false;
         this._dirtyRect.empty();
@@ -902,6 +888,8 @@ Class.define("framework.ui.view.View", EventEmitter, {
      * @protected
      */
     paintSelf: function(context) {
+        this.processHardwareAcceleration(context);
+
         if (this._visibility !== "visible") {
             return false;
         }
@@ -910,22 +898,22 @@ Class.define("framework.ui.view.View", EventEmitter, {
             return false;
         }
 
-        if (this._hardwareAccelerated) {
-            context = this._bitmapBufferContext;
+        if (context !== null) {
+            context.save();
+
+            context.globalAlpha = this._opacity;
+            context.translate(this._originX, this._originY);
+            context.translate(this._translationX, this._translationY);
+            context.scale(this._scaleX, this._scaleY);
+            context.rotate(this._rotationZ);
+            context.translate(-this._originX, -this._originY);
+
+            context.beginPath();
+            context.rect(0, 0, this._width, this._height);
+            context.clip();
+        } else {
+            context = this._backBufferContext;
         }
-
-        context.save();
-
-        context.globalAlpha = this._opacity;
-        context.translate(this._originX, this._originY);
-        context.translate(this._translationX, this._translationY);
-        context.scale(this._scaleX, this._scaleY);
-        context.rotate(this._rotationZ);
-        context.translate(-this._originX, -this._originY);
-
-        context.beginPath();
-        context.rect(0, 0, this._width, this._height);
-        context.clip();
 
         this.drawBackground(context);
         this.draw(context);
@@ -1098,19 +1086,67 @@ Class.define("framework.ui.view.View", EventEmitter, {
     /**
      * Process hardware acceleration
      * @method View#processHardwareAcceleration
+     * @param {Context} context - the canvas context to which the view is rendered.
      * @private
      */
-    processHardwareAcceleration: function() {
-        if (!this._hardwareAccelerated) {
-            this.getWindow().windowManager.destroyCanvas(this._bitmapBuffer);
-            this._bitmapBuffer = null;
+    processHardwareAcceleration: function(context) {
+        if (context !== null) {
+            if (this._backBuffer !== null) {
+                this.getWindow().windowManager.destroyBackBuffer(this._backBuffer);
+                this._backBuffer = null;
+                this._backBufferContext = null;
+            }
         } else {
-            if (this._bitmapBuffer.width !== this._width || this._bitmapBuffer.height !== this._height) {
-                this.getWindow().windowManager.destroyCanvas(this._bitmapBuffer);
-                this._bitmapBuffer = this.getWindow().windowManager.createCanvas(this._width, this._height);
-                this._bitmapBufferContext = this.getWindow().windowManager.getContext(this._bitmapBuffer);
+            if (this._backBuffer === null) {
+                this._backBuffer = this.getWindow().windowManager.createBackBuffer(this._width, this._height);
+                this._backBufferContext = this.getWindow().windowManager.getBackBufferContext(this._backBuffer);
+            } else {
+                if (this._backBuffer.width !== this._width || this._backBuffer.height !== this._height) {
+                    this.getWindow().windowManager.destroyBackBuffer(this._backBuffer);
+                    this._backBuffer = this.getWindow().windowManager.createBackBuffer(this._width, this._height);
+                    this._backBufferContext = this.getWindow().windowManager.getBackBufferContext(this._backBuffer);
+                }
             }
         }
+    },
+
+    /**
+     * @name View#backBuffer
+     * @type {Canvas}
+     * @description the back buffer.
+     * @readonly
+     * @private
+     */
+    get backBuffer() {
+        return this._backBuffer;
+    },
+
+    /**
+     * @name View#offsetLeft
+     * @type {Number}
+     * @description the offset left.
+     * @private
+     */
+    get offsetLeft() {
+        return this._offsetLeft;
+    },
+
+    set offsetLeft(value) {
+        this._offsetLeft = value;
+    },
+
+    /**
+     * @name View#offsetTop
+     * @type {Number}
+     * @description the offset top.
+     * @private
+     */
+    get offsetTop() {
+        return this._offsetTop;
+    },
+
+    set offsetTop(value) {
+        this._offsetTop = value;
     },
 
     /**

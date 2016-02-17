@@ -161,16 +161,32 @@ Class.define("framework.ui.view.StackView", CompositeView, {
         if (this._panning) {
             if (this._children.length > 1) {
                 var nextChild = this._children[this._children.length - 2];
-                context.translate(nextChild.left, nextChild.top);
+                if (context !== null) {
+                    context.save();
+                    context.translate(nextChild.left, nextChild.top);
+                } else {
+                    nextChild.offsetLeft = nextChild.left;
+                    nextChild.offsetTop = nextChild.top;
+                }
                 nextChild.paint(context);
-                context.translate(-nextChild.left, -nextChild.top);
+                if (context !== null) {
+                    context.restore();
+                }
             }
         }
 
         var topChild = this._children[this._children.length - 1];
-        context.translate(topChild.left, topChild.top);
+        if (context !== null) {
+            context.save();
+            context.translate(topChild.left, topChild.top);
+        } else {
+            topChild.offsetLeft = topChild.left;
+            topChild.offsetTop = topChild.top;
+        }
         topChild.paint(context);
-        context.translate(-topChild.left, -topChild.top);
+        if (context !== null) {
+            context.restore();
+        }
     },
 
     /**

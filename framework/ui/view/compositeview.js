@@ -262,7 +262,9 @@ Class.define("framework.ui.view.CompositeView", View, {
 
         this.paintChildren(context);
 
-        context.restore();
+        if (context !== null) {
+            context.restore();
+        }
 
         this._dirty = false;
         this._dirtyRect.empty();
@@ -285,9 +287,17 @@ Class.define("framework.ui.view.CompositeView", View, {
         for (var i = 0; i < length; i++) {
             var view = this._children[i];
             if (view.bottom >= 0 && view.top <= this._height) {
-                context.translate(view.left, view.top);
+                if (context !== null) {
+                    context.save();
+                    context.translate(view.left, view.top);
+                } else {
+                    view.offsetLeft = view.left;
+                    view.offsetTop = view.top;
+                }
                 view.paint(context);
-                context.translate(-view.left, -view.top);
+                if (context !== null) {
+                    context.restore();
+                }
             }
         }
     },
